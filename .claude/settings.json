@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "mcp__novamira-laura-inboost-ma",
+      "mcp__novamira-tch-inboost-mark",
+      "mcp__inboost_google",
+      "mcp__Data_For_SEO",
+      "Bash(python3 -I tools/*)",
+      "Bash(node tools/render.js *)"
+    ]
+  }
+}
