@@ -48,6 +48,25 @@ Esto explica las auditorías: FCP 2,9 s, LCP 4,5 s, TBT 1.970 ms, los scripts `b
 
 - La captura móvil de la dist es idéntica al paquete.
 
+## v3 (tras PageSpeed 84: FCP 1,6 s · LCP 2,0 s · TBT 580 ms · CLS 0)
+
+- **Scripts:** el runtime y los JS propios del paquete (carga diferida, efectos, lightbox) van con `defer`. Un `<style>x-dc{display:none}</style>` en el `<head>` sustituye la ocultación que antes hacía el runtime.
+- **Preconnects:** se quitan los de Google Fonts, porque las fuentes son locales.
+- **Comprobación:** inicio, branding, camolas, design-web y sobre, en móvil (390 px) y escritorio (1.440 px). Sin errores de JS ni 404 y sin desborde horizontal; el runtime, `HMPerf`, los efectos y el lightbox se cargan. Las 10 rutas están otra vez en caché (unos 25 ms).
+- **Copias de seguridad:** `hm-boceto-dist.php.bak-*` en el tema.
+
+## Al reexportar desde Claude Design (adaptación móvil en curso)
+
+- Basta con sustituir el HTML en `hm-paginas/` con el mismo nombre: la versión dist y la caché se regeneran solas. Todo lo de este archivo se vuelve a aplicar en cada exportación.
+- Si el diseño usa imágenes nuevas de hortelamagenta.pt, se quedan remotas hasta ejecutar `wp eval 'echo wp_json_encode(hm_media_mirror(600));'`.
+- Una ruta nueva se añade a `$hm_paginas` en `hm-boceto.php`.
+- Lo que queda depende del propio diseño; corregirlo en la fuente, porque la exportación lo sobrescribe:
+  - **TBT y reflow forzado:** vienen de la lógica del componente (React pinta todo; el cursor y los efectos de scroll leen medidas del layout).
+  - **Contraste:** `span.sc-interp` son las palabras del texto que se ilumina con el scroll, que empiezan en gris claro.
+  - **Agentic Browsing:** `article#op-panel-1` lleva un `role` que `<article>` no admite (usar `<div role="tabpanel">`).
+  - **Animaciones:** hay 10 animaciones no compuestas (propiedades distintas de transform u opacity).
+  - **Cabecera móvil:** «Pedir orçamento» se corta a 390-412 px.
+
 ## Pendiente / siguiente paso
 
 - **Renderizado:** React sigue pintando toda la página en el navegador, con unos 0,8 s de CPU (a 4x) antes de la primera pintura. Para bajar más haría falta HTML prerenderizado (la versión Divi o una instantánea SSR).

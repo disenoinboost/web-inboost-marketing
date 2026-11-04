@@ -15,7 +15,7 @@
  */
 defined( 'ABSPATH' ) || exit;
 
-const HM_DIST_VER = 2;
+const HM_DIST_VER = 3;
 
 function hm_dist_dir() {
 	return get_stylesheet_directory() . '/hm-paginas/dist';
@@ -217,7 +217,8 @@ function hm_dist_build( $src ) {
 			$res[ $r['id'] ] = $map[ $r['uuid'] ];
 		}
 	}
-	$head = '<script>window.__resources=' . wp_json_encode( $res, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG ) . ';</script>';
+	// x-dc oculto desde el principio: el runtime va con defer y lo ocultaba al ejecutarse en el <head>.
+	$head = '<style>x-dc{display:none!important}</style><script>window.__resources=' . wp_json_encode( $res, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG ) . ';</script>';
 	// React y ReactDOM los inyecta el runtime: precargarlos para que bajen en paralelo con él.
 	foreach ( $res as $id => $u ) {
 		if ( preg_match( '#/react(-dom)?@[\d.]+/umd/#', $id ) ) {
@@ -226,6 +227,18 @@ function hm_dist_build( $src ) {
 	}
 	if ( preg_match( '#/\* latin \*/\s*@font-face\s*\{[^}]*?url\("([^"]+\.woff2)"\)#', $tpl, $fm ) ) {
 		$head .= '<link rel="preload" as="font" type="font/woff2" href="' . esc_attr( $fm[1] ) . '" crossorigin>';
+	}
+
+	// Scripts propios del paquete (runtime, carga diferida): defer, para que no bloqueen el análisis del HTML.
+	$tpl = preg_replace_callback(
+		'#<script\b(?![^>]*\b(?:defer|async|type=)[\s=>])([^>]*\ssrc="' . preg_quote( hm_dist_url(), '#' ) . '/a/[^"]+\.js"[^>]*)>#i',
+		static fn( $m ) => '<script defer' . $m[1] . '>',
+		$tpl
+	);
+	// Fuentes ya locales: fuera los preconnect a Google Fonts (Lighthouse los marca como no usados).
+	$sin = preg_replace( '#<link\b[^>]*rel="preconnect"[^>]*href="https://fonts\.(?:gstatic|googleapis)\.com/?"[^>]*>\s*#i', '', $tpl );
+	if ( false === strpos( $sin, 'fonts.googleapis.com' ) && false === strpos( $sin, 'fonts.gstatic.com' ) ) {
+		$tpl = $sin;
 	}
 
 	// Medios remotos -> copias locales (solo si están todas; las <meta> como og:image siguen absolutas).
