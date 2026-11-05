@@ -85,3 +85,13 @@ Copias previas en el servidor: `hm-boceto-fix.css/.js.bak-20261105-104300`.
 | Vídeos | Póster (imagen fija) en todos los vídeos en móvil, para que no haya cuadros negros mientras carga. Versiones ligeras nuevas: catálogo y site de Camolas, estacionario y vídeo de Alsil, sacos de Farinhas Firmos (de 0,6–18 MB a 51–171 KB), showreel 2020 de Sobre (20,2 → 3,6 MB, con audio). En la cinta de Design Web («Conteúdos», 12 vídeos), versiones mini de 12 s (60–210 KB). Precarga a 1 pantalla en lugar de 1,5 |
 
 Medios en `uploads/hm-media/movil/` (y `movil/posters/`), transferidos por la rama y verificados con md5. Se borró `uploads/hm-tmp-camolas/` (temporal de la ronda 3).
+
+## Quinta ronda (móvil)
+
+- **Flechas** (opiniones de Home/Serviços/Sobre y filtros de Projetos): sin marco, trazo fino y largo (44 × 12 px, 1,2 px) al estilo de theconcretehome.com; zona táctil de 52 × 44 px; desactivada al 25 %; al pulsar pasa a magenta y se desplaza 4 px en su dirección. En filtros, centradas con «Disciplina» y «Setor» y alineadas a la derecha.
+- **Vídeos enteros en 16:9, sin recorte**, manteniendo el efecto de entrada:
+  - Home · showreel: se mantiene la ventana que se abre desde abajo y el zoom 1,18 → 1. El vídeo pasa a `contain` y su posición vertical acompaña la apertura (de abajo al centro, `--hm-oy` calculado en `reelFit()` con la misma fórmula del diseño). Al final, el vídeo queda centrado y «Showreel» con los botones justo debajo.
+  - Camolas · Filme: misma idea (ventana centrada); «Adega Camolas · Vídeo» justo debajo.
+  - Camolas · Anúncios (catálogo) y Design Web · Conteúdos: las cajas con vídeo pasan de 4:3 o 3:4 a 16:9.
+  - João Bordeira y la cinta de Fotografia de Camolas ya eran 16:9: sin cambios.
+- Publicado desde el commit 3767e42 (css 25a3fb08…, js 645843c2…). Copias en el servidor: `hm-boceto-fix.*.bak-20261105-110656`. `hm_dist_reset()` y WP Rocket vaciados; páginas servidas con `v=1793876816`.
