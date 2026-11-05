@@ -70,3 +70,18 @@ Copias previas en el servidor: `hm-boceto-fix.css/.js.bak-20261105-<hora>` y `hm
 | Projetos · filtro | Cuando un proyecto se repite, sale otra foto del mismo proyecto (rotando si tiene pocas). Solo en móvil, como lo demás |
 
 Transferencia: los vídeos y capturas se subieron a esta rama y el servidor los descargó de raw.githubusercontent.com con md5. Después se quitaron del árbol del repositorio (siguen en el historial, commit 48a180f).
+
+## Cuarta ronda (2026-11-05, móvil)
+
+Copias previas en el servidor: `hm-boceto-fix.css/.js.bak-20261105-104300`.
+
+| Punto | Cambio |
+|---|---|
+| Barra «Pedir orçamento · Ligar» | No se veía: `.hm-cta { display: none }` (para escritorio) iba después del bloque móvil. Ahora va dentro de `@media (min-width: 768px)`. Comprobado con el HTML servido: visible a 390 px |
+| Barra «Neste projeto» (Camolas) | El JS guardaba una referencia que quedaba obsoleta al repintar el diseño; ahora vuelve a buscarla (`isConnected`) |
+| Opiniones (Home, Serviços, Sobre) | Mismo diseño que Sobre: sin imagen ni logotipo, cita a 26 px junto a la persona (separación de 20 px), citas largas recortadas (5 líneas en Home/Serviços, 4 en Sobre, que conserva «Ler mais»), sin altura mínima de pantalla. Dos nombres nítidos y solo el de la derecha esbatido; los nombres encajan a la izquierda (scroll-snap). Flechas anterior/siguiente debajo de los nombres |
+| Home · servicios | Relleno 18/14 px en lugar de 16/16: el texto quedaba 3,6 px más cerca de la línea de arriba |
+| Projetos · filtros | Flechas a la altura de «Disciplina» y «Setor», a la derecha; desplazan la fila y se atenúan en los extremos |
+| Vídeos | Póster (imagen fija) en todos los vídeos en móvil, para que no haya cuadros negros mientras carga. Versiones ligeras nuevas: catálogo y site de Camolas, estacionario y vídeo de Alsil, sacos de Farinhas Firmos (de 0,6–18 MB a 51–171 KB), showreel 2020 de Sobre (20,2 → 3,6 MB, con audio). En la cinta de Design Web («Conteúdos», 12 vídeos), versiones mini de 12 s (60–210 KB). Precarga a 1 pantalla en lugar de 1,5 |
+
+Medios en `uploads/hm-media/movil/` (y `movil/posters/`), transferidos por la rama y verificados con md5. Se borró `uploads/hm-tmp-camolas/` (temporal de la ronda 3).
