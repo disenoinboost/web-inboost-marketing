@@ -96,3 +96,12 @@ Medios en `uploads/hm-media/movil/` (y `movil/posters/`), transferidos por la ra
   - João Bordeira y la cinta de Fotografia de Camolas ya eran 16:9: sin cambios.
 - Publicado desde el commit 3767e42 (css 25a3fb08…, js 645843c2…). Copias en el servidor: `hm-boceto-fix.*.bak-20261105-110656`. `hm_dist_reset()` y WP Rocket vaciados; páginas servidas con `v=1793876816`.
 - **Ajuste:** el fondo de la ventana del showreel (Home) y del Filme (Camolas) pasa de negro a gris claro `#E8ECED` (el de Manifesto, Projetos y Contacto). "Showreel", "Adega Camolas · Vídeo" y los botones pasan a tinta: "Pausa / Play" con borde fino y "Ver completo com som" en oscuro. Con la ventana abierta, el diseño ponía la cabecera en oscuro; ahora queda clara (clase `hm-reel-claro`, calculada en `reelFit()`). Publicado desde el commit 43e993d (css 4c503a9a…, js 4987f005…). Copias: `bak-20261105-111640`. Páginas servidas con `v=1793877400`.
+
+## Favicon (todas las páginas)
+
+- El favicon ya estaba en las páginas del diseño desde la tercera ronda (el mismo `favicon.png` que hortelamagenta.pt, md5 idéntico), pero apuntaba a `/favicon.ico`. Antes de existir ese archivo, WordPress redirigía `/favicon.ico` a su logo "W", así que el navegador seguía mostrando el icono guardado: la dirección era la misma.
+- **Cambios:**
+  - Nueva función `hm_favicon_tags()` en `hm-boceto.php`, con `?v=20261105b` para que el navegador vuelva a descargar el icono. La usan las páginas del diseño (`hm_fix_inject`) y, mediante `wp_head`, también las que pinta WordPress (artículos, categorías, autor y 404), siempre que no haya un Site Icon definido.
+  - Se añade `assets/favicon.svg` (copia en `capa-fix/favicon.svg`): el mismo "hm" en vector, tomado del `safari-mask-icon.svg` original. Es oscuro en pestañas claras y `#E8ECED` en pestañas oscuras, donde el PNG original casi no se ve.
+  - Etiquetas: `/favicon.ico?v=…` con `sizes="32x32"`, `favicon.svg`, `apple-touch-icon.png` y `mask-icon`.
+- Comprobado en `/`, `/projetos/camolas/`, `/blog/`, `/category/branding/`, un artículo y un 404: las cuatro etiquetas están en todas. Copia de seguridad: `hm-boceto.php.bak-20261105-113138`.
