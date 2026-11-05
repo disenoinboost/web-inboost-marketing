@@ -115,3 +115,19 @@ Medios en `uploads/hm-media/movil/` (y `movil/posters/`), transferidos por la ra
 - **Orden sin huecos:** `packClients()` (JS) mide los nombres y los reparte en el mínimo número de líneas posible, con líneas de longitud parecida. El reparto parte de colocar primero los nombres más largos y se mejora con intercambios. Se recalcula al cambiar el ancho y al cargar la tipografía. El orden se aplica con `order` y los saltos de línea con `margin-right` en el último nombre de cada línea, mediante una hoja `<style id="hm-pack">` (si el diseño vuelve a pintar la lista, no se pierde). El separador "·" pasa a `li::after` y se oculta al final de cada línea.
 - **Resultado:** móvil a 390 px, 5 líneas llenas al 98–99 % (antes 6). Ordenador a 1440 px, 3 líneas al 76–78 %; a 1280 px, 3 al 80–82 %; a 1920 px, 2 al 78 %.
 - Publicado desde el commit 273cff9 (css c21c922b…, js 6a5fbf44…). Copia: `bak-20261105-114745`. `/sobre/` se sirve con `v=1793879265`.
+
+## Sexta ronda
+
+- **Mano de "deslizar"** (móvil): Branding y Design Web · Trabalhos, y Camolas · Rótulos.
+  - Icono de línea (mano con el dedo y flecha doble, trazo 1,3) dentro de un círculo translúcido de 68 px con desenfoque. Al entrar la galería en pantalla aparece, se desplaza de derecha a izquierda con el dedo "pulsado" y desaparece, tres veces seguidas.
+  - En cuanto la persona desliza la galería ya no vuelve a salir.
+  - En Trabalhos queda centrada al 58 % de alto; en Rótulos, sobre la primera imagen.
+  - `hands()` en JS: quita las manos que quedan sueltas cuando el diseño vuelve a pintar la galería. Animación `@keyframes hm-hand`; con movimiento reducido, sin animación.
+- **Camolas · cabecera** (PC y móvil): la foto pasa a `z-index: 0` y el velo degradado del diseño (`data-veil`) la cubre al bajar, igual que al fondo.
+- **Camolas** (móvil): se oculta la barra flotante de secciones (`[data-pidx]`).
+- **Sobre · Equipa:**
+  - **PC:** el nombre grande de fondo pasa despacio en fila (cuatro copias, `translate` −25 % en bucle, unos 42 px/s).
+  - **Móvil:** el mismo efecto como fondo por detrás del cargo, el nombre y la cita (`::before` del bloque de texto, 150 px, `#d6dce0`, unos 34 px/s).
+  - La duración se calcula por nombre para que todos vayan a la misma velocidad. Con movimiento reducido, quieto.
+- **Home · showreel** (móvil): vuelve a pantalla completa (vídeo recortado, fondo oscuro, cabecera oscura), como lo tenía el diseño. El Filme de Camolas sigue entero sobre gris, para comparar. Se retira `reelFit()`.
+- Publicado desde el commit 45991c7 (css 730f121e…, js a9745a9d…). Copia: `bak-20261105-152647`. Páginas servidas con `v=1793892408`.
