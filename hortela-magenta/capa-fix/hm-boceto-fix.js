@@ -4,7 +4,9 @@
    3. Painéis de processo (data-step-v): a troca é suave, como no computador (o painel aberto fecha-se enquanto o conteúdo
       se desvanece; o novo abre-se com a imagem a entrar e o texto a subir).
    4-8 (2026-11-05): opiniões com a cortada esbatida, carrossel de rótulos, cortinas horizontais (Camolas),
-      pré-carga dos vídeos e barra «Neste projeto» no telemóvel. */
+      pré-carga dos vídeos e barra «Neste projeto» no telemóvel.
+   9-11 (2026-11-05, 3.ª ronda): vídeos e capturas leves no telemóvel, barra «Pedir orçamento · Ligar», fotografias
+      variadas na galeria filtrada de Projetos. */
 (function () {
   if (window.__hmFix) return; window.__hmFix = 1;
   var D = document, W = window;
@@ -78,7 +80,7 @@
   }
   var tick = 0;
   function frame() {
-    tick = 0; railTick(); if (!MQ.matches) return;
+    tick = 0; railTick(); ctaTick(); if (!MQ.matches) return;
     var vh = W.innerHeight;
     secs.forEach(function (o) {
       var r = o.el.getBoundingClientRect(); if (r.bottom < -vh || r.top > 2 * vh) return;
@@ -165,9 +167,9 @@
     });
   }
 
-  /* 6. Camolas · identidade: no telemóvel as cortinas abrem-se na horizontal (faixas) em vez de colunas */
+  /* 6. Camolas · identidade (só Camolas; Branding também tem #identidade): no telemóvel as cortinas abrem-se na horizontal (faixas) em vez de colunas */
   function curtains() {
-    D.querySelectorAll('#identidade [data-step] > div:first-child > div[data-x]').forEach(function (el) {
+    D.querySelectorAll('section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div[data-x]').forEach(function (el) {
       var off = el.getAttribute('data-off') || '';
       if (el.__hmOff === undefined) el.__hmOff = off;
       var want = MQ.matches ? el.__hmOff.replace(/inset\(0 (\S+) 0 (\S+)\)/, 'inset($2 0 $1 0)') : el.__hmOff;
@@ -191,6 +193,7 @@
   }, { rootMargin: '150% 0px 150% 0px' }) : null;
   function vids() {
     if (!vio) return;
+    D.querySelectorAll('video').forEach(function (v) { if (MQ.matches) movil(v); });
     D.querySelectorAll('video[preload="none"]').forEach(function (v) { if (!v.__hmV) { v.__hmV = 1; vio.observe(v); } });
   }
 
@@ -211,7 +214,75 @@
     rail.scrollTo({ left: Math.max(0, li.offsetLeft - (rail.clientWidth - li.offsetWidth) / 2), behavior: RED ? 'auto' : 'smooth' });
   }
 
-  function init() { markMenu(); subMenus(); sides(); steps(); peeks(); lpN(); curtains(); vids(); req(); }
+
+  /* 9. (2026-11-05, 3.ª ronda) telemóvel: vídeos mais leves e capturas novas do site da Adega Camolas (uploads/hm-media/movil/) */
+  var MV = '/wp-content/uploads/hm-media/movil/';
+  var VMAP = {
+    'hortela_magenta-showreel-clip_2025.mp4': 'showreel-clip-2025-movil.mp4',
+    'hortelamagenta_portfolio_marca_camolas_video.mp4': 'camolas-filme-movil.mp4',
+    'hortelamagenta-joao-bordeira-filme-camolas-design-label-small.mp4': 'camolas-joao-bordeira-movil.mp4'
+  };
+  var SMAP = { '99266298c7a73406.jpg': 'camolas-site-vinhos-movil.webp', '26d667bc8ea1fccf.jpg': 'camolas-site-regiao-movil.webp', '4c058854c64f119c.jpg': 'camolas-site-experiencias-movil.webp' };
+  function movil(v) {
+    var src = v.getAttribute('src') || ''; var f = src.split('/').pop();
+    if (!VMAP[f] || src.indexOf(MV) === 0) return;
+    var playing = !v.paused; v.setAttribute('src', MV + VMAP[f]);
+    if (playing) { var pr = v.play && v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+  }
+  function shots() {
+    if (!MQ.matches) return;
+    D.querySelectorAll('#digital picture source[srcset]').forEach(function (s) {
+      var f = (s.getAttribute('srcset') || '').split('/').pop();
+      if (!SMAP[f]) return;
+      s.setAttribute('srcset', MV + SMAP[f]); s.setAttribute('type', 'image/webp'); s.setAttribute('width', '390'); s.setAttribute('height', '3200');
+    });
+  }
+
+  /* 10. barra fixa «Pedir orçamento · Ligar» no telemóvel (aparece depois do primeiro ecrã; some no rodapé e em /contacto/) */
+  var cta = null;
+  function ctaBar() {
+    if (cta || here.indexOf('/contacto/') === 0 || !D.body) return;
+    cta = D.createElement('nav'); cta.className = 'hm-cta'; cta.setAttribute('aria-label', 'Contacto rápido');
+    cta.innerHTML = '<a class="hm-cta-main" href="/contacto/">Pedir orçamento</a>' +
+      '<a href="tel:+351211806292" aria-label="Ligar para a Hortelã Magenta: (+351) 211 806 292"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Ligar</a>';
+    D.body.appendChild(cta);
+  }
+  function ctaTick() {
+    if (!cta) return;
+    var on = false;
+    if (MQ.matches && !D.querySelector('[data-mobile][aria-hidden="false"]')) {
+      var vh = W.innerHeight, ft = D.querySelector('footer[data-screen-label], [data-screen-label*="Footer"]'), ct = D.getElementById('contacto');
+      on = W.scrollY > vh * .6;
+      if (on && ft && ft.getBoundingClientRect().top < vh) on = false;
+      if (on && ct) { var r = ct.getBoundingClientRect(); if (r.top < vh * .7 && r.bottom > vh * .3) on = false; }
+      /* secções de ecrã inteiro com botões em baixo (galeria de trabalhos, showreel): a barra não as tapa */
+      if (on) [].forEach.call(D.querySelectorAll('#trabalhos-galeria, [data-reel]'), function (z) { var q = z.getBoundingClientRect(); if (q.top < vh - 60 && q.bottom > 80) on = false; });
+    }
+    if (cta.__on !== on) { cta.__on = on; cta.classList.toggle('hm-on', on); D.documentElement.classList.toggle('hm-cta-up', on); }
+  }
+
+  /* 11. Projetos · galeria filtrada: quando um projeto se repete, mostra outra fotografia do mesmo projeto */
+  var PFX = '/wp-content/uploads/hm-media/hortelamagenta.pt/media/pages/projetos/';
+  var POOL = {"livro-vilamoura":["09122571f9-1701272616/livro-vilamoura-cover-1800x.webp","6edf468bf6-1701272616/livro-vilamoura-img_02-950x.webp"],"imperalum":["7bae5f7d33-1739317592/hortelamagenta_portfolio_marca_imperalum_estacionario_01-1900x.webp","f3800cf11d-1739317292/hortelamagenta_portfolio_marca_imperalum_foto_01-1900x.webp","14bf0e96c3-1740759289/hortelamagenta_portfolio_marca_imperalum_banner_02-2400x.webp"],"knowledgebiz":["321a9cd129-1711539290/hortelamagenta_portfolio_marca_knowledgebiz_estacionario-1900x.webp","ee282865f6-1711539355/hortelamagenta_portfolio_marca_knowledgebiz_site_01-1900x.webp","41d543fd60-1711376064/hortelamagenta_portfolio_marca_knowledgebiz_banner-1900x.webp","acb8f0ddc8-1712331803/hortelamagenta_portfolio_marca_knowledgebiz_site_03-1900x.webp"],"camara-municipal-de-almada-roteiro":["ca85983fc0-1737996772/hortelamagenta_portfolio_marca_camera-municipal-de-almada_roteiro_capa-1200x.webp"],"consulai":["f492899131-1721829424/hortelamagenta_portfolio_marca_consulai_estacionario-1900x.webp","555bf500a9-1721821692/hortelamagenta_portfolio_marca_consulai_bottle-1900x.webp"],"farinhas-firmos":["7f27a0d0e0-1733915142/hortelamagenta_portfolio_marca_farinhafirmos_site_05-1900x.webp","12345640cf-1733915142/hortelamagenta_portfolio_marca_farinhafirmos_fabrica_09-950x.webp","20cfd38b8a-1733915142/hortelamagenta_portfolio_marca_farinhafirmos_calendario-1900x.webp","fd75baaf78-1736160048/hortelamagenta_portfolio_marca_farinhafirmos_fabrica-1900x.webp","e3a534ab47-1733915142/firmos_20210825_0055_hr_lr-1900x.webp","16f823843a-1733915142/hortelamagenta_portfolio_marca_farinhafirmos_redessociais_02-1900x.webp","0d8085f2b6-1733915142/hortelamagenta_portfolio_marca_farinhafirmos_farinha_sacos_02-1900x.webp","0d8085f2b6-1733915142/hortelamagenta_portfolio_marca_farinhafirmos_farinha_sacos_02-2400x.webp","8519297690-1733915142/hortelamagenta_portfolio_marca_farinhafirmos_fabrica_11-950x.webp"],"alinea":["0551698f70-1712332751/hortelamagenta_portfolio_alinea_capa-1200x.webp","6d50161d47-1710332766/hortelamagenta_portfolio_alinea_foto_01-950x.webp","33c4775e47-1710332840/hortelamagenta_portfolio_alinea_site_03-1900x.webp","dbafb4fd83-1710332713/hortelamagenta_portfolio_alinea_foto_03-950x.webp","07b0800a86-1710332776/hortelamagenta_portfolio_alinea_foto_02-950x.webp","8fb573ecfc-1710332790/hortelamagenta_portfolio_alinea_site_01-1900x.webp","9de4876d63-1710332653/hortelamagenta_portfolio_alinea_estacionario-1900x.webp"],"hospital-garcia-de-orta":["f7fbbaa315-1718375214/hortelamagenta_portfolio_marca_hgo_foto_01-950x.webp","c27930cb86-1736937441/hortelamagenta_portfolio_marca_hgo_capa-1200x.webp"],"documentos-normativos-imt":["ed2aa16f83-1736435754/hortelamagenta_portfolio_marca_imt_fasciaculo_capa-1200x.webp","2017b46299-1736432908/hortelamagenta_portfolio_marca_imt_fasciaculo_livro_01-1900x.webp"],"croma":["9377ea8d5d-1716976133/hortelamagenta_portfolio_marca_croma_foto-1900x.webp","78fb3bf26c-1716976201/hortelamagenta_portfolio_marca_croma_banner_02-2400x.webp"],"alsil":["d2144ed056-1734532126/alsilgroup_portfolio_marca_display-2400x.webp","be5cc9f6bd-1734959174/alsilgroup_portfolio_marca_stand-1900x.webp","979b7fe850-1734105167/hortelamagenta_portfolio_marca_alsilgroup_fabrica_01-1900x.webp","9c1cb9e731-1734105140/hortelamagenta_portfolio_marca_alsilgroup_cartao-de-visita-1900x.webp","2a93ca4ffe-1734715205/hortelamagenta_portfolio_marca_alsilgroup_fabrica_08-950x.webp","c2f6dc93f5-1734526716/hortelamagenta_portfolio_marca_alsilgroup_fabrica_04-950x.webp"],"camolas":["8ff25d922e-1736263859/hortelamagenta_portfolio_marca_camolas_garrafeira_02-1900x.webp","8065f08070-1736418209/hortelamagenta_portfolio_marca_camolas_cobaia_01-1900x.webp","be69d0f63a-1736268673/hortelamagenta_portfolio_marca_camolas_garrafeira_03-950x.webp","bd22f22426-1740738083/hortelamagenta_portfolio_marca_camolas_site_01-1900x.webp","93fc94cba4-1736267817/hortelamagenta_portfolio_marca_camolas_site_02-1900x.webp","0a24e03049-1740739416/hortelamagenta_portfolio_marca_camolas_monocasta_syrah_01-950x.webp","77614d917d-1736329416/hortelamagenta_portfolio_marca_camolas_grande-escolha_01-1900x.webp","2d4be057fa-1736177003/hortelamagenta_portfolio_marca_camolas_rollup-1900x.webp","b13a072826-1736418294/hortelamagenta_portfolio_marca_camolas_cobaia_03-1900x.webp","feffce8393-1736335730/hortelamagenta_portfolio_marca_camolas_moscatel-5-anos_04-1900x.webp"],"queijaria-da-sao":["bec50ba50e-1725318903/hortelamagenta_portfolio_marca_queijariadasao_site_01-1900x.webp","4146df1010-1725294355/hortelamagenta_portfolio_marca_queijariadasao_foto_06-1900x.webp","d71896b407-1725371731/hortelamagenta_portfolio_marca_queijariadasao_rotulos-1900x.webp","7686824007-1725283017/hortelamagenta_portfolio_marca_queijariadasao_veiculo-1900x.webp","57a9fce544-1725292582/hortelamagenta_portfolio_marca_queijariadasao_site_02-1900x.webp","dcbe49e55a-1725292989/hortelamagenta_portfolio_marca_queijariadasao_foto_05-1900x.webp"]};
+  var used = {};
+  function variety() {
+    if (!MQ.matches) return;
+    var mad = D.querySelector('[data-mad]'); if (!mad) return;
+    if (!mad.__hmMo && W.MutationObserver) { mad.__hmMo = new MutationObserver(function () { used = {}; setTimeout(variety, 0); }); mad.__hmMo.observe(mad, { childList: true }); }
+    mad.querySelectorAll('[data-madf] > a[aria-hidden="true"]').forEach(function (a) {
+      if (a.__hmV) return; a.__hmV = 1;
+      var m = (a.getAttribute('href') || '').match(/\/projetos\/([^\/?#]+)/); if (!m || !POOL[m[1]]) return;
+      var slug = m[1], list = POOL[slug], img = a.querySelector('img'); if (!img) return;
+      var cur = img.getAttribute('src') || '';
+      /* roda pelas fotografias do projeto, a começar pelas que ainda não apareceram (a capa já está à vista) */
+      var u = used[slug] || (used[slug] = { n: 0, cover: cur.split('/').pop() });
+      var opts = list.filter(function (f) { return f.split('/').pop() !== u.cover; }); if (!opts.length) return;
+      var f = opts[u.n++ % opts.length];
+      img.removeAttribute('srcset'); img.setAttribute('src', PFX + slug + '/' + f);
+    });
+  }
+
+  function init() { markMenu(); subMenus(); sides(); steps(); peeks(); lpN(); curtains(); vids(); shots(); ctaBar(); variety(); req(); }
   /* o desenho é montado por JS: repetir até aparecer e quando o menu se abre */
   var n = 0, iv = setInterval(function () { init(); if (++n > 20) clearInterval(iv); }, 250);
   D.addEventListener('click', function () { setTimeout(function () { markMenu(); subMenus(); }, 0); }, true);

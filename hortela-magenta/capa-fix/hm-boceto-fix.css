@@ -76,10 +76,6 @@ html body [data-mobile] > div:first-child > span > span { width: clamp(170px, 16
   /* Home · showreel: o título não sobe por cima de «— Showreel» */
   html body [data-reel-l] { transform: none !important; }
 
-  /* Home · serviços: cada título numa linha e mais pequeno que o título principal */
-  html body #servicos [data-svc-i] h3 { font-size: clamp(18px, 5.4vw, 22px) !important; overflow-wrap: normal !important; }
-  html body #servicos [data-svc-i] h3 button { white-space: nowrap !important; }
-
   /* opiniões (Home, Serviços, Sobre): 2 e meia à vista; a que fica cortada, esbatida (hm-peek, de hm-boceto-fix.js) */
   html body [data-op-tabs] { gap: 16px !important; }
   html body [data-op-tabs] > [role="tab"] { flex: 0 0 calc((100% - 32px) / 2.5) !important; min-width: 0 !important; transition: filter .35s ease, opacity .35s ease, color .2s ease !important; }
@@ -90,61 +86,9 @@ html body [data-mobile] > div:first-child > span > span { width: clamp(170px, 16
   html body [data-faq-side] ~ * h3, html body [data-faq-side] ~ * h3 > button { font-size: 19px !important; line-height: 1.25 !important; }
   html body [data-faq-side] ~ * h3 > button { padding-top: 18px !important; padding-bottom: 18px !important; }
 
-  /* galerias horizontais (Branding e Design Web · trabalhos; Camolas · rótulos): carrossel que desliza com o dedo, sem fixar o ecrã */
-  html body section[data-lp] { height: auto !important; }
-  html body section[data-lp] > [data-lp-st] { position: relative !important; top: auto !important; height: auto !important; min-height: 0 !important; overflow: hidden !important; display: block !important; }
-  html body [data-lp-track] { position: relative !important; left: auto !important; top: auto !important; width: auto !important; min-width: 0 !important; max-width: none !important; height: auto !important; transform: none !important; will-change: auto !important; display: flex !important; align-items: stretch !important; gap: 12px !important; padding: 0 16px 8px !important; overflow-x: auto !important; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding: 0 16px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
-  html body [data-lp-track]::-webkit-scrollbar { display: none; }
-  html body [data-lp-track] > * { flex: 0 0 auto !important; scroll-snap-align: start; }
-  html body [data-lp] [data-lpt] { opacity: 1 !important; filter: none !important; transform: none !important; }
-  html body [data-lp] [data-lpd] { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
-  html body [data-lp] [data-lpi] { clip-path: none !important; }
-  html body [data-lp] [data-lpi] img { transform: none !important; }
-
-  /* Branding e Design Web: texto de entrada inteiro e cartões com botão «Ver projeto» */
-  html body [data-lp-st] > [data-lp-ov] { opacity: .66 !important; }
-  html body [data-lp-ct] { position: relative !important; inset: auto !important; opacity: 1 !important; gap: 22px !important; padding: 56px 16px 28px !important; }
-  html body [data-lp-ct] > p { font-size: 28px !important; max-width: none !important; line-height: 1.12 !important; font-weight: 200 !important; }
-  html body [data-lp-ct] > div:first-child { font-size: 16px !important; }
-  html body [data-lp-ct] > div:first-child > span:last-child { font-size: 0 !important; }
-  html body [data-lp-ct] > div:first-child > span:last-child::after { content: "Deslize para o lado \2192"; font-size: 16px; }
-  html body [data-lp-st] > [data-lp-track] { padding-bottom: 56px !important; }
-  html body [data-lp-track] > article[data-lpp] { width: 80vw !important; height: auto !important; display: grid !important; grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto auto 1fr auto; grid-template-areas: "img img" "name name" "tags tags" "desc desc" "count btn"; align-items: center; padding-bottom: 18px; }
-  html body article[data-lpp] > * { position: relative !important; inset: auto !important; margin: 0 18px !important; max-width: none !important; min-width: 0; }
-  html body article[data-lpp] > [data-lpi] { grid-area: img; width: auto !important; height: auto !important; aspect-ratio: 4 / 3; margin: 0 !important; }
-  html body article[data-lpp] > a[data-lpt] { grid-area: name; margin-top: 18px !important; font-size: 26px !important; font-weight: 200 !important; line-height: 1.08 !important; white-space: normal !important; }
-  html body article[data-lpp] > div[data-lpd] { grid-area: tags; left: auto !important; right: auto !important; margin-top: 14px !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; column-gap: 14px !important; }
-  html body article[data-lpp] > div[data-lpd] > span { font-size: 15px !important; min-width: 0; overflow: hidden; }
-  html body article[data-lpp] > p[data-lpd]:not(:last-child) { grid-area: desc; align-self: start; margin-top: 14px !important; font-size: 15px !important; line-height: 1.45 !important; }
-  html body article[data-lpp] > p[data-lpd]:last-child { grid-area: count; margin-top: 18px !important; font-size: 14px !important; }
-  html body article[data-lpp] > a[data-lp-plus] { grid-area: btn; justify-self: end; margin-top: 18px !important; width: auto !important; height: auto !important; min-height: 40px; padding: 0 16px !important; border-radius: 999px !important; border-color: currentColor !important; display: inline-flex !important; align-items: center; gap: 8px; font-size: 15px !important; font-weight: 300 !important; white-space: nowrap; }
-  html body article[data-lpp] > a[data-lp-plus] > svg { display: none !important; }
-  html body article[data-lpp] > a[data-lp-plus]::before { content: "Ver projeto"; }
-  html body article[data-lpp] > a[data-lp-plus]::after { content: "\2192"; }
-
-  /* Camolas · rótulos: o texto fica à esquerda, fixo, e as garrafas deslizam por baixo */
-  html body #rotulos > [data-lp-st] { padding: 64px 0 !important; }
-  html body #rotulos [data-lp-track] { display: grid !important; grid-auto-flow: column; grid-template-rows: auto auto; grid-auto-columns: 78vw; column-gap: 12px !important; row-gap: 28px !important; }
-  html body #rotulos [data-lp-track] > div:first-child { grid-row: 1; grid-column: 1 / span var(--hm-n, 5); position: sticky !important; left: 16px; width: calc(100vw - 32px) !important; max-width: none !important; justify-self: start; scroll-snap-align: none; }
-  html body #rotulos [data-lp-track] > article { grid-row: 2; width: auto !important; }
-
-  /* Projetos · galeria: três colunas juntas e maiores, mais altas do que a moldura para se moverem com o scroll */
-  html body [data-mad] { gap: 8px !important; padding: 0 8px !important; height: 150vw !important; }
-  html body [data-mad] > [data-madcol] { gap: 8px !important; }
-
   /* Projetos · índice: o que se fez em cada projeto em minúsculas */
   html body #lista li > a > span[style*="uppercase"] { text-transform: lowercase !important; letter-spacing: 0 !important; }
 
-
-  /* Camolas · identidade: as quatro cortinas na horizontal; imagem inteira em cima e a lista por baixo */
-  html body #identidade [data-step] > div:first-child { height: auto !important; overflow: hidden !important; background: none !important; }
-  html body #identidade [data-step] > div:first-child > div[data-x] { inset: 0 0 auto 0 !important; height: calc((100vw - 32px) * 2 / 3) !important; background: var(--ph, #E8ECED) !important; }
-  html body #identidade [data-step] > div:first-child > div[data-x] > img { object-fit: contain !important; }
-  html body #identidade [data-step] > div:first-child > div[aria-hidden="true"] { display: none !important; }
-  html body #identidade [data-step] > div:first-child > div:last-child { position: relative !important; inset: auto !important; margin-top: calc((100vw - 32px) * 2 / 3 + 10px) !important; grid-template-columns: minmax(0, 1fr) !important; }
-  html body #identidade [data-step] > div:first-child > div:last-child > button { flex-direction: row !important; justify-content: flex-start !important; align-items: baseline !important; gap: 14px !important; padding: 12px 0 !important; border: 0 !important; border-top: 1px solid rgba(28, 27, 35, .14) !important; color: var(--ink, #1C1B23) !important; }
-  html body #identidade [data-step] > div:first-child > div:last-child > button > span { font-size: 14px !important; }
-  html body #identidade [data-step] > div:first-child > div:last-child > button > span + span { font-size: 20px !important; }
 
   /* Camolas · mais projetos: uma coluna, cartões baixos */
   html body section[data-screen-label="09 Projetos"] [data-step] { grid-template-columns: minmax(0, 1fr) !important; grid-auto-rows: auto !important; gap: 8px !important; }
@@ -214,3 +158,83 @@ html body [data-mobile] > div:first-child > span > span { width: clamp(170px, 16
   html body [data-reel-ui] > div { flex-wrap: nowrap !important; gap: 10px !important; }
   html body [data-reel-ui] > div > button, html body [data-reel-ui] > div > a { font-size: 14px !important; line-height: 1.2 !important; white-space: nowrap !important; width: auto !important; min-width: 0 !important; height: auto !important; min-height: 40px; padding: 0 14px !important; display: inline-flex !important; align-items: center !important; }
 }
+
+/* ==========================================================================
+   2026-11-05 (3) · terceira ronda (telemóvel até 767 px)
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* Home · serviços: como o índice de Projetos (número pequeno à esquerda, título a 28 px, linhas com mais ar) */
+  html body #servicos [data-svc-i] { padding: 0 !important; }
+  html body #servicos [data-svc-i]:last-child { border-bottom: 1px solid rgba(28, 27, 35, .12); }
+  html body #servicos [data-svc-i] h3 { font-size: 28px !important; line-height: 1 !important; overflow-wrap: normal !important; }
+  html body #servicos [data-svc-i] h3 > button { display: grid !important; grid-template-columns: 44px minmax(0, 1fr); column-gap: 20px !important; align-items: baseline !important; width: 100%; padding: 16px 0 !important; white-space: normal !important; }
+  html body #servicos [data-svc-i] h3 > button > span:first-child { font-size: 16px !important; color: #6E6A63 !important; }
+  html body #servicos [data-svc-i] h3 > button > span + span { font-size: 28px !important; font-weight: 200 !important; letter-spacing: -.045em !important; line-height: 1 !important; padding-top: 0 !important; }
+
+  /* Branding e Design Web · trabalhos: o desenho original (ecrã inteiro, fundo, texto de entrada, cartões altos),
+     mas passa-se com o dedo em vez de com o scroll; botão «Ver projeto» no lugar do + */
+  html body #trabalhos-galeria { height: 100svh !important; min-height: 600px !important; }
+  html body #trabalhos-galeria > [data-lp-st] { position: relative !important; top: auto !important; height: 100% !important; min-height: 0 !important; overflow: hidden !important; }
+  html body #trabalhos-galeria [data-lp-ov] { opacity: .5 !important; }
+  html body #trabalhos-galeria [data-lp-ct] { opacity: 1 !important; }
+  html body #trabalhos-galeria [data-lp-ct] > p { font-size: 30px !important; max-width: calc(84vw - 40px) !important; line-height: 1.08 !important; }
+  html body #trabalhos-galeria [data-lp-ct] > div:first-child > span:last-child { font-size: 0 !important; }
+  html body #trabalhos-galeria [data-lp-ct] > div:first-child > span:last-child::after { content: "Deslize para o lado \2192"; font-size: 16px; }
+  html body #trabalhos-galeria [data-lp-track] { position: absolute !important; inset: 0 !important; width: auto !important; height: 100% !important; transform: none !important; will-change: auto !important; padding: 0 !important; overflow-x: auto !important; overflow-y: hidden !important; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  html body #trabalhos-galeria [data-lp-track]::-webkit-scrollbar { display: none; }
+  html body #trabalhos-galeria [data-lp-track]::before { content: ""; flex: 0 0 84vw; scroll-snap-align: start; }
+  html body #trabalhos-galeria [data-lp-track]::after { content: ""; flex: 0 0 7vw; }
+  html body #trabalhos-galeria [data-lpp] { scroll-snap-align: center; scroll-snap-stop: always; }
+  html body #trabalhos-galeria [data-lpi] { clip-path: none !important; }
+  html body #trabalhos-galeria [data-lpi] img { transform: none !important; }
+  html body #trabalhos-galeria [data-lpd] { opacity: 1 !important; transform: none !important; pointer-events: auto !important; }
+  html body #trabalhos-galeria [data-lpp] > div[data-lpd] { right: 20px !important; }
+  html body #trabalhos-galeria [data-lpt] { opacity: 1 !important; filter: none !important; font-size: 30px !important; line-height: 1.05 !important; white-space: normal !important; right: 20px !important; bottom: 76px !important; }
+  html body #trabalhos-galeria [data-lpp] > p[data-lpd]:last-child { bottom: 30px !important; }
+  html body #trabalhos-galeria a[data-lp-plus] { top: auto !important; bottom: 18px !important; right: 20px !important; width: auto !important; height: 40px !important; padding: 0 16px !important; border-radius: 999px !important; border-color: currentColor !important; display: inline-flex !important; align-items: center; gap: 8px; font-size: 15px !important; font-weight: 300 !important; white-space: nowrap; }
+  html body #trabalhos-galeria a[data-lp-plus] > svg { display: none !important; }
+  html body #trabalhos-galeria a[data-lp-plus]::before { content: "Ver projeto"; }
+  html body #trabalhos-galeria a[data-lp-plus]::after { content: "\2192"; }
+
+  /* Camolas · rótulos: carrossel com o dedo, texto fixo em cima; nome encostado à esquerda e número à direita */
+  html body #rotulos { height: auto !important; }
+  html body #rotulos > [data-lp-st] { position: relative !important; top: auto !important; height: auto !important; min-height: 0 !important; overflow: hidden !important; display: block !important; padding: 64px 0 !important; }
+  html body #rotulos [data-lp-track] { position: relative !important; left: auto !important; top: auto !important; width: auto !important; min-width: 0 !important; max-width: none !important; height: auto !important; transform: none !important; will-change: auto !important; display: grid !important; grid-auto-flow: column; grid-template-rows: auto auto; grid-auto-columns: 78vw; column-gap: 12px !important; row-gap: 28px !important; padding: 0 16px 8px !important; overflow-x: auto !important; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding: 0 16px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  html body #rotulos [data-lp-track]::-webkit-scrollbar { display: none; }
+  html body #rotulos [data-lp-track] > div:first-child { grid-row: 1; grid-column: 1 / span var(--hm-n, 5); position: sticky !important; left: 16px; width: calc(100vw - 32px) !important; max-width: none !important; justify-self: start; }
+  html body #rotulos [data-lp-track] > article { grid-row: 2; width: auto !important; scroll-snap-align: start; }
+  html body #rotulos [data-lpi] { clip-path: none !important; }
+  html body #rotulos [data-lpi] img { transform: none !important; }
+  html body #rotulos [data-lpt], html body #rotulos [data-lpd] { opacity: 1 !important; filter: none !important; transform: none !important; }
+  html body #rotulos article > div:last-child { margin: 16px 0 0 !important; padding: 0 !important; }
+
+  /* Projetos · galeria: ocupa o ecrã inteiro; colunas um pouco mais largas do que o ecrã para serem mais altas e se moverem */
+  html body [data-mad] { height: 100svh !important; width: 120vw !important; margin-left: -10vw !important; gap: 8px !important; padding: 0 !important; }
+  html body [data-mad] > [data-madcol] { gap: 8px !important; }
+
+  /* Camolas · identidade (só Camolas: Branding também tem #identidade): cortinas na horizontal; a imagem enche o espaço 3:2 */
+  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child { height: auto !important; overflow: hidden !important; background: none !important; }
+  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div[data-x] { inset: 0 0 auto 0 !important; height: calc((100vw - 32px) * 2 / 3) !important; }
+  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div[data-x] > img { object-fit: cover !important; }
+  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div[aria-hidden="true"] { display: none !important; }
+  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div:last-child { position: relative !important; inset: auto !important; margin-top: calc((100vw - 32px) * 2 / 3 + 10px) !important; grid-template-columns: minmax(0, 1fr) !important; }
+  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div:last-child > button { flex-direction: row !important; justify-content: flex-start !important; align-items: baseline !important; gap: 14px !important; padding: 12px 0 !important; border: 0 !important; border-top: 1px solid rgba(28, 27, 35, .14) !important; color: var(--ink, #1C1B23) !important; }
+  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div:last-child > button > span { font-size: 14px !important; }
+  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div:last-child > button > span + span { font-size: 20px !important; }
+
+  /* Camolas · O site: capturas novas (2x) e o dobro do percurso para as ver com calma */
+  html body #digital[data-scrub] { height: 1000vh !important; }
+
+  /* barra fixa «Pedir orçamento · Ligar» (hm-boceto-fix.js): as outras barras de baixo sobem quando ela está à vista */
+  .hm-cta { display: flex; position: fixed; z-index: 45; left: 50%; bottom: 14px; display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: 9999px; background: rgba(250, 250, 248, .92); -webkit-backdrop-filter: saturate(180%) blur(12px); backdrop-filter: saturate(180%) blur(12px); box-shadow: 0 0 0 1px rgba(28, 27, 35, .08), 0 8px 24px rgba(28, 27, 35, .12); transform: translate3d(-50%, 16px, 0); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .35s ease, transform .5s cubic-bezier(.2,.7,.2,1), visibility 0s linear .35s; font-family: inherit; }
+  .hm-cta.hm-on { transform: translate3d(-50%, 0, 0); opacity: 1; visibility: visible; pointer-events: auto; transition: opacity .35s ease, transform .5s cubic-bezier(.2,.7,.2,1), visibility 0s linear 0s; }
+  .hm-cta a { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 18px; border-radius: 9999px; font-size: 15px; font-weight: 300; letter-spacing: .01em; line-height: 1; text-decoration: none; white-space: nowrap; color: #1C1B23; }
+  .hm-cta a.hm-cta-main { background: #1C1B23; color: #FAFAF8; }
+  .hm-cta a.hm-cta-main::after { content: "\2192"; }
+  .hm-cta a svg { width: 16px; height: 16px; flex: none; }
+  .hm-cta a:focus-visible { outline: 2px solid #D82E87; outline-offset: 2px; }
+  html.hm-cta-up [data-crail], html.hm-cta-up [data-frail] { bottom: 72px !important; }
+  html.hm-cta-up [data-pidx] { bottom: 72px !important; }
+}
+.hm-cta { display: none; }
+@media (max-width: 767px) and (prefers-reduced-motion: reduce) { .hm-cta, .hm-cta.hm-on { transition: none; } }
