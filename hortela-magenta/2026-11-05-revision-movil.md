@@ -49,3 +49,24 @@ Copia previa en el servidor: `hm-boceto-fix.css.bak-20261105-091715`.
 | Entradilla de la ficha de proyecto en PC | 24,5 px (servicios 18) | 18 px como las demás (servicios 16) |
 | Entradilla del artículo en PC | 27 px | 18 px |
 | Home · botones del showreel en móvil | «Ver completo com som» en 3 líneas y fuera de la caja | «Showreel» encima; los dos botones en una línea a 14 px |
+
+## Tercera ronda (2026-11-05, móvil salvo indicación)
+
+Copias previas en el servidor: `hm-boceto-fix.css/.js.bak-20261105-<hora>` y `hm-boceto.php.bak-20261105-<hora>`.
+
+| Punto | Cambio |
+|---|---|
+| Home · servicios | Mismo estilo que el índice de Projetos: número de 16 px en gris, título a 28 px, 16 px de aire y líneas arriba y abajo |
+| Barra «Pedir orçamento · Ligar» | Nueva barra fija abajo en móvil (como la de Camolas). Aparece tras el primer pantallazo y se oculta en el pie, en «Contacto», en el showreel y en la galería de trabajos. Sube las otras barras (blog, filtros de Projetos, Camolas). No se muestra en /contacto/ ni en PC |
+| Branding / Design Web · Trabalhos | Vuelve el diseño original (pantalla completa, fondo, texto de entrada, tarjetas altas); se pasa con el dedo (scroll-snap) y lleva «Ver projeto →» en lugar del +; nombre a 30 px que puede partirse |
+| Branding / Design Web · cabecera | En móvil solo la primera frase de la entradilla (script en línea tras `</x-dc>`, `assets/hm-entradilla-movil.html`): cabe en 664 px (antes 767 y 695) |
+| Branding · Ponto de partida | Causa: mis reglas de las cortinas de Camolas usaban `#identidade`, que también existe en Branding. Ahora solo `section#identidade[data-tone] [data-step]:not([data-step-v])` |
+| Camolas · rótulos | Las reglas de tarjetas de Branding también les afectaban: el nombre vuelve a estar pegado a la izquierda, el número a la derecha y 16 px bajo la imagen |
+| Camolas · identidade | Imagen a `cover`, ocupa todo el hueco 3:2 |
+| Camolas · O site | Capturas nuevas de adegacamolas.pt a 2x (780×6400; primeros 3.200 px de cada página, porque Vinhos mide 30.600 px y Região 16.190). La sección mide el doble (1000vh) para que pasen más despacio. Nota: Experiências muestra «Temporariamente Encerrado» en la web actual |
+| Vídeos | Versiones ligeras solo en móvil, sin audio (en la web van silenciados): showreel 7,0 → 2,1 MB (720p), filme 13,5 → 3,4 MB, João Bordeira 9,3 → 1,8 MB (540p). En `uploads/hm-media/movil/` |
+| Favicon | El de hortelamagenta.pt (`favicon.png`, `safari-mask-icon.svg`), más `/favicon.ico` y `apple-touch-icon.png` de 180 px generado desde el SVG |
+| Projetos · galería | A pantalla completa (100svh), con columnas a 120vw para que sean más altas que el marco y se muevan |
+| Projetos · filtro | Cuando un proyecto se repite, sale otra foto del mismo proyecto (rotando si tiene pocas). Solo en móvil, como lo demás |
+
+Transferencia: los vídeos y capturas se subieron a esta rama y el servidor los descargó de raw.githubusercontent.com con md5. Después se quitaron del árbol del repositorio (siguen en el historial, commit 48a180f).
