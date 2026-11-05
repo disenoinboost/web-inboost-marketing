@@ -1,0 +1,675 @@
+<title>Auditoría Hortelã Magenta</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@200;300;400&family=Source+Sans+3:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap">
+<style>
+/* Informe con la tinta, el papel y el magenta de la propia marca: columna de lectura con índice lateral */
+:root {
+  --paper: #FAFAF8; --ink: #1C1B23; --mist: #E8ECED; --line: #D9DCDD; --muted: #5E5A54; --magenta: #C2246F;
+  --alta: #B3263E; --media: #A15C07; --baja: #3F6B4F; --chip: #EEF0F0; --card: #FFFFFF;
+  --f-display: "League Spartan", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Source Sans 3", "Segoe UI", Arial, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #16151B; --ink: #ECEAE6; --mist: #201F27; --line: #34333D; --muted: #A7A29A; --magenta: #F0629F;
+  --alta: #F07A8C; --media: #E9A84E; --baja: #8CC7A0; --chip: #26252E; --card: #1C1B23; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #16151B; --ink: #ECEAE6; --mist: #201F27; --line: #34333D; --muted: #A7A29A; --magenta: #F0629F;
+  --alta: #F07A8C; --media: #E9A84E; --baja: #8CC7A0; --chip: #26252E; --card: #1C1B23; color-scheme: dark }
+* { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font: 17px/1.6 var(--f-body); }
+.wrap { max-width: 1180px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 48px 96px; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 56px; }
+@media (max-width: 900px) { .wrap { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-block: 28px 64px; } nav.toc { position: static !important; } }
+nav.toc { position: sticky; top: calc(24px + env(safe-area-inset-top, 0px)); align-self: start; font-size: 14px; }
+nav.toc p { font: 400 13px/1.3 var(--f-mono); text-transform: uppercase; letter-spacing: .08em; color: var(--muted); margin: 0 0 10px; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+nav.toc a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; }
+nav.toc a:hover, nav.toc a:focus-visible { border-bottom-color: var(--magenta); outline: none; }
+main { min-width: 0; }
+h1, h2, h3 { font-family: var(--f-display); font-weight: 300; letter-spacing: -.02em; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(40px, 6vw, 68px); font-weight: 200; line-height: 1.02; }
+h2 { font-size: clamp(28px, 3.4vw, 40px); line-height: 1.08; margin: 72px 0 8px; padding-top: 20px; border-top: 1px solid var(--line); }
+h3 { font-size: 22px; line-height: 1.2; font-weight: 400; }
+.eyebrow { font: 400 13px/1.3 var(--f-mono); text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin: 0 0 16px; }
+.eyebrow b { color: var(--magenta); font-weight: 400; }
+.lead { font-size: 20px; line-height: 1.5; max-width: 62ch; margin: 20px 0 0; }
+p { max-width: 68ch; }
+.sub { color: var(--muted); max-width: 70ch; }
+a { color: var(--magenta); }
+code { font: 14px var(--f-mono); background: var(--chip); padding: 1px 5px; }
+.verdict { margin-top: 36px; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+.verdict div { background: var(--mist); padding: 16px 18px; }
+.verdict strong { display: block; font: 300 34px/1 var(--f-display); font-variant-numeric: tabular-nums; }
+.verdict span { font-size: 14px; color: var(--muted); }
+.key { margin-top: 28px; display: grid; gap: 10px; }
+.key li { max-width: 72ch; }
+ol.key { padding-left: 20px; }
+.finding { margin-top: 28px; background: var(--card); border: 1px solid var(--line); padding: 22px 24px 24px; display: grid; gap: 12px; }
+.finding header { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 12px; }
+.finding header .id { font: 400 14px var(--f-mono); color: var(--muted); }
+.finding h3 { flex: 1 1 320px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { font: 400 12px/1 var(--f-mono); text-transform: uppercase; letter-spacing: .06em; padding: 6px 8px; background: var(--chip); color: var(--ink); }
+.chip.alta { color: var(--alta); box-shadow: inset 3px 0 0 var(--alta); }
+.chip.media { color: var(--media); box-shadow: inset 3px 0 0 var(--media); }
+.chip.baja { color: var(--baja); box-shadow: inset 3px 0 0 var(--baja); }
+dl { margin: 0; display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 6px 16px; font-size: 16px; }
+dt { color: var(--muted); font-size: 14px; padding-top: 2px; }
+dd { margin: 0; min-width: 0; overflow-wrap: anywhere; }
+@media (max-width: 560px) { dl { grid-template-columns: minmax(0, 1fr); } dt { padding-top: 6px; } .finding { padding: 18px 16px; } }
+figure { margin: 4px 0 0; }
+figure img { display: block; max-width: 100%; height: auto; border: 1px solid var(--line); background: #fff; }
+figcaption { font-size: 14px; color: var(--muted); margin-top: 6px; }
+.table-wrap { overflow-x: auto; margin-top: 20px; border: 1px solid var(--line); }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 15px; background: var(--card); }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+th { font: 400 12px var(--f-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); background: var(--mist); position: sticky; top: 0; }
+td:first-child { font-family: var(--f-display); font-size: 17px; white-space: nowrap; }
+td.num, .num { font-variant-numeric: tabular-nums; }
+.scale { margin-top: 18px; display: grid; gap: 0; border: 1px solid var(--line); background: var(--card); }
+.scale div { display: grid; grid-template-columns: 170px 110px 110px minmax(0, 1fr); gap: 12px; padding: 10px 14px; border-bottom: 1px solid var(--line); align-items: baseline; }
+.scale div:last-child { border-bottom: 0; }
+.scale .h { background: var(--mist); font: 400 12px var(--f-mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+@media (max-width: 640px) { .scale div { grid-template-columns: 1fr 70px 70px; } .scale div > :nth-child(4) { grid-column: 1 / -1; font-size: 14px; color: var(--muted); } }
+.note { background: var(--mist); padding: 16px 18px; margin-top: 20px; max-width: 72ch; }
+.cols2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 16px; }
+.cols2 > div { background: var(--card); border: 1px solid var(--line); padding: 16px 18px; min-width: 0; }
+.cols2 h3 { font-size: 19px; margin-bottom: 8px; }
+.cols2 ul { margin: 0; padding-left: 18px; }
+footer.end { margin-top: 64px; padding-top: 20px; border-top: 1px solid var(--line); color: var(--muted); font-size: 15px; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<div class="wrap">
+<nav class="toc" aria-label="Índice del informe">
+  <p>Índice</p>
+  <ol>
+    <li><a href="#resumen">Resumen</a></li>
+    <li><a href="#globales">A · Problemas globales</a></li>
+    <li><a href="#paginas">B · Por página</a></li>
+    <li><a href="#movil">C · Solo móvil</a></li>
+    <li><a href="#mejoras">D · Mejoras de diseño</a></li>
+    <li><a href="#comparativa">Tabla comparativa</a></li>
+    <li><a href="#sistema">Sistema propuesto</a></li>
+    <li><a href="#cobertura">Qué se ha revisado</a></li>
+  </ol>
+</nav>
+
+<main>
+<p class="eyebrow"><b>—</b> Auditoría visual · 5 de noviembre de 2026</p>
+<h1>Hortelã Magenta: coherencia de diseño en escritorio y móvil</h1>
+<p class="lead">Recorrido completo de hortelamagenta.inboost.marketing en Chromium, con 22 URL a 1440, 1024, 768 y 390 px. Solo análisis: no se ha modificado nada en la web.</p>
+
+<section id="resumen" aria-labelledby="t-resumen">
+<h2 id="t-resumen">Resumen</h2>
+<p>Las 10 páginas hechas con el diseño nuevo comparten un sistema sólido. Usan la misma tipografía (Spartan), la misma paleta, un ritmo de secciones constante (126 px en escritorio y 64 px en móvil), cuerpo de texto a 18 y 16 px, esquinas rectas y el mismo pie. Lo que rompe la sensación de conjunto está alrededor de esas páginas: las URL que sirve WordPress con su plantilla por defecto, los enlaces que llevan a la web antigua y una escala de títulos secundarios sin criterio.</p>
+<div class="verdict" role="list">
+  <div role="listitem"><strong class="num">5</strong><span>problemas de prioridad alta</span></div>
+  <div role="listitem"><strong class="num">17</strong><span>de prioridad media</span></div>
+  <div role="listitem"><strong class="num">10</strong><span>de prioridad baja</span></div>
+  <div role="listitem"><strong class="num">23</strong><span>URL revisadas (70 renderizados en 4 anchos)</span></div>
+</div>
+<p class="eyebrow" style="margin-top:32px"><b>—</b> Lo primero que corregiría</p>
+<ol class="key">
+  <li><strong>La barra fija «Pedir orçamento · Ligar» no se ve en ningún móvil.</strong> Es un error mío de la última publicación: una regla de una línea la oculta siempre (A1).</li>
+  <li><strong>12 URL públicas siguen con la plantilla por defecto de WordPress:</strong> 6 artículos, 4 categorías, el autor y el 404. Tienen fuente de sistema y textos en español e inglés en una web portuguesa (A2).</li>
+  <li><strong>12 de los 13 proyectos llevan a hortelamagenta.pt</strong>, la web antigua, y el blog solo enlaza 1 de sus 7 artículos (A3).</li>
+  <li><strong>El H1 no sigue un criterio común.</strong> En Home, Branding y Design Web es el antetítulo pequeño, no el titular (A4).</li>
+  <li><strong>Los títulos de sección (H2) usan 13 tamaños distintos en escritorio.</strong> En móvil, además, el H2 queda más grande que el H1 (A5, A6).</li>
+  <li><strong>En Design Web y Sobre hay párrafos enteros con estilo de título</strong>, de hasta 9 líneas en móvil (B2, B4).</li>
+</ol>
+</section>
+
+<section id="globales" aria-labelledby="t-glob">
+<h2 id="t-glob">A · Problemas globales</h2>
+<p class="sub">Afectan a varias páginas y conviene corregirlos con un criterio común.</p>
+
+<article class="finding">
+  <header><span class="id">A1</span><h3>La barra fija «Pedir orçamento · Ligar» no aparece</h3><div class="chips"><span class="chip alta">Alta</span><span class="chip">Móvil</span></div></header>
+  <dl>
+    <dt>Páginas</dt><dd>Todas las del diseño nuevo, menos /contacto/.</dd>
+    <dt>Elemento</dt><dd><code>.hm-cta</code> en <code>assets/hm-boceto-fix.css</code> (capa propia).</dd>
+    <dt>Problema</dt><dd>La regla <code>.hm-cta { display: none }</code>, que debía ocultarla solo en escritorio, quedó detrás del bloque móvil y siempre gana. La barra se activa (clase <code>hm-on</code>), pero su display calculado es <code>none</code>. Lo publiqué yo en la ronda anterior sin comprobar la visibilidad real.</dd>
+    <dt>Por qué importa</dt><dd>Falta la llamada a la acción que pediste. Además, las barras del blog, de los filtros de Projetos y de Camolas suben 58 px para dejarle sitio y queda un hueco vacío.</dd>
+    <dt>Propuesta</dt><dd>Mover esa regla antes del bloque móvil o limitarla a <code>min-width: 768px</code>. Es un cambio de una línea.</dd>
+  </dl>
+</article>
+
+<article class="finding">
+  <header><span class="id">A2</span><h3>12 URL públicas sin el diseño (plantilla por defecto de WordPress/Divi)</h3><div class="chips"><span class="chip alta">Alta</span><span class="chip">Ambos</span></div></header>
+  <dl>
+    <dt>Páginas</dt><dd>/rebranding-o-que-conservar/, /naming-como-escolher-o-nome/, /manual-de-normas-de-uma-marca/, /preparar-conteudos-novo-site/, /fotografia-de-produto-catalogo/, /comunicacao-continuada-agencia/, /category/sites/, /category/branding/, /category/fotografia-video/, /category/comunicacao/, /author/disenoinboost-marketing/ y cualquier 404.</dd>
+    <dt>Problema</dt><dd>
+      <ul>
+        <li>El título sale en Times porque la fuente que pide Divi da 404 (<code>/wp-content/cache/fonts/…/l/font</code>).</li>
+        <li>La imagen destacada está sin maquetar y el cuerpo del artículo es una sola frase.</li>
+        <li>La barra lateral está en inglés («Recent Posts», «Recent Comments»).</li>
+        <li>El formulario de comentarios («Enviar Un Comentario»), el buscador («Buscar») y el 404 («No Se Encontraron Resultados», «Página no encontrada») están en español.</li>
+        <li>La cabecera también tiene otras medidas (A7).</li>
+      </ul>
+    </dd>
+    <dt>Por qué importa</dt><dd>Están en el sitemap y la web de pruebas es indexable (A12). Quien llegue desde un buscador ve otra web, en otros idiomas.</dd>
+    <dt>Propuesta</dt><dd>
+      <ol>
+        <li>Pasar los 6 artículos a la plantilla del artículo nuevo (/blog/quanto-custa-um-site/).</li>
+        <li>Redirigir categorías y autor a /blog/ (o al filtro del tema), o sacarlos del sitemap con noindex.</li>
+        <li>Hacer un 404 con el diseño y en portugués.</li>
+        <li>Poner WordPress en pt_PT y desactivar los comentarios.</li>
+      </ol>
+    </dd>
+  </dl>
+  <figure><img src="img/wp-post-d.webp" alt="Artículo servido por WordPress a 1440 px: título en Times, imagen sin maquetar y barra lateral en inglés" loading="lazy"><figcaption>/rebranding-o-que-conservar/ a 1440 px.</figcaption></figure>
+  <figure><img src="img/wp-post-m.webp" alt="El mismo artículo en móvil: formulario de comentarios en español" loading="lazy"><figcaption>El mismo artículo a 390 px: comentarios en español.</figcaption></figure>
+  <figure><img src="img/wp-404-cat.webp" alt="Página 404 en español y archivo de categoría con la plantilla de Divi" loading="lazy"><figcaption>El 404 («No Se Encontraron Resultados») y /category/sites/.</figcaption></figure>
+</article>
+
+<article class="finding">
+  <header><span class="id">A3</span><h3>Enlaces que sacan al usuario de la web nueva</h3><div class="chips"><span class="chip alta">Alta</span><span class="chip">Ambos</span></div></header>
+  <dl>
+    <dt>Páginas</dt><dd>Home (destacados, opiniones), Projetos (galería e índice), Branding y Design Web (carruseles), Camolas («Mais projetos»), Blog.</dd>
+    <dt>Problema</dt><dd>
+      <ul>
+        <li>12 de los 13 proyectos enlazan a hortelamagenta.pt/projetos/…, con el diseño antiguo. Solo Camolas tiene ficha nueva.</li>
+        <li>«EN» y «Política de Privacidade» también van a producción.</li>
+        <li>En /blog/ se listan 7 artículos, pero solo «Quanto custa um site para empresas?» es un enlace; los otros 6 no llevan a ninguna parte.</li>
+      </ul>
+    </dd>
+    <dt>Por qué importa</dt><dd>Se rompe la sensación de conjunto en el momento de más interés (ver un proyecto) y el blog parece incompleto.</dd>
+    <dt>Propuesta</dt><dd>Hacer las fichas de proyecto con la plantilla de Camolas, que ya admite nombres largos como «Hospital Garcia de Orta». Mientras tanto, marcar con ↗ los enlaces que salen a la web antigua y enlazar los artículos (tras A2).</dd>
+  </dl>
+</article>
+
+<article class="finding">
+  <header><span class="id">A4</span><h3>El H1 sigue dos criterios distintos</h3><div class="chips"><span class="chip alta">Alta</span><span class="chip">Ambos</span></div></header>
+  <dl>
+    <dt>Páginas</dt><dd>
+      <ul>
+        <li><strong>H1 = antetítulo</strong> de 16–18 px en mayúsculas: Home, Branding y Design Web. El titular grande es un <code>&lt;p&gt;</code>.</li>
+        <li><strong>H1 = titular:</strong> Serviços, Projetos, Camolas, Sobre, Blog, artículo y Contacto.</li>
+      </ul>
+    </dd>
+    <dt>Problema</dt><dd>Lectores de pantalla y buscadores toman «Branding e identidade para empresas» como título, y no «Marcas que se reconhecem em…».</dd>
+    <dt>Por qué importa</dt><dd>La jerarquía es incoherente para SEO y accesibilidad. Además, el H1 de las tres páginas más importantes queda en 18 px.</dd>
+    <dt>Propuesta</dt><dd>El titular visual siempre como H1; el antetítulo, como párrafo de etiqueta. El aspecto no cambia.</dd>
+  </dl>
+  <figure><img src="img/heros-d.webp" alt="Cabecera de Branding alineada a la izquierda y cabecera de Serviços centrada" loading="lazy"><figcaption>Dos familias de cabecera: Branding (izquierda) y Serviços (centrada). Cambia la composición y también la etiqueta del titular.</figcaption></figure>
+</article>
+
+<article class="finding">
+  <header><span class="id">A5</span><h3>Escala de H2 sin sistema en escritorio</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Escritorio</span></div></header>
+  <dl>
+    <dt>Medido a 1440 px</dt><dd class="num">13 tamaños distintos: 41,5 · 50,7 · 53 · 55,3 · 57,6 · 62,2 · 64,5 · 66,8 · 71,4 · 73,7 · 76 · 115 · 121 px.</dd>
+    <dt>Mismo papel, otro tamaño</dt><dd>
+      <ul>
+        <li><strong>Cierre «Diga-nos, onde quer chegar?»:</strong> 115 px en Home, 76 en el resto y 53 en Contacto.</li>
+        <li><strong>Título de las preguntas frecuentes:</strong> 66,8 px en Home y 55,3 en Branding y Design Web.</li>
+        <li><strong>«Sonhar, criar, concretizar.»:</strong> 64,5 px en Home y 50,7 en Projetos.</li>
+        <li><strong>Títulos de sección de Camolas:</strong> 73,7 px. En Branding, de 41,5 a 71,4.</li>
+      </ul>
+    </dd>
+    <dt>Por qué importa</dt><dd>Es el principal motivo por el que algunas páginas parecen hechas con otro criterio.</dd>
+    <dt>Propuesta</dt><dd>Tres niveles: 76 / 64 / 48 px a 1440 (ver «Sistema propuesto»).</dd>
+  </dl>
+  <figure><img src="img/cierre-d.webp" alt="El mismo título de cierre a 115 px en Home y a 53 px en Contacto" loading="lazy"><figcaption>«Diga-nos, onde quer chegar?»: a la izquierda en Home (115 px), a la derecha en Contacto (53 px).</figcaption></figure>
+</article>
+
+<article class="finding">
+  <header><span class="id">A6</span><h3>En móvil el H2 es mayor que el H1</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Móvil</span></div></header>
+  <dl>
+    <dt>Páginas</dt><dd>Todas las del diseño nuevo.</dd>
+    <dt>Problema</dt><dd>El H1 mide 30 px y el H2, 32 px. Viene de la ronda 2, cuando bajé el H1 para que ningún titular pasara de 3 líneas.</dd>
+    <dt>Propuesta</dt><dd>H2 de sección a 26 px y H2 de cierre a 28 px. Así el H1 de 30 px vuelve a mandar.</dd>
+  </dl>
+  <figure><img src="img/h1h2-m.webp" alt="Sobre en móvil: titular a 30 px y título de la sección siguiente a 32 px" loading="lazy"><figcaption>/sobre/ a 390 px: el H2 de la segunda pantalla es más grande que el H1 de la primera.</figcaption></figure>
+</article>
+
+<article class="finding">
+  <header><span class="id">A7</span><h3>Cabecera con otras medidas en las páginas de WordPress</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Ambos</span></div></header>
+  <dl>
+    <dt>Medidas</dt><dd>
+      <ul>
+        <li><strong>Escritorio:</strong> logotipo de 197 × 26 y menú a 19,6 px en WordPress, frente a 230 × 30 y 17,3 px en el diseño nuevo.</li>
+        <li><strong>Móvil:</strong> cabecera de 81 px con logotipo de 180 px, frente a 65 px y 148 px.</li>
+      </ul>
+    </dd>
+    <dt>Por qué importa</dt><dd>Al pasar de una página a otra, el logotipo «salta».</dd>
+    <dt>Propuesta</dt><dd>Se resuelve con A2. Si esas plantillas se quedan, aplicarles las mismas medidas.</dd>
+  </dl>
+  <figure><img src="img/header-d.webp" alt="Cabecera de un artículo de WordPress encima de la cabecera de Branding" loading="lazy"><figcaption>Arriba, un artículo de WordPress; abajo, Branding (1440 px).</figcaption></figure>
+  <figure><img src="img/header-m.webp" alt="Cabecera móvil de WordPress y del diseño nuevo" loading="lazy"><figcaption>Lo mismo a 390 px.</figcaption></figure>
+</article>
+
+<article class="finding">
+  <header><span class="id">A8</span><h3>Cinco variantes del enlace de acción subrayado</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Ambos</span></div></header>
+  <dl>
+    <dt>Variantes</dt><dd>
+      <ul>
+        <li>Subrayado magenta o gris.</li>
+        <li>Separación de 3 a 6 px y altura de 24 a 31 px.</li>
+        <li>Mayúsculas solo en «VER PROJETO» de la Home.</li>
+        <li>Flecha →, flecha ↗ o sin flecha, sin criterio («Ver projeto →», «Ver projeto ↗», «Ver projeto»).</li>
+      </ul>
+    </dd>
+    <dt>Propuesta</dt><dd>Dos estilos:
+      <ul>
+        <li><strong>Acción:</strong> magenta, minúsculas, →.</li>
+        <li><strong>Secundario:</strong> gris, sin flecha.</li>
+      </ul>
+      ↗ solo para enlaces externos. Separación fija de 4 px.
+    </dd>
+  </dl>
+</article>
+
+<article class="finding">
+  <header><span class="id">A9</span><h3>Botones rellenos con seis alturas y una píldora fuera de sitio</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Ambos</span></div></header>
+  <dl>
+    <dt>Medido</dt><dd>
+      <ul>
+        <li><strong>64 px:</strong> CTA de cierre, igual en todas las páginas.</li>
+        <li><strong>60 px:</strong> «Enviar mensagem».</li>
+        <li><strong>48 px:</strong> «Todos os projetos».</li>
+        <li><strong>46 px:</strong> «Pausa / Play» y vista previa de Projetos.</li>
+        <li><strong>42 px:</strong> barra fija.</li>
+        <li><strong>40 px:</strong> «Ver projeto» de los carruseles.</li>
+      </ul>
+    </dd>
+    <dt>Problema</dt><dd>Todo el contenido usa esquinas rectas. La única píldora dentro de un contenido es el botón «Ver projeto» de los carruseles de Branding y Design Web, que añadí yo en la ronda 3.</dd>
+    <dt>Propuesta</dt><dd>
+      <ul>
+        <li>Primario: 56 px en escritorio y 52 en móvil.</li>
+        <li>Secundario: 44 px.</li>
+        <li>Esquinas rectas en el contenido; la píldora, solo para elementos flotantes (barras inferiores).</li>
+      </ul>
+    </dd>
+  </dl>
+</article>
+
+<article class="finding">
+  <header><span class="id">A10</span><h3>«— SHOWREEL» se monta sobre «Veja o showreel» en escritorio y tablet</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Escritorio y tablet</span></div></header>
+  <dl>
+    <dt>Página</dt><dd>/ (Home), sección Showreel, a 1440, 1024 y 768 px.</dd>
+    <dt>Problema</dt><dd>Al hacer scroll, el título sube hasta 72 px y pisa la etiqueta. La corrección de la ronda 1 solo cubrió hasta 767 px.</dd>
+    <dt>Propuesta</dt><dd>La misma corrección en todos los anchos: que suba el bloque entero o que no se desplace el título.</dd>
+  </dl>
+  <figure><img src="img/reel-d.webp" alt="Etiqueta Showreel superpuesta al título Veja o showreel a 1440 px" loading="lazy"><figcaption>1440 px, durante el scroll.</figcaption></figure>
+</article>
+
+<article class="finding">
+  <header><span class="id">A11</span><h3>El mismo componente con escalas distintas</h3><div class="chips"><span class="chip baja">Baja</span><span class="chip">Escritorio</span></div></header>
+  <dl>
+    <dt>Casos</dt><dd>
+      <ul>
+        <li><strong>Lista de palabras desplegables:</strong> Serviços de la Home a 92 px; «O que determina o âmbito» de Design Web, a unos 45 px.</li>
+        <li><strong>«Marcas que crescem connosco»:</strong> rejilla de 4 columnas en Home y Serviços, y de 6 en Design Web.</li>
+      </ul>
+    </dd>
+    <dt>Propuesta</dt><dd>Una escala por componente. La Home puede mantener su versión grande si se decide como excepción.</dd>
+  </dl>
+  <figure><img src="img/listas.webp" alt="Lista de servicios de la Home a la izquierda y lista de ámbito de Design Web a la derecha" loading="lazy"><figcaption>Mismo componente: Home (izquierda) y Design Web (derecha).</figcaption></figure>
+  <figure><img src="img/marcas.webp" alt="Rejilla de marcas a 4 columnas en Home y a 6 en Design Web" loading="lazy"><figcaption>«Marcas que crescem connosco»: Home (4 columnas) y Design Web (6).</figcaption></figure>
+</article>
+
+<article class="finding">
+  <header><span class="id">A12</span><h3>Problemas técnicos que afectan a la calidad</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Ambos</span></div></header>
+  <dl>
+    <dt>Detectado</dt><dd>
+      <ol>
+        <li>La web de pruebas es indexable (<code>blog_public=1</code>) y sus páginas están en el sitemap.</li>
+        <li>Tres canónicos apuntan a URL de producción que dan 404: <code>/blog</code>, <code>/branding-para-empresas</code> y <code>/websites-para-empresas</code>.</li>
+        <li>/sobre/ pide imágenes «<code>{{ h.src }}</code>» desde la plantilla oculta: dos peticiones 404 por visita.</li>
+        <li>Serviços carga dos imágenes directamente de Wikimedia Commons (logotipo de Stericycle y una foto de Tavira). Es una dependencia externa que no he podido comprobar desde aquí.</li>
+        <li>En las páginas de WordPress, la fuente de Divi da 404 (origen de las Times de A2).</li>
+      </ol>
+    </dd>
+    <dt>Propuesta</dt><dd>
+      <ul>
+        <li>Poner noindex hasta el lanzamiento.</li>
+        <li>Revisar los canónicos con las URL definitivas.</li>
+        <li>Copiar al servidor las dos imágenes de Wikimedia.</li>
+        <li>Evitar que el navegador pida las imágenes de la plantilla oculta.</li>
+      </ul>
+    </dd>
+  </dl>
+</article>
+</section>
+
+<section id="paginas" aria-labelledby="t-pag">
+<h2 id="t-pag">B · Problemas específicos de cada página</h2>
+
+<article class="finding">
+  <header><span class="id">B1</span><h3>Home · Proyectos destacados: nombres poco legibles y recorrido muy largo en móvil</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Ambos</span></div></header>
+  <dl>
+    <dt>Página</dt><dd>/ · sección «05b Projetos em destaque».</dd>
+    <dt>Problema</dt><dd>Los nombres de los proyectos (blancos, peso 100) quedan sobre fotos claras o con mucho detalle: Alinea, Queijaria da São y los rótulos de Camolas. En móvil la sección mide 6.077 px, unas 7 pantallas, para 5 proyectos.</dd>
+    <dt>Propuesta</dt><dd>
+      <ul>
+        <li>Un degradado oscuro bajo el texto y peso 200.</li>
+        <li>En móvil, limitar el recorrido a unas 3 pantallas.</li>
+      </ul>
+    </dd>
+  </dl>
+  <figure><img src="img/destaque.webp" alt="Nombre Alinea sobre una foto clara en escritorio y en móvil" loading="lazy"><figcaption>Escritorio (izquierda) y móvil (derecha). El círculo magenta es el cursor personalizado del diseño, capturado en reposo.</figcaption></figure>
+</article>
+
+<article class="finding">
+  <header><span class="id">B2</span><h3>Design Web · Un párrafo de 33 palabras con estilo de título</h3><div class="chips"><span class="chip alta">Alta</span><span class="chip">Ambos</span></div></header>
+  <dl>
+    <dt>Página</dt><dd>/servicos/design-web/ · sección «06 Agência».</dd>
+    <dt>Problema</dt><dd>«Uma agência de comunicação, não só de sites. Desde 2007, a Hortelã Magenta trabalha a comunicação de empresas: marca, design gráfico, editorial, fotografia, vídeo e digital.» va como H2: 5 líneas a 67 px en escritorio y 9 líneas en móvil.</dd>
+    <dt>Por qué importa</dt><dd>Un texto informativo compite con los títulos y cuesta leerlo con ese tamaño y peso tan fino.</dd>
+    <dt>Propuesta</dt><dd>Dejar como H2 la primera frase («Uma agência de comunicação, não só de sites.») y pasar el resto a párrafo de entradilla, sin cambiar el texto.</dd>
+  </dl>
+  <figure><img src="img/agencia.webp" alt="El párrafo con estilo de título en escritorio (5 líneas) y en móvil (9 líneas)" loading="lazy"><figcaption>Escritorio y móvil.</figcaption></figure>
+</article>
+
+<article class="finding">
+  <header><span class="id">B3</span><h3>Design Web · Tarjetas con texto vertical en móvil</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Móvil</span></div></header>
+  <dl>
+    <dt>Página</dt><dd>/servicos/design-web/ · «O que procura cada visitante» (01–04).</dd>
+    <dt>Problema</dt><dd>Cuatro tarjetas de unos 300 px de alto cada una, con el texto girado 90°. Se lee girando la cabeza y ocupan casi 4 pantallas.</dd>
+    <dt>Propuesta</dt><dd>En móvil, filas horizontales compactas: número, texto y flecha.</dd>
+  </dl>
+  <figure><img src="img/cards-vert-m.webp" alt="Tarjetas 01 a 04 con texto vertical en móvil" loading="lazy"><figcaption>390 px.</figcaption></figure>
+</article>
+
+<article class="finding">
+  <header><span class="id">B4</span><h3>Sobre · El mismo caso que B2 en la introducción</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Ambos</span></div></header>
+  <dl>
+    <dt>Página</dt><dd>/sobre/ · «02 Introdução».</dd>
+    <dt>Problema</dt><dd>«Dedicamo-nos a 100% a cada cliente: estamos ao seu lado, sugerimos, envolvemo-nos no negócio e ajudamo-lo a crescer.» como H2: 4 líneas en escritorio y 7 en móvil.</dd>
+    <dt>Propuesta</dt><dd>Dejar la primera cláusula como título y el resto como entradilla, o bajarlo un nivel de la escala.</dd>
+  </dl>
+</article>
+
+<article class="finding">
+  <header><span class="id">B5</span><h3>Camolas · «O site» muestra «Temporariamente Encerrado»</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Móvil</span></div></header>
+  <dl>
+    <dt>Página</dt><dd>/projetos/camolas/ · «05 Site», tercera captura (Experiências).</dd>
+    <dt>Problema</dt><dd>La captura nueva refleja el estado actual de adegacamolas.pt: la página de experiencias anuncia que está cerrada.</dd>
+    <dt>Por qué importa</dt><dd>En un caso de éxito transmite algo negativo del cliente.</dd>
+    <dt>Propuesta</dt><dd>Usar otra página (Loja o Contactos) o volver a la captura anterior solo para esta pantalla.</dd>
+  </dl>
+  <figure><img src="img/encerrado-m.webp" alt="Captura de la web de la bodega con el texto Temporariamente Encerrado" loading="lazy" style="max-width:320px"><figcaption>390 px.</figcaption></figure>
+</article>
+
+<article class="finding">
+  <header><span class="id">B6</span><h3>Branding y Design Web · Cabecera desequilibrada en escritorio</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Escritorio</span></div></header>
+  <dl>
+    <dt>Página</dt><dd>/servicos/branding/ y /servicos/design-web/ a 1440 × 900.</dd>
+    <dt>Problema</dt><dd>Con el antetítulo pegado a la miga (ronda 2), queda un vacío grande bajo el titular. La entradilla sigue abajo a la derecha, lejos del titular.</dd>
+    <dt>Propuesta</dt><dd>Subir la entradilla a la altura del titular o reducir la altura de la cabecera a unos 80vh, para que el bloque respire sin hueco muerto.</dd>
+  </dl>
+  <figure><img src="img/branding-hero-d.webp" alt="Cabecera de Branding con espacio vacío bajo el titular" loading="lazy"><figcaption>/servicos/branding/ a 1440 px.</figcaption></figure>
+</article>
+
+<article class="finding">
+  <header><span class="id">B7</span><h3>Serviços · Página muy larga con cinco bloques iguales</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Ambos</span></div></header>
+  <dl>
+    <dt>Página</dt><dd>/servicos/.</dd>
+    <dt>Problema</dt><dd>Cinco bloques con la misma estructura (título, texto, lista, collage) suman 16.104 px en escritorio y 13.858 en móvil, donde cada servicio apila de 3 a 5 imágenes.</dd>
+    <dt>Propuesta</dt><dd>En móvil, 2 imágenes por servicio. El índice «Acesso rápido» ya existe y ayuda.</dd>
+  </dl>
+</article>
+
+<article class="finding">
+  <header><span class="id">B8</span><h3>Opiniones · Logotipo en un recuadro blanco grande</h3><div class="chips"><span class="chip baja">Baja</span><span class="chip">Móvil</span></div></header>
+  <dl>
+    <dt>Páginas</dt><dd>/servicos/ y /sobre/ (opinión de ADREPES).</dd>
+    <dt>Problema</dt><dd>El logotipo ocupa todo el ancho dentro de un recuadro blanco y parece un marcador provisional.</dd>
+    <dt>Propuesta</dt><dd>Logotipo pequeño junto al nombre, o una foto del proyecto como en el resto de opiniones.</dd>
+  </dl>
+  <figure><img src="img/adrepes-m.webp" alt="Logotipo de ADREPES grande en un recuadro blanco" loading="lazy" style="max-width:320px"><figcaption>/servicos/ a 390 px.</figcaption></figure>
+</article>
+
+<article class="finding">
+  <header><span class="id">B9</span><h3>Projetos · Filtros: fotos repetidas en escritorio y botón que tapa la lista en móvil</h3><div class="chips"><span class="chip baja">Baja</span><span class="chip">Ambos</span></div></header>
+  <dl>
+    <dt>Página</dt><dd>/projetos/.</dd>
+    <dt>Problema</dt><dd>
+      <ul>
+        <li><strong>Escritorio:</strong> al filtrar por Indústria, se repite la misma foto de Imperalum en una columna. La variedad que añadí solo se aplica en móvil.</li>
+        <li><strong>Móvil:</strong> el botón flotante «Filtros» tapa texto del índice.</li>
+      </ul>
+    </dd>
+    <dt>Propuesta</dt><dd>Aplicar la variedad de fotos también en escritorio y dejar margen inferior en la lista.</dd>
+  </dl>
+  <figure><img src="img/filtros.webp" alt="Botón Filtros sobre el índice en móvil y galería filtrada en escritorio con una foto repetida" loading="lazy"><figcaption>Móvil (izquierda) y escritorio filtrado (derecha).</figcaption></figure>
+</article>
+
+<article class="finding">
+  <header><span class="id">B10</span><h3>Camolas · «Sobre o projeto» demasiado denso</h3><div class="chips"><span class="chip baja">Baja</span><span class="chip">Ambos</span></div></header>
+  <dl>
+    <dt>Página</dt><dd>/projetos/camolas/ · «02 Sobre o projeto».</dd>
+    <dt>Problema</dt><dd>Un bloque de 13 líneas a 33 px en escritorio (unos 24 en móvil), con palabras resaltadas.</dd>
+    <dt>Propuesta</dt><dd>24 px en escritorio y 20 en móvil, con un ancho máximo de 60 caracteres.</dd>
+  </dl>
+</article>
+
+<article class="finding">
+  <header><span class="id">B11</span><h3>Contacto · El título del formulario repite el cierre de las demás páginas</h3><div class="chips"><span class="chip baja">Baja</span><span class="chip">Ambos</span></div></header>
+  <dl>
+    <dt>Página</dt><dd>/contacto/ · «02 Formulário».</dd>
+    <dt>Problema</dt><dd>«Diga-nos, onde quer chegar?» aparece aquí a 53 px; en el resto de páginas es el gran cierre a 76 px. El mismo mensaje toma papeles distintos.</dd>
+    <dt>Propuesta</dt><dd>En Contacto, usar como título del formulario la etiqueta que ya tiene («Escreva-nos») en el nivel de subsección y dejar ese texto solo como cierre del resto de páginas.</dd>
+  </dl>
+</article>
+
+<article class="finding">
+  <header><span class="id">B12</span><h3>Home · Modo oscuro: la cabecera se ve clara</h3><div class="chips"><span class="chip baja">Baja</span><span class="chip">Escritorio</span></div></header>
+  <dl>
+    <dt>Página</dt><dd>/ con el interruptor de versión oscura.</dd>
+    <dt>Problema</dt><dd>Al activarlo, la cabecera oscura de la Home se mostró clara mientras el resto se oscurecía. Puede ser un instante de la transición, así que está pendiente de confirmar en un navegador de escritorio real.</dd>
+  </dl>
+  <figure><img src="img/dark-d.webp" alt="Home en modo oscuro con la cabecera en claro" loading="lazy"><figcaption>1440 px, 1,2 s después de activar el modo oscuro.</figcaption></figure>
+</article>
+</section>
+
+<section id="movil" aria-labelledby="t-mov">
+<h2 id="t-mov">C · Problemas exclusivos de móvil</h2>
+
+<article class="finding">
+  <header><span class="id">C1</span><h3>La barra «Neste projeto» de Camolas no aparece de forma fiable</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Móvil</span></div></header>
+  <dl>
+    <dt>Página</dt><dd>/projetos/camolas/.</dd>
+    <dt>Problema</dt><dd>En la pasada de auditoría quedó oculta (opacidad 0) en la sección Rótulos. En la ronda 3 sí aparecía. Mi script guarda una referencia a la barra que se queda obsoleta si el diseño la vuelve a pintar.</dd>
+    <dt>Propuesta</dt><dd>Buscar la barra en cada fotograma o comprobar que sigue en la página (<code>isConnected</code>) antes de usarla.</dd>
+  </dl>
+  <figure><img src="img/rail-m.webp" alt="Camolas en móvil sin la barra de secciones inferior" loading="lazy" style="max-width:320px"><figcaption>Rótulos a 390 px: sin barra.</figcaption></figure>
+</article>
+
+<article class="finding">
+  <header><span class="id">C2</span><h3>Entradillas centradas demasiado largas</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Móvil</span></div></header>
+  <dl>
+    <dt>Páginas</dt><dd>/servicos/ (7 líneas centradas), /projetos/, /sobre/, /blog/, /contacto/.</dd>
+    <dt>Problema</dt><dd>Más de 3 líneas de texto centrado cuestan de leer: el ojo no encuentra el inicio de cada línea.</dd>
+    <dt>Propuesta</dt><dd>Un máximo de 3 líneas centradas o, en móvil, alinear la entradilla a la izquierda.</dd>
+  </dl>
+  <figure><img src="img/intro-centrada-m.webp" alt="Cabecera de Serviços en móvil con una entradilla centrada de siete líneas" loading="lazy" style="max-width:320px"><figcaption>/servicos/ a 390 px.</figcaption></figure>
+</article>
+
+<article class="finding">
+  <header><span class="id">C3</span><h3>Secciones de scroll fijado demasiado largas</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Móvil</span></div></header>
+  <dl>
+    <dt>Medido a 390 px</dt><dd class="num">
+      <ul>
+        <li>Home, destacados: 6.077 px.</li>
+        <li>Branding, «Suportes»: 3.882 px.</li>
+        <li>Design Web, «Responsivo»: 3.629 px.</li>
+        <li>Camolas, «O site»: 8.440 px. Lo alargué a petición tuya para que las capturas pasaran más despacio.</li>
+      </ul>
+    </dd>
+    <dt>Problema</dt><dd>En móvil son muchas pantallas sin avanzar por la página.</dd>
+    <dt>Propuesta</dt><dd>Revisarlas juntas con un tope de unas 3 pantallas por bloque. En «O site», equilibrar la velocidad con capturas más cortas.</dd>
+  </dl>
+</article>
+
+<article class="finding">
+  <header><span class="id">C4</span><h3>Las mejoras táctiles no llegan a tablet (768–1023 px)</h3><div class="chips"><span class="chip media">Media</span><span class="chip">Tablet</span></div></header>
+  <dl>
+    <dt>Problema</dt><dd>Las reglas móviles solo se aplican hasta 767 px. A 768 y 1024 px vuelven las galerías fijadas con scroll, no hay barra fija y aparece el solapamiento del showreel. El menú ya es hamburguesa hasta 1099 px.</dd>
+    <dt>Propuesta</dt><dd>Aplicar a 1023 px las reglas táctiles: carruseles, barra fija y opiniones.</dd>
+  </dl>
+</article>
+
+<article class="finding">
+  <header><span class="id">C5</span><h3>Indicación «Passe o cursor» en pantallas táctiles</h3><div class="chips"><span class="chip baja">Baja</span><span class="chip">Móvil</span></div></header>
+  <dl>
+    <dt>Página</dt><dd>/servicos/design-web/ («O que entra na proposta»).</dd>
+    <dt>Problema</dt><dd>En móvil no hay cursor. La Home ya dice «Toque em cada palavra».</dd>
+    <dt>Propuesta</dt><dd>El mismo texto que la Home en dispositivos táctiles.</dd>
+  </dl>
+</article>
+
+<article class="finding">
+  <header><span class="id">C6</span><h3>Áreas táctiles pequeñas</h3><div class="chips"><span class="chip baja">Baja</span><span class="chip">Móvil</span></div></header>
+  <dl>
+    <dt>Medido</dt><dd class="num">Entre 16 y 41 enlaces por página miden menos de 32 px de alto: sobre todo, listas del pie y enlaces dentro del texto.</dd>
+    <dt>Propuesta</dt><dd>Listas del pie con 44 px de alto por enlace en móvil.</dd>
+  </dl>
+</article>
+
+<article class="finding">
+  <header><span class="id">C7</span><h3>Barras flotantes sobre el contenido</h3><div class="chips"><span class="chip baja">Baja</span><span class="chip">Móvil</span></div></header>
+  <dl>
+    <dt>Páginas</dt><dd>/projetos/ («Filtros») y /blog/ (temas).</dd>
+    <dt>Propuesta</dt><dd>Margen inferior en el contenido igual a la altura de la barra, para que nunca tape la última línea.</dd>
+  </dl>
+</article>
+
+<article class="finding">
+  <header><span class="id">C8</span><h3>La «×» del menú usa Arial</h3><div class="chips"><span class="chip baja">Baja</span><span class="chip">Móvil y tablet</span></div></header>
+  <dl>
+    <dt>Problema</dt><dd>Es el único elemento de la web que no hereda Spartan.</dd>
+    <dt>Propuesta</dt><dd>Que el botón herede la fuente o usar un icono dibujado, como el ☰.</dd>
+  </dl>
+</article>
+</section>
+
+<section id="mejoras" aria-labelledby="t-mej">
+<h2 id="t-mej">D · Mejoras de diseño</h2>
+<div class="cols2">
+  <div><h3>D1 · Ficha de proyecto para todos</h3><p>La plantilla de Camolas ya funciona con nombres largos y títulos unificados. Llevar a ella los otros 12 proyectos cierra A3 y da al portfolio la calidad de la Home.</p></div>
+  <div><h3>D2 · Plantilla de artículo para el blog</h3><p>La del artículo «Quanto custa…» (índice lateral, autor, relacionados) sirve para los 6 artículos de WordPress. Las tarjetas de /blog/ pasarían a ser enlaces.</p></div>
+  <div><h3>D3 · Dos familias de cabecera declaradas</h3><p>«Servicio o caso» (izquierda, titular y entradilla lateral) e «índice o institucional» (centrada). Misma altura y misma distancia entre la miga y el titular (hoy 66 px en las centradas).</p></div>
+  <div><h3>D4 · Variables compartidas</h3><p>Pasar tamaños, espacios y botones a variables CSS en la capa propia. Así cada página usa el mismo valor y no un <code>clamp()</code> suelto, que es el origen de los 13 tamaños de H2.</p></div>
+  <div><h3>D5 · Un único cierre</h3><p>La sección «Diga-nos… / Falemos…» al mismo tamaño (76 px) en todas las páginas, con un solo botón primario.</p></div>
+  <div><h3>D6 · Contraste</h3><p>Medir con criterio WCAG los textos grises claros sobre niebla (#E8ECED) y los nombres finos sobre foto (B1). En esta pasada no se ha medido el contraste de forma sistemática.</p></div>
+</div>
+</section>
+
+<section id="comparativa" aria-labelledby="t-comp">
+<h2 id="t-comp">Tabla comparativa del sistema actual</h2>
+<p class="sub">Valores medidos en el navegador a 1440 px (escritorio) y 390 px (móvil).</p>
+<div class="table-wrap" tabindex="0" role="region" aria-label="Tabla comparativa">
+<table>
+<thead><tr><th scope="col">Elemento</th><th scope="col">Criterio actual</th><th scope="col">Inconsistencias detectadas</th><th scope="col">Propuesta</th></tr></thead>
+<tbody>
+<tr><td>H1</td><td class="num">Interiores: 83 px (escritorio) y 30 px (móvil), peso 100–200. Home: 112 px.</td><td>En Home, Branding y Design Web el H1 es el antetítulo de 16–18 px. En móvil, el H1 es menor que el H2.</td><td>Titular = H1 siempre. 83 px y 30 px. La Home, como excepción declarada.</td></tr>
+<tr><td>H2</td><td class="num">De 41,5 a 121 px en escritorio; 32 px en móvil.</td><td>13 tamaños; el mismo papel con tamaños distintos (cierre 115 / 76 / 53).</td><td>Tres niveles: 76 / 64 / 48 px. En móvil, 28 / 26 / 22.</td></tr>
+<tr><td>H3</td><td class="num">De 18,7 a 92 px en escritorio; 22–28 px en móvil.</td><td>La misma lista desplegable a 92 y a unos 45 px. Títulos de tarjeta entre 27 y 46 px.</td><td>Lista grande 48 / 28; tarjeta 30 / 22; menor 22 / 18.</td></tr>
+<tr><td>Entradillas</td><td class="num">18 px (16 en móvil), interlineado 1,5.</td><td>Camolas a 24–33 px. Centradas de 5–7 líneas en móvil. Párrafos con estilo de título (B2, B4).</td><td>18 / 16 px; como mucho 60 caracteres y 3 líneas si van centradas.</td></tr>
+<tr><td>Párrafos</td><td class="num">18 / 16 px, color tinta o gris.</td><td>Descripciones desplegables de hasta 1.325 px de ancho, unos 166 caracteres por línea (Home Serviços, Design Web Âmbito, Sobre Valores).</td><td>Ancho máximo de 65 caracteres (unos 640 px a 18 px).</td></tr>
+<tr><td>Botones</td><td class="num">Primario oscuro de 64 px, esquinas rectas.</td><td>6 alturas (64, 60, 48, 46, 42, 40); una píldora dentro de los carruseles.</td><td>Primario 56 / 52, secundario 44, rectos; píldora solo en barras flotantes.</td></tr>
+<tr><td>Enlaces de acción</td><td>Texto con subrayado magenta.</td><td>5 variantes de color, separación, mayúsculas y flecha.</td><td>Acción (magenta, →) y secundario (gris); ↗ solo para externos.</td></tr>
+<tr><td>Espaciados</td><td class="num">Secciones 126 / 126 px (escritorio) y 64 / 64 px (móvil): coherente en todo el diseño nuevo.</td><td>Cabeceras con cuatro combinaciones: 199/126, 199/54, 150/54, 199/0.</td><td>Mantener el ritmo de secciones; dos variantes de cabecera (D3).</td></tr>
+<tr><td>Cabeceras</td><td class="num">81 px (escritorio) y 65 px (móvil); logotipo 230 / 170 / 148 px.</td><td>Páginas de WordPress: logotipo 197 / 180 px y cabecera de 81 px en móvil; menú a 19,6 px.</td><td>Mismas medidas en todas (A2, A7).</td></tr>
+<tr><td>Tarjetas</td><td>Sin radio ni sombra; foto y pie.</td><td>Cuatro presentaciones del mismo objeto «proyecto» (galería, índice, «Mais projetos», destacados), justificadas por composición; proporciones de imagen libres.</td><td>Mantener las presentaciones; fijar dos proporciones (4:3 y 4:5) y el mismo pie de 16 px.</td></tr>
+<tr><td>Pie</td><td>Igual en todas las páginas, también en las de WordPress: 4 columnas y el logotipo grande decorativo.</td><td>Enlaces de unos 20 px de alto en móvil.</td><td>Áreas táctiles de 44 px; sin más cambios.</td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section id="sistema" aria-labelledby="t-sis">
+<h2 id="t-sis">Sistema de diseño unificado propuesto</h2>
+<p class="sub">Parte de lo que ya funciona: Spartan, la paleta, el ritmo de 126/64 px y las esquinas rectas. Solo fija valores donde hoy hay dispersión.</p>
+
+<h3 style="margin-top:28px">Escala tipográfica</h3>
+<div class="scale" role="table" aria-label="Escala tipográfica">
+  <div class="h" role="row"><span role="columnheader">Nivel</span><span role="columnheader">1440 px</span><span role="columnheader">390 px</span><span role="columnheader">Uso</span></div>
+  <div role="row"><span role="cell">Display Home</span><span class="num" role="cell">112 / 100</span><span class="num" role="cell">30 / 200</span><span role="cell">Solo la portada (excepción declarada).</span></div>
+  <div role="row"><span role="cell">H1 titular</span><span class="num" role="cell">83 / 100</span><span class="num" role="cell">30 / 200</span><span role="cell"><code>clamp(40px, 5.76vw, 102px)</code> y <code>clamp(26px, 7.7vw, 34px)</code> (los actuales).</span></div>
+  <div role="row"><span role="cell">H2 cierre</span><span class="num" role="cell">76 / 100</span><span class="num" role="cell">28 / 200</span><span role="cell">«Diga-nos… / Falemos…» en todas las páginas.</span></div>
+  <div role="row"><span role="cell">H2 sección</span><span class="num" role="cell">64 / 100</span><span class="num" role="cell">26 / 200</span><span role="cell">Títulos de bloque (hoy de 50 a 74 px).</span></div>
+  <div role="row"><span role="cell">H2 subsección</span><span class="num" role="cell">48 / 100</span><span class="num" role="cell">22 / 200</span><span role="cell">Preguntas frecuentes, carruseles, testimonios.</span></div>
+  <div role="row"><span role="cell">H3 lista grande</span><span class="num" role="cell">48 / 100</span><span class="num" role="cell">28 / 200</span><span role="cell">Servicios de la Home, Âmbito, índice de Projetos.</span></div>
+  <div role="row"><span role="cell">H3 tarjeta</span><span class="num" role="cell">30 / 200</span><span class="num" role="cell">22 / 200</span><span role="cell">Proyectos, artículos, paneles de proceso.</span></div>
+  <div role="row"><span role="cell">Entradilla</span><span class="num" role="cell">18 / 300</span><span class="num" role="cell">16 / 300</span><span role="cell">Interlineado 1,5; ≤ 60 caracteres; ≤ 3 líneas si va centrada.</span></div>
+  <div role="row"><span role="cell">Párrafo</span><span class="num" role="cell">18 / 300</span><span class="num" role="cell">16 / 300</span><span role="cell">≤ 65 caracteres (unos 640 px).</span></div>
+  <div role="row"><span role="cell">Etiqueta</span><span class="num" role="cell">16–18 / 300</span><span class="num" role="cell">14–16 / 300</span><span role="cell">Mayúsculas, espaciado 0,1em, «—» en magenta.</span></div>
+</div>
+
+<div class="cols2">
+  <div><h3>Espacios y anchuras</h3><ul>
+    <li>Secciones: 126 px arriba y abajo en escritorio, 64 px en móvil (ya es así).</li>
+    <li>Título → texto: 32 px en escritorio y 20 en móvil. Texto → enlace: 24 / 16 px.</li>
+    <li>Margen lateral: <code>clamp(16px, 4vw, 64px)</code> (actual).</li>
+    <li>Ancho de lectura: 640 px para párrafos y 560 para entradillas.</li>
+  </ul></div>
+  <div><h3>Botones y enlaces</h3><ul>
+    <li><strong>Primario:</strong> tinta #1C1B23 con texto #FAFAF8, 56 px (52 en móvil), relleno lateral de 28 px, 16–18 px de texto, esquinas rectas y →.</li>
+    <li><strong>Enlace de acción:</strong> subrayado magenta de 1 px a 4 px del texto, minúsculas, →.</li>
+    <li><strong>Enlace secundario:</strong> gris, sin flecha.</li>
+    <li><strong>Píldora:</strong> solo en barras flotantes (filtros, temas, Camolas y la barra fija).</li>
+  </ul></div>
+  <div><h3>Tarjetas, radios y sombras</h3><ul>
+    <li>Radio 0 y sin sombra en todo el contenido; separación por fondo o por línea de 1 px.</li>
+    <li>Imagen 4:3 (horizontal) o 4:5 (vertical), con <code>object-fit: cover</code>.</li>
+    <li>Pie de tarjeta de 16 px; categoría y fecha en gris.</li>
+  </ul></div>
+  <div><h3>Cabeceras y responsive</h3><ul>
+    <li>Cabecera de 81 px (65 en móvil); logotipo de 230 px (≥ 1100), 170–250 (tablet) y 148 (móvil).</li>
+    <li>Cortes: ≤ 767 móvil, ≤ 1023 táctil (carruseles, barra fija), ≤ 1099 menú hamburguesa.</li>
+    <li>Ningún titular por encima de 3 líneas en móvil.</li>
+    <li>Secciones fijadas de unas 3 pantallas como máximo.</li>
+  </ul></div>
+</div>
+</section>
+
+<section id="cobertura" aria-labelledby="t-cob">
+<h2 id="t-cob">Qué se ha revisado realmente</h2>
+<div class="note"><strong>Método.</strong> Desde este entorno la red no llega al dominio (el proxy lo bloquea). El servidor de WordPress entregó el HTML de cada URL tal como se publica y los recursos de la propia web. Las páginas se abrieron en Chromium (Playwright) a 1440 × 900, 1024 × 768, 768 × 1024 y 390 × 844. En cada una se hizo scroll completo, captura de cada pantalla y medición en el navegador de tipografía, espacios, botones, imágenes, desbordes y errores.</div>
+<div class="table-wrap" tabindex="0" role="region" aria-label="URL inspeccionadas">
+<table>
+<thead><tr><th scope="col">URL</th><th scope="col">1440</th><th scope="col">1024</th><th scope="col">768</th><th scope="col">390</th><th scope="col">Resultado</th></tr></thead>
+<tbody>
+<tr><td>/</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>Sin desborde horizontal</td></tr>
+<tr><td>/servicos/</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>2 imágenes de Wikimedia no verificables</td></tr>
+<tr><td>/servicos/branding/</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>Sin errores</td></tr>
+<tr><td>/servicos/design-web/</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>Sin errores</td></tr>
+<tr><td>/projetos/</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>Filtro probado (Indústria)</td></tr>
+<tr><td>/projetos/camolas/</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>Vídeos no verificables (ver abajo)</td></tr>
+<tr><td>/sobre/</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>2 peticiones 404 «{{ h.src }}»</td></tr>
+<tr><td>/blog/</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>6 de 7 tarjetas sin enlace</td></tr>
+<tr><td>/blog/quanto-custa-um-site/</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>/quanto-custa-um-site/ sirve el mismo HTML (duplicado)</td></tr>
+<tr><td>/contacto/</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>Formulario: campos de 56 px con etiqueta</td></tr>
+<tr><td>6 artículos de WordPress</td><td>✓</td><td>1 de 6</td><td>1 de 6</td><td>✓</td><td>Sin diseño (A2)</td></tr>
+<tr><td>4 categorías y autor</td><td>✓</td><td>1 de 5</td><td>1 de 5</td><td>✓</td><td>Sin diseño (A2)</td></tr>
+<tr><td>404</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>En español (A2)</td></tr>
+</tbody>
+</table>
+</div>
+<div class="cols2">
+  <div><h3>Interacciones comprobadas</h3><ul>
+    <li>Menú móvil con submenús y menús desplegables de escritorio (Serviços, Projetos).</li>
+    <li>Acordeones de preguntas, filtros de Projetos y modo oscuro.</li>
+    <li>Formulario de contacto (sin enviar).</li>
+    <li>Carruseles con el dedo (en rondas anteriores), barra fija y barra de Camolas.</li>
+    <li>Estado HTTP de todos los enlaces internos y de los que llevan a hortelamagenta.pt.</li>
+  </ul></div>
+  <div><h3>No verificado</h3><ul>
+    <li>Reproducción de vídeos: los MP4 no se pueden servir en este entorno y salen en negro en las capturas. Por eso los 404 de vídeo en consola no cuentan como fallo.</li>
+    <li>Imágenes enlazadas desde Wikimedia y otros dominios externos.</li>
+    <li>Envío real del formulario.</li>
+    <li>Comportamiento en Safari de iPhone y en dispositivos físicos.</li>
+    <li>Contraste WCAG medido de forma sistemática y rendimiento.</li>
+    <li>Cursor personalizado y animaciones en tiempo real: las capturas muestran estados fijos.</li>
+  </ul></div>
+</div>
+</section>
+
+<footer class="end">Siguiente paso: con tu visto bueno, aplico los cambios por bloques en este orden: A1 y C1 (fallos míos), luego A2–A4 y por último la escala tipográfica. No se ha tocado nada de la web durante esta auditoría.</footer>
+</main>
+</div>
