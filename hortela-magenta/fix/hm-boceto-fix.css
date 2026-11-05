@@ -1,0 +1,41 @@
+/* Hortelã Magenta · correções sobre o boceto (versão móvel até 767 px).
+   Carregado depois do desenho por hm-boceto.php; sobrevive a novas exportações de hm-paginas.
+   Ao passar para Divi, juntar a hm-movil.css. */
+
+/* menu móvel (também em tablet): página atual em branco com a linha rosa (como o menu do computador) */
+html body [data-mobile] a[data-hm-cur] { position: relative; color: #FAFAF8 !important; }
+html body [data-mobile] a[data-hm-cur]::after { content: ""; position: absolute; left: 0; bottom: 2px; width: 16px; height: 1.5px; background: #D82E87; }
+
+/* menu móvel: Serviços e Projetos dobrados; o botão + à direita abre as subpáginas (o nome continua a ser link) */
+html body [data-mobile] nav { display: grid !important; grid-template-columns: minmax(0, 1fr) auto; align-items: center; }
+html body [data-mobile] nav > * { grid-column: 1 / -1; }
+html body [data-mobile] nav > a.hm-has-sub { grid-column: 1; }
+html body [data-mobile] nav > .hm-sub-btn { grid-column: 2; position: relative; width: 44px; height: 44px; margin-right: -10px; padding: 0; border: 0; background: none; color: #EDEAE4; cursor: pointer; }
+html body [data-mobile] nav > .hm-sub-btn::before,
+html body [data-mobile] nav > .hm-sub-btn::after { content: ""; position: absolute; left: 50%; top: 50%; width: 16px; height: 1.5px; margin: -.75px 0 0 -8px; background: currentColor; transition: transform .3s cubic-bezier(.76,0,.24,1); }
+html body [data-mobile] nav > .hm-sub-btn::after { transform: rotate(90deg); }
+html body [data-mobile] nav > .hm-sub-btn[aria-expanded="true"]::after { transform: rotate(0deg); }
+html body [data-mobile] nav > .hm-sub-btn:focus-visible { outline: 2px solid #D82E87; outline-offset: -4px; }
+html body [data-mobile] nav > .hm-sub { overflow: hidden; transition: height .3s ease, padding .3s ease, opacity .3s ease, visibility 0s linear 0s; }
+html body [data-mobile] nav > .hm-sub:not(.hm-open) { height: 0 !important; padding-top: 0 !important; padding-bottom: 0 !important; opacity: 0; visibility: hidden; transition: height .3s ease, padding .3s ease, opacity .3s ease, visibility 0s linear .3s; }
+
+@media (max-width: 767px) {
+  /* textos laterais dos blocos fixados (Branding: suportes; Design Web: ecrãs): fundo decorativo por trás das peças.
+     Um em cima à esquerda (aparece quando o título sai), o outro em baixo à direita; a opacidade vem de hm-boceto-fix.js */
+  html body [data-dev-side][data-hm-side] { opacity: var(--hm-so, 0) !important; visibility: visible !important; width: auto !important; max-width: calc(100% - 32px); z-index: 0 !important; transition: opacity .35s ease; }
+  html body [data-dev-side][data-hm-side="l"] { top: 84px !important; bottom: auto !important; left: 16px !important; }
+  html body [data-dev-side][data-hm-side="r"] { top: auto !important; bottom: 20px !important; right: 16px !important; }
+  html body [data-dev-side][data-hm-side] > p { font-size: 16px !important; margin: 0 0 6px !important; }
+
+  /* painéis de processo (Ponto de partida, Processo): o painel que fecha mantém o conteúdo à vista enquanto desvanece */
+  html body [data-step-v] > [data-t].hm-closing > img { display: block !important; position: relative !important; inset: auto !important; height: 220px !important; }
+  html body [data-step-v] > [data-t].hm-closing > div { display: block !important; position: relative !important; left: auto !important; right: auto !important; bottom: auto !important; padding: 22px 20px 26px; }
+  html body [data-step-v] > [data-t].hm-closing > [data-vl] { opacity: 0 !important; }
+
+  /* artigo: a assinatura logo a seguir à entradilla, sem o vazio do ecrã inteiro; foto, nome/cargo e data alinhados */
+  html body main header[data-hero] { min-height: 0 !important; }
+  html body main header[data-hero] > [data-hl-fade]:last-child { margin-top: 28px !important; padding-top: 0 !important; display: grid !important; grid-template-columns: auto auto; justify-content: center; align-items: center; column-gap: 12px; row-gap: 2px; }
+  html body main header[data-hero] > [data-hl-fade]:last-child > img { grid-row: 1 / span 2; }
+  html body main header[data-hero] > [data-hl-fade]:last-child > span[aria-hidden="true"] { display: none !important; }
+  html body main header[data-hero] > [data-hl-fade]:last-child > time { grid-column: 2; }
+}
