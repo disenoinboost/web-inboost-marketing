@@ -105,3 +105,10 @@ Medios en `uploads/hm-media/movil/` (y `movil/posters/`), transferidos por la ra
   - Se añade `assets/favicon.svg` (copia en `capa-fix/favicon.svg`): el mismo "hm" en vector, tomado del `safari-mask-icon.svg` original. Es oscuro en pestañas claras y `#E8ECED` en pestañas oscuras, donde el PNG original casi no se ve.
   - Etiquetas: `/favicon.ico?v=…` con `sizes="32x32"`, `favicon.svg`, `apple-touch-icon.png` y `mask-icon`.
 - Comprobado en `/`, `/projetos/camolas/`, `/blog/`, `/category/branding/`, un artículo y un 404: las cuatro etiquetas están en todas. Copia de seguridad: `hm-boceto.php.bak-20261105-113138`.
+
+## Sobre · «Também confiaram em nós»
+
+- Los nombres se reducen para que destaquen menos. Antes eran 20 px en móvil y 20–28 px en ordenador (`clamp(20px, 1.7vw, 28px)`).
+- **Ordenador y tableta:** `clamp(16px, 1.25vw, 18px)`, y la lista pasa bajo el rótulo cuando no tiene al menos 700 px al lado (`flex-basis: 700px`). Líneas: 3 a 768, 900, 1024, 1280, 1366 y 1440 px; 2 a 1100–1200 y 1920 px. Antes eran 4 a 1440 px.
+- **Móvil:** 15 px, 6 líneas a 390 px (antes 8 líneas y 276 px de alto; ahora 147 px). Con los 14 nombres, 3 líneas a 390 px exigirían letra de unos 10 px.
+- Publicado desde el commit c150eaf (css 8d349bd3…). Copia: `bak-20261105-114236`. `/sobre/` se sirve con `v=1793878957`.
