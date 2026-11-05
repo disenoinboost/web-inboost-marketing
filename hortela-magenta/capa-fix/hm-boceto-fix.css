@@ -287,5 +287,16 @@ html body [data-mobile] > div:first-child > span > span { width: clamp(170px, 16
   /* Camolas · Anúncios e Design Web · Conteúdos: as caixas com vídeo passam a 16:9 */
   html body #anuncios [data-m]:has(> video) { aspect-ratio: 16 / 9 !important; }
   html body #conteudos [data-marquee] > div:has(> video) { aspect-ratio: 16 / 9 !important; }
+  /* fundo da janela em cinzento claro (o de Manifesto/Contacto), não em negro; textos e botões em tinta */
+  html body [data-reel] [data-reel-media], html body [data-grow-media] { background: #E8ECED !important; }
+  html body [data-reel] [data-reel-ui], html body [data-grow] [data-grow-ui] { color: #1C1B23 !important; }
+  html body [data-reel] [data-reel-ui] > div > button { border-color: rgba(28, 27, 35, .35) !important; background: transparent !important; color: #1C1B23 !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+  html body [data-reel] [data-reel-ui] > div > a { background: #1C1B23 !important; color: #FAFAF8 !important; }
+  /* cabeçalho claro enquanto o showreel ocupa o ecrã (o desenho punha-o escuro) */
+  html.hm-reel-claro body [data-header] { color: #1C1B23 !important; }
+  html.hm-reel-claro body [data-header] > [data-hbg="d"] { opacity: 0 !important; }
+  html.hm-reel-claro body [data-header] > [data-hbg="l"] { opacity: 1 !important; }
+  html.hm-reel-claro body [data-logo-ink] { opacity: 1 !important; }
+  html.hm-reel-claro body [data-logo-white] { opacity: 0 !important; }
 }
 

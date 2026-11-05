@@ -84,8 +84,12 @@
   function reelFit(vh) {
     if (!reelV || !reelV.isConnected) reelV = D.querySelector('[data-reel] [data-reel-video]');
     var sec = reelV && reelV.closest('[data-reel]'); if (!sec) return;
-    var r = sec.getBoundingClientRect(); if (r.bottom < -vh || r.top > 2 * vh) return;
+    var r = sec.getBoundingClientRect(), near = !(r.bottom < -vh || r.top > 2 * vh);
     var lead = vh * .25, p = RED ? 1 : clamp((lead - r.top) / Math.max(1, r.height - vh + lead)), x = clamp(p / .74), e = RED ? 1 : x * x * (3 - 2 * x);
+    /* fundo claro: o cabeçalho fica claro quando o desenho o poria escuro */
+    var claro = near && e > .6 && r.top <= 0 && r.bottom > 40;
+    if (claro !== reelV.__hmClaro) { reelV.__hmClaro = claro; D.documentElement.classList.toggle('hm-reel-claro', claro); }
+    if (!near) return;
     var oy = Math.round((100 - 50 * e) * 10) / 10;
     if (oy !== reelV.__hmOy) { reelV.__hmOy = oy; reelV.style.setProperty('--hm-oy', oy + '%'); }
   }
