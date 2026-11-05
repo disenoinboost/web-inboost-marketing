@@ -6,7 +6,8 @@
    4-8 (2026-11-05): opiniões com a cortada esbatida, carrossel de rótulos, cortinas horizontais (Camolas),
       pré-carga dos vídeos e barra «Neste projeto» no telemóvel.
    9-11 (2026-11-05, 3.ª ronda): vídeos e capturas leves no telemóvel, barra «Pedir orçamento · Ligar», fotografias
-      variadas na galeria filtrada de Projetos. */
+      variadas na galeria filtrada de Projetos.
+   12 (2026-11-05, 4.ª ronda): setas nas opiniões e nos filtros de Projetos; pósteres e versões leves de todos os vídeos. */
 (function () {
   if (window.__hmFix) return; window.__hmFix = 1;
   var D = document, W = window;
@@ -153,7 +154,7 @@
     D.querySelectorAll('[data-op-tabs]').forEach(function (list) {
       if (list.__hmP) return; list.__hmP = 1;
       var o = new IntersectionObserver(function (es) {
-        es.forEach(function (e) { e.target.classList.toggle('hm-peek', e.intersectionRatio < .92); });
+        es.forEach(function (e) { var rb = e.rootBounds; e.target.classList.toggle('hm-peek', e.intersectionRatio < .92 && (!rb || e.boundingClientRect.right > rb.right - 2)); });
       }, { root: list, threshold: [0, .25, .5, .75, .92, 1] });
       [].forEach.call(list.children, function (t) { if (t.getAttribute('role') === 'tab') o.observe(t); });
     });
@@ -190,7 +191,7 @@
       var r = v.getBoundingClientRect();
       try { if (v.paused && v.readyState === 0 && (r.top > W.innerHeight || r.bottom < 0)) v.load(); } catch (x) {}
     });
-  }, { rootMargin: '150% 0px 150% 0px' }) : null;
+  }, { rootMargin: '100% 0px 100% 0px' }) : null;
   function vids() {
     if (!vio) return;
     D.querySelectorAll('video').forEach(function (v) { if (MQ.matches) movil(v); });
@@ -201,7 +202,7 @@
   var rail = null, railA = [], railS = [];
   function railTick() {
     if (W.innerWidth >= 900) return;
-    rail = rail || D.querySelector('[data-pidx]'); if (!rail) return;
+    if (!rail || !rail.isConnected) { rail = D.querySelector('[data-pidx]'); railA = []; railS = []; } if (!rail) return;
     if (!railA.length) { railA = [].slice.call(rail.querySelectorAll('[data-pidx-a]')); railS = railA.map(function (a) { return D.querySelector(a.getAttribute('href')); }); }
     var vh = W.innerHeight, f = railS[0], l = railS[railS.length - 1]; if (!f || !l) return;
     var show = f.getBoundingClientRect().top < vh * .6 && l.getBoundingClientRect().bottom > vh * .4;
@@ -218,15 +219,26 @@
   /* 9. (2026-11-05, 3.ª ronda) telemóvel: vídeos mais leves e capturas novas do site da Adega Camolas (uploads/hm-media/movil/) */
   var MV = '/wp-content/uploads/hm-media/movil/';
   var VMAP = {
-    'hortela_magenta-showreel-clip_2025.mp4': 'showreel-clip-2025-movil.mp4',
-    'hortelamagenta_portfolio_marca_camolas_video.mp4': 'camolas-filme-movil.mp4',
-    'hortelamagenta-joao-bordeira-filme-camolas-design-label-small.mp4': 'camolas-joao-bordeira-movil.mp4'
+    'hortela_magenta-showreel-clip_2025.mp4': 'showreel-clip-2025-movil',
+    'hortelamagenta_portfolio_marca_camolas_video.mp4': 'camolas-filme-movil',
+    'hortelamagenta-joao-bordeira-filme-camolas-design-label-small.mp4': 'camolas-joao-bordeira-movil',
+    'hortelamagenta_portfolio_marca_camolas_catalogo.mp4': 'camolas-catalogo-movil',
+    'hortelamagenta_portfolio_marca_camolas_site_04.mp4': 'camolas-site-04-movil',
+    'hortelamagenta_portfolio_marca_alsilgroup_estacionario.mp4': 'alsil-estacionario-movil',
+    'hortelamagenta_portfolio_marca_farinhafirmos_farinha_sacos_03.mp4': 'farinha-sacos-movil',
+    'hortelamagenta_portfolio_marca_alsilgroup_video.mp4': 'alsil-video-mini',
+    'HM-reel_2020.mp4': 'hm-reel-2020-movil'
   };
+  /* cinta de miniaturas de Design Web (#conteudos): versões ainda mais pequenas */
+  var MINI = { 'camolas-filme-movil': 'camolas-filme-mini', 'camolas-joao-bordeira-movil': 'camolas-joao-bordeira-mini' };
   var SMAP = { '99266298c7a73406.jpg': 'camolas-site-vinhos-movil.webp', '26d667bc8ea1fccf.jpg': 'camolas-site-regiao-movil.webp', '4c058854c64f119c.jpg': 'camolas-site-experiencias-movil.webp' };
   function movil(v) {
-    var src = v.getAttribute('src') || ''; var f = src.split('/').pop();
-    if (!VMAP[f] || src.indexOf(MV) === 0) return;
-    var playing = !v.paused; v.setAttribute('src', MV + VMAP[f]);
+    var src = v.getAttribute('src') || '', f = src.split('/').pop(), name = src.indexOf(MV) === 0 ? f.replace(/\.mp4$/, '') : VMAP[f];
+    if (!name) return;
+    if (MINI[name] && v.closest('#conteudos')) name = MINI[name];
+    if (!v.getAttribute('poster')) v.setAttribute('poster', MV + 'posters/' + name + '.webp');
+    if (src === MV + name + '.mp4') return;
+    var playing = !v.paused; v.setAttribute('src', MV + name + '.mp4');
     if (playing) { var pr = v.play && v.play(); if (pr && pr.catch) pr.catch(function () {}); }
   }
   function shots() {
@@ -282,10 +294,52 @@
     });
   }
 
-  function init() { markMenu(); subMenus(); sides(); steps(); peeks(); lpN(); curtains(); vids(); shots(); ctaBar(); variety(); req(); }
+
+  /* 12. (2026-11-05, 4.ª ronda) setas: opiniões (anterior/seguinte) e filtros de Projetos (deslizar a fila) */
+  var SVG_L = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>';
+  var SVG_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  function mkArrows(labelPrev, labelNext) {
+    var n = D.createElement('div'); n.className = 'hm-arrows';
+    n.innerHTML = '<button type="button" aria-label="' + labelPrev + '">' + SVG_L + '</button><button type="button" aria-label="' + labelNext + '">' + SVG_R + '</button>';
+    return n;
+  }
+  function opArrows() {
+    D.querySelectorAll('[data-op-tabs]').forEach(function (list) {
+      /* um só par de setas por lista: se o desenho voltou a pintar a lista, as setas antigas saem */
+      [].forEach.call(list.parentNode.querySelectorAll(':scope > .hm-arrows'), function (o) { if (o.__list !== list) o.remove(); });
+      if (list.__hmArr && list.__hmArr.isConnected) return;
+      var nav = mkArrows('Opinião anterior', 'Opinião seguinte'), b = nav.children; nav.__list = list;
+      list.parentNode.insertBefore(nav, list.nextSibling); list.__hmArr = nav;
+      function tabs() { return [].filter.call(list.children, function (t) { return t.getAttribute('role') === 'tab'; }); }
+      function cur() { var t = tabs(); for (var i = 0; i < t.length; i++) if (t[i].getAttribute('aria-selected') === 'true') return i; return 0; }
+      function show(i) { var t = tabs(); if (!t[i]) return; list.scrollTo({ left: t[i].offsetLeft - t[0].offsetLeft, behavior: RED ? 'auto' : 'smooth' }); }
+      function state() { var i = cur(), n = tabs().length; b[0].disabled = i <= 0; b[1].disabled = i >= n - 1; }
+      function go(d) { var t = tabs(), i = Math.max(0, Math.min(t.length - 1, cur() + d)); if (t[i]) { t[i].click(); show(i); } setTimeout(state, 50); }
+      b[0].addEventListener('click', function () { go(-1); }); b[1].addEventListener('click', function () { go(1); });
+      if (W.MutationObserver) new MutationObserver(function () { state(); }).observe(list, { attributes: true, subtree: true, attributeFilter: ['aria-selected'] });
+      state();
+    });
+  }
+  function filterArrows() {
+    D.querySelectorAll('#filtros ol[role="group"]').forEach(function (ol) {
+      var g = ol.parentNode; if (!g) return;
+      [].forEach.call(g.querySelectorAll(':scope > .hm-arrows'), function (o) { if (o.__list !== ol) o.remove(); });
+      if (ol.__hmArr && ol.__hmArr.isConnected) return;
+      var name = (g.querySelector(':scope > p') || {}).textContent || '';
+      var nav = mkArrows('Ver opções anteriores de ' + name.trim(), 'Ver mais opções de ' + name.trim()), b = nav.children;
+      nav.__list = ol; g.appendChild(nav); ol.__hmArr = nav;
+      function state() { var max = ol.scrollWidth - ol.clientWidth - 2; b[0].disabled = ol.scrollLeft <= 2; b[1].disabled = ol.scrollLeft >= max; }
+      b[0].addEventListener('click', function () { ol.scrollBy({ left: -ol.clientWidth * .7, behavior: RED ? 'auto' : 'smooth' }); });
+      b[1].addEventListener('click', function () { ol.scrollBy({ left: ol.clientWidth * .7, behavior: RED ? 'auto' : 'smooth' }); });
+      ol.addEventListener('scroll', state, { passive: true }); W.addEventListener('resize', state); state();
+    });
+  }
+
+  function init() { markMenu(); subMenus(); sides(); steps(); peeks(); lpN(); curtains(); vids(); shots(); ctaBar(); variety(); opArrows(); filterArrows(); req(); }
   /* o desenho é montado por JS: repetir até aparecer e quando o menu se abre */
   var n = 0, iv = setInterval(function () { init(); if (++n > 20) clearInterval(iv); }, 250);
-  D.addEventListener('click', function () { setTimeout(function () { markMenu(); subMenus(); }, 0); }, true);
+  D.addEventListener('click', function () { setTimeout(function () { markMenu(); subMenus(); opArrows(); filterArrows(); }, 60); }, true);
+  [6000, 10000].forEach(function (t) { setTimeout(function () { opArrows(); filterArrows(); vids(); }, t); });
   W.addEventListener('scroll', req, { passive: true });
   W.addEventListener('resize', function () { curtains(); req(); });
   if (D.readyState !== 'loading') init(); else D.addEventListener('DOMContentLoaded', init);

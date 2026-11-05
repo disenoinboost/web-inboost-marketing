@@ -167,7 +167,7 @@ html body [data-mobile] > div:first-child > span > span { width: clamp(170px, 16
   html body #servicos [data-svc-i] { padding: 0 !important; }
   html body #servicos [data-svc-i]:last-child { border-bottom: 1px solid rgba(28, 27, 35, .12); }
   html body #servicos [data-svc-i] h3 { font-size: 28px !important; line-height: 1 !important; overflow-wrap: normal !important; }
-  html body #servicos [data-svc-i] h3 > button { display: grid !important; grid-template-columns: 44px minmax(0, 1fr); column-gap: 20px !important; align-items: baseline !important; width: 100%; padding: 16px 0 !important; white-space: normal !important; }
+  html body #servicos [data-svc-i] h3 > button { display: grid !important; grid-template-columns: 44px minmax(0, 1fr); column-gap: 20px !important; align-items: baseline !important; width: 100%; padding: 18px 0 14px !important; white-space: normal !important; }
   html body #servicos [data-svc-i] h3 > button > span:first-child { font-size: 16px !important; color: #6E6A63 !important; }
   html body #servicos [data-svc-i] h3 > button > span + span { font-size: 28px !important; font-weight: 200 !important; letter-spacing: -.045em !important; line-height: 1 !important; padding-top: 0 !important; }
 
@@ -236,5 +236,36 @@ html body [data-mobile] > div:first-child > span > span { width: clamp(170px, 16
   html.hm-cta-up [data-crail], html.hm-cta-up [data-frail] { bottom: 72px !important; }
   html.hm-cta-up [data-pidx] { bottom: 72px !important; }
 }
-.hm-cta { display: none; }
+@media (min-width: 768px) { .hm-cta { display: none !important; } }
 @media (max-width: 767px) and (prefers-reduced-motion: reduce) { .hm-cta, .hm-cta.hm-on { transition: none; } }
+
+/* ==========================================================================
+   2026-11-05 (4) · quarta ronda (telemóvel)
+   ========================================================================== */
+.hm-arrows { display: none; }
+@media (max-width: 767px) {
+  /* opiniões (Home, Serviços, Sobre): o desenho de Sobre em todas, sem imagem, citação junto de quem a diz, as longas recortadas */
+  html body #opinioes { min-height: 0 !important; }
+  html body #opinioes [data-op-box] { display: none !important; }
+  html body #opinioes [data-op-art] > div:first-child { display: none !important; }
+  html body #opinioes [data-op-panel] { gap: 20px !important; justify-content: flex-start !important; }
+  html body #opinioes [data-op-panel] blockquote, html body #opinioes [data-op-art] > p[data-fw] { font-size: 26px !important; line-height: 1.15 !important; display: -webkit-box !important; -webkit-box-orient: vertical; overflow: hidden !important; }
+  html body #opinioes [data-op-panel] blockquote { -webkit-line-clamp: 5; }
+  html body #opinioes [data-op-art] > p[data-fw] { -webkit-line-clamp: 4; }
+  html body #opinioes [data-op-art] > div[data-op-rest] { margin-top: 18px !important; }
+  /* nomes das opiniões: encaixam à esquerda; só a da direita fica cortada e esbatida */
+  html body [data-op-tabs] { scroll-snap-type: x mandatory; scroll-padding-left: 0; }
+  html body [data-op-tabs] > [role="tab"] { scroll-snap-align: start; }
+
+  /* setas (opiniões e filtros de Projetos) */
+  .hm-arrows { display: flex; justify-content: flex-end; gap: 8px; }
+  .hm-arrows button { width: 40px; height: 40px; display: grid; place-items: center; padding: 0; margin: 0; border: 1px solid rgba(28, 27, 35, .22); border-radius: 0; background: transparent; color: #1C1B23; cursor: pointer; transition: opacity .2s ease, border-color .2s ease; -webkit-tap-highlight-color: transparent; }
+  .hm-arrows button svg { width: 18px; height: 18px; display: block; }
+  .hm-arrows button:disabled { opacity: .3; cursor: default; }
+  .hm-arrows button:not(:disabled):active { border-color: #D82E87; color: #D82E87; }
+  .hm-arrows button:focus-visible { outline: 2px solid #D82E87; outline-offset: 2px; }
+  #opinioes .hm-arrows { margin-top: 16px; }
+  html body #filtros > div > div { position: relative !important; }
+  html body #filtros > div > div > p { min-height: 40px; display: flex !important; align-items: center; padding-right: 96px; }
+  #filtros .hm-arrows { position: absolute; top: 14px; right: 0; }
+}
