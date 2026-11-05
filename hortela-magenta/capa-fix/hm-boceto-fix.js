@@ -79,25 +79,10 @@
       secs.push({ el: el, l: s[0], r: s[1], vl: -1, vr: -1 });
     });
   }
-  /* Home · showreel inteiro no telemóvel (5.ª ronda): o vídeo acompanha a janela do desenho, de baixo para o centro */
-  var reelV = null;
-  function reelFit(vh) {
-    if (!reelV || !reelV.isConnected) reelV = D.querySelector('[data-reel] [data-reel-video]');
-    var sec = reelV && reelV.closest('[data-reel]'); if (!sec) return;
-    var r = sec.getBoundingClientRect(), near = !(r.bottom < -vh || r.top > 2 * vh);
-    var lead = vh * .25, p = RED ? 1 : clamp((lead - r.top) / Math.max(1, r.height - vh + lead)), x = clamp(p / .74), e = RED ? 1 : x * x * (3 - 2 * x);
-    /* fundo claro: o cabeçalho fica claro quando o desenho o poria escuro */
-    var claro = near && e > .6 && r.top <= 0 && r.bottom > 40;
-    if (claro !== reelV.__hmClaro) { reelV.__hmClaro = claro; D.documentElement.classList.toggle('hm-reel-claro', claro); }
-    if (!near) return;
-    var oy = Math.round((100 - 50 * e) * 10) / 10;
-    if (oy !== reelV.__hmOy) { reelV.__hmOy = oy; reelV.style.setProperty('--hm-oy', oy + '%'); }
-  }
   var tick = 0;
   function frame() {
     tick = 0; railTick(); ctaTick(); if (!MQ.matches) return;
     var vh = W.innerHeight;
-    reelFit(vh);
     secs.forEach(function (o) {
       var r = o.el.getBoundingClientRect(); if (r.bottom < -vh || r.top > 2 * vh) return;
       var p = clamp(-r.top / Math.max(1, r.height - vh));
@@ -402,11 +387,55 @@
     if (st.textContent !== css) st.textContent = css;
   }
 
-  function init() { markMenu(); subMenus(); sides(); steps(); peeks(); lpN(); curtains(); vids(); shots(); ctaBar(); variety(); opArrows(); filterArrows(); packClients(); req(); }
+
+  /* 11. (6.ª ronda) mão de «deslizar» no telemóvel: aparece, desliza e desaparece até a pessoa mexer na galeria */
+  var HAND = '<svg viewBox="-2 -7 28 31" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 -3h12M5 -6 2 -3l3 3M11 -6l3 3-3 3"/><path d="M22 14a8 8 0 0 1-8 8"/><path d="M18 11v-1a2 2 0 0 0-2-2a2 2 0 0 0-2 2"/><path d="M14 10V9a2 2 0 0 0-2-2a2 2 0 0 0-2 2v1"/><path d="M10 9.5V4a2 2 0 0 0-2-2a2 2 0 0 0-2 2v10"/><path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15"/></svg>';
+  var handIO = W.IntersectionObserver ? new IntersectionObserver(function (es) {
+    es.forEach(function (e) {
+      var tr = e.target, h = tr.__hmHand; if (!h || !h.isConnected || tr.__hmSwiped) return;
+      if (e.isIntersecting && e.intersectionRatio > .55) {
+        if (tr.closest('#rotulos')) { var im = tr.querySelector('article [data-lpi]') || tr.querySelector('article'); if (im) { var hr = h.parentElement.getBoundingClientRect(), ir = im.getBoundingClientRect(); h.style.top = (ir.top - hr.top + ir.height / 2) + 'px'; h.style.left = Math.min(W.innerWidth * .62, ir.left - hr.left + ir.width / 2) + 'px'; } }
+        h.classList.remove('hm-go'); void h.offsetWidth; h.classList.add('hm-go');
+      } else if (!e.isIntersecting) h.classList.remove('hm-go');
+    });
+  }, { threshold: [0, .6] }) : null;
+  function hands() {
+    if (!MQ.matches || !handIO) return;
+    D.querySelectorAll('#trabalhos-galeria [data-lp-track], #rotulos [data-lp-track]').forEach(function (tr) {
+      var host = tr.parentElement; if (!host) return;
+      /* se o desenho voltou a pintar a galeria, a mão antiga sai */
+      if (tr.__hmHand && tr.__hmHand.isConnected) { [].forEach.call(host.querySelectorAll(':scope > .hm-hand'), function (o) { if (o !== tr.__hmHand) o.remove(); }); return; }
+      [].forEach.call(host.querySelectorAll(':scope > .hm-hand'), function (o) { o.remove(); });
+      var h = D.createElement('span'); h.className = 'hm-hand'; h.setAttribute('aria-hidden', 'true'); h.innerHTML = HAND;
+      host.appendChild(h); tr.__hmHand = h; h.__tr = tr;
+      if (!tr.__hmHandOn) {
+        tr.__hmHandOn = 1;
+        tr.addEventListener('scroll', function () { if (tr.scrollLeft > 24 && !tr.__hmSwiped) { tr.__hmSwiped = 1; if (tr.__hmHand) { tr.__hmHand.classList.remove('hm-go'); tr.__hmHand.style.display = 'none'; } } }, { passive: true });
+        handIO.observe(tr);
+      }
+    });
+  }
+
+  /* 12. (6.ª ronda) Sobre · Equipa: o nome passa por trás, em fila; a velocidade é a mesma para todos os nomes */
+  function teamNames() {
+    var els = [].slice.call(D.querySelectorAll('#equipa [data-stack] > div[aria-hidden] > span')).map(function (s) { return { el: s, name: s.textContent.trim(), px: 42 }; });
+    D.querySelectorAll('#equipa ul > li > div').forEach(function (d) { var h3 = d.querySelector('h3'); if (h3) els.push({ el: d, name: h3.textContent.trim(), px: 34, pseudo: 1 }); });
+    els.forEach(function (o) {
+      if (!o.name || o.name.indexOf('{{') > -1) return;
+      if (o.el.getAttribute('data-hm-name') !== o.name) o.el.setAttribute('data-hm-name', o.name);
+      if (o.el.__hmDur) return;
+      var w = o.pseudo ? parseFloat(getComputedStyle(o.el, '::before').width) : o.el.scrollWidth;
+      if (!(w > 0)) return;
+      o.el.__hmDur = Math.max(18, Math.round(w / 4 / o.px));
+      o.el.style.setProperty('--hm-dur', o.el.__hmDur + 's');
+    });
+  }
+
+  function init() { markMenu(); subMenus(); sides(); steps(); peeks(); lpN(); curtains(); vids(); shots(); ctaBar(); variety(); opArrows(); filterArrows(); packClients(); hands(); teamNames(); req(); }
   /* o desenho é montado por JS: repetir até aparecer e quando o menu se abre */
   var n = 0, iv = setInterval(function () { init(); if (++n > 20) clearInterval(iv); }, 250);
   D.addEventListener('click', function () { setTimeout(function () { markMenu(); subMenus(); opArrows(); filterArrows(); }, 60); }, true);
-  [6000, 10000].forEach(function (t) { setTimeout(function () { opArrows(); filterArrows(); vids(); packClients(); }, t); });
+  [6000, 10000].forEach(function (t) { setTimeout(function () { opArrows(); filterArrows(); vids(); packClients(); hands(); teamNames(); }, t); });
   W.addEventListener('scroll', req, { passive: true });
   W.addEventListener('resize', function () { curtains(); req(); packClients(); });
   if (D.fonts && D.fonts.ready) D.fonts.ready.then(function () { packSig = ''; packClients(); });

@@ -273,14 +273,11 @@ html body [data-mobile] > div:first-child > span > span { width: clamp(170px, 16
 }
 
 /* ==========================================================================
-   2026-11-05 (5) · quinta ronda (telemóvel): vídeos inteiros, sem recorte
+   2026-11-05 (5) · quinta ronda (telemóvel): vídeos inteiros, sem recorte (6.ª ronda: só Camolas; o showreel da Home volta a ecrã inteiro)
    Mantém-se o efeito de entrada (a janela que se abre e o zoom); dentro dela
    o vídeo vê-se inteiro em 16:9, como o showreel de Sobre.
    ========================================================================== */
 @media (max-width: 767px) {
-  /* Home · showreel: começa encostado em baixo (onde nasce a janela) e acaba centrado; legenda e botões logo por baixo */
-  html body [data-reel] [data-reel-video] { object-fit: contain !important; object-position: 50% var(--hm-oy, 100%) !important; }
-  html body [data-reel] [data-reel-ui] { top: calc(50% + 28.125vw + 20px) !important; bottom: auto !important; }
   /* Camolas · Filme: centrado, com «Adega Camolas · Vídeo» logo por baixo */
   html body [data-grow-media] > video { object-fit: contain !important; }
   html body [data-grow] [data-grow-ui] { top: calc(50% + 28.125vw + 16px) !important; bottom: auto !important; }
@@ -288,16 +285,8 @@ html body [data-mobile] > div:first-child > span > span { width: clamp(170px, 16
   html body #anuncios [data-m]:has(> video) { aspect-ratio: 16 / 9 !important; }
   html body #conteudos [data-marquee] > div:has(> video) { aspect-ratio: 16 / 9 !important; }
   /* fundo da janela em cinzento claro (o de Manifesto/Contacto), não em negro; textos e botões em tinta */
-  html body [data-reel] [data-reel-media], html body [data-grow-media] { background: #E8ECED !important; }
-  html body [data-reel] [data-reel-ui], html body [data-grow] [data-grow-ui] { color: #1C1B23 !important; }
-  html body [data-reel] [data-reel-ui] > div > button { border-color: rgba(28, 27, 35, .35) !important; background: transparent !important; color: #1C1B23 !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
-  html body [data-reel] [data-reel-ui] > div > a { background: #1C1B23 !important; color: #FAFAF8 !important; }
-  /* cabeçalho claro enquanto o showreel ocupa o ecrã (o desenho punha-o escuro) */
-  html.hm-reel-claro body [data-header] { color: #1C1B23 !important; }
-  html.hm-reel-claro body [data-header] > [data-hbg="d"] { opacity: 0 !important; }
-  html.hm-reel-claro body [data-header] > [data-hbg="l"] { opacity: 1 !important; }
-  html.hm-reel-claro body [data-logo-ink] { opacity: 1 !important; }
-  html.hm-reel-claro body [data-logo-white] { opacity: 0 !important; }
+  html body [data-grow-media] { background: #E8ECED !important; }
+  html body [data-grow] [data-grow-ui] { color: #1C1B23 !important; }
 }
 
 
@@ -307,3 +296,39 @@ html body #opinioes ul[data-fw] { font-size: clamp(16px, 1.25vw, 18px) !importan
 /* separador como pseudo-elemento (o JS esconde o do fim de cada linha, ver packClients) */
 html body #opinioes ul[data-fw] > li > span[aria-hidden] { display: none !important; }
 html body #opinioes ul[data-fw] > li::after { content: "\00B7"; padding: 0 .45em; color: #D82E87; }
+
+/* ==========================================================================
+   2026-11-05 (6) · sexta ronda
+   ========================================================================== */
+/* mão de «deslizar» (telemóvel): Branding e Design Web · Trabalhos; Camolas · Rótulos */
+.hm-hand { display: none; }
+@media (max-width: 767px) {
+  .hm-hand { display: grid; position: absolute; z-index: 6; left: 50%; top: 50%; width: 68px; height: 68px; margin: -34px 0 0 -34px; place-items: center; border-radius: 50%; background: rgba(28, 27, 35, .42); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); color: #FAFAF8; opacity: 0; pointer-events: none; }
+  .hm-hand svg { width: 38px; height: 38px; display: block; overflow: visible; }
+  .hm-hand.hm-go { animation: hm-hand 2.8s cubic-bezier(.45, 0, .25, 1) .3s 3 both; }
+  #trabalhos-galeria .hm-hand { top: 58%; }
+}
+@keyframes hm-hand {
+  0% { opacity: 0; transform: translateX(26px) scale(1); }
+  12% { opacity: 1; transform: translateX(26px) scale(1); }
+  18% { opacity: 1; transform: translateX(26px) scale(.9); }
+  52% { opacity: 1; transform: translateX(-26px) scale(.9); }
+  58% { opacity: 1; transform: translateX(-26px) scale(1); }
+  70%, 100% { opacity: 0; transform: translateX(-26px) scale(1); }
+}
+@media (prefers-reduced-motion: reduce) { .hm-hand.hm-go { animation: none; opacity: 1; } }
+
+/* Camolas · cabeçalho: a fotografia desvanece-se com o fundo ao descer (o véu passa por cima, como nas outras páginas) */
+html body #topo > figure { z-index: 0 !important; }
+
+/* Camolas · sem a barra flutuante de secções no telemóvel */
+@media (max-width: 767px) { html body [data-pidx] { display: none !important; } }
+
+/* Sobre · Equipa: o nome passa devagar por trás, como fundo (computador: o nome grande; telemóvel: por trás do cargo, nome e descrição) */
+@keyframes hm-name-run { from { translate: 0 0; } to { translate: -25% 0; } }
+html body #equipa [data-stack] > div[aria-hidden] > span[data-hm-name] { justify-self: start; width: max-content; padding-left: 0 !important; animation: hm-name-run var(--hm-dur, 60s) linear infinite; }
+html body #equipa [data-stack] > div[aria-hidden] > span[data-hm-name]::after { content: "\2003" attr(data-hm-name) "\2003" attr(data-hm-name) "\2003" attr(data-hm-name) "\2003"; }
+html body #equipa:not(:has([data-stack])) { overflow-x: clip; }
+html body #equipa ul > li > div[data-hm-name] { position: relative; isolation: isolate; }
+html body #equipa ul > li > div[data-hm-name]::before { content: attr(data-hm-name) "\2003" attr(data-hm-name) "\2003" attr(data-hm-name) "\2003" attr(data-hm-name) "\2003"; position: absolute; z-index: -1; top: 6px; left: calc(-1 * clamp(16px, 4vw, 64px)); white-space: nowrap; font-size: 150px; font-weight: 100; letter-spacing: -0.07em; line-height: .8; color: #d6dce0; pointer-events: none; animation: hm-name-run var(--hm-dur, 40s) linear infinite; }
+@media (prefers-reduced-motion: reduce) { html body #equipa [data-hm-name], html body #equipa [data-hm-name]::before { animation: none !important; } }
