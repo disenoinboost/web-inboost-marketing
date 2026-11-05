@@ -36,3 +36,16 @@ Todo va en la capa propia `wp-content/themes/divi-child/assets/hm-boceto-fix.css
 ## Verificación
 
 Render local con Chromium (390×844 y 1440×900) de las 10 páginas: ancho del documento = ventana, 0 errores JS; escritorio sin cambios salvo el menú. En el servidor: las 4 páginas probadas responden 200 con la versión nueva de la capa y las fotos de Hortelanices 200 `image/jpeg`. WP Rocket vaciado (`hm_dist_reset()`).
+
+## Segunda ronda (2026-11-05, tarde)
+
+Copia previa en el servidor: `hm-boceto-fix.css.bak-20261105-091715`.
+
+| Punto | Antes | Ahora |
+|---|---|---|
+| Título de cabecera en PC (1440 px) | Camolas 124 px, Branding/Design Web 98, artículo 67, resto 83 | Todos 83 px (`clamp(40px, 5.76vw, 102px)`; Branding y Design Web conservan el límite de su columna). «Hospital Garcia de Orta» cabe en una línea a 1440 y 1110 px. La Home no se toca |
+| Título de cabecera en móvil | 37 px, hasta 4 líneas (Serviços, Contacto, Projetos, Blog) | 30 px a 390 px (`clamp(26px, 7.7vw, 34px)`), máximo 3 líneas en todas |
+| Antetítulo de Branding/Design Web en PC | Centrado en la altura: 125 px bajo las migas | Justo debajo de las migas |
+| Entradilla de la ficha de proyecto en PC | 24,5 px (servicios 18) | 18 px como las demás (servicios 16) |
+| Entradilla del artículo en PC | 27 px | 18 px |
+| Home · botones del showreel en móvil | «Ver completo com som» en 3 líneas y fuera de la caja | «Showreel» encima; los dos botones en una línea a 14 px |

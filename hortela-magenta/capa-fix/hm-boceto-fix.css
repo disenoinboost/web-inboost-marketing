@@ -135,12 +135,6 @@ html body [data-mobile] > div:first-child > span > span { width: clamp(170px, 16
   /* Projetos · índice: o que se fez em cada projeto em minúsculas */
   html body #lista li > a > span[style*="uppercase"] { text-transform: lowercase !important; letter-spacing: 0 !important; }
 
-  /* Camolas e artigo: título e entradilla ao tamanho do cabeçalho de Branding */
-  html body main #topo h1 { font-size: clamp(32px, 9.6vw, 42px) !important; font-weight: 200 !important; line-height: 1.02 !important; letter-spacing: -.04em !important; }
-  html body main #topo > h1 + div > p:first-child { font-size: 14px !important; line-height: 1.45 !important; }
-  html body main #topo > h1 + div > p:first-child * { font-size: inherit !important; line-height: inherit !important; }
-  html body main #topo > h1 + div > p[data-type] { font-size: 16px !important; line-height: 1.5 !important; }
-  html body main header[data-hero] > p[data-hl-fade] { font-size: 16px !important; line-height: 1.5 !important; font-weight: 300 !important; letter-spacing: 0 !important; }
 
   /* Camolas · identidade: as quatro cortinas na horizontal; imagem inteira em cima e a lista por baixo */
   html body #identidade [data-step] > div:first-child { height: auto !important; overflow: hidden !important; background: none !important; }
@@ -176,4 +170,47 @@ html body [data-mobile] > div:first-child > span > span { width: clamp(170px, 16
   html body [data-pidx] a > span:last-child { font-size: 13px !important; }
   html body [data-pidx] a[data-hm-on] { color: #1C1B23 !important; }
   html body [data-pidx] a[data-hm-on] > span:first-child { background: #D82E87 !important; border-color: #D82E87 !important; }
+}
+
+/* ==========================================================================
+   2026-11-05 (2) · títulos de cabeçalho iguais em todas as páginas
+   ========================================================================== */
+
+/* título grande do cabeçalho (Serviços, Branding, Design Web, Projetos, ficha de projeto, Sobre, Blog, artigo, Contacto):
+   o mesmo tamanho em todas — no computador o de Serviços/Projetos/Sobre (83 px a 1440 px), com o qual cabe
+   «Hospital Garcia de Orta» numa linha; Branding e Design Web mantêm o limite da sua coluna (--hdr-fit). A Home fica à parte. */
+@media (min-width: 768px) {
+  html body main section[data-hero] h1:not([style*="font-size: 18px"]):not([style*="font-size:18px"]),
+  html body main header[data-hero] h1,
+  html body main #topo h1,
+  html body main [style*="hdr-fit"] { font-size: clamp(40px, min(5.76vw, var(--hdr-fit, 5.76vw)), 102px) !important; }
+
+  /* Branding e Design Web: «— Branding e identidade…» logo abaixo das migalhas (antes ficava centrado na altura do ecrã) */
+  html body main section[data-screen-label="01 Cabeçalho"]:not(#topo) > div:nth-of-type(2) > div:first-child > div:first-child { margin: 0 0 auto !important; }
+
+  /* ficha de projeto e artigo: entradilla como nas outras páginas (18 px) e serviços ainda mais pequenos */
+  html body main #topo > h1 + div > p[data-type] { font-size: 18px !important; line-height: 1.5 !important; }
+  html body main #topo > h1 + div > p:first-child { font-size: 16px !important; line-height: 1.5 !important; }
+  html body main #topo > h1 + div > p:first-child * { font-size: inherit !important; line-height: inherit !important; }
+  html body main header[data-hero] > p[data-hl-fade] { font-size: 18px !important; line-height: 1.5 !important; letter-spacing: 0 !important; }
+}
+
+@media (max-width: 767px) {
+  /* telemóvel: todos os títulos de cabeçalho ao mesmo tamanho (30 px a 390 px), no máximo 3 linhas */
+  html body main h1:not([style*="font-size: 18px"]):not([style*="font-size: 16px"]):not([style*="font-size:18px"]):not([style*="font-size:16px"]),
+  html body main [data-hero-display],
+  html body main [style*="hdr-fit"],
+  html body main #topo h1 { font-size: clamp(26px, 7.7vw, 34px) !important; font-weight: 200 !important; line-height: 1.04 !important; letter-spacing: -.04em !important; }
+
+  /* ficha de projeto e artigo: entradilla 16 px como em Branding; serviços do projeto a 14 px */
+  html body main #topo > h1 + div > p:first-child { font-size: 14px !important; line-height: 1.45 !important; }
+  html body main #topo > h1 + div > p:first-child * { font-size: inherit !important; line-height: inherit !important; }
+  html body main #topo > h1 + div > p[data-type] { font-size: 16px !important; line-height: 1.5 !important; }
+  html body main header[data-hero] > p[data-hl-fade] { font-size: 16px !important; line-height: 1.5 !important; font-weight: 300 !important; letter-spacing: 0 !important; }
+
+  /* Home · showreel aberto: «Showreel» por cima e os dois botões numa linha, com a mesma letra */
+  html body [data-reel-ui] { flex-direction: column !important; align-items: flex-start !important; justify-content: flex-end !important; gap: 12px !important; }
+  html body [data-reel-ui] > p { font-size: 24px !important; }
+  html body [data-reel-ui] > div { flex-wrap: nowrap !important; gap: 10px !important; }
+  html body [data-reel-ui] > div > button, html body [data-reel-ui] > div > a { font-size: 14px !important; line-height: 1.2 !important; white-space: nowrap !important; width: auto !important; min-width: 0 !important; height: auto !important; min-height: 40px; padding: 0 14px !important; display: inline-flex !important; align-items: center !important; }
 }
