@@ -351,12 +351,64 @@
     });
   }
 
-  function init() { markMenu(); subMenus(); sides(); steps(); peeks(); lpN(); curtains(); vids(); shots(); ctaBar(); variety(); opArrows(); filterArrows(); req(); }
+
+  /* 10. Sobre · «Também confiaram em nós» (5.ª ronda): os nomes arrumam-se em linhas equilibradas, sem buracos grandes.
+     Recalcula-se com a largura; as regras vão numa folha própria (o desenho pode voltar a pintar a lista). */
+  var packSig = '';
+  function balance(w, L, cap) {
+    var ids = w.map(function (x, i) { return i; }).sort(function (a, b) { return w[b] - w[a]; });
+    var lines = [], sums = [], l;
+    for (l = 0; l < L; l++) { lines.push([]); sums.push(0); }
+    ids.forEach(function (i) { var m = 0; for (var q = 1; q < L; q++) if (sums[q] < sums[m]) m = q; lines[m].push(i); sums[m] += w[i]; });
+    for (var it = 0; it < 300; it++) {
+      var hi = 0; for (l = 1; l < L; l++) if (sums[l] > sums[hi]) hi = l;
+      var done = false;
+      for (var o = 0; o < L && !done; o++) {
+        if (o === hi) continue;
+        for (var a = 0; a < lines[hi].length && !done; a++) {
+          var ia = lines[hi][a];
+          if (lines[hi].length > 1 && sums[o] + w[ia] < sums[hi] - .5) { lines[hi].splice(a, 1); lines[o].push(ia); sums[hi] -= w[ia]; sums[o] += w[ia]; done = true; break; }
+          for (var b = 0; b < lines[o].length; b++) {
+            var ib = lines[o][b], d = w[ia] - w[ib];
+            if (d > .5 && sums[o] + d < sums[hi] - .5) { lines[hi][a] = ib; lines[o][b] = ia; sums[hi] -= d; sums[o] += d; done = true; break; }
+          }
+        }
+      }
+      if (!done) break;
+    }
+    for (l = 0; l < L; l++) if (sums[l] > cap || !lines[l].length) return null;
+    return { lines: lines, sums: sums };
+  }
+  function packClients() {
+    var ul = D.querySelector('#opinioes ul[data-fw]'); if (!ul) return;
+    var kids = [].slice.call(ul.children), lis = kids.filter(function (e) { return e.tagName === 'LI'; }), n = lis.length; if (n < 3) return;
+    var Wd = ul.clientWidth; if (!Wd) return;
+    var w = lis.map(function (li) { return li.getBoundingClientRect().width; });
+    var sig = Wd + ':' + w.map(function (x) { return Math.round(x * 10); }).join(','); if (sig === packSig) return; packSig = sig;
+    var cap = Wd - 2, tot = 0, res = null, L; w.forEach(function (x) { tot += x; });
+    for (L = Math.max(1, Math.ceil(tot / cap)); L <= n && !res; L++) res = balance(w, L, cap);
+    if (!res) return;
+    var order = res.lines.map(function (ln, k) { return { ln: ln.slice().sort(function (a, b) { return a - b; }), s: res.sums[k] }; });
+    order.sort(function (a, b) { return a.ln[0] - b.ln[0]; });
+    var css = '', k = 0;
+    order.forEach(function (o) {
+      o.ln.forEach(function (i, j) {
+        var sel = '#opinioes ul[data-fw] > li:nth-child(' + (kids.indexOf(lis[i]) + 1) + ')';
+        css += sel + '{order:' + (k++) + '}';
+        if (j === o.ln.length - 1) css += sel + '{margin-right:' + Math.max(0, Wd - o.s - 2).toFixed(1) + 'px}' + sel + '::after{visibility:hidden}';
+      });
+    });
+    var st = D.getElementById('hm-pack'); if (!st) { st = D.createElement('style'); st.id = 'hm-pack'; D.head.appendChild(st); }
+    if (st.textContent !== css) st.textContent = css;
+  }
+
+  function init() { markMenu(); subMenus(); sides(); steps(); peeks(); lpN(); curtains(); vids(); shots(); ctaBar(); variety(); opArrows(); filterArrows(); packClients(); req(); }
   /* o desenho é montado por JS: repetir até aparecer e quando o menu se abre */
   var n = 0, iv = setInterval(function () { init(); if (++n > 20) clearInterval(iv); }, 250);
   D.addEventListener('click', function () { setTimeout(function () { markMenu(); subMenus(); opArrows(); filterArrows(); }, 60); }, true);
-  [6000, 10000].forEach(function (t) { setTimeout(function () { opArrows(); filterArrows(); vids(); }, t); });
+  [6000, 10000].forEach(function (t) { setTimeout(function () { opArrows(); filterArrows(); vids(); packClients(); }, t); });
   W.addEventListener('scroll', req, { passive: true });
-  W.addEventListener('resize', function () { curtains(); req(); });
+  W.addEventListener('resize', function () { curtains(); req(); packClients(); });
+  if (D.fonts && D.fonts.ready) D.fonts.ready.then(function () { packSig = ''; packClients(); });
   if (D.readyState !== 'loading') init(); else D.addEventListener('DOMContentLoaded', init);
 })();
