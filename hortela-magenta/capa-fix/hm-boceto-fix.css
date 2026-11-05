@@ -257,15 +257,35 @@ html body [data-mobile] > div:first-child > span > span { width: clamp(170px, 16
   html body [data-op-tabs] { scroll-snap-type: x mandatory; scroll-padding-left: 0; }
   html body [data-op-tabs] > [role="tab"] { scroll-snap-align: start; }
 
-  /* setas (opiniões e filtros de Projetos) */
-  .hm-arrows { display: flex; justify-content: flex-end; gap: 8px; }
-  .hm-arrows button { width: 40px; height: 40px; display: grid; place-items: center; padding: 0; margin: 0; border: 1px solid rgba(28, 27, 35, .22); border-radius: 0; background: transparent; color: #1C1B23; cursor: pointer; transition: opacity .2s ease, border-color .2s ease; -webkit-tap-highlight-color: transparent; }
-  .hm-arrows button svg { width: 18px; height: 18px; display: block; }
-  .hm-arrows button:disabled { opacity: .3; cursor: default; }
-  .hm-arrows button:not(:disabled):active { border-color: #D82E87; color: #D82E87; }
-  .hm-arrows button:focus-visible { outline: 2px solid #D82E87; outline-offset: 2px; }
-  #opinioes .hm-arrows { margin-top: 16px; }
+  /* setas (opiniões e filtros de Projetos) · 5.ª ronda: traço fino e comprido, sem moldura */
+  .hm-arrows { display: flex; justify-content: flex-end; gap: 6px; margin-right: -4px; }
+  .hm-arrows button { width: 52px; height: 44px; display: grid; place-items: center; padding: 0; margin: 0; border: 0; border-radius: 0; background: none; box-shadow: none; color: #1C1B23; cursor: pointer; transition: opacity .25s ease, color .2s ease; -webkit-tap-highlight-color: transparent; -webkit-appearance: none; appearance: none; }
+  .hm-arrows button svg { width: 44px; height: 12px; display: block; overflow: visible; transition: transform .3s cubic-bezier(.2, .7, .2, 1); }
+  .hm-arrows button:disabled { opacity: .25; cursor: default; }
+  .hm-arrows button:not(:disabled):active { color: #D82E87; }
+  .hm-arrows button:first-child:not(:disabled):active svg { transform: translateX(-4px); }
+  .hm-arrows button:last-child:not(:disabled):active svg { transform: translateX(4px); }
+  .hm-arrows button:focus-visible { outline: 1px solid #D82E87; outline-offset: 0; }
+  #opinioes .hm-arrows { margin-top: 12px; }
   html body #filtros > div > div { position: relative !important; }
-  html body #filtros > div > div > p { min-height: 40px; display: flex !important; align-items: center; padding-right: 96px; }
-  #filtros .hm-arrows { position: absolute; top: 14px; right: 0; }
+  html body #filtros > div > div > p { min-height: 40px; display: flex !important; align-items: center; padding-right: 124px; }
+  #filtros .hm-arrows { position: absolute; top: 12px; right: 0; }
 }
+
+/* ==========================================================================
+   2026-11-05 (5) · quinta ronda (telemóvel): vídeos inteiros, sem recorte
+   Mantém-se o efeito de entrada (a janela que se abre e o zoom); dentro dela
+   o vídeo vê-se inteiro em 16:9, como o showreel de Sobre.
+   ========================================================================== */
+@media (max-width: 767px) {
+  /* Home · showreel: começa encostado em baixo (onde nasce a janela) e acaba centrado; legenda e botões logo por baixo */
+  html body [data-reel] [data-reel-video] { object-fit: contain !important; object-position: 50% var(--hm-oy, 100%) !important; }
+  html body [data-reel] [data-reel-ui] { top: calc(50% + 28.125vw + 20px) !important; bottom: auto !important; }
+  /* Camolas · Filme: centrado, com «Adega Camolas · Vídeo» logo por baixo */
+  html body [data-grow-media] > video { object-fit: contain !important; }
+  html body [data-grow] [data-grow-ui] { top: calc(50% + 28.125vw + 16px) !important; bottom: auto !important; }
+  /* Camolas · Anúncios e Design Web · Conteúdos: as caixas com vídeo passam a 16:9 */
+  html body #anuncios [data-m]:has(> video) { aspect-ratio: 16 / 9 !important; }
+  html body #conteudos [data-marquee] > div:has(> video) { aspect-ratio: 16 / 9 !important; }
+}
+

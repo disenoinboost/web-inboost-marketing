@@ -79,10 +79,21 @@
       secs.push({ el: el, l: s[0], r: s[1], vl: -1, vr: -1 });
     });
   }
+  /* Home · showreel inteiro no telemóvel (5.ª ronda): o vídeo acompanha a janela do desenho, de baixo para o centro */
+  var reelV = null;
+  function reelFit(vh) {
+    if (!reelV || !reelV.isConnected) reelV = D.querySelector('[data-reel] [data-reel-video]');
+    var sec = reelV && reelV.closest('[data-reel]'); if (!sec) return;
+    var r = sec.getBoundingClientRect(); if (r.bottom < -vh || r.top > 2 * vh) return;
+    var lead = vh * .25, p = RED ? 1 : clamp((lead - r.top) / Math.max(1, r.height - vh + lead)), x = clamp(p / .74), e = RED ? 1 : x * x * (3 - 2 * x);
+    var oy = Math.round((100 - 50 * e) * 10) / 10;
+    if (oy !== reelV.__hmOy) { reelV.__hmOy = oy; reelV.style.setProperty('--hm-oy', oy + '%'); }
+  }
   var tick = 0;
   function frame() {
     tick = 0; railTick(); ctaTick(); if (!MQ.matches) return;
     var vh = W.innerHeight;
+    reelFit(vh);
     secs.forEach(function (o) {
       var r = o.el.getBoundingClientRect(); if (r.bottom < -vh || r.top > 2 * vh) return;
       var p = clamp(-r.top / Math.max(1, r.height - vh));
@@ -296,8 +307,9 @@
 
 
   /* 12. (2026-11-05, 4.ª ronda) setas: opiniões (anterior/seguinte) e filtros de Projetos (deslizar a fila) */
-  var SVG_L = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>';
-  var SVG_R = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  /* setas finas e compridas (5.ª ronda) */
+  var SVG_L = '<svg viewBox="0 0 44 12" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M44 6H1.5M7 .5 1.5 6 7 11.5"/></svg>';
+  var SVG_R = '<svg viewBox="0 0 44 12" fill="none" stroke="currentColor" stroke-width="1.2" aria-hidden="true"><path d="M0 6h42.5M37 .5 42.5 6 37 11.5"/></svg>';
   function mkArrows(labelPrev, labelNext) {
     var n = D.createElement('div'); n.className = 'hm-arrows';
     n.innerHTML = '<button type="button" aria-label="' + labelPrev + '">' + SVG_L + '</button><button type="button" aria-label="' + labelNext + '">' + SVG_R + '</button>';
