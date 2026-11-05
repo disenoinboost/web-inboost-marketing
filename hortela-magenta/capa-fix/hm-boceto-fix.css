@@ -300,3 +300,7 @@ html body [data-mobile] > div:first-child > span > span { width: clamp(170px, 16
   html.hm-reel-claro body [data-logo-white] { opacity: 0 !important; }
 }
 
+
+/* Sobre · «Também confiaram em nós» (5.ª ronda): nomes mais pequenos, para não destacarem; no computador cabem em 3 linhas */
+html body #opinioes ul[data-fw] { font-size: clamp(16px, 1.25vw, 18px) !important; flex-basis: 700px !important; }
+@media (max-width: 767px) { html body #opinioes ul[data-fw] { font-size: 15px !important; } }
