@@ -356,8 +356,9 @@ html body #equipa ul > li > div[data-hm-name]::before { content: attr(data-hm-na
 /* Branding · Trabalhos: a galeria de deslizar fica parada um pouco (e encaixa ao chegar); por baixo, a original, que anda ao descer e também encaixa */
 @media (max-width: 767px) {
   html:has([data-hm-scroll]) { scroll-snap-type: y proximity; }
-  html body:has([data-hm-scroll]) #trabalhos-galeria { height: 135svh !important; scroll-snap-align: start; }
-  html body:has([data-hm-scroll]) #trabalhos-galeria > [data-lp-st] { position: sticky !important; top: 0 !important; height: 100svh !important; }
+  /* ecrã inteiro como a cópia (100vh = altura com a barra do Safari escondida; com 100svh via-se uma faixa negra por baixo); fundo branco se alguma vez sobrar espaço */
+  html body:has([data-hm-scroll]) #trabalhos-galeria { height: calc(100vh + 35vh) !important; height: calc(100vh + 35svh) !important; background: #FFFFFF !important; scroll-snap-align: start; }
+  html body:has([data-hm-scroll]) #trabalhos-galeria > [data-lp-st] { position: sticky !important; top: 0 !important; height: 100vh !important; }
   html body [data-hm-scroll] { scroll-snap-align: start; }
 }
 
