@@ -83,6 +83,7 @@
   function frame() {
     tick = 0; railTick(); ctaTick(); if (!MQ.matches) return;
     var vh = W.innerHeight;
+    reel2();
     secs.forEach(function (o) {
       var r = o.el.getBoundingClientRect(); if (r.bottom < -vh || r.top > 2 * vh) return;
       var p = clamp(-r.top / Math.max(1, r.height - vh));
@@ -268,7 +269,7 @@
       if (on && ft && ft.getBoundingClientRect().top < vh) on = false;
       if (on && ct) { var r = ct.getBoundingClientRect(); if (r.top < vh * .7 && r.bottom > vh * .3) on = false; }
       /* secções de ecrã inteiro com botões em baixo (galeria de trabalhos, showreel): a barra não as tapa */
-      if (on) [].forEach.call(D.querySelectorAll('#trabalhos-galeria, [data-reel]'), function (z) { var q = z.getBoundingClientRect(); if (q.top < vh - 60 && q.bottom > 80) on = false; });
+      if (on) [].forEach.call(D.querySelectorAll('#trabalhos-galeria, [data-reel], [data-hm-scroll], [data-hm-reel2]'), function (z) { var q = z.getBoundingClientRect(); if (q.top < vh - 60 && q.bottom > 80) on = false; });
     }
     if (cta.__on !== on) { cta.__on = on; cta.classList.toggle('hm-on', on); D.documentElement.classList.toggle('hm-cta-up', on); }
   }
@@ -431,11 +432,68 @@
     });
   }
 
-  function init() { markMenu(); subMenus(); sides(); steps(); peeks(); lpN(); curtains(); vids(); shots(); ctaBar(); variety(); opArrows(); filterArrows(); packClients(); hands(); teamNames(); req(); }
+
+  /* 13. (7.ª ronda) Home · segundo showreel: a janela abre-se ao descer, como o Filme de Camolas; o vídeo fica inteiro */
+  var r2Try = 0;
+  function reel2() {
+    var s = D.querySelector('[data-hm-reel2]'); if (!s) return;
+    var st = s.firstElementChild, md = s.querySelector('[data-hm-r2-media]'), v = md && md.querySelector('video'), ui = s.querySelector('[data-hm-r2-ui]'); if (!st || !md) return;
+    var r = s.getBoundingClientRect(), vh = st.clientHeight || W.innerHeight, vw = st.clientWidth || W.innerWidth;
+    if (r.bottom < -vh || r.top > 2 * vh) { if (v && !v.paused) v.pause(); return; }
+    var lead = vh * .25, p = RED ? 1 : clamp((lead - r.top) / Math.max(1, r.height - vh + lead)), x = clamp(p / .74), e = RED ? 1 : x * x * (3 - 2 * x);
+    var w0 = vw * .76, h0 = Math.min(vh * .42, w0 * 9 / 16), w = w0 + (vw - w0) * e, h = h0 + (vh - h0) * e, ix = (vw - w) / 2, it = (vh - h) / 2;
+    var cp = 'inset(' + it.toFixed(1) + 'px ' + ix.toFixed(1) + 'px)'; md.style.clipPath = cp; md.style.webkitClipPath = cp;
+    if (v) v.style.transform = 'scale(' + (1.18 - .18 * e).toFixed(3) + ')';
+    if (ui) ui.style.opacity = e > .85 ? 1 : 0;
+    if (v && v.paused && !s.__hmUserPaused && r.top < vh * .8 && r.bottom > vh * .2) {
+      var nw = Date.now(); if (nw - r2Try > 800) { r2Try = nw; v.muted = true; v.playsInline = true; v.setAttribute('playsinline', ''); var pr = v.play && v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+    }
+  }
+  D.addEventListener('click', function (ev) {
+    var b = ev.target.closest && ev.target.closest('[data-hm-r2-toggle]'); if (!b) return;
+    var s = b.closest('[data-hm-reel2]'), v = s && s.querySelector('video'); if (!v) return;
+    if (v.paused) { s.__hmUserPaused = false; v.muted = true; var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } else { v.pause(); s.__hmUserPaused = true; }
+  });
+
+  /* 14. (7.ª ronda) Camolas · Rótulos: setas (as mesmas das opiniões), além da mão */
+  function rotArrows() {
+    if (!MQ.matches) return;
+    var tr = D.querySelector('#rotulos [data-lp-track]'); if (!tr) return;
+    var intro = tr.firstElementChild; if (!intro || intro.tagName === 'ARTICLE') return;
+    [].forEach.call(intro.querySelectorAll(':scope > .hm-arrows'), function (o) { if (o !== tr.__hmArr) o.remove(); });
+    if (tr.__hmArr && tr.__hmArr.isConnected) return;
+    var nav = mkArrows('Rótulo anterior', 'Rótulo seguinte'), b = nav.children; nav.classList.add('hm-arrows-rot'); intro.appendChild(nav); tr.__hmArr = nav;
+    function stepW() { var a = tr.querySelector('article'); return a ? a.getBoundingClientRect().width + (parseFloat(getComputedStyle(tr).columnGap) || 0) : tr.clientWidth * .8; }
+    function state() { var max = tr.scrollWidth - tr.clientWidth - 2; b[0].disabled = tr.scrollLeft <= 2; b[1].disabled = tr.scrollLeft >= max; }
+    b[0].addEventListener('click', function () { tr.scrollBy({ left: -stepW(), behavior: RED ? 'auto' : 'smooth' }); });
+    b[1].addEventListener('click', function () { tr.scrollBy({ left: stepW(), behavior: RED ? 'auto' : 'smooth' }); });
+    tr.__hmArrState = state;
+    if (!tr.__hmArrOn) { tr.__hmArrOn = 1; tr.addEventListener('scroll', function () { if (tr.__hmArrState) tr.__hmArrState(); }, { passive: true }); }
+    state();
+  }
+
+  /* 15. (7.ª ronda) Camolas · Anúncios: a imagem abre-se quando chega à altura dos olhos (o desenho abria-a logo ao entrar no ecrã) */
+  var lateIO = null, lateLast = -1;
+  var FROMS = ['inset(100% 0 0 0)', 'inset(0 0 100% 0)', 'inset(0 100% 0 0)', 'inset(0 0 0 100%)', 'inset(50% 50% 50% 50%)', 'inset(0 100% 100% 0)', 'inset(100% 0 0 100%)'];
+  function lightUp(el) {
+    var k; do { k = Math.floor(Math.random() * FROMS.length); } while (k === lateLast); lateLast = k;
+    el.classList.add('hm-lit');
+    if (!el.animate) return;
+    el.animate([{ clipPath: FROMS[k] }, { clipPath: 'inset(0 0 0 0)' }], { duration: 1300, easing: 'cubic-bezier(.7,0,.2,1)', fill: 'backwards' });
+    var z = el.querySelector('[data-zoom]'); if (z) z.animate([{ transform: 'scale(1.22)' }, { transform: 'scale(1)' }], { duration: 1800, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'backwards' });
+  }
+  function lateAds() {
+    if (!MQ.matches || RED || !IO) return;
+    var els = D.querySelectorAll('#anuncios [data-m="swap-inline"]'); if (!els.length) return;
+    if (!lateIO) { D.documentElement.classList.add('hm-late-on'); lateIO = new IntersectionObserver(function (es) { es.forEach(function (e) { if (!e.isIntersecting) return; lateIO.unobserve(e.target); lightUp(e.target); }); }, { rootMargin: '0px 0px -45% 0px' }); }
+    [].forEach.call(els, function (el) { if (el.__hmLate || el.classList.contains('hm-lit')) return; el.__hmLate = 1; lateIO.observe(el); });
+  }
+
+  function init() { markMenu(); subMenus(); sides(); steps(); peeks(); lpN(); curtains(); vids(); shots(); ctaBar(); variety(); opArrows(); filterArrows(); packClients(); hands(); teamNames(); rotArrows(); lateAds(); req(); }
   /* o desenho é montado por JS: repetir até aparecer e quando o menu se abre */
   var n = 0, iv = setInterval(function () { init(); if (++n > 20) clearInterval(iv); }, 250);
   D.addEventListener('click', function () { setTimeout(function () { markMenu(); subMenus(); opArrows(); filterArrows(); }, 60); }, true);
-  [6000, 10000].forEach(function (t) { setTimeout(function () { opArrows(); filterArrows(); vids(); packClients(); hands(); teamNames(); }, t); });
+  [6000, 10000].forEach(function (t) { setTimeout(function () { opArrows(); filterArrows(); vids(); packClients(); hands(); teamNames(); rotArrows(); lateAds(); }, t); });
   W.addEventListener('scroll', req, { passive: true });
   W.addEventListener('resize', function () { curtains(); req(); packClients(); });
   if (D.fonts && D.fonts.ready) D.fonts.ready.then(function () { packSig = ''; packClients(); });

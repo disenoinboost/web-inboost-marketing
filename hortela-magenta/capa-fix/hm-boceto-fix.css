@@ -218,9 +218,11 @@ html body [data-mobile] > div:first-child > span > span { width: clamp(170px, 16
   html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div[data-x] > img { object-fit: cover !important; }
   html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div[aria-hidden="true"] { display: none !important; }
   html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div:last-child { position: relative !important; inset: auto !important; margin-top: calc((100vw - 32px) * 2 / 3 + 10px) !important; grid-template-columns: minmax(0, 1fr) !important; }
-  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div:last-child > button { flex-direction: row !important; justify-content: flex-start !important; align-items: baseline !important; gap: 14px !important; padding: 12px 0 !important; border: 0 !important; border-top: 1px solid rgba(28, 27, 35, .14) !important; color: var(--ink, #1C1B23) !important; }
-  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div:last-child > button > span { font-size: 14px !important; }
-  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div:last-child > button > span + span { font-size: 20px !important; }
+  /* (7.ª ronda) as linhas têm o tamanho e o espaçamento da lista de serviços da Home */
+  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div:last-child > button { display: grid !important; grid-template-columns: 44px minmax(0, 1fr); column-gap: 20px !important; row-gap: 0 !important; justify-content: stretch !important; align-items: baseline !important; padding: 18px 0 14px !important; border: 0 !important; border-top: 1px solid rgba(28, 27, 35, .12) !important; color: var(--ink, #1C1B23) !important; }
+  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div:last-child > button:last-child { border-bottom: 1px solid rgba(28, 27, 35, .12) !important; }
+  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div:last-child > button > span { font-size: 16px !important; line-height: 1 !important; color: #6E6A63 !important; transform: none !important; }
+  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div:last-child > button > span + span { font-size: 28px !important; font-weight: 200 !important; letter-spacing: -.045em !important; line-height: 1 !important; color: var(--ink, #1C1B23) !important; }
 
   /* Camolas · O site: capturas novas (2x) e o dobro do percurso para as ver com calma */
   html body #digital[data-scrub] { height: 1000vh !important; }
@@ -332,3 +334,52 @@ html body #equipa:not(:has([data-stack])) { overflow-x: clip; }
 html body #equipa ul > li > div[data-hm-name] { position: relative; isolation: isolate; }
 html body #equipa ul > li > div[data-hm-name]::before { content: attr(data-hm-name) "\2003" attr(data-hm-name) "\2003" attr(data-hm-name) "\2003" attr(data-hm-name) "\2003"; position: absolute; z-index: -1; top: 6px; left: calc(-1 * clamp(16px, 4vw, 64px)); white-space: nowrap; font-size: 150px; font-weight: 100; letter-spacing: -0.07em; line-height: .8; color: #d6dce0; pointer-events: none; animation: hm-name-run var(--hm-dur, 40s) linear infinite; }
 @media (prefers-reduced-motion: reduce) { html body #equipa [data-hm-name], html body #equipa [data-hm-name]::before { animation: none !important; } }
+
+/* ==========================================================================
+   2026-11-06 (7) · sétima ronda (telemóvel)
+   ========================================================================== */
+/* Home · segundo showreel, inteiro sobre cinzento (montado no modelo por hm-entradilla-movil.html; animado em reel2()) */
+[data-hm-reel2] { display: none; }
+@media (max-width: 767px) {
+  [data-hm-reel2] { display: block; position: relative; height: 240vh; background: #FFFFFF; }
+  [data-hm-r2-st] { position: sticky; top: 0; height: 100svh; overflow: hidden; }
+  [data-hm-r2-media] { position: absolute; inset: 0; background: #E8ECED; clip-path: inset(30% 12%); }
+  [data-hm-r2-media] > video { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; transform: scale(1.18); }
+  [data-hm-r2-ui] { position: absolute; left: 16px; right: 16px; top: calc(50% + 28.125vw + 20px); display: flex; flex-direction: column; align-items: flex-start; gap: 12px; color: #1C1B23; opacity: 0; transition: opacity .6s ease; }
+  [data-hm-r2-ui] > p { margin: 0; font-size: 24px; font-weight: 100; letter-spacing: -0.03em; line-height: 1; }
+  [data-hm-r2-ui] > div { display: flex; flex-wrap: nowrap; gap: 10px; }
+  [data-hm-r2-ui] button, [data-hm-r2-ui] a { min-height: 40px; padding: 0 14px; display: inline-flex; align-items: center; margin: 0; font: inherit; font-size: 14px; line-height: 1.2; white-space: nowrap; border-radius: 0; text-decoration: none; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  [data-hm-r2-ui] button { border: 1px solid rgba(28, 27, 35, .35); background: transparent; color: #1C1B23; }
+  [data-hm-r2-ui] a { border: 0; background: #1C1B23; color: #FAFAF8; }
+}
+
+/* Branding · Trabalhos: a galeria de deslizar fica parada um pouco (e encaixa ao chegar); por baixo, a original, que anda ao descer e também encaixa */
+@media (max-width: 767px) {
+  html:has([data-hm-scroll]) { scroll-snap-type: y proximity; }
+  html body:has([data-hm-scroll]) #trabalhos-galeria { height: 135svh !important; scroll-snap-align: start; }
+  html body:has([data-hm-scroll]) #trabalhos-galeria > [data-lp-st] { position: sticky !important; top: 0 !important; height: 100svh !important; }
+  html body [data-hm-scroll] { scroll-snap-align: start; }
+}
+
+/* Branding · galeria que anda ao descer (cópia): os mesmos acertos de tamanho e o botão «Ver projeto» da galeria de deslizar; mantém as animações do desenho */
+@media (max-width: 767px) {
+  html body [data-hm-scroll] [data-lp-ct] > p { font-size: 30px !important; max-width: calc(84vw - 40px) !important; line-height: 1.08 !important; }
+  html body [data-hm-scroll] [data-lpp] > div[data-lpd] { right: 20px !important; }
+  html body [data-hm-scroll] [data-lpt] { font-size: 30px !important; line-height: 1.05 !important; white-space: normal !important; right: 20px !important; bottom: 76px !important; }
+  html body [data-hm-scroll] [data-lpp] > p[data-lpd]:last-child { bottom: 30px !important; }
+  html body [data-hm-scroll] a[data-lp-plus] { top: auto !important; bottom: 18px !important; right: 20px !important; width: auto !important; height: 40px !important; padding: 0 16px !important; border-radius: 999px !important; border-color: currentColor !important; display: inline-flex !important; align-items: center; gap: 8px; font-size: 15px !important; font-weight: 300 !important; white-space: nowrap; }
+  html body [data-hm-scroll] a[data-lp-plus] > svg { display: none !important; }
+  html body [data-hm-scroll] a[data-lp-plus]::before { content: "Ver projeto"; }
+  html body [data-hm-scroll] a[data-lp-plus]::after { content: "\2192"; }
+}
+
+/* Camolas · Rótulos: setas, além da mão (à direita, na linha de «Design de rótulos de vinho») */
+@media (max-width: 767px) {
+  html body #rotulos [data-lp-track] > div:first-child { position: sticky !important; }
+  #rotulos .hm-arrows-rot { position: absolute; right: 0; bottom: -10px; }
+}
+
+/* Camolas · Anúncios: as imagens só se abrem quando chegam à altura dos olhos (ver lateAds) */
+@media (max-width: 767px) {
+  html.hm-late-on #anuncios [data-m="swap-inline"]:not(.hm-lit) { clip-path: inset(100% 0 0 0) !important; -webkit-clip-path: inset(100% 0 0 0) !important; }
+}
