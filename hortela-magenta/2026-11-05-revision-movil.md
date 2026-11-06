@@ -131,3 +131,18 @@ Medios en `uploads/hm-media/movil/` (y `movil/posters/`), transferidos por la ra
   - La duración se calcula por nombre para que todos vayan a la misma velocidad. Con movimiento reducido, quieto.
 - **Home · showreel** (móvil): vuelve a pantalla completa (vídeo recortado, fondo oscuro, cabecera oscura), como lo tenía el diseño. El Filme de Camolas sigue entero sobre gris, para comparar. Se retira `reelFit()`.
 - Publicado desde el commit 45991c7 (css 730f121e…, js a9745a9d…). Copia: `bak-20261105-152647`. Páginas servidas con `v=1793892408`.
+
+## Séptima ronda (móvil, 2026-11-06)
+
+- **Home · segundo showreel:** justo debajo del showreel a pantalla completa, el mismo vídeo entero sobre gris `#E8ECED`. La ventana se abre al bajar, igual que el Filme de Camolas, y debajo quedan "Showreel", "Pausa / Play" y "Ver completo com som".
+  - Se monta en la plantilla antes de que el diseño la pinte (`hm-entradilla-movil.html`) y la anima `reel2()`. Usa la versión ligera `showreel-clip-2025-movil.mp4` con su póster.
+  - La barra "Pedir orçamento · Ligar" se oculta mientras está en pantalla.
+- **Branding · Trabalhos:**
+  - La galería de deslizar se queda quieta 35 % de pantalla (sección de 135svh con el bloque fijo) y encaja al llegar (`scroll-snap-type: y proximity` en la página, `scroll-snap-align: start`).
+  - Debajo, una copia (`#trabalhos-galeria-scroll`, `data-hm-scroll`, creada en la plantilla) con la navegación original del diseño: avanza al bajar y se detiene con cada proyecto centrado. También encaja al llegar.
+  - La copia lleva los mismos ajustes de tamaño que la de deslizar (texto de 30 px, nombre de proyecto completo, botón "Ver projeto") y conserva las animaciones del diseño.
+  - Design Web sin cambios.
+- **Camolas · Identidade visual:** los botones 01–04 toman las medidas de la lista de servicios de la home: rejilla de 44 px + 1fr, separación de 20 px, relleno de 18/14 px, número de 16 px en `#6E6A63`, texto de 28 px y peso 200, líneas `rgba(28,27,35,.12)` y filas de 61 px.
+- **Camolas · Rótulos:** flechas finas, las mismas de las opiniones, a la derecha en la línea de "Design de rótulos de vinho →", además de la mano. Avanzan una etiqueta y se atenúan en los extremos.
+- **Camolas · Anúncios:** el diseño abría las imágenes cuando aún estaban por debajo de la pantalla (`rootMargin 10%`). Ahora se quedan cerradas hasta que llegan al 55 % de la altura de la pantalla, la altura de los ojos, y entonces se abren desde un lado al azar con el zoom del diseño (`lateAds()`).
+- Publicado desde el commit 6d633df (css f3e35a2c…, js fc7c19b5…, script temprano 8a18193c…). Copias: `bak-20261106-090913`. Páginas servidas con `v=1793956154`. Comprobado también con el HTML servido.
