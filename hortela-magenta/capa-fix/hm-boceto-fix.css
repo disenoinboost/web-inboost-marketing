@@ -373,10 +373,11 @@ html body #equipa ul > li > div[data-hm-name]::before { content: attr(data-hm-na
   html body [data-hm-scroll] a[data-lp-plus]::after { content: "\2192"; }
 }
 
-/* Camolas · Rótulos: setas, além da mão (à direita, na linha de «Design de rótulos de vinho») */
+/* Camolas · Rótulos: setas, além da mão, por baixo das imagens e dos nomes, à direita.
+   O título fica sempre no mesmo sítio (left: 0, porque a faixa já tem 16 px de margem; com 16 px saltava ao chegar ao fim) */
 @media (max-width: 767px) {
-  html body #rotulos [data-lp-track] > div:first-child { position: sticky !important; }
-  #rotulos .hm-arrows-rot { position: absolute; right: 0; bottom: -10px; }
+  html body #rotulos [data-lp-track] > div:first-child { position: sticky !important; left: 0 !important; }
+  #rotulos .hm-arrows-rot { margin: 14px 12px 0 16px; }
 }
 
 /* Camolas · Anúncios: as imagens só se abrem quando chegam à altura dos olhos (ver lateAds) */
