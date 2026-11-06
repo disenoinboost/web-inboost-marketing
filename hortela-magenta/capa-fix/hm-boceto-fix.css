@@ -384,3 +384,6 @@ html body #equipa ul > li > div[data-hm-name]::before { content: attr(data-hm-na
 @media (max-width: 767px) {
   html.hm-late-on #anuncios [data-m="swap-inline"]:not(.hm-lit) { clip-path: inset(100% 0 0 0) !important; -webkit-clip-path: inset(100% 0 0 0) !important; }
 }
+
+/* Camolas · O site (telemóvel): sem a etiqueta do canto («01 Vinhos», «02 Região e Vinhas», «03 Experiências») sobre as capturas */
+@media (max-width: 767px) { html body #digital div:has(> span[data-x][data-on]) { display: none !important; } }
