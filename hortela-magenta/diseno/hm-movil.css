@@ -1,0 +1,89 @@
+/* Hortelã Magenta · versão móvel (até 767 px).
+   Sobrepõe-se aos estilos em linha do desenho; no Divi vai tal qual numa folha de estilos do tema. */
+@media (max-width: 767px) {
+  :root { --sp-block: 64px !important; --sp-title: 32px !important; --sp-hdr: 104px !important; }
+
+  /* cabeçalho: logótipo menor e sem «Pedir orçamento» (está no menu) para que o botão do menu se veja sempre */
+  [data-header] > div:first-child { height: 64px !important; gap: 12px !important; }
+  [data-header] > div:first-child > a:first-child > span { width: 148px !important; }
+  [data-header] > div:first-child a[style*="white-space: nowrap"], [data-header] [data-cta] { display: none !important; }
+
+  /* texto: 16 px no corpo, títulos à escala do ecrã */
+  main [style*="font-size: 18px"], footer [style*="font-size: 18px"] { font-size: 16px !important; }
+  main [style*="text-transform: uppercase"] { letter-spacing: .06em !important; }
+  main h1:not([style*="font-size: 18px"]):not([style*="font-size: 16px"]),
+  main [data-hero-display], main [style*="hdr-fit"] { font-size: clamp(32px, 9.6vw, 42px) !important; font-weight: 200 !important; line-height: 1.02 !important; letter-spacing: -.04em !important; }
+  #topo h1 { font-size: clamp(52px, 16vw, 64px) !important; font-weight: 100 !important; }
+  main h2:not([style*="font-size: 18px"]):not([style*="font-size: 16px"]) { font-size: clamp(28px, 8.2vw, 34px) !important; font-weight: 200 !important; line-height: 1.05 !important; }
+  main h3:not([style*="font-size: 18px"]):not([style*="font-size: 16px"]):not([data-m]) { font-size: clamp(22px, 6.4vw, 26px) !important; font-weight: 200 !important; line-height: 1.12 !important; }
+  main h3[data-m="card-title"] { font-size: 22px !important; font-weight: 200 !important; line-height: 1.2 !important; }
+  main h3 [data-fw], main h3 button > span { font-size: inherit !important; }
+  [data-svc-i] h3 { overflow-wrap: anywhere; }
+  main blockquote, main [data-colorize] { font-size: clamp(24px, 7vw, 30px) !important; font-weight: 200 !important; line-height: 1.15 !important; }
+
+  /* cabeçalhos das páginas: ecrã inteiro também no telemóvel; «Moita…» em baixo, por baixo do texto, sem «Descer» */
+  main section[data-hero], main section[data-screen-label="01 Cabeçalho"]:not(#topo) { min-height: 100svh !important; height: auto !important; box-sizing: border-box; padding-bottom: 32px !important; }
+  /* Projeto (Camolas) e Artigo também a ecrã inteiro: a fotografia do projeto cresce até ao fundo; a assinatura do artigo desce */
+  #topo, main header[data-hero] { min-height: 100svh !important; box-sizing: border-box; display: flex !important; flex-direction: column !important; }
+  #topo > figure { flex: 1 1 auto; aspect-ratio: auto !important; min-height: 180px; }
+  main header[data-hero] > [data-hl-fade]:last-child { margin-top: auto !important; padding-top: 32px; }
+  main [data-hero-dark] { padding-top: 128px !important; }
+  main [data-hero-dark] > [data-hero-title] { margin: auto 0 !important; }
+  main section[data-hero] > [data-hl-fade] { position: static !important; margin-top: auto !important; padding-top: 40px; }
+  main [data-hero] > [data-hl-fade][aria-hidden="true"] > span:last-child { display: none !important; }
+  /* Branding / Design Web: título, depois o texto e os links, e por fim «Moita…» */
+  main section[data-screen-label="01 Cabeçalho"]:not(#topo) > div:nth-of-type(2) { display: flex !important; flex-direction: column !important; flex-wrap: nowrap !important; }
+  main section[data-screen-label="01 Cabeçalho"]:not(#topo) > div:nth-of-type(2) > div:first-child { display: contents !important; }
+  main section[data-screen-label="01 Cabeçalho"]:not(#topo) > div:nth-of-type(2) > div:first-child > div:first-child { order: 1; margin: 0 !important; }
+  main section[data-screen-label="01 Cabeçalho"]:not(#topo) > div:nth-of-type(2) > div:last-child { order: 2; flex: none !important; }
+  main section[data-screen-label="01 Cabeçalho"]:not(#topo) > div:nth-of-type(2) > div:first-child > [data-hl-fade] { order: 3; margin-top: auto !important; padding-top: 40px; }
+
+  /* showreel: abre-se em grande ao descer, como no computador; sem as listas laterais, que não cabem */
+  [data-reel-side] { display: none !important; }
+
+  /* projetos em destaque (home): índice lateral 01–05 compacto; o texto do painel afasta-se para não se tocarem */
+  nav[aria-label="Projetos em destaque"] { left: 14px !important; height: min(44vh, 320px) !important; }
+  nav[aria-label="Projetos em destaque"] a { font-size: 16px !important; gap: 8px !important; }
+  [data-fp-panel] [data-fp-body] { padding-left: 76px !important; padding-right: 16px !important; box-sizing: border-box; }
+
+  /* filtros de Projetos: uma fila que desliza, com o bordo direito esbatido; sem a dica do cursor */
+  div:has(+ #filtros) > p:last-child { display: none !important; }
+  #filtros > div { grid-template-columns: minmax(0,1fr) !important; }
+  #filtros > div > div { display: block !important; min-width: 0 !important; max-width: 100%; }
+  #filtros > div > div > p { margin: 14px 0 2px !important; }
+  #filtros ol[role="group"] { min-width: 0 !important; max-width: calc(100% + 16px); flex-wrap: nowrap !important; overflow-x: auto; column-gap: 22px !important; margin-right: -16px !important; padding-right: 40px !important; scrollbar-width: none; -webkit-mask: linear-gradient(90deg, #000 80%, transparent); mask: linear-gradient(90deg, #000 80%, transparent); }
+  #filtros ol[role="group"]::-webkit-scrollbar { display: none; }
+  #filtros ol[role="group"] > li { flex: none !important; }
+  #filtros ol[role="group"] button, #filtros ol[role="group"] [aria-disabled] { padding: 12px 0 !important; white-space: nowrap; }
+  #filtros ol[role="group"] button > span:first-child, #filtros ol[role="group"] [aria-disabled] > span:first-child { display: none !important; }
+
+  /* anúncios e redes sociais (Camolas): cada peça com a sua imagem, uma por baixo da outra */
+  [data-m="swap-media"] { display: none !important; }
+  [data-m="swap-inline"] { display: block !important; margin-bottom: 20px; }
+  [data-swap-txt] { opacity: 1 !important; min-height: 0 !important; flex-direction: column !important; align-items: stretch !important; padding: 28px 0 12px !important; }
+
+  /* equipa (Sobre): fotos direitas, sem sombra, e menos espaço entre pessoas */
+  #equipa ul { gap: 56px !important; }
+  #equipa figure { transform: none !important; width: 100% !important; max-width: 360px; margin: 0 !important; box-shadow: none !important; }
+
+  /* colunas laterais fixas (perguntas, índice do artigo): em móvel ficam no seu sítio, para que o conteúdo não passe por cima */
+  [data-faq-side] { position: static !important; top: auto !important; }
+
+  /* processo (painéis que se abrem): fechados com o título centrado; aberto com a imagem em cima e o texto por baixo, sobre fundo tinta */
+  [data-step-v] { height: auto !important; gap: 8px !important; }
+  [data-step-v] > [data-t] { flex: none !important; }
+  [data-step-v] > [data-t][aria-expanded="false"] { height: 64px !important; }
+  [data-step-v] > [data-t][aria-expanded="false"] > img, [data-step-v] > [data-t][aria-expanded="false"] > div { display: none !important; }
+  [data-step-v] > [data-t] > [data-vl] { top: 50% !important; bottom: auto !important; left: 20px !important; right: 20px !important; transform: translateY(-50%) !important; white-space: normal !important; font-size: 20px !important; line-height: 1.2; }
+  [data-step-v] > [data-t] > span[aria-hidden="true"] { display: none !important; }
+  [data-step-v] > [data-t][aria-expanded="true"] { height: auto !important; background: #1C1B23 !important; }
+  [data-step-v] > [data-t][aria-expanded="true"] > img { position: relative !important; inset: auto !important; display: block; height: 220px !important; }
+  [data-step-v] > [data-t][aria-expanded="true"] > div { position: relative !important; left: auto !important; right: auto !important; bottom: auto !important; padding: 22px 20px 26px; }
+
+  /* galeria horizontal: as etiquetas deixam sítio ao botão + */
+  [data-lpp] > div[data-lpd] { right: 76px !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; column-gap: 14px !important; }
+  [data-lpp] > div[data-lpd] > span { min-width: 0; overflow: hidden; }
+  [data-lp-plus] { width: 44px !important; height: 44px !important; }
+
+  main img, main video { max-width: 100%; }
+}
