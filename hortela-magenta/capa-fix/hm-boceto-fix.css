@@ -225,7 +225,7 @@ html body [data-mobile] > div:first-child > span > span { width: clamp(170px, 16
   html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div:last-child > button > span + span { font-size: 28px !important; font-weight: 200 !important; letter-spacing: -.045em !important; line-height: 1 !important; color: var(--ink, #1C1B23) !important; }
 
   /* Camolas · O site: capturas novas (2x) e o dobro do percurso para as ver com calma */
-  html body #digital[data-scrub] { height: 1000vh !important; }
+  html body #digital[data-scrub] { height: 1400vh !important; } /* 8.ª ronda: páginas inteiras (antes 1000vh com 3.200 px) */
 
   /* barra fixa «Pedir orçamento · Ligar» (hm-boceto-fix.js): as outras barras de baixo sobem quando ela está à vista */
   .hm-cta { display: flex; position: fixed; z-index: 45; left: 50%; bottom: 14px; display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: 9999px; background: rgba(250, 250, 248, .92); -webkit-backdrop-filter: saturate(180%) blur(12px); backdrop-filter: saturate(180%) blur(12px); box-shadow: 0 0 0 1px rgba(28, 27, 35, .08), 0 8px 24px rgba(28, 27, 35, .12); transform: translate3d(-50%, 16px, 0); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .35s ease, transform .5s cubic-bezier(.2,.7,.2,1), visibility 0s linear .35s; font-family: inherit; }
@@ -388,3 +388,107 @@ html body #equipa ul > li > div[data-hm-name]::before { content: attr(data-hm-na
 
 /* Camolas · O site (telemóvel): sem a etiqueta do canto («01 Vinhos», «02 Região e Vinhas», «03 Experiências») sobre as capturas */
 @media (max-width: 767px) { html body #digital div:has(> span[data-x][data-on]) { display: none !important; } }
+
+/* ===== 8.ª ronda (2026-11-23): mudanças aprovadas por Gonçalo e Vítor ===== */
+
+/* Cifras 2007 · 572 · 2893 (Home e Sobre): a Spartan não tem algarismos tabulares e o contador dava a cada coluna a largura do «0»,
+   por isso o 2, o 5 e o 7 deixavam um buraco à direita. Cada coluna passa a medir o avanço real do seu algarismo (com o -0,05em do desenho).
+   overflow-y: clip corta só em altura: durante a rotação os algarismos mais largos podem passar um pouco para o lado. */
+html body span:has(> [data-dg]) { overflow-x: visible !important; overflow-y: clip !important; flex: none; }
+html body span:has(> [data-dg="0"]) { width: .8241em; }
+html body span:has(> [data-dg="1"]) { width: .2636em; }
+html body span:has(> [data-dg="2"]) { width: .677em; }
+html body span:has(> [data-dg="3"]) { width: .6166em; }
+html body span:has(> [data-dg="4"]) { width: .607em; }
+html body span:has(> [data-dg="5"]) { width: .6991em; }
+html body span:has(> [data-dg="6"]) { width: .69em; }
+html body span:has(> [data-dg="7"]) { width: .5675em; }
+html body span:has(> [data-dg="8"]) { width: .6281em; }
+html body span:has(> [data-dg="9"]) { width: .69em; }
+
+/* Tipografia em portáteis e ecrãs pequenos (768–1919 px). Referência: a leitura do iMac (≥1920 px fica igual).
+   Os títulos com tamanho em vw passam a crescer de 85 % (1280 px) a 100 % (1920 px): calc(1,3·c·vw − 5,76·c px) com o mesmo máximo do desenho;
+   os mínimos de 30 px ou mais descem 15 %. Texto corrido: 16 px a 1280 px até 18 px a 1920 px, com entrelinha 1,6. Títulos fixos de 28 px: 24 → 28 px. */
+@media (min-width: 768px) and (max-width: 1919px) {
+  html body [style*="font-size: clamp(40px, 8.4vw, 168px)"], html body [style*="font-size:clamp(40px,8.4vw,168px)"] { font-size: clamp(34px, calc(10.92vw - 48.4px), 168px) !important; }
+  html body [style*="font-size: clamp(36px, 8.64vw, 160px)"], html body [style*="font-size:clamp(36px,8.64vw,160px)"] { font-size: clamp(31px, calc(11.232vw - 49.8px), 160px) !important; }
+  html body [style*="font-size: clamp(43px, 8vw, 157px)"], html body [style*="font-size:clamp(43px,8vw,157px)"] { font-size: clamp(37px, calc(10.4vw - 46.1px), 157px) !important; }
+  html body [style*="font-size: clamp(40px, 6.4vw, 144px)"], html body [style*="font-size:clamp(40px,6.4vw,144px)"] { font-size: clamp(34px, calc(8.32vw - 36.9px), 144px) !important; }
+  html body [style*="font-size: clamp(51px, 6.4vw, 120px)"], html body [style*="font-size:clamp(51px,6.4vw,120px)"] { font-size: clamp(43px, calc(8.32vw - 36.9px), 120px) !important; }
+  html body [style*="font-size: clamp(40px, 7.76vw, 112px)"], html body [style*="font-size:clamp(40px,7.76vw,112px)"] { font-size: clamp(34px, calc(10.088vw - 44.7px), 112px) !important; }
+  html body [style*="font-size: clamp(40px, 5.76vw, 102px)"], html body [style*="font-size:clamp(40px,5.76vw,102px)"] { font-size: clamp(34px, calc(7.488vw - 33.2px), 102px) !important; }
+  html body [style*="font-size: clamp(40px, 5.28vw, 102px)"], html body [style*="font-size:clamp(40px,5.28vw,102px)"] { font-size: clamp(34px, calc(6.864vw - 30.4px), 102px) !important; }
+  html body [style*="font-size: clamp(45px, 5.92vw, 96px)"], html body [style*="font-size:clamp(45px,5.92vw,96px)"] { font-size: clamp(38px, calc(7.696vw - 34.1px), 96px) !important; }
+  html body [style*="font-size: clamp(40px, 5.12vw, 94px)"], html body [style*="font-size:clamp(40px,5.12vw,94px)"] { font-size: clamp(34px, calc(6.656vw - 29.5px), 94px) !important; }
+  html body [style*="font-size: clamp(36px, 4.48vw, 90px)"], html body [style*="font-size:clamp(36px,4.48vw,90px)"] { font-size: clamp(31px, calc(5.824vw - 25.8px), 90px) !important; }
+  html body [style*="font-size: clamp(40px, 4.64vw, 86px)"], html body [style*="font-size:clamp(40px,4.64vw,86px)"] { font-size: clamp(34px, calc(6.032vw - 26.7px), 86px) !important; }
+  html body [style*="font-size: clamp(40px, 4.64vw, 83px)"], html body [style*="font-size:clamp(40px,4.64vw,83px)"] { font-size: clamp(34px, calc(6.032vw - 26.7px), 83px) !important; }
+  html body [style*="font-size: clamp(36px, 4.48vw, 80px)"], html body [style*="font-size:clamp(36px,4.48vw,80px)"] { font-size: clamp(31px, calc(5.824vw - 25.8px), 80px) !important; }
+  html body [style*="font-size: clamp(40px, 4.48vw, 80px)"], html body [style*="font-size:clamp(40px,4.48vw,80px)"] { font-size: clamp(34px, calc(5.824vw - 25.8px), 80px) !important; }
+  html body [style*="font-size: clamp(40px, 4.96vw, 80px)"], html body [style*="font-size:clamp(40px,4.96vw,80px)"] { font-size: clamp(34px, calc(6.448vw - 28.6px), 80px) !important; }
+  html body [style*="font-size: clamp(40px, 5.12vw, 80px)"], html body [style*="font-size:clamp(40px,5.12vw,80px)"] { font-size: clamp(34px, calc(6.656vw - 29.5px), 80px) !important; }
+  html body [style*="font-size: clamp(40px, 3.84vw, 74px)"], html body [style*="font-size:clamp(40px,3.84vw,74px)"] { font-size: clamp(34px, calc(4.992vw - 22.1px), 74px) !important; }
+  html body [style*="font-size: clamp(40px, 4.64vw, 74px)"], html body [style*="font-size:clamp(40px,4.64vw,74px)"] { font-size: clamp(34px, calc(6.032vw - 26.7px), 74px) !important; }
+  html body [style*="font-size: clamp(40px, 4vw, 74px)"], html body [style*="font-size:clamp(40px,4vw,74px)"] { font-size: clamp(34px, calc(5.2vw - 23.0px), 74px) !important; }
+  html body [style*="font-size: clamp(40px, 4.48vw, 70px)"], html body [style*="font-size:clamp(40px,4.48vw,70px)"] { font-size: clamp(34px, calc(5.824vw - 25.8px), 70px) !important; }
+  html body [style*="font-size: clamp(36px, 4vw, 70px)"], html body [style*="font-size:clamp(36px,4vw,70px)"] { font-size: clamp(31px, calc(5.2vw - 23.0px), 70px) !important; }
+  html body [style*="font-size: clamp(40px, 3.68vw, 67px)"], html body [style*="font-size:clamp(40px,3.68vw,67px)"] { font-size: clamp(34px, calc(4.784vw - 21.2px), 67px) !important; }
+  html body [style*="font-size: clamp(40px, 4.32vw, 67px)"], html body [style*="font-size:clamp(40px,4.32vw,67px)"] { font-size: clamp(34px, calc(5.616vw - 24.9px), 67px) !important; }
+  html body [style*="font-size: clamp(36px, 3.52vw, 64px)"], html body [style*="font-size:clamp(36px,3.52vw,64px)"] { font-size: clamp(31px, calc(4.576vw - 20.3px), 64px) !important; }
+  html body [style*="font-size: clamp(40px, 4vw, 61px)"], html body [style*="font-size:clamp(40px,4vw,61px)"] { font-size: clamp(34px, calc(5.2vw - 23.0px), 61px) !important; }
+  html body [style*="font-size: clamp(34px, 2.88vw, 51px)"], html body [style*="font-size:clamp(34px,2.88vw,51px)"] { font-size: clamp(29px, calc(3.744vw - 16.6px), 51px) !important; }
+  html body [style*="font-size: clamp(40px, 3.68vw, 51px)"], html body [style*="font-size:clamp(40px,3.68vw,51px)"] { font-size: clamp(34px, calc(4.784vw - 21.2px), 51px) !important; }
+  html body [style*="font-size: clamp(40px, 8.8vw, 51px)"], html body [style*="font-size:clamp(40px,8.8vw,51px)"] { font-size: clamp(34px, calc(11.44vw - 50.7px), 51px) !important; }
+  html body [style*="font-size: clamp(28px, 2.72vw, 48px)"], html body [style*="font-size:clamp(28px,2.72vw,48px)"] { font-size: clamp(28px, calc(3.536vw - 15.7px), 48px) !important; }
+  html body [style*="font-size: clamp(32px, 3.2vw, 48px)"], html body [style*="font-size:clamp(32px,3.2vw,48px)"] { font-size: clamp(27px, calc(4.16vw - 18.4px), 48px) !important; }
+  html body [style*="font-size: clamp(34px, 2.88vw, 45px)"], html body [style*="font-size:clamp(34px,2.88vw,45px)"] { font-size: clamp(29px, calc(3.744vw - 16.6px), 45px) !important; }
+  html body [style*="font-size: clamp(28px, 2.56vw, 42px)"], html body [style*="font-size:clamp(28px,2.56vw,42px)"] { font-size: clamp(28px, calc(3.328vw - 14.7px), 42px) !important; }
+  html body [style*="font-size: clamp(32px, 2.4vw, 42px)"], html body [style*="font-size:clamp(32px,2.4vw,42px)"] { font-size: clamp(27px, calc(3.12vw - 13.8px), 42px) !important; }
+  html body [style*="font-size: clamp(32px, 2.88vw, 42px)"], html body [style*="font-size:clamp(32px,2.88vw,42px)"] { font-size: clamp(27px, calc(3.744vw - 16.6px), 42px) !important; }
+  html body [style*="font-size: clamp(26px, 2.4vw, 38px)"], html body [style*="font-size:clamp(26px,2.4vw,38px)"] { font-size: clamp(26px, calc(3.12vw - 13.8px), 38px) !important; }
+  html body [style*="font-size: clamp(26px, 2.2vw, 36px)"], html body [style*="font-size:clamp(26px,2.2vw,36px)"] { font-size: clamp(26px, calc(2.86vw - 12.7px), 36px) !important; }
+  html body [style*="font-size: clamp(26px, 2.4vw, 36px)"], html body [style*="font-size:clamp(26px,2.4vw,36px)"] { font-size: clamp(26px, calc(3.12vw - 13.8px), 36px) !important; }
+  html body [style*="font-size: clamp(24px, 2.4vw, 36px)"], html body [style*="font-size:clamp(24px,2.4vw,36px)"] { font-size: clamp(24px, calc(3.12vw - 13.8px), 36px) !important; }
+  html body [style*="font-size: clamp(30px, 2.08vw, 35px)"], html body [style*="font-size:clamp(30px,2.08vw,35px)"] { font-size: clamp(26px, calc(2.704vw - 12.0px), 35px) !important; }
+  html body [style*="font-size: clamp(24px, 2.3vw, 34px)"], html body [style*="font-size:clamp(24px,2.3vw,34px)"] { font-size: clamp(24px, calc(2.99vw - 13.2px), 34px) !important; }
+  html body [style*="font-size: clamp(20px, 1.8vw, 32px)"], html body [style*="font-size:clamp(20px,1.8vw,32px)"] { font-size: clamp(20px, calc(2.34vw - 10.4px), 32px) !important; }
+  html body [style*="font-size: clamp(22px, 1.68vw, 32px)"], html body [style*="font-size:clamp(22px,1.68vw,32px)"] { font-size: clamp(22px, calc(2.184vw - 9.7px), 32px) !important; }
+  html body [style*="font-size: clamp(28px, 2.08vw, 32px)"], html body [style*="font-size:clamp(28px,2.08vw,32px)"] { font-size: clamp(28px, calc(2.704vw - 12.0px), 32px) !important; }
+  html body [style*="font-size: clamp(26px, 1.92vw, 32px)"], html body [style*="font-size:clamp(26px,1.92vw,32px)"] { font-size: clamp(26px, calc(2.496vw - 11.1px), 32px) !important; }
+  html body [style*="font-size: clamp(20px, 1.9vw, 32px)"], html body [style*="font-size:clamp(20px,1.9vw,32px)"] { font-size: clamp(20px, calc(2.47vw - 10.9px), 32px) !important; }
+  html body [style*="font-size: clamp(24px, 1.9vw, 32px)"], html body [style*="font-size:clamp(24px,1.9vw,32px)"] { font-size: clamp(24px, calc(2.47vw - 10.9px), 32px) !important; }
+  html body [style*="font-size: clamp(22px, 1.9vw, 30px)"], html body [style*="font-size:clamp(22px,1.9vw,30px)"] { font-size: clamp(22px, calc(2.47vw - 10.9px), 30px) !important; }
+  html body [style*="font-size: clamp(24px, 1.9vw, 30px)"], html body [style*="font-size:clamp(24px,1.9vw,30px)"] { font-size: clamp(24px, calc(2.47vw - 10.9px), 30px) !important; }
+  html body [style*="font-size: clamp(20px, 2vw, 30px)"], html body [style*="font-size:clamp(20px,2vw,30px)"] { font-size: clamp(20px, calc(2.6vw - 11.5px), 30px) !important; }
+  html body [style*="font-size: clamp(22px, 2vw, 30px)"], html body [style*="font-size:clamp(22px,2vw,30px)"] { font-size: clamp(22px, calc(2.6vw - 11.5px), 30px) !important; }
+  html body [style*="font-size: 18px"], html body [style*="font-size:18px"] { font-size: clamp(16px, calc(.3125vw + 12px), 18px) !important; }
+  html body [style*="font-size: 18px"][style*="line-height: 1.5"], html body [style*="font-size:18px"][style*="line-height:1.5"] { line-height: 1.6 !important; }
+  html body [style*="font-size: 28px"], html body [style*="font-size:28px"] { font-size: clamp(24px, calc(.625vw + 16px), 28px) !important; }
+}
+
+/* Home · «Sobre a Hortelã Magenta»: «Somos uma equipa criativa…» mais pequeno e com mais entrelinha (desenho: clamp(22px,1.68vw,32px) e 1,2) */
+html body #sobre [data-sobre-text] { font-size: clamp(20px, 1.4vw, 26px) !important; line-height: 1.45 !important; }
+
+/* Rodapé: «Política de Privacidade», «Livro de Reclamações» e «© 2026» ligeiramente mais pequenos (16 → 14 px; exceção pedida à regra dos 16 px) */
+html body footer[data-screen-label] div[style*="border-top"] > :not(div),
+html body footer[data-screen-label] div[style*="border-top"] a[href*="politica-de-privacidade"],
+html body footer[data-screen-label] div[style*="border-top"] a[href*="livroreclamacoes"] { font-size: 14px !important; letter-spacing: .01em; }
+
+/* Sobre · os dois showreels: separadores «2025 · 2020» (hm-boceto-fix.js, 16) com o mesmo estilo do botão do som */
+html body .hm-reels { display: flex; gap: clamp(16px, 2vw, 28px); margin: 0 auto 0 clamp(20px, 3vw, 48px); }
+html body .hm-reels button { background: none; border: 0; border-bottom: 1px solid transparent; padding: 6px 0; font: inherit; font-size: 18px; color: rgba(250, 250, 248, .55); cursor: pointer; transition: color .2s ease, border-color .2s ease; }
+html body .hm-reels button[aria-pressed="true"] { color: #FAFAF8; border-bottom-color: #D82E87; }
+html body .hm-reels button:hover { color: #FAFAF8; }
+html body .hm-reels button:focus-visible { outline: 2px solid #D82E87; outline-offset: 4px; }
+@media (max-width: 767px) {
+  html body div:has(> .hm-reels) { flex-wrap: wrap !important; row-gap: 10px !important; }
+  html body div:has(> .hm-reels) > h2, html body div:has(> .hm-reels) > button { white-space: nowrap; }
+  html body .hm-reels { order: 3; flex-basis: 100%; margin: 0; gap: 20px; }
+}
+
+/* Camolas · O site: capturas da página inteira de adegacamolas.pt (Vinhos, Região e Vinhas, Experiências), em tramos de até 4.000 px.
+   [data-hm-shot="pc"] (1440 px a 2x) no computador e [data-hm-shot="m"] (390 px a 2x) no telemóvel; a secção fica mais longa para que passem mais devagar. */
+html body [data-hm-shot] img { display: block; width: 100%; height: auto; }
+@media (max-width: 760px) { html body [data-hm-shot="pc"] { display: none !important; } }
+@media (min-width: 761px) { html body [data-hm-shot="m"] { display: none !important; } }
+@media (min-width: 768px) { html body #digital[data-scrub] { height: 1000vh !important; } }

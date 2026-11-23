@@ -1,0 +1,65 @@
+# Hortelã Magenta · 8.ª ronda: cambios aprobados por Gonçalo y Vítor (2026-11-23)
+
+Petición: tarea de ClickUp «Hortela Magenta - Cambios web 23 nov» (mensaje de Dani en el chat del cliente), con las indicaciones de Laura: espaciado de las cifras y capturas enteras de adegacamolas.pt para «Digital · O site».
+
+Sitio: https://hortelamagenta.inboost.marketing. Las páginas salen de los paquetes de Claude Design (`hm-paginas/*.html`), más la capa propia (`assets/hm-boceto-fix.css/.js`, fuente en `capa-fix/`).
+
+## Cómo se ha hecho
+
+- **Textos y estructura:** se cambian dentro de los paquetes, en su template. Las ediciones están en `paquetes/*.json` y son reaplicables si llega un kit nuevo.
+  - `textos.json`: 20 ediciones.
+  - `medios.json`: 13 ediciones.
+  - `capturas.json`: 9 ediciones.
+  - En local se aplican al dist con `paquetes/aplicar.py`. En el servidor, con `paquetes/aplicar.php`, que compara cuántas veces aparece cada texto, recodifica con `JSON_HEX_TAG` y comprueba el resultado antes de escribirlo.
+  - Copias en el servidor: `hm-paginas-bak/2026-11-23-antes-8a-ronda/` (las 10 páginas) y `hm-paginas-bak/2026-11-23-antes-8a-ronda-capturas/` (camolas, servicos, design-web).
+- **Estilos y comportamiento:** en la capa (`capa-fix/`). Se sube con un parche (old → new) y se verifica el md5.
+  - Publicada: css `cecd3999…`, js `5f822ef2…`, servida con `v=1795436228`.
+  - Copias: `hm-boceto-fix.*.bak-20261123-*`.
+
+## Hecho
+
+| Página | Cambio |
+|---|---|
+| Home y Sobre · cifras 2007 · 572 · 2893 | La Spartan no tiene cifras tabulares y el contador daba a cada columna el ancho del «0». Ahora cada columna mide lo que avanza su cifra (CSS `:has(> [data-dg="N"])`, en em). Recorta solo en vertical (`overflow-y: clip`) |
+| Tipografía general (768–1919 px) | Los títulos en vw van del 85 % a 1280 px al 100 % a 1920 px: `calc(1,3·c·vw − 5,76·c px)`, con el máximo del diseño, generado para cada clamp. El texto corrido pasa de 16 px (1280) a 18 px (1920) con interlineado 1,6. Los títulos fijos de 28 px van de 24 a 28 px. A partir de 1920 px (iMac) no cambia nada; el móvil tampoco |
+| Home · cabecera | «Moita, Portugal — desde 2007» → «Desde 2007» |
+| Home · Serviços | 6.º servicio «Avenças mensais», solo en la lista (no en el menú). Texto provisional a partir de las respuestas de Gonçalo (doc de ClickUp «Documento»). Enlaza a /contacto/ con «Falar sobre uma avença». **Hay que revisarlo con el Word «Avença Mensal 360» cuando llegue** |
+| Home · Sobre a Hortelã Magenta | «Somos uma equipa criativa…»: `clamp(22px,1,68vw,32px)` y 1,2 → `clamp(20px,1,4vw,26px)` y 1,45 |
+| Todas · bloque de contacto | «Estúdio» → «Sede» |
+| Todas · pie | «Política de Privacidade», «Livro de Reclamações» y «© 2026» pasan de 16 a 14 px (excepción pedida a la regla de 16 px) |
+| Design Web | Cabecera: «Desde 2007». Fuera los bloques `#atividade` («O que o site deve explicar», puntos 01–04) y `#processo` («Como organizamos o projeto»). Se mantiene «O que determina o âmbito» |
+| Design Web · Trabalhos | El fondo pasa del rótulo `garrafeira_01` al site de Farinhas Firmos (`farinhafirmos_site_06`). La tarjeta 3, Alinea, pasa a Palmela Experiences: montaje de PC y móvil con capturas propias (sin la cinta de «Black Friday»), etiquetas «Website › Enoturismo», texto provisional y enlace a palmelaexperiences.pt. También se cambian los datos de la galería |
+| Branding · cabecera | Fuera «Moita, Portugal — desde 2007» |
+| Serviços · Design Web | Captura de Camolas → recorte 4:5 de la captura nueva de adegacamolas.pt en móvil |
+| Serviços · Campanhas & Redes Sociais | Los carteles de Croma pasan a sus publicaciones en redes (`croma_rs_01`). El stand de Stockfer/Alsil pasa a las publicaciones de Consulai (`consulai_redes_sociais_02`), con su pie. Las de Farinhas Firmos (`redessociais_02`) ya eran publicaciones reales y se quedan |
+| Serviços · Fotografia & Vídeo | Alinea: de 950 px a la versión más grande de hortelamagenta.pt (1023 px), en WebP q90 en lugar de q74 |
+| Camolas · Rótulos e packaging | Se añaden 5 trabajos (06–10): Cobaia (caja), Grande Escolha (rótulo), Garrafeira (caja), Monocasta Syrah (rótulo) y Moscatel de Setúbal |
+| Camolas · Anúncios e redes sociais | Se mantiene la cuadrícula. Roll-up → «25 anos», catálogo → «Cobaia» (imagen de campaña), bases para copo → «Prémio». Textos provisionales |
+| Camolas · O site | Capturas de **página entera** de adegacamolas.pt (Vinhos, Região e Vinhas, Experiências) a 2x, para PC (1440 px) y móvil (390 px), en tramos WebP de menos de 4.000 px (`uploads/hm-media/site-camolas/`). `[data-hm-shot="pc"\|"m"]`. Alto de la sección: 1000vh en PC y 1400vh en móvil. JS 17: los tramos pasan de lazy a eager a pantalla y media |
+| Sobre | Debajo de «Transparência», fuera la frase «Acreditamos genuinamente…». Showreels: pestañas «2025 · 2020» junto al botón del sonido (JS 16, clic delegado). PC: vídeos completos. Móvil: versiones ligeras; la de 2025 no tiene sonido, así que al activarlo pasa a la completa |
+| Contacto · selector | + «Avenças mensais» y «Coaching de Marcas» |
+
+## Medios
+
+- **Capturas:** adegacamolas.pt (cookie `age_gate=1`, Locomotive Scroll desactivado) y palmelaexperiences.pt.
+  - Hechas en local con el servidor como pasarela.
+  - Transferidas por la rama (commits `e5d222b` y `23e4c3d`) y verificadas con md5.
+  - JPEG a 1x para Laura en el scratchpad de la sesión.
+- **Imágenes nuevas de hortelamagenta.pt:** copiadas con `hm_media_mirror()`, 12 en total.
+- **Sin usar en el servidor:** `site-camolas/camolas-site-regiao-fundo.webp` (fondo descartado porque su titular chocaba con el texto de la galería).
+
+## Verificación
+
+- **Local, sobre las páginas regeneradas por el servidor:** 10 páginas en móvil y PC (20 pruebas), con 0 errores, sin desborde y con la capa cargada.
+- **En vivo:**
+  - Las 10 URL responden 200 con `v=1795436228`.
+  - El md5 de la capa servida es igual al local.
+  - Los tramos, el montaje y las imágenes nuevas responden 200 `image/webp`.
+
+## Pendiente (material o decisión de Dani/Gonçalo)
+
+- **Words de Gonçalo:** «Avença Mensal 360» y «Coaching de Marcas». No están en ClickUp ni en la demo. Los textos de la avença y de los anuncios de Camolas son provisionales.
+- **Clientes con avença:** confirmar si se pueden nombrar en la Home.
+- **Foto de Alinea en mayor resolución:** la web solo tiene 1023 px.
+- **Más anuncios y publicaciones reales de Camolas:** en hortelamagenta.pt solo están el banner de 25 anos, el del premio y los de Cobaia.
+- **Decisiones abiertas de Dani, sin tocar en esta ronda:** vídeo de la Home en móvil, formato de los proyectos de Branding en móvil, y los campos del formulario y la ubicación de la sede.

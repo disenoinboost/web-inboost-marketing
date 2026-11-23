@@ -490,11 +490,67 @@
     [].forEach.call(els, function (el) { if (el.__hmLate || el.classList.contains('hm-lit')) return; el.__hmLate = 1; lateIO.observe(el); });
   }
 
-  function init() { markMenu(); subMenus(); sides(); steps(); peeks(); lpN(); curtains(); vids(); shots(); ctaBar(); variety(); opArrows(); filterArrows(); packClients(); hands(); teamNames(); rotArrows(); lateAds(); req(); }
+  /* 16. (8.ª ronda, 2026-11-23) Sobre · os dois showreels: separadores «2025» (novo, por omissão) e «2020» (antigo) junto ao botão do som.
+     Computador: os vídeos completos. Telemóvel: as versões leves; o de 2025 leve não tem som, por isso ao ativar o som passa ao completo. */
+  var R25 = '/wp-content/uploads/hm-media/hortelamagenta.pt/media/pages/home/0765d0a2b4-1740654579/hortela_magenta-showreel_2025.mp4';
+  var R20 = '/wp-content/uploads/hm-media/nostalgia.hortelamagenta.pt/old/wp-content/themes/hortelamagenta/static/vids/HM-reel_2020.mp4';
+  var REELS = { '2025': { pc: R25, m: MV + 'showreel-clip-2025-movil.mp4', poster: MV + 'posters/showreel-clip-2025-movil.webp', mute: true }, '2020': { pc: R20, m: MV + 'hm-reel-2020-movil.mp4', poster: MV + 'posters/hm-reel-2020-movil.webp' } };
+  var reelCur = '2025';
+  function reelSet(v, k, keepSound) {
+    var r = REELS[k], playing = !v.paused, src = MQ.matches ? (keepSound && r.mute ? r.pc : r.m) : r.pc;
+    reelCur = k;
+    if (MQ.matches) v.setAttribute('poster', r.poster); else v.removeAttribute('poster');
+    if (v.getAttribute('src') !== src) { v.setAttribute('src', src); v.load(); if (playing || keepSound) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } }
+    D.querySelectorAll('.hm-reels button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-k') === k ? 'true' : 'false'); });
+  }
+  function reels() {
+    var v = D.querySelector('[data-sobre-reel]'); if (!v) return;
+    var sec = v.closest('section'), h2 = sec && sec.querySelector('h2'); if (!h2) return;
+    var row = h2.parentElement;
+    if (!row.querySelector('.hm-reels')) {
+      var g = D.createElement('div'); g.className = 'hm-reels'; g.setAttribute('role', 'group'); g.setAttribute('aria-label', 'Escolher showreel');
+      ['2025', '2020'].forEach(function (k) {
+        var b = D.createElement('button'); b.type = 'button'; b.setAttribute('data-k', k); b.textContent = k;
+        g.appendChild(b);
+      });
+      h2.insertAdjacentElement('afterend', g);
+    }
+    /* clique por delegação: o desenho pode voltar a montar o cabeçalho (copiando o HTML) e os listeners dos botões perdiam-se */
+    if (!D.__hmReelClick) {
+      D.__hmReelClick = 1;
+      D.addEventListener('click', function (e) { var b = e.target && e.target.closest && e.target.closest('.hm-reels button'); if (!b) return; var w = D.querySelector('[data-sobre-reel]'); if (w) reelSet(w, b.getAttribute('data-k'), !w.muted); }, true);
+    }
+    if (!v.__hmReel) {
+      v.__hmReel = 1;
+      /* som ativado no telemóvel com o 2025 leve (sem som): passa ao completo */
+      v.addEventListener('volumechange', function () { if (MQ.matches && !v.muted && REELS[reelCur].mute && v.getAttribute('src') !== REELS[reelCur].pc) reelSet(v, reelCur, true); });
+    }
+    var want = MQ.matches ? REELS[reelCur].m : REELS[reelCur].pc, now = v.getAttribute('src') || '';
+    if (now !== want && now !== REELS[reelCur].pc) reelSet(v, reelCur, false);
+    else D.querySelectorAll('.hm-reels button').forEach(function (b) { b.setAttribute('aria-pressed', b.getAttribute('data-k') === reelCur ? 'true' : 'false'); });
+  }
+
+  /* 17. (8.ª ronda) Camolas · O site: os tramos das capturas são lazy; ecrã e meio antes da secção passam a eager
+     (dentro da moldura recortada o navegador só os pediria ao aparecer, e ficariam brancos ao passar depressa) */
+  var shotIO = null;
+  function shotsWarm() {
+    var sec = D.getElementById('digital'); if (!sec || sec.__hmWarm || !('IntersectionObserver' in W)) return;
+    sec.__hmWarm = 1;
+    shotIO = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return; shotIO.disconnect();
+        var k = W.matchMedia('(max-width: 760px)').matches ? 'm' : 'pc';
+        D.querySelectorAll('[data-hm-shot="' + k + '"] img[loading="lazy"]').forEach(function (im) { im.setAttribute('loading', 'eager'); });
+      });
+    }, { rootMargin: '150% 0px' });
+    shotIO.observe(sec);
+  }
+
+  function init() { markMenu(); subMenus(); sides(); steps(); peeks(); lpN(); curtains(); vids(); shots(); ctaBar(); variety(); opArrows(); filterArrows(); packClients(); hands(); teamNames(); rotArrows(); lateAds(); reels(); shotsWarm(); req(); }
   /* o desenho é montado por JS: repetir até aparecer e quando o menu se abre */
   var n = 0, iv = setInterval(function () { init(); if (++n > 20) clearInterval(iv); }, 250);
   D.addEventListener('click', function () { setTimeout(function () { markMenu(); subMenus(); opArrows(); filterArrows(); }, 60); }, true);
-  [6000, 10000].forEach(function (t) { setTimeout(function () { opArrows(); filterArrows(); vids(); packClients(); hands(); teamNames(); rotArrows(); lateAds(); }, t); });
+  [6000, 10000].forEach(function (t) { setTimeout(function () { opArrows(); filterArrows(); vids(); packClients(); hands(); teamNames(); rotArrows(); lateAds(); reels(); }, t); });
   W.addEventListener('scroll', req, { passive: true });
   W.addEventListener('resize', function () { curtains(); req(); packClients(); });
   if (D.fonts && D.fonts.ready) D.fonts.ready.then(function () { packSig = ''; packClients(); });

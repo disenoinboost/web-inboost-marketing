@@ -14,10 +14,10 @@ data = json.load(open(src))
 data = data.get('data', data)
 data = data.get('return_value', data)
 os.makedirs(out, exist_ok=True)
-for name, b64 in data.get('html', {}).items():
+for name, b64 in (data.get('html') or {}).items():
     if b64:
         open(os.path.join(out, name + '.html'), 'wb').write(gzip.decompress(base64.b64decode(b64)))
-for path, b64 in data.get('files', {}).items():
+for path, b64 in (data.get('files') or {}).items():
     fp = os.path.join(out, 'site', path.lstrip('/'))
     os.makedirs(os.path.dirname(fp), exist_ok=True)
     open(fp, 'wb').write(gzip.decompress(base64.b64decode(b64)))

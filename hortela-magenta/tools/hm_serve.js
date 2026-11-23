@@ -15,7 +15,7 @@ const fs = require('fs'), path = require('path');
 const ORIGIN = 'https://hortelamagenta.inboost.marketing';
 const PAGES = { '/': 'home', '/servicos/': 'servicos', '/servicos/branding/': 'branding', '/servicos/design-web/': 'design-web', '/projetos/': 'projetos', '/projetos/camolas/': 'camolas', '/sobre/': 'sobre', '/blog/': 'blog', '/blog/quanto-custa-um-site/': 'artigo', '/contacto/': 'contacto' };
 const TYPES = { '.js': 'application/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.png': 'image/png', '.jpg': 'image/jpeg', '.webp': 'image/webp', '.mp4': 'video/mp4' };
-const FIX = process.env.FIX || path.join(__dirname, '..', 'fix');
+const FIX = process.env.FIX || path.join(__dirname, '..', 'capa-fix');
 const [dir, cmd, ...rest] = process.argv.slice(2);
 const flags = Object.fromEntries(rest.filter(a => a.startsWith('--')).map(a => { const [k, v] = a.slice(2).split('='); return [k, v === undefined ? true : v]; }));
 const args = rest.filter(a => !a.startsWith('--'));

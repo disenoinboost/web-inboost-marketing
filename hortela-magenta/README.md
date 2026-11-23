@@ -22,9 +22,9 @@ El `CLAUDE.md` de la raíz es de otro proyecto (optimización de URL de Inboost)
 
 - **Archivos:**
   - En el sitio: `wp-content/themes/divi-child/assets/hm-boceto-fix.css` y `hm-boceto-fix.js`.
-  - La fuente está en **`hortela-magenta/fix/`**, y hay que mantener las dos versiones iguales.
+  - La fuente está en **`hortela-magenta/capa-fix/`**, y hay que mantener las dos versiones iguales.
   - Sobreviven a kits nuevos del diseño.
-- **Subir:** `python3 -I hortela-magenta/tools/hm_push.py`. Imprime el `code` para `novamira/execute-php`, que sube los dos archivos, verifica el md5 y vacía las cachés.
+- **Subir:** `python3 -I hortela-magenta/tools/hm_push.py hortela-magenta/capa-fix` (o, si pesa mucho, un parche old → new con verificación de md5, como en la 8.ª ronda). Imprime el `code` para `novamira/execute-php`, que sube los dos archivos, verifica el md5 y vacía las cachés.
 - **Contenido actual (ya publicado y aprobado):**
   - **Menú móvil `[data-mobile]`:**
     - Marca la página actual con `data-hm-cur`.
@@ -32,7 +32,9 @@ El `CLAUDE.md` de la raíz es de otro proyecto (optimización de URL de Inboost)
   - **Textos laterales de `[data-marca]`/`[data-device]`** (Branding «Suportes», Design Web «Responsivo»): visibles en móvil como fondo detrás de las piezas.
   - **Paneles `[data-step-v]`** («Ponto de partida» en Branding, «Processo» en Design Web): transición suave al cambiar.
   - **Artículo:** la firma va pegada a la entradilla.
-- **Correcciones dentro de los paquetes** (hay que repetirlas si llega un kit nuevo sin ellas): en el CSS móvil, `[data-header] > div:first-child` → `div:first-of-type` (3 veces por página).
+- **Correcciones dentro de los paquetes** (hay que repetirlas si llega un kit nuevo sin ellas):
+  - En el CSS móvil, `[data-header] > div:first-child` → `div:first-of-type` (3 veces por página).
+  - Textos, estructura e imágenes de la 8.ª ronda: `paquetes/2026-11-23-*.json`. Se prueban en local con `paquetes/aplicar.py` y se aplican en el servidor con `paquetes/aplicar.php`.
 
 ## Probar en local (el contenedor NO llega al sitio: proxy 403)
 
@@ -44,7 +46,7 @@ El `CLAUDE.md` de la raíz es de otro proyecto (optimización de URL de Inboost)
    - `node hortela-magenta/tools/hm_serve.js <dir> reg`: las 10 páginas en móvil y PC (errores, desborde, capa cargada).
    - `… shot /servicos/branding/ out.png --at='#identidade:0'`: captura de un bloque.
    - `… run <ruta> guion.js`: interacciones con Playwright, como `page.tap`.
-   - Siempre se usa la capa LOCAL de `hortela-magenta/fix/`. Las imágenes de hm-media no se traen y salen grises.
+   - Siempre se usa la capa LOCAL de `hortela-magenta/capa-fix/` (o la carpeta de la variable `FIX`). Las imágenes de hm-media no se traen y salen grises.
 
 ## Lecciones aprendidas (evitan horas)
 
@@ -90,7 +92,7 @@ El `CLAUDE.md` de la raíz es de otro proyecto (optimización de URL de Inboost)
   - Después, ampliar `hm_media_refs()` para recoger también rutas relativas `AAAA/MM/*.jpg|png` cuando la constante base se use con variable. A continuación, `hm_media_mirror()` y `hm_dist_reset()`.
   - Si nostalgia no responde, buscar las imágenes en otro sitio o pedírselas a Laura.
 
-## Pendiente: cambios pedidos por Laura (5-nov-2026), todos para MÓVIL salvo los dos marcados para PC
+## Cambios pedidos por Laura (5-nov-2026), ya hechos (ver `2026-11-05-revision-movil.md`; la 8.ª ronda, en `2026-11-23-octava-ronda.md`)
 
 - **Global:**
   - El logo cambia entre la pantalla normal y el menú abierto: tiene que ser igual (tamaño y posición).

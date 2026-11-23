@@ -1,0 +1,107 @@
+[
+ {
+  "op": "replace",
+  "page": "servicos",
+  "old": "croma/78fb3bf26c-1716976201/hortelamagenta_portfolio_marca_croma_banner_02-2400x.",
+  "new": "croma/b58dae6e64-1716976422/hortelamagenta_portfolio_marca_croma_rs_01-1900x.",
+  "count": 1,
+  "why": "Serviços · Campanhas: Croma, cartazes → publicações nas redes"
+ },
+ {
+  "op": "regex",
+  "page": "servicos",
+  "pattern": "alsil/be5cc9f6bd-1734959174/alsilgroup_portfolio_marca_stand-1900x\\.(jpg|webp)(\" src=\"data:image/gif;base64,[^\"]*\" alt=\"Campanhas &amp; Redes Sociais — )Alsilgroup(\"[^>]*></div><figcaption[^>]*>)Alsilgroup</figcaption>",
+  "new": "consulai/34cf7342ce-1721827892/hortelamagenta_portfolio_marca_consulai_redes_sociais_02-1900x.\\1\\2Consulai\\3Consulai</figcaption>",
+  "count": 1,
+  "why": "Serviços · Campanhas: stand Stockfer (Alsil) → publicações da Consulai"
+ },
+ {
+  "op": "replace",
+  "page": "servicos",
+  "old": "alinea/6d50161d47-1710332766/hortelamagenta_portfolio_alinea_foto_01-950x.",
+  "new": "alinea/6d50161d47-1710332766/hortelamagenta_portfolio_alinea_foto_01-1023x1534-q85.",
+  "count": 2,
+  "why": "Serviços · Fotografia: Alinea com a versão maior (1023 px)"
+ },
+ {
+  "op": "replace",
+  "page": "camolas",
+  "old": "camolas/2d4be057fa-1736177003/hortelamagenta_portfolio_marca_camolas_rollup-1900x.",
+  "new": "camolas/4814cb2a18-1735900286/hortelamagenta_portfolio_marca_camolas_25anos_banner-1900x.",
+  "count": 2,
+  "why": "Camolas · Anúncios 02: roll-up → 25 anos"
+ },
+ {
+  "op": "replace",
+  "page": "camolas",
+  "old": "alt=\"Roll-up da Adega Camolas\" width=\"1900\" height=\"1267\" loading=\"lazy\" decoding=\"async\" style=\"display:block; width:100%; height:100%; object-fit:cover;\"",
+  "new": "alt=\"Adega Camolas — 25 anos\" width=\"1900\" height=\"602\" loading=\"lazy\" decoding=\"async\" style=\"display:block; width:100%; height:100%; object-fit:contain;\"",
+  "count": 2,
+  "why": ""
+ },
+ {
+  "op": "replace",
+  "page": "camolas",
+  "old": ">Roll-up</h3><p style=\"margin:14px 0 0; max-width:34ch; font-size:18px; line-height:1.5; color:var(--tx); text-wrap:pretty;\">Suporte de grande formato para provas, feiras e eventos, com a imagem da adega.</p><p style=\"margin:10px 0 0; font-size:18px; color:var(--mu);\">Impressão em grande formato</p>",
+  "new": ">25 anos</h3><p style=\"margin:14px 0 0; max-width:34ch; font-size:18px; line-height:1.5; color:var(--tx); text-wrap:pretty;\">Campanha dos 25 anos da adega, para anúncios e publicações nas redes sociais.</p><p style=\"margin:10px 0 0; font-size:18px; color:var(--mu);\">Anúncios · Redes sociais</p>",
+  "count": 1,
+  "why": ""
+ },
+ {
+  "op": "regex",
+  "page": "camolas",
+  "pattern": "<video data-zoom=\"\" data-video=\"\" src=\"[^\"]*camolas_catalogo\\.mp4\" muted=\"\" loop=\"\" playsinline=\"\" preload=\"none\" aria-label=\"Catálogo da Adega Camolas\" style=\"display:block; width:100%; height:100%; object-fit:cover;\"></video>",
+  "new": "<img data-zoom=\"\" src=\"https://hortelamagenta.pt/media/pages/projetos/camolas/68a9f929cc-1736418280/hortelamagenta_portfolio_marca_camolas_cobaia_02-1900x.jpg\" alt=\"Anúncio do Cobaia, da Adega Camolas\" width=\"1900\" height=\"950\" loading=\"lazy\" decoding=\"async\" style=\"display:block; width:100%; height:100%; object-fit:cover;\">",
+  "count": 1,
+  "why": "Camolas · Anúncios 03: catálogo → anúncio Cobaia"
+ },
+ {
+  "op": "regex",
+  "page": "camolas",
+  "pattern": "<video data-video=\"\" src=\"[^\"]*camolas_catalogo\\.mp4\" muted=\"\" loop=\"\" playsinline=\"\" preload=\"none\" aria-label=\"Catálogo da Adega Camolas\" style=\"display:block; width:100%; height:100%; object-fit:cover;\"></video>",
+  "new": "<img src=\"https://hortelamagenta.pt/media/pages/projetos/camolas/68a9f929cc-1736418280/hortelamagenta_portfolio_marca_camolas_cobaia_02-1900x.jpg\" alt=\"Anúncio do Cobaia, da Adega Camolas\" width=\"1900\" height=\"950\" loading=\"lazy\" decoding=\"async\" style=\"display:block; width:100%; height:100%; object-fit:cover;\">",
+  "count": 1,
+  "why": ""
+ },
+ {
+  "op": "replace",
+  "page": "camolas",
+  "old": ">Catálogo</h3><p style=\"margin:14px 0 0; max-width:34ch; font-size:18px; line-height:1.5; color:var(--tx); text-wrap:pretty;\">As gamas de vinhos reunidas num catálogo, com a mesma linguagem dos rótulos.</p><p style=\"margin:10px 0 0; font-size:18px; color:var(--mu);\">Editorial</p>",
+  "new": ">Cobaia</h3><p style=\"margin:14px 0 0; max-width:34ch; font-size:18px; line-height:1.5; color:var(--tx); text-wrap:pretty;\">Imagem de campanha do Cobaia, com a garrafa e as uvas em destaque.</p><p style=\"margin:10px 0 0; font-size:18px; color:var(--mu);\">Anúncios · Redes sociais</p>",
+  "count": 1,
+  "why": ""
+ },
+ {
+  "op": "replace",
+  "page": "camolas",
+  "old": "camolas/0e1d9bea3a-1735900358/hortelamagenta_portfolio_marca_camolas_base-para-copo-950x.",
+  "new": "camolas/7ed9788f4b-1736329677/hortelamagenta_portfolio_marca_camolas_aword-1900x.",
+  "count": 2,
+  "why": "Camolas · Anúncios 04: bases para copo → prémio"
+ },
+ {
+  "op": "replace",
+  "page": "camolas",
+  "old": "alt=\"Base para copo da Adega Camolas\" width=\"950\" height=\"871\" loading=\"lazy\" decoding=\"async\" style=\"display:block; width:100%; height:100%; object-fit:cover;\"",
+  "new": "alt=\"Adega Camolas — prémio\" width=\"1900\" height=\"584\" loading=\"lazy\" decoding=\"async\" style=\"display:block; width:100%; height:100%; object-fit:contain;\"",
+  "count": 2,
+  "why": ""
+ },
+ {
+  "op": "replace",
+  "page": "camolas",
+  "old": ">Base para copo</h3><p style=\"margin:14px 0 0; max-width:34ch; font-size:18px; line-height:1.5; color:var(--tx); text-wrap:pretty;\">A marca à mesa: bases para copo para a loja e para as provas.</p><p style=\"margin:10px 0 0; font-size:18px; color:var(--mu);\">Impressão</p>",
+  "new": ">Prémio</h3><p style=\"margin:14px 0 0; max-width:34ch; font-size:18px; line-height:1.5; color:var(--tx); text-wrap:pretty;\">Publicação para partilhar uma distinção dos vinhos da adega.</p><p style=\"margin:10px 0 0; font-size:18px; color:var(--mu);\">Redes sociais</p>",
+  "count": 1,
+  "why": ""
+ },
+ {
+  "op": "insert_after",
+  "page": "camolas",
+  "anchor": "hortelamagenta_portfolio_marca_camolas_garrafeira_02-1900x.",
+  "marker": "</article>",
+  "text": "<article data-lpp=\"\" data-cursor-bg=\"solid\" style=\"flex:none; width:clamp(280px,46vw,720px);\"><div data-lpi=\"\" style=\"aspect-ratio:3/2; overflow:hidden; background:var(--ph); clip-path:inset(0 0 27.8% 0);\"><img src=\"https://hortelamagenta.pt/media/pages/projetos/camolas/8065f08070-1736418209/hortelamagenta_portfolio_marca_camolas_cobaia_01-1900x.jpg\" alt=\"Embalagem do Cobaia\" width=\"1900\" height=\"950\" loading=\"lazy\" decoding=\"async\" style=\"display:block; width:100%; height:100%; object-fit:cover; transform:scale(1.08);\"></div><div style=\"display:flex; justify-content:space-between; align-items:baseline; gap:16px; margin-top:16px;\"><h3 data-lpt=\"\" style=\"margin:0; font-size:clamp(24px,2.4vw,36px); line-height:1.05; letter-spacing:-0.035em; font-weight:200; opacity:.15;\">Cobaia</h3><span data-lpd=\"\" style=\"font-size:16px; color:inherit; opacity:0; transform:translateY(10px); transition:opacity .5s ease, transform .6s cubic-bezier(.2,.7,.2,1);\">06</span></div></article><article data-lpp=\"\" data-cursor-bg=\"solid\" style=\"flex:none; width:clamp(280px,46vw,720px);\"><div data-lpi=\"\" style=\"aspect-ratio:3/2; overflow:hidden; background:var(--ph); clip-path:inset(0 0 27.8% 0);\"><img src=\"https://hortelamagenta.pt/media/pages/projetos/camolas/0afccdb5c0-1736270048/hortelamagenta_portfolio_marca_camolas_grande-escolha_03-1023x1116-q85.jpg\" alt=\"Rótulo Grande Escolha, pormenor\" width=\"1023\" height=\"1116\" loading=\"lazy\" decoding=\"async\" style=\"display:block; width:100%; height:100%; object-fit:cover; transform:scale(1.08);\"></div><div style=\"display:flex; justify-content:space-between; align-items:baseline; gap:16px; margin-top:16px;\"><h3 data-lpt=\"\" style=\"margin:0; font-size:clamp(24px,2.4vw,36px); line-height:1.05; letter-spacing:-0.035em; font-weight:200; opacity:.15;\">Grande Escolha · rótulo</h3><span data-lpd=\"\" style=\"font-size:16px; color:inherit; opacity:0; transform:translateY(10px); transition:opacity .5s ease, transform .6s cubic-bezier(.2,.7,.2,1);\">07</span></div></article><article data-lpp=\"\" data-cursor-bg=\"solid\" style=\"flex:none; width:clamp(280px,46vw,720px);\"><div data-lpi=\"\" style=\"aspect-ratio:3/2; overflow:hidden; background:var(--ph); clip-path:inset(0 0 27.8% 0);\"><img src=\"https://hortelamagenta.pt/media/pages/projetos/camolas/92cfcefb3a-1736269755/hortelamagenta_portfolio_marca_camolas_garrafeira_04-1023x1023-q85.jpg\" alt=\"Caixa do Garrafeira\" width=\"1023\" height=\"1023\" loading=\"lazy\" decoding=\"async\" style=\"display:block; width:100%; height:100%; object-fit:cover; transform:scale(1.08);\"></div><div style=\"display:flex; justify-content:space-between; align-items:baseline; gap:16px; margin-top:16px;\"><h3 data-lpt=\"\" style=\"margin:0; font-size:clamp(24px,2.4vw,36px); line-height:1.05; letter-spacing:-0.035em; font-weight:200; opacity:.15;\">Garrafeira · caixa</h3><span data-lpd=\"\" style=\"font-size:16px; color:inherit; opacity:0; transform:translateY(10px); transition:opacity .5s ease, transform .6s cubic-bezier(.2,.7,.2,1);\">08</span></div></article><article data-lpp=\"\" data-cursor-bg=\"solid\" style=\"flex:none; width:clamp(280px,46vw,720px);\"><div data-lpi=\"\" style=\"aspect-ratio:3/2; overflow:hidden; background:var(--ph); clip-path:inset(0 0 27.8% 0);\"><img src=\"https://hortelamagenta.pt/media/pages/projetos/camolas/c5bc2f709d-1740739433/hortelamagenta_portfolio_marca_camolas_monocasta_syrah_02-1023x920-q85.jpg\" alt=\"Rótulo Monocasta Syrah, pormenor\" width=\"1023\" height=\"920\" loading=\"lazy\" decoding=\"async\" style=\"display:block; width:100%; height:100%; object-fit:cover; transform:scale(1.08);\"></div><div style=\"display:flex; justify-content:space-between; align-items:baseline; gap:16px; margin-top:16px;\"><h3 data-lpt=\"\" style=\"margin:0; font-size:clamp(24px,2.4vw,36px); line-height:1.05; letter-spacing:-0.035em; font-weight:200; opacity:.15;\">Monocasta Syrah · rótulo</h3><span data-lpd=\"\" style=\"font-size:16px; color:inherit; opacity:0; transform:translateY(10px); transition:opacity .5s ease, transform .6s cubic-bezier(.2,.7,.2,1);\">09</span></div></article><article data-lpp=\"\" data-cursor-bg=\"solid\" style=\"flex:none; width:clamp(280px,46vw,720px);\"><div data-lpi=\"\" style=\"aspect-ratio:3/2; overflow:hidden; background:var(--ph); clip-path:inset(0 0 27.8% 0);\"><img src=\"https://hortelamagenta.pt/media/pages/projetos/camolas/11b861d53c-1735900400/hortelamagenta_portfolio_marca_camolas_foto_04-1023x1227-q85.jpg\" alt=\"Rótulo Moscatel de Setúbal\" width=\"1023\" height=\"1227\" loading=\"lazy\" decoding=\"async\" style=\"display:block; width:100%; height:100%; object-fit:cover; transform:scale(1.08);\"></div><div style=\"display:flex; justify-content:space-between; align-items:baseline; gap:16px; margin-top:16px;\"><h3 data-lpt=\"\" style=\"margin:0; font-size:clamp(24px,2.4vw,36px); line-height:1.05; letter-spacing:-0.035em; font-weight:200; opacity:.15;\">Moscatel de Setúbal</h3><span data-lpd=\"\" style=\"font-size:16px; color:inherit; opacity:0; transform:translateY(10px); transition:opacity .5s ease, transform .6s cubic-bezier(.2,.7,.2,1);\">10</span></div></article>",
+  "count": 1,
+  "why": "Camolas · Rótulos e packaging: +5 trabalhos (06–10)"
+ }
+]
