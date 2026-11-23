@@ -82,3 +82,4 @@ Sitio: https://hortelamagenta.inboost.marketing. Las páginas salen de los paque
 - **Pruebas en local:** 20 de 20 sin errores ni desborde.
 - **En vivo:** páginas 200, md5 de la capa igual y medios 200.
 - **Serviços · Web design (después):** el borde blanco de las pantallas se confundía con la web. El montaje pasa a `camolas-site-mockup-4x5-v2.webp`, con monitor y móvil negros (bisel, cámara e isla). La versión 1 se borró del servidor.
+- **Serviços · Web design (v3):** el resto de la página sale pegado por debajo del monitor y del móvil, sin hueco, como en las otras muestras (`camolas-site-mockup-4x5-v3.webp`). La v2 se borró del servidor.

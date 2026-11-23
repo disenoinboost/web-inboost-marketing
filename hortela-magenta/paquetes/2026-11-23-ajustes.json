@@ -38,5 +38,13 @@
   "new": "camolas-site-mockup-4x5-v2.webp",
   "count": 1,
   "why": "Serviços · Design Web: montagem com molduras pretas (monitor e telemóvel), para não se confundir com o site"
+ },
+ {
+  "op": "regex",
+  "page": "servicos",
+  "pattern": "camolas-site-mockup-4x5-v2\\.webp",
+  "new": "camolas-site-mockup-4x5-v3.webp",
+  "count": 1,
+  "why": "Serviços · Design Web: o resto da página sai por baixo do monitor e do telemóvel, sem espaço (como nas outras amostras)"
  }
 ]
