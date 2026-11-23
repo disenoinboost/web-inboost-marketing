@@ -492,3 +492,17 @@ html body [data-hm-shot] img { display: block; width: 100%; height: auto; }
 @media (max-width: 760px) { html body [data-hm-shot="pc"] { display: none !important; } }
 @media (min-width: 761px) { html body [data-hm-shot="m"] { display: none !important; } }
 @media (min-width: 768px) { html body #digital[data-scrub] { height: 1000vh !important; } }
+
+/* ===== 8.ª ronda · ajustes de Laura (2026-11-23, tarde) ===== */
+
+/* Home · cifras: o mesmo espaço entre a linha e os algarismos que entre o texto e a linha seguinte
+   (o desenho tinha clamp(12px,2vh,20px) por cima e o gap da coluna, clamp(20px,3vh,36px), por baixo; medido: 11 vs 28 px no telemóvel, 16 vs 36 no PC) */
+html body #sobre div:has(> p > span > [data-dg]) { padding-top: calc(clamp(20px, 3vh, 36px) + 10px) !important; }
+
+/* Camolas · Anúncios e redes sociais: as imagens enchem a caixa (sem faixas creme) e o 05 fica centrado na sua caixa como os outros */
+html body #anuncios img { object-fit: cover !important; }
+@media (min-width: 768px) { html body #anuncios article[data-swap-txt]:last-of-type { min-height: 62vh !important; align-items: center !important; } }
+
+/* Design Web: ao sair da cabeçalho, o véu (data-veil) pinta-a com a cor do bloco seguinte. Era #e8eced (o bloco «Atividade», retirado);
+   o seguinte agora é «Responsivo», #f6f7f8, como em Branding o véu e «Suportes» têm a mesma cor */
+html body section:has(+ #responsivo) [data-veil] { background: linear-gradient(to top, #f6f7f8 50%, transparent 100%) !important; }

@@ -1,0 +1,34 @@
+[
+ {
+  "op": "regex",
+  "page": "servicos",
+  "pattern": "<img (?:width=\"\\d+\" height=\"\\d+\" )?src=\"[^\"]*alinea_foto_01[^\"]*\" alt=\"Fotografia &amp; Vídeo — Alinea\"",
+  "new": "<img src=\"https://hortelamagenta.pt/media/pages/projetos/queijaria-da-sao/4146df1010-1725294355/hortelamagenta_portfolio_marca_queijariadasao_foto_06-1900x.jpg\" alt=\"Fotografia &amp; Vídeo — Queijaria da São\"",
+  "count": 1,
+  "why": "Serviços · Fotografia: a foto da Alinea só existe pequena (máx. 1023×682); passa a uma fotografia de produto nítida (Queijaria da São, 1900 px)"
+ },
+ {
+  "op": "regex",
+  "page": "servicos",
+  "pattern": "(queijariadasao_foto_06-1900x\\.(?:jpg|webp)\" alt=\"Fotografia &amp; Vídeo — Queijaria da São\"[^>]*></div><figcaption[^>]*>)Alinea(</figcaption>)",
+  "new": "\\1Queijaria da São\\2",
+  "count": 1,
+  "why": "Serviços · Fotografia: legenda"
+ },
+ {
+  "op": "regex",
+  "page": "servicos",
+  "pattern": "<img (?:width=\"\\d+\" height=\"\\d+\" )?src=\"[^\"]*camolas-site-servicos-4x5\\.webp\" alt=\"Design Web — Camolas\"",
+  "new": "<img width=\"1450\" height=\"1812\" src=\"/wp-content/uploads/hm-media/site-camolas/camolas-site-mockup-4x5.webp\" alt=\"Design Web — Camolas\"",
+  "count": 1,
+  "why": "Serviços · Design Web: montagem do site da Adega Camolas (PC e telemóvel), no estilo das outras"
+ },
+ {
+  "op": "regex",
+  "page": "design-web",
+  "pattern": "<img (?:width=\"\\d+\" height=\"\\d+\" )?src=\"[^\"]*farinhafirmos_site_06-1900x\\.(?:jpg|webp)\" alt=\"\" loading=\"lazy\" style=\"position:absolute; inset:0;",
+  "new": "<img src=\"https://hortelamagenta.pt/media/pages/projetos/camolas/89760b53c2-1736254803/hortelamagenta_portfolio_marca_camolas_site_04.jpg\" alt=\"\" loading=\"lazy\" style=\"position:absolute; inset:0;",
+  "count": 1,
+  "why": "Design Web · Trabalhos: fundo escuro (site da Adega Camolas sobre negro) para ler bem o texto"
+ }
+]

@@ -63,3 +63,21 @@ Sitio: https://hortelamagenta.inboost.marketing. Las páginas salen de los paque
 - **Foto de Alinea en mayor resolución:** la web solo tiene 1023 px.
 - **Más anuncios y publicaciones reales de Camolas:** en hortelamagenta.pt solo están el banner de 25 anos, el del premio y los de Cobaia.
 - **Decisiones abiertas de Dani, sin tocar en esta ronda:** vídeo de la Home en móvil, formato de los proyectos de Branding en móvil, y los campos del formulario y la ubicación de la sede.
+
+## Ajustes de Laura (2026-11-23, tarde)
+
+| Punto | Causa | Cambio |
+|---|---|---|
+| Camolas · Anúncios: franjas crema | 25 anos, Prémio y Frase usaban `object-fit: contain` | Todas las imágenes del bloque con `cover` (capa) |
+| Camolas · Anúncios: el 05 pegado abajo | El diseño daba al último `min-height: 31vh` y `align-items: flex-end` | En PC, `62vh` y centrado como los demás (capa) |
+| Home · cifras: margen desigual | Arriba `clamp(12px,2vh,20px)` y abajo el gap de la columna. Medido: 11 frente a 28 px en móvil y 16 frente a 36 en PC | `padding-top: calc(clamp(20px,3vh,36px) + 10px)`. Resultado: 28/28 en móvil y 35/36 en PC (capa, solo `#sobre` de la Home) |
+| Design Web · transición de la cabecera | Al bajar, el velo (`data-veil`) pinta la cabecera de `#e8eced`, el color del bloque «Atividade» que se quitó. El bloque siguiente, «Responsivo», es `#f6f7f8` | El velo usa el color del bloque siguiente cuando este es `#responsivo` (capa). Igual que en Branding (velo y «Suportes» del mismo color) |
+| Design Web · fondo de «Trabalhos de criação web» | `farinhafirmos_site_06` era demasiado claro para tanto texto | `camolas_site_04.jpg` (2400 px, fondo casi negro, el site a la derecha) |
+| Serviços · Web design (Camolas) | El recorte 4:5 de 780 px se ampliaba a 724 px CSS de ancho (borroso) y no seguía el estilo de las otras | Montaje propio de 1450×1812 con el estilo de `farinhafirmos_site_05`: PC y móvil de adegacamolas.pt/vinhos sobre fondo oscuro con bloque arena, a partir de las capturas a 2x (`site-camolas/camolas-site-mockup-4x5.webp`) |
+| Serviços · Fotografia: Alinea borrosa | Las fotos de Alinea en hortelamagenta.pt son como mucho de 1023×682. La `foto_03` tiene márgenes blancos (la foto útil es de unos 490×680). El hueco mide 724 px CSS | Pasa a una foto de producto nítida: Queijaria da São (`queijariadasao_foto_06`, 1900 px, WebP q88), con su pie. Si se quiere Alinea, hace falta el original |
+
+- **Ediciones de paquetes:** `paquetes/2026-11-23-ajustes.json` (4).
+- **Copias:** `hm-paginas-bak/2026-11-23-antes-8a-ronda-ajustes/`.
+- **Capa:** css `d1360f50…`, servida con `v=1795439334`.
+- **Pruebas en local:** 20 de 20 sin errores ni desborde.
+- **En vivo:** páginas 200, md5 de la capa igual y medios 200.
