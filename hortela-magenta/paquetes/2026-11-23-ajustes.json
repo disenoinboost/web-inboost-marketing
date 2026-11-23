@@ -30,5 +30,13 @@
   "new": "<img src=\"https://hortelamagenta.pt/media/pages/projetos/camolas/89760b53c2-1736254803/hortelamagenta_portfolio_marca_camolas_site_04.jpg\" alt=\"\" loading=\"lazy\" style=\"position:absolute; inset:0;",
   "count": 1,
   "why": "Design Web · Trabalhos: fundo escuro (site da Adega Camolas sobre negro) para ler bem o texto"
+ },
+ {
+  "op": "regex",
+  "page": "servicos",
+  "pattern": "camolas-site-mockup-4x5\\.webp",
+  "new": "camolas-site-mockup-4x5-v2.webp",
+  "count": 1,
+  "why": "Serviços · Design Web: montagem com molduras pretas (monitor e telemóvel), para não se confundir com o site"
  }
 ]
