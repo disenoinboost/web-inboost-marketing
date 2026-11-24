@@ -127,3 +127,21 @@ El `CLAUDE.md` de la raíz es de otro proyecto (optimización de URL de Inboost)
 - **PC:** en el menú de escritorio, un poco más pequeños el logo, el texto y el desplegable.
 
 Forma de trabajar con Laura: en español, directo, avisos cortos de avance. Antes de publicar, probar en local (móvil y PC, 0 errores, sin desborde). Después de publicar, comprobar en vivo con `wp_remote_get` y dar a Laura la lista de lo hecho.
+
+## Fase 2 (2026-11-24): web completa
+
+Informe: `2026-11-24-fase2-informe.md`. Código: `fase2/`.
+
+- **36 URL servidas + 404.** Además de las 10 de la fase 1: 12 fichas de proyecto, 5 servicios (Gráfico + Editorial, Campanhas & Redes Sociais, Fotografia & Vídeo, Avença 360°, Coaching de Marcas), las 5 landings de especialidad, Política de Privacidade, Política de Cookies, Mapa do site, Obrigado y 404.
+- **Mapa de URL:** `hm-rutas.php` en el tema hijo (fuente: `fase2/servidor/hm-rutas.php`). Páginas, redirecciones 301 y prefijos.
+  - Barra final canónica por URL, como en la web actual: sin barra (`/projetos/camolas`), salvo las landings (`/design-rotulos-vinho/`). La otra variante redirige con 301.
+  - Versión inglesa `/en/...` → equivalente en portugués (301). Rutas nativas de WordPress (entradas, adjuntos, feeds) → 404 del diseño; categorías → /blog; autor → /sobre.
+  - `/media/...` de Kirby → copia local en hm-media (301), para enlaces e imágenes indexadas.
+- **`hm-boceto.php` (servidor):** usa el mapa, sirve `hm-paginas/404.html` con estado 404, genera `/sitemap.xml` (sitemaps de WordPress desactivados), `?divi` y `?paquete` solo con sesión, y `X-Robots-Tag: noindex` en cualquier dominio que no sea hortelamagenta.pt.
+- **Formulario:** `hm-formulario.php`, `POST /wp-json/hm/v1/contacto`. Guarda cada pedido en «Pedidos de contacto» (tipo `hm_pedido`) y envía un email a `hm_form_to` (por omisión, el email de administración). Después lleva a `/obrigado`. Las páginas de servicio enlazan `/contacto?servico=…` y el formulario preselecciona el servicio.
+- **Generador** (`fase2/gerador/`, Python): monta los modelos (template) de las páginas nuevas a partir de los existentes, con los bloques del diseño (Camolas para proyectos, Branding para servicios, landings, 404 y obrigado, Artigo para legales y mapa) y aplica a todas las páginas los cambios comunes (`comum.py`: enlaces internos sin barra, menús, pie) y de contenido (`extras.py`).
+  - Datos: `dados_projetos.py`, `dados_servicos.py`, `dados_landings.py`, `dados_aux.py`.
+  - Uso: traer los modelos originales (`template` de cada paquete) y `media-info.json`; `python3 gerar.py <modelos> media-info.json oldproj.json <salida>`; probar con `dist_local.py` + Chromium.
+  - **Si llega un kit nuevo de Claude Design:** volver a ejecutar el generador sobre los modelos nuevos (las páginas existentes reciben otra vez `comum.py` y `extras.py`).
+- **Desplegar:** subir los modelos a `fase2/modelos/` (con `md5.json`), hacer push y ejecutar `fase2/servidor/construir.php` en `novamira/execute-php`. El script los descarga de raw.githubusercontent.com, compone cada paquete solo con los recursos que usa, deja copia en `hm-paginas-bak/<fecha>-antes-<etiqueta>/` y vacía dist y WP Rocket. Los PHP se instalan con `fase2/servidor/implantar.php`, que hace `php -l` antes de sustituir.
+- **Medios:** los 266 de las fichas y landings ya están en `uploads/hm-media/`, con `fase2/servidor/espelhar.php`.
