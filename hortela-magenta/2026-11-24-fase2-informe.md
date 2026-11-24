@@ -231,14 +231,14 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 - **Landings:** se conservan las afirmaciones comerciales actuales, por ejemplo «eleva o seu valor percebido» o «experiência comprovada». Confirmar los premios IWSC 2024 y Mutante Awards 2025.
 - **Legales:**
   - La política de privacidad usa `info@hortelamagenta.com` (dominio .com). Confirmar el email y si se añade el NIF o los datos registrales.
-  - La Política de Cookies es nueva y necesita validación jurídica.
-  - No existe «Aviso legal» en la web actual y no se ha inventado. Confirmar si se quiere.
+  - La Política de Cookies es nueva (ahora con Complianz, GTM/GA4 y el píxel de Meta) y necesita validación jurídica.
+  - No existe «Aviso legal» en la web actual y no se ha inventado. En Portugal las sociedades deben identificarse en su web (Código das Sociedades Comerciais, art. 171.º; a validar jurídicamente): denominación, sede, conservatória del registro, número de matrícula/NIPC y capital social. Si venden a consumidores, también la información de resolución alternativa de litigios (RAL). Pedir esos datos al cliente para añadir una sección «Informação legal».
 - **Vídeos de Vimeo** (Alinea y Livro Vilamoura): se enlazan, no se incrustan, para no instalar cookies de terceros sin consentimiento.
 - **Versión inglesa:** la web actual tiene 19 páginas en inglés indexables. El diseño nuevo es solo en portugués. Ahora redirigen (301). Decidir si se rehace una versión EN.
 - **Blog:** solo hay un artículo real. Ni la web actual (no tiene blog) ni la archivada en nostalgia.hortelamagenta.pt (portfolio, servicios, equipo y Hortelanices) tienen artículos que migrar. Las 6 tarjetas de ejemplo siguen a la vista y llevan al artículo real: antes de publicar, hay que escribir esos artículos o quitar las tarjetas (`extras._blog_sem_exemplos` en el generador). Material de partida: S02 para naming, manual y rebranding, S01, S04, el Word de avença y la guía A02.
-- **No creadas por falta de contenido real (los Word lo indican):**
-  - Páginas locales `/criacao-de-sites-lisboa` y `/criacao-de-sites-algarve` (G01/G02): falta prueba de cobertura y caso local.
-  - Guía `/guias/manual-identidade-visual` (A02): falta una muestra autorizada.
+- **No creadas por falta de contenido real (los Word lo indican):** no son páginas de la web actual, sino propuestas del plan de contenidos SEO de Inboost (paquete «03-Contenidos»). Para hacerlas hace falta material del cliente:
+  - Páginas locales `/criacao-de-sites-lisboa` y `/criacao-de-sites-algarve` (G01/G02): confirmar que trabajan y atienden clientes en Lisboa y el Algarve, y al menos un proyecto o caso de cada zona (con permiso para citarlo).
+  - Guía `/guias/manual-identidade-visual` (A02): un manual de identidad real que se pueda enseñar (o partes), con autorización del cliente final.
 - **Pendientes de rondas anteriores:** la foto original de Alinea y más anuncios de Camolas.
 
 ## 8. Errores detectados y corregidos
@@ -263,9 +263,11 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 2. **Formulario:**
    - Definir el destinatario con `update_option('hm_form_to', 'email-de-hortela')`. Ahora llega al email de administración de WordPress.
    - Comprobar la entrega del correo en el servidor de producción (SPF/DKIM o SMTP).
-3. **Analítica y consentimiento:**
-   - La web actual carga Google Tag Manager (GA4) y un banner de cookies (CookieConsent); el sitio nuevo no tiene ninguno de los dos.
-   - Para no perder datos, instalar GA4/GTM con una herramienta de consentimiento, con preferencias, y actualizar la Política de Cookies.
+3. **Analítica y consentimiento** (hecho en la ronda del punto 10; quedan estos pasos):
+   - **GTM-KXHQKJMV:** incluye dos etiquetas HTML de píxel de Meta (1075614403527200 y 1791344078253720) que disparan PageView sin condición. En GTM, añadirles «Configuración de consentimiento → requerir `ad_storage`» (o el activador `cmplz_event_marketing`) para que respeten el banner. GA4 ya respeta el Consent Mode.
+   - **Site Kit:** conectar con la cuenta de Google del cliente (Search Console y GA4) cuando el dominio sea hortelamagenta.pt. Sus etiquetas están bloqueadas por código para no duplicar GA4; no hace falta tocar «colocar fragmento».
+   - **WP Mail SMTP:** configurar el buzón de envío (ahora usa `mail()` de PHP).
+   - **Wordfence:** completar la instalación con una licencia gratuita (pide un email de Inboost) y poner un email de alertas. El cortafuegos está en modo aprendizaje (lo normal la primera semana).
 4. **Migración del dominio:**
    - Apuntar hortelamagenta.pt a este WordPress y cambiar `home` y `siteurl`.
    - Redirigir www → sin www y http → https (el servidor actual ya lo hace).
@@ -282,3 +284,51 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
    - Las 36 URL, las 301 de la tabla del punto 6 y el formulario real en producción.
    - Vaciar WP Rocket.
 8. **Divi:** el README de la fase 1 prevé rehacer las páginas en Divi al final. Si se hace, conservar el mapa de URL (`hm-rutas.php`) y los bloques de datos del generador como fuente de contenido.
+
+## 10. Ronda 2026-11-24 (tarde): portugués, plugins y cookies
+
+**Idioma:**
+- WordPress pasa a `pt_PT` (paquete de idioma instalado). Los usuarios 1 y 2 conservan el escritorio en español.
+- Revisión del texto visible, atributos (`alt`, `aria-label`, `title`, `placeholder`) y salida de plugins de las 37 páginas servidas: sin castellano. Los textos del formulario, del correo y de los mensajes de error ya estaban en portugués.
+- Único resto encontrado: los valores internos del ajuste de fondo de las fichas de proyecto («Gris claro / Gris oscuro / Negro», no visibles). Ahora son «Cinza claro / Cinza escuro / Preto».
+
+**Plugins instalados y activos** (wordpress.org, con traducciones pt_PT y es_ES):
+
+| Plugin | Versión | Configuración |
+|---|---|---|
+| Complianz | 7.5.7 | Región UE; banner propio (Spartan, esquinas rectas, #1C1B23 y #D82E87) con textos PT-PT; categorías Necessários, Estatísticas y Marketing; GTM-KXHQKJMV con Consent Mode v2; políticas propias (/politica-de-cookies y /politica-de-privacidade) |
+| Yoast SEO | 28.9 | Sitemaps XML desactivados (el sitio usa su propio /sitemap.xml). No controla el SEO de las páginas del diseño: título, descripción, canonical y JSON-LD van en cada paquete |
+| Site Kit by Google | 1.192.0 | Sin conectar (pendiente). Etiquetas bloqueadas por código para no duplicar GA4 |
+| WP Mail SMTP | 4.10.4 | Sin credenciales (pendiente) |
+| Wordfence | 9.1.1 | Cortafuegos en modo aprendizaje; sin licencia (pendiente) |
+| WP Rocket | 3.21.1 | Ya estaba |
+
+- **Schema Pro:** no instalado. Es de pago (hace falta el zip y la licencia de Inboost). Las páginas ya llevan su JSON-LD en el paquete.
+
+**Salida de plugins en las páginas del diseño:**
+- Las páginas del diseño se sirven antes de `wp_head()`, así que ningún plugin llegaba a ellas.
+- `hm-boceto.php` ejecuta ahora `wp_head`/`wp_footer` solo con las funciones de Complianz y Site Kit (más las de WordPress que imprimen sus estilos y scripts) e inyecta el resultado. Yoast, Divi y el resto quedan fuera.
+- **GTM solo se carga en hortelamagenta.pt:** en el entorno de trabajo, las visitas de revisión no entran en GA4 ni en los píxeles.
+- Sin meta «generator».
+
+**Pie de todas las páginas:** botón «Preferências de cookies» entre «Política de Cookies» y «Mapa do site». Reabre el panel de Complianz.
+
+**Política de Cookies:** describe lo que se instala de verdad:
+- Necesarias: `cmplz_*` 365 días y el `sessionStorage` del sitio.
+- Estadísticas: `_ga` y `_ga_*` de GA4 vía GTM.
+- Marketing: `_fbp` del píxel de Meta.
+- También explica el Consent Mode, los terceros (Google y Meta, con transferencias bajo el Data Privacy Framework) y cómo cambiar la elección.
+
+**Verificación:**
+- En vivo: 36 rutas en 200 y la 404 en 404, todas con `lang="pt-PT"`, banner y botón del pie.
+  - Sin GTM fuera de producción; en producción simulada, GTM sale con el consentimiento denegado por defecto.
+  - `/sitemap.xml` en 200 y `/sitemap_index.xml` en 404.
+  - El formulario REST sigue respondiendo con Wordfence activo.
+  - El enlace del banner dice «Política de Privacidade».
+- En local (Chromium, móvil y PC):
+  - El banner aparece.
+  - «Ver preferências» muestra las 3 categorías.
+  - «Recusar» guarda la negativa (`cmplz_statistics=deny`, `cmplz_marketing=deny`).
+  - El botón del pie reabre el panel y «Aceitar» guarda `allow`.
+  - 0 errores JS y sin desborde horizontal.
+
