@@ -267,10 +267,11 @@ function hm_plugins_saida() {
 			return ( false !== stripos( (string) $s, 'googletagmanager' ) ) ? '' : $s;
 		}, 99 );
 	}
-	// Complianz dá aos documentos de URL própria o título genérico «Declaração de Privacidade»: usar o nome da página.
-	if ( class_exists( 'COMPLIANZ' ) && isset( COMPLIANZ::$config->generic_documents_list['privacy-statement'] ) ) {
-		COMPLIANZ::$config->generic_documents_list['privacy-statement']['title'] = 'Política de Privacidade';
-	}
+	// Complianz da a los documentos con URL propia el título genérico «Declaração de Privacidade»: se usa el de la página.
+	// (Complianz guarda los enlaces 10 min en el transitorio page_links_<banner>_<locale>.)
+	add_filter( 'gettext', function ( $tr, $text, $domain ) {
+		return ( 'complianz-gdpr' === $domain && 'Privacy Statement' === $text ) ? 'Política de Privacidade' : $tr;
+	}, 10, 3 );
 	$ws  = wp_scripts();
 	$wst = wp_styles();
 	$pre = array( $ws->queue, $wst->queue );
@@ -290,7 +291,7 @@ function hm_plugins_saida() {
 	ob_start();
 	do_action( 'wp_footer' );
 	$out['footer'] = trim( (string) ob_get_clean() );
-	// Sem metas «generator» (versões de plugins à vista).
+	// Sin metas «generator» (dejan a la vista las versiones de los plugins).
 	$out['head'] = trim( preg_replace( '#<meta name="generator"[^>]*>\s*#i', '', $out['head'] ) );
 	return $out;
 }
