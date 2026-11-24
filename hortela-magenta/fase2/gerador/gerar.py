@@ -93,8 +93,17 @@ def build_projeto(slug, p, base):
 
 
 # ------------------------------------------------------------------------------------------- serviços
+KIND_BG = {'frase': '#e8eced', 'faq': '#f6f7f8'}
+
+
 def blocks_html(blocks, slug):
     out = []
+    # faixa de imagens logo a seguir a outra secção: o mesmo fundo e sem espaço entre as duas (parecem um só bloco)
+    for i, (kind, b) in enumerate(blocks):
+        if kind == 'imagens' and i and not b.get('title'):
+            pk, pb = blocks[i - 1]
+            b.setdefault('bg', pb.get('bg') or KIND_BG.get(pk, '#ffffff'))
+            b['joined'] = True
     for i, (kind, b) in enumerate(blocks):
         sid = b.get('id', '%s-%d' % (kind, i + 1))
         label = '%02d %s' % (i + 2, b.get('eyebrow', kind).replace('&', 'e'))
@@ -128,6 +137,8 @@ def blocks_html(blocks, slug):
     # antes de «Mais projetos» (que tem o seu próprio espaço por cima) a secção anterior não leva o espaço inferior inteiro
     kinds = [k for k, _ in blocks]
     for i in range(len(out) - 1):
+        if kinds[i + 1] == 'imagens' and blocks[i + 1][1].get('joined'):
+            out[i] = out[i].replace(f'padding:var(--sp-block) {B.PAD} var(--sp-block) {B.PAD}', f'padding:var(--sp-block) {B.PAD} clamp(28px,3.5vw,56px) {B.PAD}', 1)
         if kinds[i + 1] == 'mais':
             out[i] = out[i].replace(f'padding:var(--sp-block) {B.PAD} var(--sp-block) {B.PAD}', f'padding:var(--sp-block) {B.PAD} var(--sp-title) {B.PAD}', 1)
     return out

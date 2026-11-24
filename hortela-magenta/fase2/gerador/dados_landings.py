@@ -27,7 +27,7 @@ def landings(M, LI):
         desc='Design de rótulos e packaging para vinhos em Portugal: identidade vínica, rótulos, caixas e acabamentos. Projetos premiados como os da Adega Camolas.',
         og=LI(s, 'hortelamagenta_portfolio_marca_camolas_grande-escolha_01-1900x2850-q90.webp'),
         hero=dict(crumbs=[('Início', '/'), ('Serviços', '/servicos'), ('Rótulos para vinhos', None)],
-                  h1='Design de Rótulos para Vinhos em Portugal', display=['Rótulos que', 'diferenciam, valorizam e', 'posicionam marcas.'],
+                  h1='Design de Rótulos para Vinhos em Portugal', display=['Rótulos que diferenciam,', 'valorizam e posicionam', 'marcas.'],
                   intro='No setor dos vinhos, a qualidade já não é o único fator de decisão. A história, a textura, a tipografia e o encanto visual comunicam-se antes de a rolha ser aberta. O seu rótulo é a prova narrativa.',
                   cta=('/contacto', 'Fale connosco →'), cta2=('#portfolio', 'Ver portfólio')),
         blocks=[
@@ -87,7 +87,7 @@ def landings(M, LI):
         desc='Identidade corporativa, catálogos técnicos, fotografia, vídeo e websites B2B para empresas industriais. Casos como Alsil Group, Farinhas Firmos e Imperalum.',
         og=LI(s, 'alsilgroup_portfolio_marca_display-1900x3040-q90.webp'),
         hero=dict(crumbs=[('Início', '/'), ('Serviços', '/servicos'), ('Indústria', None)],
-                  h1='Design de Comunicação para a Indústria', display=['Complexidade técnica', 'em comunicação clara', 'e diferenciadora.'],
+                  h1='Design de Comunicação para a Indústria', display=['Complexidade técnica em', 'comunicação clara', 'e diferenciadora.'],
                   intro='Num setor onde a prova do valor técnico é tantas vezes dificultada pela complexidade da oferta, o design de comunicação para a indústria garante a clareza. Diferenciar as suas máquinas ou serviços em mercados ultracompetitivos impacta diretamente a perceção de sofisticação pelo seu cliente.',
                   cta=('/contacto', 'Fale connosco →'), cta2=('#portfolio', 'Ver casos práticos')),
         blocks=[
@@ -136,7 +136,7 @@ def landings(M, LI):
         desc='Branding para clínicas dentárias em Portugal: identidade visual, aplicação no espaço, comunicação digital e posicionamento para clínicas que valorizam a qualidade.',
         og=LI(s, 'dental_clinic_premium.webp'),
         hero=dict(crumbs=[('Início', '/'), ('Serviços', '/servicos'), ('Clínicas dentárias', None)],
-                  h1='Branding para Clínicas Dentárias em Portugal', display=['A identidade', 'do seu espaço,', 'à altura da clínica.'],
+                  h1='Branding para Clínicas Dentárias em Portugal', display=['A identidade do seu', 'espaço, à altura', 'da clínica.'],
                   intro='No setor da saúde dentária, a competência clínica já não é o único fator de decisão. A confiança, a perceção de higiene, a tecnologia e o conforto são comunicados antes de o paciente se sentar na cadeira. A sua marca é o primeiro diagnóstico.',
                   cta=('/contacto', 'Fale connosco →'), cta2=('#intervencao', 'A nossa intervenção')),
         blocks=[
@@ -157,6 +157,11 @@ def landings(M, LI):
             ('imagens', dict(id='imagens', eyebrow='Imagens', title='Design que transmite tranquilidade', items=[
                 dict(img=LI(s, 'dental_clinic_premium.webp'), alt='Branding e design para clínica dentária premium', cap='Identidade e espaço clínico'),
                 dict(img=LI(s, 'dental_clinic_details.webp'), alt='Identidade visual e logótipo para clínica dentária', cap='Detalhes da identidade'),
+            ])),
+            ('imagens', dict(items=[
+                foto(I('hospital-garcia-de-orta', 'hgo_estacionario'), 'Estacionário do Hospital Garcia de Orta', 'Hospital Garcia de Orta · Identidade na saúde', 'hospital-garcia-de-orta'),
+                foto(I('hospital-garcia-de-orta', 'hgo_badge'), 'Crachá do Hospital Garcia de Orta', 'Hospital Garcia de Orta · Crachá', 'hospital-garcia-de-orta'),
+                foto(I('hospital-garcia-de-orta', 'hgo_rollup'), 'Roll-up do Hospital Garcia de Orta', 'Hospital Garcia de Orta · Roll-up', 'hospital-garcia-de-orta'),
             ])),
             ('chips', dict(eyebrow='Para quem', title='Para quem desenhamos?', items=['Clínicas de Reabilitação Oral e Implantologia', 'Clínicas de Estética Dentária Avançada', 'Consultórios Boutique e Exclusivos', 'Grupos de Saúde a preparar expansão'])),
             ('lista', dict(eyebrow='Método', title='Método', bg='#f6f7f8', items=[
@@ -181,7 +186,7 @@ def landings(M, LI):
         desc='Design de comunicação para entidades públicas: relatórios, publicações institucionais, infografia, fotografia e vídeo. Projetos para IMT, Câmara Municipal de Almada e Hospital Garcia de Orta.',
         og=LI(s, 'hortelamagenta_portfolio_marca_imt_fasciaculo_livro_01-1900x2850-q90.webp'),
         hero=dict(crumbs=[('Início', '/'), ('Serviços', '/servicos'), ('Administração pública', None)],
-                  h1='Design de Comunicação para Administração Pública em Portugal', display=['Informação complexa', 'em comunicação clara,', 'acessível e relevante.'],
+                  h1='Design de Comunicação para Administração Pública em Portugal', display=['Informação complexa em', 'comunicação clara,', 'acessível e', 'relevante.'],
                   intro='Na administração pública, comunicar não é apenas informar: é garantir clareza, transparência e confiança. Projetos institucionais exigem rigor, estrutura e capacidade de transformar informação complexa em comunicação acessível.',
                   cta=('/contacto', 'Fale connosco →'), cta2=('#portfolio', 'Projetos desenvolvidos')),
         blocks=[

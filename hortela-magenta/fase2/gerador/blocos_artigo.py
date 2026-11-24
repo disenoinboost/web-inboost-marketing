@@ -14,7 +14,7 @@ def _inline(h):
 def header(d):
     return f'''<header data-hero="" data-screen-label="01 Cabeçalho" style="background:#ffffff; padding:var(--sp-hdr) {PAD} var(--sp-title) {PAD}; text-align:center; display:flex; flex-direction:column; align-items:center;">
   <nav aria-label="Breadcrumb" data-hl-fade="" style="margin-bottom:clamp(28px,5vh,56px);"><ol style="list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; justify-content:center; gap:10px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:#6E6A63;"><li><a href="/" style="color:#6E6A63; text-decoration:none;">Início</a></li><li aria-hidden="true" style="color:#D82E87;">—</li><li aria-current="page" style="color:#1C1B23;">{esc(d["h1"])}</li></ol></nav>
-  <h1 style="margin:0; max-width:17ch; font-size:clamp(40px,4.64vw,83px); font-weight:100; letter-spacing:-0.05em; line-height:.98; color:#1C1B23; text-wrap:balance;"><span data-hl="" style="display:block;">{esc(d["h1"])}</span></h1>
+  <h1 style="margin:0; max-width:17ch; font-size:clamp(40px,4.64vw,83px); font-weight:100; letter-spacing:-0.05em; line-height:1.04; color:#1C1B23; text-wrap:balance;"><span data-hl="" style="display:block;">{esc(d["h1"])}</span></h1>
   <p data-hl-fade="" style="margin:clamp(24px,4vh,40px) 0 0; max-width:44ch; font-size:clamp(24px,1.9vw,32px); font-weight:200; line-height:1.35; letter-spacing:-0.01em; color:#4A4743; text-wrap:pretty;">{esc(d["lead"])}</p>
 </header>'''
 

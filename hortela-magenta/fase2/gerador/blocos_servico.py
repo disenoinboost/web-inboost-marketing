@@ -30,10 +30,10 @@ def hero(h):
     lines = ''
     delays = [0.15, 0.27, 0.39, 0.51, 0.63]
     disp = h['display']
-    # Título longo (4 linhas ou linhas de mais de 19 caracteres): ocupa também a coluna da direita, por cima do texto pequeno.
-    wide = h.get('wide', len(disp) >= 4 or max(len(l) for l in disp) > 19)
-    if wide and h.get('display_wide'):
-        disp = h['display_wide']
+    # Sempre a estrutura e o tamanho de letra de Branding (3 linhas, antetítulo à mesma altura).
+    # Títulos longos: as linhas de cima podem passar para a coluna da direita (width:max-content); a última fica à esquerda,
+    # para não tocar no texto pequeno, que está em baixo à direita.
+    wide = False
     for i, l in enumerate(disp):
         last = i == len(disp) - 1
         inner = esc(l)
@@ -42,11 +42,9 @@ def hero(h):
             rw = ''.join(f'<span data-rw="" style="grid-area:1/1; display:block; width:max-content; transform:{"none" if j == 0 else "translateY(135%)"};">{esc(w)}</span>' for j, w in enumerate(words))
             inner = (esc(l) + ' ' if l else '') + f'<span data-rotbox="3400" style="display:inline-grid; overflow:hidden; line-height:1.02; padding:.24em 0 .24em; margin:-.24em 0 -.24em;">{rw}</span>'
         lines += f'<span aria-hidden="true" style="display:block; overflow:hidden; padding:.24em 0 .16em; margin:-.24em 0 -.16em;"><span data-hl="{delays[min(i, 4)]}" style="display:block; transform:none; ">{inner}</span></span>'
-    full = ' '.join(disp) + ((' ' + h['rot'][0]) if h.get('rot') else '')
+    full = ' '.join(l for l in disp if l) + ((' ' + h['rot'][0]) if h.get('rot') else '')
     disp_style = 'margin:0 0 0 -0.04em; font-weight:100; letter-spacing:-0.055em; line-height:1; font-size:clamp(45px, min(6.88vw, var(--hdr-fit), calc(33.3vh - 120px)), 99px);'
-    if wide:
-        k = max(8.3, max(len(l) for l in disp) * 0.62)
-        disp_style = disp_style.replace('var(--hdr-fit)', f'calc((100vw - 2 * {PAD}) / {k:.1f})')
+    disp_style += f' width:max-content; max-width:calc(100vw - 2 * {PAD});'
     eyebrow_style = f'margin:0 0 clamp(20px,3.5vh,40px); font-size:18px; font-weight:300; letter-spacing:.1em; text-transform:uppercase; color:{MU}; '
     if h.get('display_is_h1'):
         top = f'<p style="{eyebrow_style}">{DASH_A} {esc(h["eyebrow"])}</p><h1 style="{disp_style}"><span style="{SR}">{esc(full)}</span>{lines}</h1>'
@@ -107,7 +105,7 @@ def panels(M, b, sec_id, label, bg='#ffffff'):
   <div style="{ROW} align-items:flex-end;">
     <div style="{COL_L}">
       <p style="margin:0 0 24px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{MU};">{DASH_A} {esc(b["eyebrow"])}</p>
-      <h2 style="margin:0; max-width:14ch; font-weight:100; font-size:clamp(40px,4.48vw,80px); letter-spacing:-0.05em; line-height:.98;">{esc(b["title"])}</h2>
+      <h2 style="margin:0; max-width:14ch; font-weight:100; font-size:clamp(40px,4.48vw,80px); letter-spacing:-0.05em; line-height:1.05;">{esc(b["title"])}</h2>
     </div>
     <div style="{COL_R}"><div style="max-width:52ch;">
       {text}
@@ -136,7 +134,7 @@ def lista(b, sec_id, label, bg='#ffffff'):
   <div style="{ROW} row-gap:48px;">
     <div data-faq-side="" style="{COL_L} position:sticky; top:clamp(100px,14vh,140px);">
       <p style="margin:0 0 28px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{MU};">{DASH_A} {esc(b["eyebrow"])}</p>
-      <h2 style="margin:0 0 28px; font-size:clamp(40px,3.84vw,74px); font-weight:100; letter-spacing:-0.05em; line-height:.95;">{esc(b["title"])}</h2>
+      <h2 style="margin:0 0 28px; font-size:clamp(40px,3.84vw,74px); font-weight:100; letter-spacing:-0.05em; line-height:1.06;">{esc(b["title"])}</h2>
       {text}{cta}
     </div>
     <div style="{COL_R}">
@@ -157,7 +155,7 @@ def texto(b, sec_id, label, bg='#ffffff'):
   <div style="{ROW}">
     <div style="{COL_L}">
       <p style="margin:0 0 24px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{MU};">{DASH_A} {esc(b["eyebrow"])}</p>
-      <h2 style="margin:0; max-width:15ch; font-weight:100; font-size:clamp(40px,4.48vw,80px); letter-spacing:-0.05em; line-height:.98;">{esc(b["title"])}</h2>
+      <h2 style="margin:0; max-width:15ch; font-weight:100; font-size:clamp(40px,4.48vw,80px); letter-spacing:-0.05em; line-height:1.05;">{esc(b["title"])}</h2>
     </div>
     <div style="{COL_R} padding-top:clamp(0px,1vw,12px);"><div style="max-width:62ch;">{paras}{cta}</div></div>
   </div>
@@ -176,7 +174,7 @@ def frase(b, sec_id, label, bg='#e8eced'):
 
 def trabalhos(M, b, sec_id='trabalhos'):
     """Introdução + galeria escura fixada com cartões de projeto (como «Trabalhos de branding»)."""
-    intro = f'''<section data-cursor-bg="light" id="{sec_id}" data-screen-label="04 Trabalhos · introdução" style="position:relative; padding:var(--sp-block) {PAD} var(--sp-title) {PAD}; background:#f6f7f8; color:{INK};"><div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:28px 64px;"><div style="flex:1 1 340px; min-width:0;"><p style="margin:0 0 18px; font-size:18px; color:{MU};">{DASH} Projetos</p><h2 style="margin:0; max-width:12ch; font-size:clamp(40px,4.96vw,80px); font-weight:100; letter-spacing:-0.05em; line-height:1.02; color:{INK};">{esc(b["title"])}</h2></div><div style="flex:1 1 340px; max-width:480px; min-width:0;"><p data-rise="" style="margin:0 0 24px; font-size:18px; line-height:1.5; color:{TX};">{esc(b["text"])}</p>{_ulink("/projetos", "Ver todos os projetos →")}</div></div></section>'''
+    intro = f'''<section data-cursor-bg="light" id="{sec_id}" data-screen-label="04 Trabalhos · introdução" style="position:relative; padding:var(--sp-block) {PAD} var(--sp-title) {PAD}; background:#f6f7f8; color:{INK};"><div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:28px 64px;"><div style="flex:1 1 340px; min-width:0;"><p style="margin:0 0 18px; font-size:18px; color:{MU};">{DASH} Projetos</p><h2 style="margin:0; max-width:12ch; font-size:clamp(40px,4.96vw,80px); font-weight:100; letter-spacing:-0.05em; line-height:1.06; color:{INK};">{esc(b["title"])}</h2></div><div style="flex:1 1 340px; max-width:480px; min-width:0;"><p data-rise="" style="margin:0 0 24px; font-size:18px; line-height:1.5; color:{TX};">{esc(b["text"])}</p>{_ulink("/projetos", "Ver todos os projetos →")}</div></div></section>'''
     cols = [('#4A4743', '#FAFAF8', 'rgba(250,250,248,.35)'), ('#a6b4c1', INK, 'rgba(28,27,35,.3)'), ('#dde3e7', INK, 'rgba(28,27,35,.3)'),
             ('#1C1B23', '#FAFAF8', 'rgba(250,250,248,.35)'), ('#e8eced', INK, 'rgba(28,27,35,.3)')]
     n = len(b['items'])
@@ -207,7 +205,7 @@ def testemunho(M, t, sec_id='testemunho', label='06 Testemunho', bg='#ffffff'):
   <div style="display:flex; flex-wrap:wrap; gap:clamp(48px,6vw,112px); align-items:center;">
     <figure style="flex:999 1 520px; min-width:0; margin:0;">
       <p style="margin:0 0 24px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{MU};">{DASH_A} {esc(eyebrow)}</p>
-      <p data-colorize="" style="margin:0; max-width:13ch; font-size:clamp(40px,4.48vw,80px); font-weight:100; letter-spacing:-0.05em; line-height:.98; text-wrap:balance;">{esc(t["headline"])}</p>
+      <p data-colorize="" style="margin:0; max-width:13ch; font-size:clamp(40px,4.48vw,80px); font-weight:100; letter-spacing:-0.05em; line-height:1.05; text-wrap:balance;">{esc(t["headline"])}</p>
       <blockquote data-rise="" style="margin:clamp(28px,4vh,44px) 0 0; max-width:56ch; font-size:18px; line-height:1.5; color:{TX}; text-wrap:pretty;"><span aria-hidden="true" style="color:#D82E87;">«</span>{esc(t["quote"])}<span aria-hidden="true" style="color:#D82E87;">»</span></blockquote>
       <figcaption data-rise="" style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:baseline; gap:12px 32px; margin-top:clamp(28px,4vh,44px); max-width:56ch;">
         <span style="display:flex; flex-direction:column; gap:6px;"><span style="display:flex; align-items:baseline; gap:12px; flex-wrap:wrap;"><span aria-hidden="true" style="color:#D82E87;">—</span><span style="font-size:18px; font-weight:400; color:{INK};">{esc(t["name"])}</span><span style="font-size:18px; color:rgba(28,27,35,.6);">{esc(t["company"])}</span></span><span style="padding-left:26px; font-size:18px; line-height:1.5; color:rgba(28,27,35,.6);">{esc(t["role"])}</span></span>
@@ -235,7 +233,7 @@ def faq(b, prefix, sec_id='perguntas', label='07 Perguntas', bg='#f6f7f8'):
   <div style="{ROW} row-gap:48px;">
     <div data-faq-side="" style="{COL_L} position:sticky; top:clamp(100px,14vh,140px);">
       <p style="margin:0 0 28px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{MU};">{DASH_A} Perguntas frequentes</p>
-      <h2 style="margin:0 0 28px; font-size:clamp(40px,3.84vw,74px); font-weight:100; letter-spacing:-0.05em; line-height:.95;">{esc(b["title"])}</h2>
+      <h2 style="margin:0 0 28px; font-size:clamp(40px,3.84vw,74px); font-weight:100; letter-spacing:-0.05em; line-height:1.06;">{esc(b["title"])}</h2>
       <p style="margin:0; max-width:34ch; font-size:18px; font-weight:300; line-height:1.5; color:{TX};">{esc(b["text"])}</p>
     </div>
     <div data-acc-group="" style="{COL_R} display:flex; flex-direction:column; border-bottom:1px solid rgba(28,27,35,.14);">{items}
@@ -255,7 +253,7 @@ def chips(b, sec_id, label, bg='#ffffff'):
     text = f'<p style="margin:0; max-width:34ch; font-size:18px; font-weight:300; line-height:1.5; color:{TX};">{esc(b["text"])}</p>' if b.get('text') else ''
     return f'''<section data-cursor-bg="light" id="{sec_id}" data-screen-label="{label}" style="background:{bg}; padding:var(--sp-block) {PAD} var(--sp-block) {PAD};">
   <div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:40px clamp(40px,7vw,140px);">
-    <div style="{COL_L}"><p style="margin:0 0 28px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{MU};">{DASH_A} {esc(b["eyebrow"])}</p><h2 style="margin:0 0 24px; font-size:clamp(40px,3.84vw,74px); font-weight:100; letter-spacing:-0.05em; line-height:.95;">{esc(b["title"])}</h2>{text}</div>
+    <div style="{COL_L}"><p style="margin:0 0 28px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{MU};">{DASH_A} {esc(b["eyebrow"])}</p><h2 style="margin:0 0 24px; font-size:clamp(40px,3.84vw,74px); font-weight:100; letter-spacing:-0.05em; line-height:1.06;">{esc(b["title"])}</h2>{text}</div>
     <ul style="{COL_R} list-style:none; margin:0; padding:0; border-bottom:1px solid rgba(28,27,35,.14);">{li}</ul>
   </div>
 </section>'''
@@ -269,7 +267,7 @@ def premios(M, b, sec_id='premios', label='Prémios', bg='#ffffff'):
     quote = f'<p data-rise="" style="margin:var(--sp-title) 0 0; max-width:40ch; font-size:clamp(24px,2.3vw,34px); font-weight:200; letter-spacing:-0.02em; line-height:1.3;">{esc(b["quote"])}</p>' if b.get('quote') else ''
     return f'''<section data-cursor-bg="light" id="{sec_id}" data-screen-label="{label}" style="background:{bg}; padding:var(--sp-block) {PAD} var(--sp-block) {PAD};">
   <p style="margin:0 0 24px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{MU};">{DASH_A} {esc(b["eyebrow"])}</p>
-  <h2 style="margin:0 0 var(--sp-title); max-width:14ch; font-weight:100; font-size:clamp(40px,4.48vw,80px); letter-spacing:-0.05em; line-height:.98;">{esc(b["title"])}</h2>
+  <h2 style="margin:0 0 var(--sp-title); max-width:14ch; font-weight:100; font-size:clamp(40px,4.48vw,80px); letter-spacing:-0.05em; line-height:1.05;">{esc(b["title"])}</h2>
   <div style="display:flex; flex-wrap:wrap; gap:40px clamp(24px,4vw,64px);">{cards}</div>{quote}
 </section>'''
 
@@ -299,15 +297,16 @@ def imagens(M, b, sec_id, label, bg='#ffffff'):
         r = w / h
         cap = ''
         if it.get('cap'):
-            inner = f'<a href="{att(it["href"])}" style="color:{INK}; text-decoration:none; border-bottom:1px solid #D82E87; padding-bottom:2px;">{esc(it["cap"])}</a>' if it.get('href') else esc(it['cap'])
-            cap = f'<figcaption style="margin-top:14px; font-size:18px; color:{MU};">{inner}</figcaption>'
+            inner = f'<a href="{att(it["href"])}" style="color:{INK}; text-decoration:underline; text-decoration-color:#D82E87; text-decoration-thickness:1px; text-underline-offset:5px;">{esc(it["cap"])}</a>' if it.get('href') else esc(it['cap'])
+            cap = f'<figcaption style="margin-top:14px; font-size:18px; line-height:1.7; color:{MU};">{inner}</figcaption>'
         figs += (f'<figure data-rise="{min(i, 4) * 0.08:.2f}" style="margin:0; flex:{r:.3f} 1 calc({r:.3f} * 230px); min-width:0;">'
                  f'<div data-cursor-bg="solid" style="aspect-ratio:{w}/{h}; overflow:hidden; background:#f6f7f8;">{img_tag(M, it["img"], it["alt"], "display:block; width:100%; height:100%; object-fit:cover;")}</div>{cap}</figure>')
     head = ''
     if b.get('title'):
         head = (f'<p style="margin:0 0 24px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{MU};">{DASH_A} {esc(b.get("eyebrow", ""))}</p>'
-                f'<h2 style="margin:0 0 var(--sp-title); max-width:18ch; font-weight:100; font-size:clamp(40px,4.48vw,80px); letter-spacing:-0.05em; line-height:.98;">{esc(b["title"])}</h2>')
+                f'<h2 style="margin:0 0 var(--sp-title); max-width:18ch; font-weight:100; font-size:clamp(40px,4.48vw,80px); letter-spacing:-0.05em; line-height:1.05;">{esc(b["title"])}</h2>')
     pad = 'var(--sp-block)' if b.get('title') else 'clamp(40px,6vw,96px)'
-    return f'''<section data-cursor-bg="light" id="{sec_id}" data-screen-label="{label}" style="background:{bg}; padding:{pad} {PAD} {pad} {PAD};">
+    top = '0px' if b.get('joined') else pad
+    return f'''<section data-cursor-bg="light" id="{sec_id}" data-screen-label="{label}" style="background:{bg}; padding:{top} {PAD} {pad} {PAD};">
   {head}<div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:28px clamp(12px,1.6vw,24px);">{figs}</div>
 </section>'''

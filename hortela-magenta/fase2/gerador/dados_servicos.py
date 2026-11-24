@@ -6,6 +6,9 @@ espanhol, adaptado a português de Portugal como já se fez em Branding e Design
 GONCALO = 'https://hortelamagenta.pt/media/pages/sobre/7f11034ae8-1701343726/hm-equipa-goncalo-700x.jpg'
 
 
+NOST = lambda M, k: next(u for u in M.info if u.startswith('/wp-content/uploads/hm-media/nostalgia.') and k in u)
+
+
 def servicos(M):
     I = lambda s, k: M.find(s, k)
     V = lambda s, k: M.find(s, k, 'video')
@@ -18,7 +21,7 @@ def servicos(M):
         desc='Packaging, folhetos, catálogos, publicações e ambientes a partir da identidade da sua empresa. Conheça projetos de design gráfico e editorial da Hortelã Magenta.',
         og=I('documentos-normativos-imt', 'imt_fasciaculo_livro_01'),
         hero=dict(crumbs=[('Início', '/'), ('Serviços', '/servicos'), ('Gráfico + Editorial', None)],
-                  h1='Design gráfico e editorial para empresas', display=['Materiais que', 'explicam a', 'sua empresa em'],
+                  h1='Design gráfico e editorial para empresas', display=['Materiais que', 'explicam a sua', 'empresa em', ''],
                   rot=['cada folheto.', 'cada catálogo.', 'cada embalagem.', 'cada página.'],
                   intro='A comunicação eficaz é a combinação perfeita entre o design apelativo e o conteúdo cativante. Seja qual for o suporte – da embalagem ao folheto – na Hortelã Magenta trabalhamos para posicionar a sua marca ou produto de forma fresca e atraente no mercado e na mente dos seus consumidores.',
                   cta=('/contacto', 'Falar sobre um projeto de design →'), cta2=('#trabalhos', 'Ver trabalhos')),
@@ -71,7 +74,7 @@ def servicos(M):
         desc='Campanhas digitais e redes sociais integradas na comunicação da sua marca: conteúdos, criatividade e acompanhamento. Conheça projetos da Hortelã Magenta.',
         og=I('farinhas-firmos', 'farinhafirmos_redessociais_02'),
         hero=dict(crumbs=[('Início', '/'), ('Serviços', '/servicos'), ('Campanhas & Redes Sociais', None)],
-                  h1='Campanhas digitais e redes sociais', display=['Levamos a sua', 'marca e produtos'], rot=['a mais clientes.', 'a mais pessoas.', 'a todo o mundo.'],
+                  h1='Campanhas digitais e redes sociais', display=['Levamos a sua', 'marca e produtos', ''], rot=['a mais clientes.', 'a mais pessoas.', 'a todo o mundo.'],
                   intro='A comunicação digital não é uma opção com futuro. É uma necessidade de todas as marcas, hoje mesmo. A digitalização dá-lhe um alcance global 24h por dia, e a automatização dá mais disponibilidade à sua equipa. Na Hortelã Magenta aliamos o design à tecnologia web e mobile, para responder a estes desafios.',
                   cta=('/contacto', 'Falar sobre a comunicação da marca →'), cta2=('#trabalhos', 'Ver trabalhos')),
         blocks=[
@@ -104,7 +107,7 @@ def servicos(M):
         desc='Fotografia institucional e de produto, packshot, vídeo e motion graphics para apresentar a sua empresa, os seus produtos e a sua atividade.',
         og=I('queijaria-da-sao', 'queijariadasao_foto_06'),
         hero=dict(crumbs=[('Início', '/'), ('Serviços', '/servicos'), ('Fotografia & Vídeo', None)],
-                  h1='Fotografia e vídeo para empresas', display=['Imagens que', 'contam a', 'sua história'], rot=['em cada produto.', 'em cada espaço.', 'em cada ecrã.'],
+                  h1='Fotografia e vídeo para empresas', display=['Imagens que contam', 'a sua história', ''], rot=['em cada produto.', 'em cada espaço.', 'em cada ecrã.'],
                   intro='Mais do que mil palavras, uma boa fotografia ou vídeo envolve o espectador na sua história. É uma ferramenta poderosa para criar experiências de marca envolventes, interativas e memoráveis. E até, através da criação 3D e Motion Graphics, para apresentar a realidade que ainda não existe.',
                   cta=('/contacto', 'Falar sobre fotografia ou vídeo →'), cta2=('#trabalhos', 'Ver trabalhos')),
         blocks=[
@@ -152,12 +155,17 @@ def servicos(M):
         desc='O departamento de comunicação da sua empresa. Conhecemos o seu negócio por dentro para lhe dar uma voz própria, coerente e real. Desde 2007.',
         og='https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg',
         hero=dict(crumbs=[('Início', '/'), ('Serviços', '/servicos'), ('Avença Mensal 360°', None)], display_is_h1=True,
-                  eyebrow='Avença Mensal 360°', display=['O departamento de', 'comunicação da sua', 'empresa. Só que do', 'lado de fora.'], display_wide=['O departamento de comunicação', 'da sua empresa.', 'Só que do lado de fora.'],
+                  eyebrow='Avença Mensal 360°', display=['O departamento de', 'comunicação da sua', 'empresa. Só que', 'do lado de fora.'],
                   intro='Há empresas que precisam de uma agência. E há empresas que precisam de alguém que conheça o seu negócio tão bem como elas. Na avença mensal 360° somos as duas coisas: a agência e o departamento de comunicação da sua empresa.',
                   cta=('/contacto', 'Marcar conversa →'), cta2=('#inclui', 'O que inclui')),
         blocks=[
             ('texto', dict(eyebrow='Mês após mês', title='Um parceiro que conhece a sua marca.', paras=[
                 'Não nos limitamos a executar pedidos. Entramos no dia a dia da empresa, percebemos o que a move e assumimos a responsabilidade de a comunicar com consistência, mês após mês. Tem um parceiro, que conhece a sua marca, o seu mercado e os seus objetivos.'])),
+            ('imagens', dict(items=[
+                dict(img=M.find('consulai', 'consulai_redes_sociais_02'), alt='Publicações da CONSULAI nas redes sociais', cap='Consulai · Redes sociais', href='/projetos/consulai'),
+                dict(img=M.find('alinea', 'alinea_anuncio'), alt='Anúncio da Alinea numa revista', cap='Alinea · Anúncio de imprensa', href='/projetos/alinea'),
+                dict(img=M.find('farinhas-firmos', 'farinhafirmos_calendario'), alt='Calendário da Farinhas Firmos', cap='Farinhas Firmos · Calendário', href='/projetos/farinhas-firmos'),
+            ])),
             ('texto', dict(eyebrow='Primeiro ouvimos', title='Primeiro ouvimos. Depois damos voz à sua empresa.', bg='#f6f7f8', paras=[
                 'Para comunicar bem uma empresa é preciso conhecê-la por dentro. Queremos saber o que vende e também porque existe: qual é o seu _core business_, o que a distingue, como pensam as pessoas que a gerem e o que os clientes valorizam nela.',
                 'Este conhecimento não se força com questionários nem com reuniões de _briefing_. Vai-se construindo com proximidade: no contacto regular, em conversas francas e, muitas vezes, à volta de uma mesa, num almoço com o cliente. É aí que surgem as histórias, as conquistas e os desafios, e que se percebe para onde o negócio está a evoluir.',
@@ -173,6 +181,11 @@ def servicos(M):
                 ('Gestão de redes sociais', 'Integrada na estratégia global da marca.'),
                 ('Acompanhamento próximo', 'Reuniões regulares, planeamento e ajustes contínuos.'),
             ], cta=('/contacto', 'Marcar conversa →'))),
+            ('imagens', dict(items=[
+                dict(img=M.find('croma', 'croma_rs_01'), alt='Publicações do CROMA nas redes sociais', cap='CROMA · Redes sociais', href='/projetos/croma'),
+                dict(img=M.find('queijaria-da-sao', 'queijariadasao_rollup'), alt='Roll-ups da Queijaria da São', cap='Queijaria da São · Roll-ups', href='/projetos/queijaria-da-sao'),
+                dict(img=M.find('imperalum', 'imperalum_banner_01'), alt='Outdoor da Imperalum', cap='Imperalum · Outdoor', href='/projetos/imperalum'),
+            ])),
             ('panels', dict(eyebrow='Departamento externo', title='Porquê ter um departamento de comunicação externo?', items=[
                 dict(short='Equipa completa', title='Uma equipa completa', text='Estratégia, design, textos e digital, sem ter de construir e gerir uma equipa interna.', img='https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg', cap='Imagem · Adega Camolas', pos='50% 50%'),
                 dict(short='Continuidade', title='Continuidade e conhecimento profundo', text='Conhecemos a história da marca, incluindo a que não está escrita em lado nenhum. Muitas vezes é nas conversas informais com os donos e administradores que descobrimos o que a empresa tem de mais verdadeiro. São histórias, valores e decisões que nunca chegaram a ser comunicados.', img=I('consulai', 'consulai_wall_logo'), cap='Imagem · Consulai', pos='50% 50%'),
@@ -197,7 +210,7 @@ def servicos(M):
         desc='Sessões de coaching de marca para clarificar posicionamento, identidade e comunicação. Ouvimos a sua marca para a ajudar a encontrar a sua voz.',
         og=GONCALO,
         hero=dict(crumbs=[('Início', '/'), ('Serviços', '/servicos'), ('Coaching de Marcas', None)], display_is_h1=True,
-                  eyebrow='Coaching de Marcas', display=['Coaching de Marcas:', 'às vezes, a sua', 'marca só precisa', 'de ser ouvida.'], display_wide=['Coaching de Marcas:', 'às vezes, a sua marca', 'só precisa de ser ouvida.'],
+                  eyebrow='Coaching de Marcas', display=['Coaching de Marcas:', 'às vezes, a sua', 'marca só precisa', 'de ser ouvida.'],
                   intro='Este serviço não fomos nós que o inventámos. Foram os nossos clientes que lhe deram nome.',
                   cta=('/contacto', 'Marcar uma sessão →'), cta2=('#como-funciona', 'Como funciona')),
         blocks=[
@@ -207,6 +220,11 @@ def servicos(M):
             ('citacao', dict(eyebrow='Um psicólogo para a sua marca', headline='Um psicólogo para a sua marca.', quote='Costumo dizer, meio a brincar, que sou quase um psicólogo de marcas. Antes de comunicar uma marca, é preciso deixá-la falar.',
                              name='Gonçalo Santos', company='Hortelã Magenta', role='Fundador da Hortelã Magenta', href='/sobre#equipa', link_label='Conhecer a equipa →',
                              img=GONCALO, img_alt='Gonçalo Santos, fundador da Hortelã Magenta', caption='Gonçalo Santos · Fundador', pos='50% 20%')),
+            ('imagens', dict(items=[
+                dict(img=NOST(M, 'post-it-addicted'), alt='Post-its com ideias numa parede do ateliê da Hortelã Magenta', cap='O ateliê · Ideias em post-its', href='/sobre'),
+                dict(img=NOST(M, 'testar-trabalhos-e-importante'), alt='Provas de trabalhos em cima da mesa', cap='O ateliê · Testar antes de decidir', href='/sobre'),
+                dict(img=NOST(M, 'novo-espaco-hortela-magenta'), alt='Espaço de trabalho da Hortelã Magenta', cap='O ateliê da Hortelã Magenta', href='/sobre'),
+            ])),
             ('texto', dict(eyebrow='Do mesmo lado da mesa', title='Não trazemos fórmulas feitas. Trazemos clareza.', bg='#f6f7f8', paras=[
                 'As marcas, tal como as pessoas, têm uma história, inseguranças, ambições e contradições. Às vezes cresceram depressa demais. Às vezes mudaram de rumo e a imagem ficou para trás. Às vezes sabem muito bem o que fazem, mas não sabem explicar porque é que isso importa.',
                 'No Coaching de Marcas sentamo-nos do mesmo lado da mesa. Fazemos perguntas, ouvimos com atenção e ajudamos a marca a encontrar as suas próprias respostas. Não trazemos fórmulas feitas. Trazemos clareza.'])),
