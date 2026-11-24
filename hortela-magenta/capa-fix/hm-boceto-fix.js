@@ -24,7 +24,7 @@
   function markMenu() {
     var m = D.querySelector('[data-mobile]'); if (!m || here === '/') return;
     m.querySelectorAll('nav a[href]').forEach(function (a) {
-      var h = a.getAttribute('href') || '', cur = h === here || (h === sec && a.parentElement && a.parentElement.tagName === 'NAV');
+      var h = (a.getAttribute('href') || '').replace(/^([^#?]*?)\/?([#?].*)?$/, '$1/'), cur = h === here || (h === sec && a.parentElement && a.parentElement.tagName === 'NAV');
       if (cur && !a.hasAttribute('data-hm-cur')) { a.setAttribute('data-hm-cur', ''); if (h === here) a.setAttribute('aria-current', 'page'); }
       else if (!cur && a.hasAttribute('data-hm-cur')) a.removeAttribute('data-hm-cur');
     });
@@ -254,9 +254,9 @@
   /* 10. barra fixa «Pedir orçamento · Ligar» no telemóvel (aparece depois do primeiro ecrã; some no rodapé e em /contacto/) */
   var cta = null;
   function ctaBar() {
-    if (cta || here.indexOf('/contacto/') === 0 || !D.body) return;
+    if (cta || here === '/contacto' || here.indexOf('/contacto/') === 0 || here.indexOf('/obrigado/') === 0 || !D.body) return;
     cta = D.createElement('nav'); cta.className = 'hm-cta'; cta.setAttribute('aria-label', 'Contacto rápido');
-    cta.innerHTML = '<a class="hm-cta-main" href="/contacto/">Pedir orçamento</a>' +
+    cta.innerHTML = '<a class="hm-cta-main" href="/contacto">Pedir orçamento</a>' +
       '<a href="tel:+351211806292" aria-label="Ligar para a Hortelã Magenta: (+351) 211 806 292"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>Ligar</a>';
     D.body.appendChild(cta);
   }
