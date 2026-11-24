@@ -16,6 +16,9 @@ CTA_STYLE = 'style="font-size:18px; color:#1C1B23; text-decoration:none; border-
 
 
 def servicos(t):
+    # a cabeçalho funde-se com a secção seguinte («Branding», branca): véu branco em vez de cinzento
+    t = t.replace('data-veil="" style="position:absolute; left:0; right:0; bottom:0; height:200%; background:linear-gradient(to top, #e8eced 50%,',
+                  'data-veil="" style="position:absolute; left:0; right:0; bottom:0; height:200%; background:linear-gradient(to top, #ffffff 50%,', 1)
     # 1) secções 03–05 e Avenças: «Explorar …» para as páginas novas (como Branding e Design Web)
     for page, label in [('/servicos/design-grafico-e-editorial', 'Explorar Gráfico + Editorial'),
                         ('/servicos/campanhas-e-redes-sociais', 'Explorar Campanhas &amp; Redes Sociais'),

@@ -165,7 +165,18 @@ def build_servico(slug, d, base, crumbs_parent=('Serviços', '/servicos'), schem
         h = d['hero']
         if h['cta'][0] == '/contacto':
             h['cta'] = (cta_href, h['cta'][1])
-    parts = [BS.hero(d['hero'])] + blocks_html(d.get('blocks', []), slug)
+    # A cabeçalho funde-se (data-veil) com a secção seguinte, como em Branding: as duas com o mesmo cinzento (#e8eced).
+    # Se a primeira secção já tiver fundo próprio, o véu usa essa cor.
+    blocks = d.get('blocks', [])
+    if blocks:
+        k0, b0 = blocks[0]
+        if k0 == 'mais':  # «Mais projetos» tem o fundo do tema (branco)
+            d['hero'].setdefault('veil', 'var(--bg)')
+        elif b0.get('bg'):
+            d['hero'].setdefault('veil', b0['bg'])
+        else:
+            b0['bg'] = d['hero'].get('veil', '#e8eced')
+    parts = [BS.hero(d['hero'])] + blocks_html(blocks, slug)
     if d.get('trabalhos'):
         parts.append(BS.trabalhos(M, d['trabalhos']))
     if d.get('testimonial'):
