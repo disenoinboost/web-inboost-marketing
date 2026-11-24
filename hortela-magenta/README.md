@@ -151,3 +151,10 @@ Informe: `2026-11-24-fase2-informe.md`. Código: `fase2/`.
   - **Banner:** se edita en Complianz → Banner de cookies (ID 1). Tras cambiarlo, vaciar WP Rocket: la salida va dentro de la caché de cada página. Los enlaces del banner se guardan 10 min en el transitorio `page_links_1_pt_PT`.
   - **Pie:** botón «Preferências de cookies» (`button.cmplz-manage-consent`, que Complianz 7 escucha para reabrir el panel), añadido por `comum.py`.
   - **Probar el banner en local:** Complianz no lo enseña a Chromium headless (lo toma por robot): usar un user agent normal.
+- **Fichas y landings (ronda del 24-nov, noche):** ver el punto 11 del informe.
+  - `blocos.fit_box()`: imagen entera en cualquier caja (fondo liso → su color; foto → copia desenfocada). Usa `gerador/media-extra.json` (color y uniformidad del borde de cada imagen, medidas de `hm-media/split/` y de algunas imágenes de Camolas).
+  - Bloques nuevos: `proj_anuncios` (lista con imagen fija, de Camolas), `proj_filme` con `sec_id='site'` para el vídeo del site, y `blocos_servico.imagens` (franja de fotos con enlace al proyecto).
+  - Las fichas se enriquecen en `dados_projetos.enriquecer()`.
+  - Marquee: `data-drag` en las fichas (fx-projeto) y `data-mq-drag` en servicios y landings (fx-servico).
+  - Rejilla de dos columnas: `ROW`/`COL_L`/`COL_R` en `blocos_servico.py`.
+  - Banco de capturas por secciones: `node secshots.js <dist> <ruta> <prefijo> [movil]` (en el scratchpad de la sesión, con las imágenes reducidas traídas del servidor).

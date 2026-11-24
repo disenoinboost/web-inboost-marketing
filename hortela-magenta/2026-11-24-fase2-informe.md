@@ -332,3 +332,42 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
   - El botón del pie reabre el panel y «Aceitar» guarda `allow`.
   - 0 errores JS y sin desborde horizontal.
 
+## 11. Ronda 2026-11-24 (noche): fichas, landings y columnas
+
+**Fichas de proyecto (las 12, mismo criterio para todas):**
+- **Imágenes de la web actual:** ya se usaban todas salvo variantes de logotipo. Ahora entran los GIF animados de Alsil, Imperalum, Knowledgebiz y Queijaria, las versiones clara y oscura de Imperalum y Knowledgebiz y la construcción del logotipo de Imperalum. Los vídeos de Vimeo (Alinea y Vilamoura) siguen enlazados.
+- **Recortes:**
+  - En Identidade las imágenes se encajan siempre enteras: los gráficos de fondo liso, sobre su propio color; las fotografías, sobre una copia desenfocada.
+  - En Aplicações cada tarjeta toma la proporción de su imagen.
+  - Se cortaban por `object-fit: cover` en cajas de proporción fija (2:1 y 3:2) y, en el móvil, por una regla de Camolas de la capa de corrección (ahora limitada con `data-hm-fit`).
+- **Imágenes partidas** (`hm-media/split/`, hechas en el servidor a partir de la copia local):
+  - Queijaria: saco y caja (antes «Merchandising»); logotipo sobre amarillo y sobre azul.
+  - Croma: t-shirt y pins.
+  - Los pins de HGO se muestran enteros (el patrón de abajo forma parte de la pieza).
+- **Secciones nuevas, con el componente de Camolas:**
+  - «Anúncios e redes sociais» (lista con imagen fija que cambia) en las 12. Cuando no hay anuncios, la sección lleva el título de lo que sí hay: «Cartazes e digital» en Knowledgebiz, «O livro por dentro» en Vilamoura, «Mapas e desdobrável» en Almada, etc.
+  - «O site» (vídeo que crece) en Knowledgebiz, Queijaria, Alinea, Farinhas Firmos y Alsil. Los vídeos de la web actual ya son mockups con dispositivos, por eso no van dentro del marco de navegador de Camolas. Para hacerlo exactamente como en Camolas harían falta capturas completas de esos sites, y antes confirmar que siguen siendo diseño de Hortelã.
+  - Textos nuevos: describen solo lo que se ve o reutilizan frases de la web actual.
+- **Testemunhos:** solo hay de Consulai, Farinhas Firmos e IMT. Los demás de /sobre son de otros clientes (Inframoura, Stericycle, Adrepes, Coprate, Mafraria, Homesphere, Tavira Lawyers). Para el resto de fichas, pedir citas al cliente.
+
+**Servicios y landings:**
+- **Carruseles que no se arrastraban** (Rótulos, Clínicas, Adm. pública, Eventos, Indústria): en las páginas de servicio el arrastre del marquee se activa con `data-mq-drag` (fx-servico) y llevaban `data-drag` (el de las fichas).
+- **Hueco blanco al final del carrusel:** el conjunto de imágenes se repite hasta pasar del ancho de la pantalla.
+- **Titulares largos** (Avença, Coaching, Adm. pública, Rótulos, Indústria): ocupan también la columna derecha, por encima del texto pequeño. Avença y Coaching tienen líneas propias para ese formato (`display_wide`).
+- **Texto sobre imagen** («O que fazemos» de Gráfico + Editorial y el resto de paneles): degradado más oscuro bajo el texto y texto en blanco puro.
+- **Más fotografía** con proyectos reales y enlace a cada uno:
+  - Adm. pública: IMT, Almada, HGO y Vilamoura.
+  - Eventos: CROMA y stands de Alsil.
+  - Rótulos: Camolas.
+  - Clínicas: sus dos imágenes pasan a una franja grande fija (eran un carrusel de dos imágenes repetidas).
+  - Clínicas no tiene más material real. Las clínicas Alinea («premium oral care») tienen fotografías muy buenas, pero su ficha L03 pide confirmación antes de presentarlas como caso dental.
+- **Prémios:** las dos imágenes se ven enteras sobre su color, en tarjetas que ocupan todo el ancho.
+- **Indústria y Rótulos:** menos espacio antes de «Mais projetos». Se sumaban los rellenos de las dos secciones.
+- **Imagen rota en vivo:** la de Filipe Palhoça en el portafolio de Rótulos (el archivo estaba guardado como `.jpg_id-6329`). Copiada con su nombre.
+
+**Columnas:** todas las secciones de dos columnas de servicios y landings (texto, listas, preguntas, «Para quem», enlaces, cabecera de paneles y frase) usan la misma rejilla 5:7. La columna derecha empieza en el mismo punto en todas y se apilan por debajo de ~800 px.
+
+**Verificación:**
+- En local, con las imágenes reales traídas del servidor: las 12 fichas por secciones en PC y Queijaria en móvil; arrastre comprobado por código en 5 páginas; regresión de 36 rutas × 2 sin errores JS ni desbordes.
+- En vivo: 36 rutas en 200 y ninguna imagen referenciada que falte en el servidor.
+
