@@ -92,3 +92,19 @@ Laura pasa «Avença Mensal 360» y «Coaching de Marcas». Son textos completos
   - `paquetes/2026-11-24-avenca.json`. Copia: `hm-paginas-bak/2026-11-24-antes-avenca/`.
 - **Para la fase siguiente:** las dos páginas de servicio. URL propuestas: `/servicos/avenca-comunicacao-360/` y `/servicos/coaching-de-marcas/`. Cuando existan, el enlace de la Home y las opciones del selector de Contacto deberán apuntar a ellas.
 - **Pendiente de Dani tras recibir los Words:** foto original de Alinea, más anuncios reales de Camolas y confirmar si se pueden nombrar los clientes con avença.
+
+## «Avenças mensais» con los demás servicios (2026-11-24)
+
+| Dónde | Cambio |
+|---|---|
+| Menú de PC (desplegable de Serviços, las 10 páginas) | 6.º elemento en la lista JS `services`, con la descripción corta «O departamento de comunicação da sua empresa.» y la imagen del estacionario de Camolas. Enlaza a `/servicos/#avencas-mensais` |
+| Menú de PC · enlaces | Gráfico + Editorial, Campanhas y Fotografia llevaban a la web antigua (`https://hortelamagenta.pt/servicos`, fallo del diseño). Ahora van a su sección de /servicos/ |
+| Menú móvil y pie (las 10 páginas) | + «Avenças mensais» → `/servicos/#avencas-mensais` |
+| Home · lista de servicios | Avenças sale de la misma lista que los demás (fuera el `concat` provisional). Enlace «Ver serviços» → `/servicos/#avencas-mensais` |
+| Serviços | La frase de la cabecera incluye «Avenças mensais». En «Acceso rápido», 06. Contadores «0N / 06». Nueva sección `#avencas-mensais` («06 / 06»), con texto del Word (párrafo, 5 puntos y CTA «Marcar conversa →» a /contacto/) e imágenes de clientes de larga duración (estacionario de Camolas, banner de Consulai y display de Alsil). Va con fondo `#f6f7f8`, alternando con Fotografia |
+
+- **Ediciones de paquetes:** `paquetes/2026-11-24-avencas-menu.json` (55).
+- **Copias:** `hm-paginas-bak/2026-11-24-antes-avencas-menu/`.
+- **Imágenes nuevas copiadas:** con `hm_media_mirror()`.
+- **Pruebas en local:** 20 de 20 sin errores. El desplegable de PC muestra 6 servicios, igual que el menú móvil y el pie.
+- **En vivo:** páginas 200, enlaces a `#avencas-mensais` presentes y ningún enlace a la web antigua.

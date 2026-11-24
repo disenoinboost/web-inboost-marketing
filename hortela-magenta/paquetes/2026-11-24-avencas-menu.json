@@ -1,0 +1,443 @@
+[
+ {
+  "op": "regex",
+  "page": "home",
+  "pattern": "(\\{ n: '05', name: 'Fotografia & Vídeo',[^\\n]*?megaSize: '[^']*' \\},)",
+  "new": "\\1\n      { n: '06', name: 'Avenças mensais', short: 'O departamento de comunicação da sua empresa.', desc: 'O departamento de comunicação da sua empresa, só que do lado de fora. Para PME e marcas com atividade nacional e internacional: marca, imagem gráfica, textos, web, fotografia, vídeo e redes sociais, com reuniões regulares e um valor mensal fixo.', chips: ['Marca e tom de voz', 'Imagem gráfica', 'Conteúdos e web', 'Fotografia e vídeo'], cta: 'Ver serviços', img: 'https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg', megaSize: 'clamp(22px,1.9vw,30px)', href: '/servicos/#avencas-mensais' },",
+  "count": 1,
+  "why": "Menu de serviços (lista JS do menu do computador): + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "home",
+  "pattern": "href: i === 0 \\? '/servicos/branding/' : i === 1 \\? '/servicos/design-web/' : 'https://hortelamagenta\\.pt/servicos',",
+  "new": "href: s.href || ['/servicos/branding/', '/servicos/design-web/', '/servicos/#design-grafico-e-editorial', '/servicos/#campanhas-e-redes-sociais', '/servicos/#fotografia-e-video'][i] || '/servicos/',",
+  "count": 1,
+  "why": "Menu do computador: Gráfico + Editorial, Campanhas e Fotografia levavam ao site antigo (hortelamagenta.pt/servicos); agora à sua secção em /servicos/"
+ },
+ {
+  "op": "regex",
+  "page": "home",
+  "pattern": "sc-for list=\"\\{\\{ services \\}\\}\" as=\"s\" hint-placeholder-count=\"5\"",
+  "new": "sc-for list=\"{{ services }}\" as=\"s\" hint-placeholder-count=\"6\"",
+  "count": 2,
+  "why": "Menu do computador: 6 serviços"
+ },
+ {
+  "op": "regex",
+  "page": "home",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1\\.4; padding:5px 0;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n      <a href=\"/servicos/#avencas-mensais\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1.4; padding:5px 0;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Menu móvel: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "home",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#FFFFFF; text-decoration:none;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n        <a href=\"/servicos/#avencas-mensais\" style=\"color:#FFFFFF; text-decoration:none;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Rodapé: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "servicos",
+  "pattern": "(\\{ n: '05', name: 'Fotografia & Vídeo',[^\\n]*?megaSize: '[^']*' \\},)",
+  "new": "\\1\n      { n: '06', name: 'Avenças mensais', short: 'O departamento de comunicação da sua empresa.', desc: 'O departamento de comunicação da sua empresa, só que do lado de fora. Para PME e marcas com atividade nacional e internacional: marca, imagem gráfica, textos, web, fotografia, vídeo e redes sociais, com reuniões regulares e um valor mensal fixo.', chips: ['Marca e tom de voz', 'Imagem gráfica', 'Conteúdos e web', 'Fotografia e vídeo'], cta: 'Ver serviços', img: 'https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg', megaSize: 'clamp(22px,1.9vw,30px)', href: '/servicos/#avencas-mensais' },",
+  "count": 1,
+  "why": "Menu de serviços (lista JS do menu do computador): + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "servicos",
+  "pattern": "href: i === 0 \\? '/servicos/branding/' : i === 1 \\? '/servicos/design-web/' : 'https://hortelamagenta\\.pt/servicos',",
+  "new": "href: s.href || ['/servicos/branding/', '/servicos/design-web/', '/servicos/#design-grafico-e-editorial', '/servicos/#campanhas-e-redes-sociais', '/servicos/#fotografia-e-video'][i] || '/servicos/',",
+  "count": 1,
+  "why": "Menu do computador: Gráfico + Editorial, Campanhas e Fotografia levavam ao site antigo (hortelamagenta.pt/servicos); agora à sua secção em /servicos/"
+ },
+ {
+  "op": "regex",
+  "page": "servicos",
+  "pattern": "sc-for list=\"\\{\\{ services \\}\\}\" as=\"s\" hint-placeholder-count=\"5\"",
+  "new": "sc-for list=\"{{ services }}\" as=\"s\" hint-placeholder-count=\"6\"",
+  "count": 2,
+  "why": "Menu do computador: 6 serviços"
+ },
+ {
+  "op": "regex",
+  "page": "servicos",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1\\.4; padding:5px 0;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n      <a href=\"/servicos/#avencas-mensais\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1.4; padding:5px 0;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Menu móvel: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "servicos",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#FFFFFF; text-decoration:none;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n        <a href=\"/servicos/#avencas-mensais\" style=\"color:#FFFFFF; text-decoration:none;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Rodapé: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "branding",
+  "pattern": "(\\{ n: '05', name: 'Fotografia & Vídeo',[^\\n]*?megaSize: '[^']*' \\},)",
+  "new": "\\1\n      { n: '06', name: 'Avenças mensais', short: 'O departamento de comunicação da sua empresa.', desc: 'O departamento de comunicação da sua empresa, só que do lado de fora. Para PME e marcas com atividade nacional e internacional: marca, imagem gráfica, textos, web, fotografia, vídeo e redes sociais, com reuniões regulares e um valor mensal fixo.', chips: ['Marca e tom de voz', 'Imagem gráfica', 'Conteúdos e web', 'Fotografia e vídeo'], cta: 'Ver serviços', img: 'https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg', megaSize: 'clamp(22px,1.9vw,30px)', href: '/servicos/#avencas-mensais' },",
+  "count": 1,
+  "why": "Menu de serviços (lista JS do menu do computador): + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "branding",
+  "pattern": "href: i === 0 \\? '/servicos/branding/' : i === 1 \\? '/servicos/design-web/' : 'https://hortelamagenta\\.pt/servicos',",
+  "new": "href: s.href || ['/servicos/branding/', '/servicos/design-web/', '/servicos/#design-grafico-e-editorial', '/servicos/#campanhas-e-redes-sociais', '/servicos/#fotografia-e-video'][i] || '/servicos/',",
+  "count": 1,
+  "why": "Menu do computador: Gráfico + Editorial, Campanhas e Fotografia levavam ao site antigo (hortelamagenta.pt/servicos); agora à sua secção em /servicos/"
+ },
+ {
+  "op": "regex",
+  "page": "branding",
+  "pattern": "sc-for list=\"\\{\\{ services \\}\\}\" as=\"s\" hint-placeholder-count=\"5\"",
+  "new": "sc-for list=\"{{ services }}\" as=\"s\" hint-placeholder-count=\"6\"",
+  "count": 2,
+  "why": "Menu do computador: 6 serviços"
+ },
+ {
+  "op": "regex",
+  "page": "branding",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1\\.4; padding:5px 0;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n      <a href=\"/servicos/#avencas-mensais\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1.4; padding:5px 0;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Menu móvel: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "branding",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#FFFFFF; text-decoration:none;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n        <a href=\"/servicos/#avencas-mensais\" style=\"color:#FFFFFF; text-decoration:none;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Rodapé: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "design-web",
+  "pattern": "(\\{ n: '05', name: 'Fotografia & Vídeo',[^\\n]*?megaSize: '[^']*' \\},)",
+  "new": "\\1\n      { n: '06', name: 'Avenças mensais', short: 'O departamento de comunicação da sua empresa.', desc: 'O departamento de comunicação da sua empresa, só que do lado de fora. Para PME e marcas com atividade nacional e internacional: marca, imagem gráfica, textos, web, fotografia, vídeo e redes sociais, com reuniões regulares e um valor mensal fixo.', chips: ['Marca e tom de voz', 'Imagem gráfica', 'Conteúdos e web', 'Fotografia e vídeo'], cta: 'Ver serviços', img: 'https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg', megaSize: 'clamp(22px,1.9vw,30px)', href: '/servicos/#avencas-mensais' },",
+  "count": 1,
+  "why": "Menu de serviços (lista JS do menu do computador): + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "design-web",
+  "pattern": "href: i === 0 \\? '/servicos/branding/' : i === 1 \\? '/servicos/design-web/' : 'https://hortelamagenta\\.pt/servicos',",
+  "new": "href: s.href || ['/servicos/branding/', '/servicos/design-web/', '/servicos/#design-grafico-e-editorial', '/servicos/#campanhas-e-redes-sociais', '/servicos/#fotografia-e-video'][i] || '/servicos/',",
+  "count": 1,
+  "why": "Menu do computador: Gráfico + Editorial, Campanhas e Fotografia levavam ao site antigo (hortelamagenta.pt/servicos); agora à sua secção em /servicos/"
+ },
+ {
+  "op": "regex",
+  "page": "design-web",
+  "pattern": "sc-for list=\"\\{\\{ services \\}\\}\" as=\"s\" hint-placeholder-count=\"5\"",
+  "new": "sc-for list=\"{{ services }}\" as=\"s\" hint-placeholder-count=\"6\"",
+  "count": 2,
+  "why": "Menu do computador: 6 serviços"
+ },
+ {
+  "op": "regex",
+  "page": "design-web",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1\\.4; padding:5px 0;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n      <a href=\"/servicos/#avencas-mensais\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1.4; padding:5px 0;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Menu móvel: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "design-web",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#FFFFFF; text-decoration:none;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n        <a href=\"/servicos/#avencas-mensais\" style=\"color:#FFFFFF; text-decoration:none;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Rodapé: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "projetos",
+  "pattern": "(\\{ n: '05', name: 'Fotografia & Vídeo',[^\\n]*?megaSize: '[^']*' \\},)",
+  "new": "\\1\n      { n: '06', name: 'Avenças mensais', short: 'O departamento de comunicação da sua empresa.', desc: 'O departamento de comunicação da sua empresa, só que do lado de fora. Para PME e marcas com atividade nacional e internacional: marca, imagem gráfica, textos, web, fotografia, vídeo e redes sociais, com reuniões regulares e um valor mensal fixo.', chips: ['Marca e tom de voz', 'Imagem gráfica', 'Conteúdos e web', 'Fotografia e vídeo'], cta: 'Ver serviços', img: 'https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg', megaSize: 'clamp(22px,1.9vw,30px)', href: '/servicos/#avencas-mensais' },",
+  "count": 1,
+  "why": "Menu de serviços (lista JS do menu do computador): + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "projetos",
+  "pattern": "href: i === 0 \\? '/servicos/branding/' : i === 1 \\? '/servicos/design-web/' : 'https://hortelamagenta\\.pt/servicos',",
+  "new": "href: s.href || ['/servicos/branding/', '/servicos/design-web/', '/servicos/#design-grafico-e-editorial', '/servicos/#campanhas-e-redes-sociais', '/servicos/#fotografia-e-video'][i] || '/servicos/',",
+  "count": 1,
+  "why": "Menu do computador: Gráfico + Editorial, Campanhas e Fotografia levavam ao site antigo (hortelamagenta.pt/servicos); agora à sua secção em /servicos/"
+ },
+ {
+  "op": "regex",
+  "page": "projetos",
+  "pattern": "sc-for list=\"\\{\\{ services \\}\\}\" as=\"s\" hint-placeholder-count=\"5\"",
+  "new": "sc-for list=\"{{ services }}\" as=\"s\" hint-placeholder-count=\"6\"",
+  "count": 2,
+  "why": "Menu do computador: 6 serviços"
+ },
+ {
+  "op": "regex",
+  "page": "projetos",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1\\.4; padding:5px 0;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n      <a href=\"/servicos/#avencas-mensais\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1.4; padding:5px 0;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Menu móvel: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "projetos",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#FFFFFF; text-decoration:none;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n        <a href=\"/servicos/#avencas-mensais\" style=\"color:#FFFFFF; text-decoration:none;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Rodapé: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "camolas",
+  "pattern": "(\\{ n: '05', name: 'Fotografia & Vídeo',[^\\n]*?megaSize: '[^']*' \\},)",
+  "new": "\\1\n      { n: '06', name: 'Avenças mensais', short: 'O departamento de comunicação da sua empresa.', desc: 'O departamento de comunicação da sua empresa, só que do lado de fora. Para PME e marcas com atividade nacional e internacional: marca, imagem gráfica, textos, web, fotografia, vídeo e redes sociais, com reuniões regulares e um valor mensal fixo.', chips: ['Marca e tom de voz', 'Imagem gráfica', 'Conteúdos e web', 'Fotografia e vídeo'], cta: 'Ver serviços', img: 'https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg', megaSize: 'clamp(22px,1.9vw,30px)', href: '/servicos/#avencas-mensais' },",
+  "count": 1,
+  "why": "Menu de serviços (lista JS do menu do computador): + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "camolas",
+  "pattern": "href: i === 0 \\? '/servicos/branding/' : i === 1 \\? '/servicos/design-web/' : 'https://hortelamagenta\\.pt/servicos',",
+  "new": "href: s.href || ['/servicos/branding/', '/servicos/design-web/', '/servicos/#design-grafico-e-editorial', '/servicos/#campanhas-e-redes-sociais', '/servicos/#fotografia-e-video'][i] || '/servicos/',",
+  "count": 1,
+  "why": "Menu do computador: Gráfico + Editorial, Campanhas e Fotografia levavam ao site antigo (hortelamagenta.pt/servicos); agora à sua secção em /servicos/"
+ },
+ {
+  "op": "regex",
+  "page": "camolas",
+  "pattern": "sc-for list=\"\\{\\{ services \\}\\}\" as=\"s\" hint-placeholder-count=\"5\"",
+  "new": "sc-for list=\"{{ services }}\" as=\"s\" hint-placeholder-count=\"6\"",
+  "count": 2,
+  "why": "Menu do computador: 6 serviços"
+ },
+ {
+  "op": "regex",
+  "page": "camolas",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1\\.4; padding:5px 0;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n      <a href=\"/servicos/#avencas-mensais\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1.4; padding:5px 0;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Menu móvel: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "camolas",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#FFFFFF; text-decoration:none;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n        <a href=\"/servicos/#avencas-mensais\" style=\"color:#FFFFFF; text-decoration:none;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Rodapé: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "sobre",
+  "pattern": "(\\{ n: '05', name: 'Fotografia & Vídeo',[^\\n]*?megaSize: '[^']*' \\},)",
+  "new": "\\1\n      { n: '06', name: 'Avenças mensais', short: 'O departamento de comunicação da sua empresa.', desc: 'O departamento de comunicação da sua empresa, só que do lado de fora. Para PME e marcas com atividade nacional e internacional: marca, imagem gráfica, textos, web, fotografia, vídeo e redes sociais, com reuniões regulares e um valor mensal fixo.', chips: ['Marca e tom de voz', 'Imagem gráfica', 'Conteúdos e web', 'Fotografia e vídeo'], cta: 'Ver serviços', img: 'https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg', megaSize: 'clamp(22px,1.9vw,30px)', href: '/servicos/#avencas-mensais' },",
+  "count": 1,
+  "why": "Menu de serviços (lista JS do menu do computador): + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "sobre",
+  "pattern": "href: i === 0 \\? '/servicos/branding/' : i === 1 \\? '/servicos/design-web/' : 'https://hortelamagenta\\.pt/servicos',",
+  "new": "href: s.href || ['/servicos/branding/', '/servicos/design-web/', '/servicos/#design-grafico-e-editorial', '/servicos/#campanhas-e-redes-sociais', '/servicos/#fotografia-e-video'][i] || '/servicos/',",
+  "count": 1,
+  "why": "Menu do computador: Gráfico + Editorial, Campanhas e Fotografia levavam ao site antigo (hortelamagenta.pt/servicos); agora à sua secção em /servicos/"
+ },
+ {
+  "op": "regex",
+  "page": "sobre",
+  "pattern": "sc-for list=\"\\{\\{ services \\}\\}\" as=\"s\" hint-placeholder-count=\"5\"",
+  "new": "sc-for list=\"{{ services }}\" as=\"s\" hint-placeholder-count=\"6\"",
+  "count": 2,
+  "why": "Menu do computador: 6 serviços"
+ },
+ {
+  "op": "regex",
+  "page": "sobre",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1\\.4; padding:5px 0;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n      <a href=\"/servicos/#avencas-mensais\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1.4; padding:5px 0;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Menu móvel: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "sobre",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#FFFFFF; text-decoration:none;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n        <a href=\"/servicos/#avencas-mensais\" style=\"color:#FFFFFF; text-decoration:none;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Rodapé: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "blog",
+  "pattern": "(\\{ n: '05', name: 'Fotografia & Vídeo',[^\\n]*?megaSize: '[^']*' \\},)",
+  "new": "\\1\n      { n: '06', name: 'Avenças mensais', short: 'O departamento de comunicação da sua empresa.', desc: 'O departamento de comunicação da sua empresa, só que do lado de fora. Para PME e marcas com atividade nacional e internacional: marca, imagem gráfica, textos, web, fotografia, vídeo e redes sociais, com reuniões regulares e um valor mensal fixo.', chips: ['Marca e tom de voz', 'Imagem gráfica', 'Conteúdos e web', 'Fotografia e vídeo'], cta: 'Ver serviços', img: 'https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg', megaSize: 'clamp(22px,1.9vw,30px)', href: '/servicos/#avencas-mensais' },",
+  "count": 1,
+  "why": "Menu de serviços (lista JS do menu do computador): + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "blog",
+  "pattern": "href: i === 0 \\? '/servicos/branding/' : i === 1 \\? '/servicos/design-web/' : 'https://hortelamagenta\\.pt/servicos',",
+  "new": "href: s.href || ['/servicos/branding/', '/servicos/design-web/', '/servicos/#design-grafico-e-editorial', '/servicos/#campanhas-e-redes-sociais', '/servicos/#fotografia-e-video'][i] || '/servicos/',",
+  "count": 1,
+  "why": "Menu do computador: Gráfico + Editorial, Campanhas e Fotografia levavam ao site antigo (hortelamagenta.pt/servicos); agora à sua secção em /servicos/"
+ },
+ {
+  "op": "regex",
+  "page": "blog",
+  "pattern": "sc-for list=\"\\{\\{ services \\}\\}\" as=\"s\" hint-placeholder-count=\"5\"",
+  "new": "sc-for list=\"{{ services }}\" as=\"s\" hint-placeholder-count=\"6\"",
+  "count": 2,
+  "why": "Menu do computador: 6 serviços"
+ },
+ {
+  "op": "regex",
+  "page": "blog",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1\\.4; padding:5px 0;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n      <a href=\"/servicos/#avencas-mensais\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1.4; padding:5px 0;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Menu móvel: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "blog",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#FFFFFF; text-decoration:none;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n        <a href=\"/servicos/#avencas-mensais\" style=\"color:#FFFFFF; text-decoration:none;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Rodapé: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "artigo",
+  "pattern": "(\\{ n: '05', name: 'Fotografia & Vídeo',[^\\n]*?megaSize: '[^']*' \\},)",
+  "new": "\\1\n      { n: '06', name: 'Avenças mensais', short: 'O departamento de comunicação da sua empresa.', desc: 'O departamento de comunicação da sua empresa, só que do lado de fora. Para PME e marcas com atividade nacional e internacional: marca, imagem gráfica, textos, web, fotografia, vídeo e redes sociais, com reuniões regulares e um valor mensal fixo.', chips: ['Marca e tom de voz', 'Imagem gráfica', 'Conteúdos e web', 'Fotografia e vídeo'], cta: 'Ver serviços', img: 'https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg', megaSize: 'clamp(22px,1.9vw,30px)', href: '/servicos/#avencas-mensais' },",
+  "count": 1,
+  "why": "Menu de serviços (lista JS do menu do computador): + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "artigo",
+  "pattern": "href: i === 0 \\? '/servicos/branding/' : i === 1 \\? '/servicos/design-web/' : 'https://hortelamagenta\\.pt/servicos',",
+  "new": "href: s.href || ['/servicos/branding/', '/servicos/design-web/', '/servicos/#design-grafico-e-editorial', '/servicos/#campanhas-e-redes-sociais', '/servicos/#fotografia-e-video'][i] || '/servicos/',",
+  "count": 1,
+  "why": "Menu do computador: Gráfico + Editorial, Campanhas e Fotografia levavam ao site antigo (hortelamagenta.pt/servicos); agora à sua secção em /servicos/"
+ },
+ {
+  "op": "regex",
+  "page": "artigo",
+  "pattern": "sc-for list=\"\\{\\{ services \\}\\}\" as=\"s\" hint-placeholder-count=\"5\"",
+  "new": "sc-for list=\"{{ services }}\" as=\"s\" hint-placeholder-count=\"6\"",
+  "count": 2,
+  "why": "Menu do computador: 6 serviços"
+ },
+ {
+  "op": "regex",
+  "page": "artigo",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1\\.4; padding:5px 0;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n      <a href=\"/servicos/#avencas-mensais\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1.4; padding:5px 0;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Menu móvel: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "artigo",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#FFFFFF; text-decoration:none;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n        <a href=\"/servicos/#avencas-mensais\" style=\"color:#FFFFFF; text-decoration:none;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Rodapé: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "contacto",
+  "pattern": "(\\{ n: '05', name: 'Fotografia & Vídeo',[^\\n]*?megaSize: '[^']*' \\},)",
+  "new": "\\1\n      { n: '06', name: 'Avenças mensais', short: 'O departamento de comunicação da sua empresa.', desc: 'O departamento de comunicação da sua empresa, só que do lado de fora. Para PME e marcas com atividade nacional e internacional: marca, imagem gráfica, textos, web, fotografia, vídeo e redes sociais, com reuniões regulares e um valor mensal fixo.', chips: ['Marca e tom de voz', 'Imagem gráfica', 'Conteúdos e web', 'Fotografia e vídeo'], cta: 'Ver serviços', img: 'https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg', megaSize: 'clamp(22px,1.9vw,30px)', href: '/servicos/#avencas-mensais' },",
+  "count": 1,
+  "why": "Menu de serviços (lista JS do menu do computador): + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "contacto",
+  "pattern": "href: i === 0 \\? '/servicos/branding/' : i === 1 \\? '/servicos/design-web/' : 'https://hortelamagenta\\.pt/servicos',",
+  "new": "href: s.href || ['/servicos/branding/', '/servicos/design-web/', '/servicos/#design-grafico-e-editorial', '/servicos/#campanhas-e-redes-sociais', '/servicos/#fotografia-e-video'][i] || '/servicos/',",
+  "count": 1,
+  "why": "Menu do computador: Gráfico + Editorial, Campanhas e Fotografia levavam ao site antigo (hortelamagenta.pt/servicos); agora à sua secção em /servicos/"
+ },
+ {
+  "op": "regex",
+  "page": "contacto",
+  "pattern": "sc-for list=\"\\{\\{ services \\}\\}\" as=\"s\" hint-placeholder-count=\"5\"",
+  "new": "sc-for list=\"{{ services }}\" as=\"s\" hint-placeholder-count=\"6\"",
+  "count": 2,
+  "why": "Menu do computador: 6 serviços"
+ },
+ {
+  "op": "regex",
+  "page": "contacto",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1\\.4; padding:5px 0;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n      <a href=\"/servicos/#avencas-mensais\" style=\"color:#9C978E; text-decoration:none; font-size:18px; font-weight:300; line-height:1.4; padding:5px 0;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Menu móvel: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "contacto",
+  "pattern": "(<a href=\"/servicos/#fotografia-e-video\" style=\"color:#FFFFFF; text-decoration:none;\">Fotografia &amp; Vídeo</a>)",
+  "new": "\\1\n        <a href=\"/servicos/#avencas-mensais\" style=\"color:#FFFFFF; text-decoration:none;\">Avenças mensais</a>",
+  "count": 1,
+  "why": "Rodapé: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "home",
+  "pattern": "services\\.concat\\(\\[\\{ n: '06', name: 'Avenças mensais',[^\\n]*?hcta: '[^']*' \\}\\]\\)",
+  "new": "services",
+  "count": 1,
+  "why": "Home · lista de serviços: Avenças mensais vem do mesmo array (link para /servicos/#avencas-mensais, «Ver serviços»)"
+ },
+ {
+  "op": "regex",
+  "page": "servicos",
+  "pattern": "Campanhas &amp; Redes Sociais e Fotografia &amp; Vídeo para dar forma",
+  "new": "Campanhas &amp; Redes Sociais, Fotografia &amp; Vídeo e Avenças mensais para dar forma",
+  "count": 1,
+  "why": "Serviços · cabeçalho: + Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "servicos",
+  "pattern": "(<span style=\"font-size:16px; color:#6E6A63; font-variant-numeric:tabular-nums;\">05</span><span style=\"font-size:18px; font-weight:300; letter-spacing:-0\\.02em; line-height:1\\.2;\">Fotografia &amp; Vídeo</span></a></li>)",
+  "new": "\\1\n    <li style=\"border-top:1px solid rgba(28,27,35,.16);\"><a href=\"#avencas-mensais\" style=\"display:flex; gap:12px; align-items:baseline; padding:18px 0; color:#1C1B23; text-decoration:none;\" style-hover=\"color:#D82E87;\"><span style=\"font-size:16px; color:#6E6A63; font-variant-numeric:tabular-nums;\">06</span><span style=\"font-size:18px; font-weight:300; letter-spacing:-0.02em; line-height:1.2;\">Avenças mensais</span></a></li>",
+  "count": 1,
+  "why": "Serviços · acesso rápido: + 06 Avenças mensais"
+ },
+ {
+  "op": "regex",
+  "page": "servicos",
+  "pattern": "(\\d\\d) / 05</p>",
+  "new": "\\1 / 06</p>",
+  "count": 5,
+  "why": "Serviços · contadores 0N / 06"
+ },
+ {
+  "op": "insert_after",
+  "page": "servicos",
+  "anchor": "id=\"fotografia-e-video\"",
+  "marker": "</section>",
+  "text": "\n\n<!-- 07a AVENÇAS MENSAIS -->\n<section data-cursor-bg=\"light\" id=\"avencas-mensais\" data-screen-label=\"07a Avenças mensais\" style=\"background:#f6f7f8; padding:var(--sp-block) clamp(16px,4vw,64px) var(--sp-block) clamp(16px,4vw,64px); scroll-margin-top:40px;\">\n  <div style=\"display:flex; flex-wrap:wrap; gap:56px clamp(40px,7vw,140px); align-items:flex-start; flex-direction:row-reverse; justify-content:flex-end;\">\n    <div data-faq-side=\"\" style=\"flex:1 1 320px; max-width:500px; position:sticky; top:clamp(110px,16vh,150px);\">\n      <p style=\"margin:0 0 22px; font-size:16px; color:rgba(28,27,35,.6); font-variant-numeric:tabular-nums; font-weight:400;\">06 / 06</p>\n      <h2 style=\"margin:0 0 24px; font-size:clamp(40px,3.68vw,67px); font-weight:100; letter-spacing:-0.05em; line-height:.95; text-wrap:balance;\">Avenças mensais</h2>\n      <p style=\"margin:0 0 var(--sp-title) 0; font-size:18px; font-weight:300; line-height:1.5; color:#4A4743; text-wrap:pretty;\">O departamento de comunicação da sua empresa, só que do lado de fora. Entramos no dia a dia da empresa, percebemos o que a move e assumimos a responsabilidade de a comunicar com consistência, mês após mês.</p>\n      <ul style=\"list-style:none; margin:0 0 32px; padding:0; border-top:1px solid rgba(28,27,35,.12);\"><li style=\"padding:12px 0; border-bottom:1px solid rgba(28,27,35,.12); font-size:18px; font-weight:300;\">Marca e tom de voz</li><li style=\"padding:12px 0; border-bottom:1px solid rgba(28,27,35,.12); font-size:18px; font-weight:300;\">Imagem gráfica e conteúdos</li><li style=\"padding:12px 0; border-bottom:1px solid rgba(28,27,35,.12); font-size:18px; font-weight:300;\">Digital e web</li><li style=\"padding:12px 0; border-bottom:1px solid rgba(28,27,35,.12); font-size:18px; font-weight:300;\">Fotografia e vídeo</li><li style=\"padding:12px 0; border-bottom:1px solid rgba(28,27,35,.12); font-size:18px; font-weight:300;\">Redes sociais e acompanhamento próximo</li></ul>\n      <a href=\"/contacto/\" style=\"font-size:18px; color:#1C1B23; text-decoration:none; border-bottom:1px solid #D82E87; padding-bottom:5px;\">Marcar conversa →</a>\n    </div>\n    <div style=\"flex:1.3 1 460px; min-width:0; display:flex; flex-direction:column; gap:clamp(20px,3vw,40px);\">\n      <figure data-rise=\"\" style=\"margin:0; \"><div style=\"aspect-ratio:1/1; overflow:hidden; background:#EEEDEA;\"><img src=\"https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg\" alt=\"Avenças mensais — Adega Camolas\" loading=\"lazy\" decoding=\"async\" style=\"display:block; width:100%; height:100%; object-fit:cover;\"></div><figcaption style=\"margin-top:10px; font-size:16px; color:rgba(28,27,35,.6); font-weight:400;\">Adega Camolas</figcaption></figure>\n      <figure data-rise=\"\" style=\"margin:0; width:78%; align-self:flex-start;\"><div style=\"aspect-ratio:16/10; overflow:hidden; background:#EEEDEA;\"><img src=\"https://hortelamagenta.pt/media/pages/projetos/consulai/cb5defbca6-1721821621/hortelamagenta_portfolio_marca_consulai_banner_02-1900x.jpg\" alt=\"Avenças mensais — Consulai\" loading=\"lazy\" decoding=\"async\" style=\"display:block; width:100%; height:100%; object-fit:cover;\"></div><figcaption style=\"margin-top:10px; font-size:16px; color:rgba(28,27,35,.6); font-weight:400;\">Consulai</figcaption></figure>\n      <figure data-rise=\"\" style=\"margin:0; \"><div style=\"aspect-ratio:4/5; overflow:hidden; background:#EEEDEA;\"><img src=\"https://hortelamagenta.pt/media/pages/projetos/alsil/d2144ed056-1734532126/alsilgroup_portfolio_marca_display-1900x.jpg\" alt=\"Avenças mensais — Alsilgroup\" loading=\"lazy\" decoding=\"async\" style=\"display:block; width:100%; height:100%; object-fit:cover;\"></div><figcaption style=\"margin-top:10px; font-size:16px; color:rgba(28,27,35,.6); font-weight:400;\">Alsilgroup</figcaption></figure>\n    </div>\n  </div>\n</section>",
+  "count": 1,
+  "why": "Serviços · nova secção 06 Avenças mensais (texto do Word de Gonçalo; imagens de clientes de longa duração)"
+ }
+]
