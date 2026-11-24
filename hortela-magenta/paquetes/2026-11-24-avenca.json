@@ -1,0 +1,10 @@
+[
+ {
+  "op": "regex",
+  "page": "home",
+  "pattern": "\\{ n: '06', name: 'Avenças mensais', short: '[^']*', desc: '[^']*', chips: \\[[^\\]]*\\], href: '/contacto/', hcta: '[^']*' \\}",
+  "new": "{ n: '06', name: 'Avenças mensais', short: 'O departamento de comunicação da sua empresa.', desc: 'O departamento de comunicação da sua empresa, só que do lado de fora. Para PME e marcas com atividade nacional e internacional: marca, imagem gráfica, textos, web, fotografia, vídeo e redes sociais, com reuniões regulares e um valor mensal fixo.', chips: ['Marca e tom de voz', 'Imagem gráfica', 'Conteúdos e web', 'Fotografia e vídeo'], href: '/contacto/', hcta: 'Marcar conversa' }",
+  "count": 1,
+  "why": "Home · 6.º serviço «Avenças mensais»: texto do Word «Avença Mensal 360» de Gonçalo (substitui o provisório) e link «Marcar conversa» (botão proposto no Word)"
+ }
+]

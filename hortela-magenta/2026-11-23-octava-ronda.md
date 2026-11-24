@@ -83,3 +83,12 @@ Sitio: https://hortelamagenta.inboost.marketing. Las páginas salen de los paque
 - **En vivo:** páginas 200, md5 de la capa igual y medios 200.
 - **Serviços · Web design (después):** el borde blanco de las pantallas se confundía con la web. El montaje pasa a `camolas-site-mockup-4x5-v2.webp`, con monitor y móvil negros (bisel, cámara e isla). La versión 1 se borró del servidor.
 - **Serviços · Web design (v3):** el resto de la página sale pegado por debajo del monitor y del móvil, sin hueco, como en las otras muestras (`camolas-site-mockup-4x5-v3.webp`). La v2 se borró del servidor.
+
+## Words de Gonçalo (2026-11-24)
+
+Laura pasa «Avença Mensal 360» y «Coaching de Marcas». Son textos completos de página de servicio (URL, title, meta, H1, apartados, CTA y FAQ) y están en el chat de la sesión, no en el repo (es público y son borradores para revisión).
+- **Home · «Avenças mensais»:** el texto provisional se sustituye por uno sacado del Word: «O departamento de comunicação da sua empresa, só que do lado de fora. Para PME e marcas com atividade nacional e internacional: marca, imagem gráfica, textos, web, fotografia, vídeo e redes sociais, com reuniões regulares e um valor mensal fixo.»
+  - El enlace pasa a «Marcar conversa» (el botón que propone el Word; «Quero um departamento de comunicação» ocupaba dos líneas en móvil) y sigue llevando a /contacto/.
+  - `paquetes/2026-11-24-avenca.json`. Copia: `hm-paginas-bak/2026-11-24-antes-avenca/`.
+- **Para la fase siguiente:** las dos páginas de servicio. URL propuestas: `/servicos/avenca-comunicacao-360/` y `/servicos/coaching-de-marcas/`. Cuando existan, el enlace de la Home y las opciones del selector de Contacto deberán apuntar a ellas.
+- **Pendiente de Dani tras recibir los Words:** foto original de Alinea, más anuncios reales de Camolas y confirmar si se pueden nombrar los clientes con avença.
