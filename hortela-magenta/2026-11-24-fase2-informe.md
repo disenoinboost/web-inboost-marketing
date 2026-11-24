@@ -371,3 +371,26 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 - En local, con las imágenes reales traídas del servidor: las 12 fichas por secciones en PC y Queijaria en móvil; arrastre comprobado por código en 5 páginas; regresión de 36 rutas × 2 sin errores JS ni desbordes.
 - En vivo: 36 rutas en 200 y ninguna imagen referenciada que falte en el servidor.
 
+## 12. Ronda 2026-11-24 (última): titulares, fotos y entrelíneas
+
+**Titulares de servicios y landings:**
+- Todos usan el tamaño y la estructura de Branding: misma fórmula de tamaño, título en la columna izquierda y texto pequeño abajo a la derecha. Los de la ronda anterior usaban otra fórmula y salían más grandes en pantallas medianas.
+- **3 líneas (como Branding y Design Web):** el antetítulo queda a la misma altura en 1280, 1440, 1536 y 1920 px. Afecta a Rótulos, Clínicas, Indústria, Eventos, Campanhas y Fotografia.
+- **Líneas largas:** pueden pasar a la columna derecha (`width:max-content`) solo si quedan por encima del texto pequeño. La última línea siempre cabe a la izquierda. Comprobado línea a línea en 6 tamaños de pantalla (de 1100×760 a 1920×1080): ninguna toca el texto pequeño.
+- **4 líneas:** Avença, Coaching y Administração pública no caben en 3 líneas a ese tamaño sin pisar el texto pequeño, y Gráfico + Editorial se queda en 4 líneas cortas, como el diseño original. En esas cuatro el antetítulo queda ~60 px más arriba. Para igualarlas habría que acortar el titular (cambio de texto, a validar con el cliente).
+
+**Fotos:**
+- Avença: dos franjas de trabajos (Consulai, Alinea y Farinhas Firmos; CROMA, Queijaria e Imperalum). Los pies dicen el proyecto y la pieza; no dicen que sean clientes de avença.
+- Coaching: fotos del ateliê del archivo de la web antigua (post-its, pruebas de trabajos, el espacio). Son de 2016 y de 1024 px.
+- Clínicas: franja con el rebranding del Hospital Garcia de Orta (identidad en salud), debajo de las dos imágenes de clínica.
+
+**Franjas de fotos:** cuando siguen a un texto (Adm. pública, Eventos, Avença…) van pegadas, con el mismo fondo y sin espacio por encima.
+
+**Entrelíneas:**
+- Títulos de sección: de .95–.98 a 1.04–1.06.
+- Títulos de la lista con imagen: de 1 a 1.1.
+- Datos del proyecto (Cliente, Serviços…): de 1.12 a 1.25.
+- Pies de foto: subrayado separado del texto y entrelínea de 1.7, para que no se toquen al partirse en dos líneas.
+
+**Verificación:** regresión de 36 rutas × 2 sin errores ni desbordes; en vivo, 36 rutas en 200 y ninguna imagen referenciada que falte.
+
