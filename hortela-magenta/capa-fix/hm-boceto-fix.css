@@ -531,3 +531,8 @@ html body section:has(+ #responsivo) [data-veil] { background: linear-gradient(t
   html body #f-panel ol [aria-disabled] > span:first-child, html body #f-panel ol [aria-disabled] > sup { font-size: 13px !important; }
   html body #f-panel ol button > span:nth-child(2), html body #f-panel ol [aria-disabled] > span:nth-child(2) { font-size: 16px !important; }
 }
+
+/* Galerias com lightbox (Camolas · Rótulos e Fotografia, Sobre · Hortelanices, Design Web · Conteúdos): aviso de que a foto se amplia.
+   [data-hm-hint="pc"] no computador («clique»), [data-hm-hint="m"] no telemóvel («toque»). */
+html body [data-hm-hint="m"] { display: none; }
+@media (max-width: 767px) { html body [data-hm-hint="pc"] { display: none; } html body [data-hm-hint="m"] { display: inline; } }

@@ -126,3 +126,21 @@ Laura pasa «Avença Mensal 360» y «Coaching de Marcas». Son textos completos
 - **Títulos de galerías horizontales (móvil):** en Rótulos de Camolas, «Grande Escolha · rótulo» y «Monocasta Syrah · rótulo» ocupaban dos líneas (unos 25 px). Rótulos y Trabalhos de Branding y Design Web (incluida la copia con scroll) van ahora al mismo tamaño, en una línea: `min(22px, (78vw − 41px) / 12,6)`, que da 22 px a 430, unos 20,9 a 390 y unos 19 a 360. No hay más galerías de este tipo en Sobre, Serviços, Projetos ni Home. En PC ya cabían.
 - **Capa:** css `9a888cf4…`, servida con `v=1795513139`.
 - **Pruebas:** 20 de 20 en local sin errores. En vivo, md5 servido igual.
+
+## «O site» a ritmo tranquilo, visor de fotos en móvil y avisos «tocar para ampliar» (2026-11-24)
+
+- **Camolas · O site.**
+  - **Causa:** el motor del diseño (`MODS.scrub`) mueve cada página con una curva *smoothstep*: empieza despacio y a la mitad va a 1,5 veces la media. Con las páginas enteras, la imagen corría unas 12 veces más que el scroll en PC y unas 30 en móvil.
+  - **Ahora:** en el paquete se quitan `data-scrub`/`data-sstep` de `#digital` (pasa a `data-hm-osite`) y la capa lo controla todo (JS 18):
+    - entrada del navegador (escala 0,56 → 1) y del texto;
+    - cada página avanza a velocidad constante: PC 2,5 px por px de scroll; móvil 3,5, con las páginas limitadas a 12.000 px (Vinhos en móvil mide 30.600);
+    - entradas de 0,75 pantalla entre páginas;
+    - etiquetas de la barra y barra de progreso;
+    - alto de la sección calculado para cada pantalla. Con movimiento reducido, estático.
+  - **Medido:** velocidad máxima de 2,6 en PC y 3,5 en móvil. La sección mide unas 14 pantallas en PC (antes 10) y unas 17 en móvil (antes 14).
+  - **Tramos:** en móvil solo se precargan los que caen dentro de ese límite.
+- **Visor de fotos (`[data-hm-lb]`) en móvil.** Se abre en el `pointerup` y el clic sintético que el móvil dispara después caía en el fondo del propio visor, que lo cerraba al instante («tocar fuera»). Con ratón funcionaba. JS 19: se ignora ese clic cuando el toque empezó con el visor cerrado; tocar el fondo con el visor abierto lo sigue cerrando. Afecta a todas las galerías con visor.
+- **Avisos.** PC: «Arraste para ver mais · clique numa foto para ampliar». Móvil: «Deslize para ver mais · toque numa foto para ampliar». Están en Camolas · Fotografia, Sobre · Hortelanices y Design Web · Conteúdos. En Camolas · Rótulos: «Clique/Toque numa imagem para ampliar». Se muestran con `[data-hm-hint="pc|m"]`.
+- **Ediciones de paquetes:** `paquetes/2026-11-24-osite-galerias.json` (5). Copias: `hm-paginas-bak/2026-11-24-antes-osite-galerias/`.
+- **Capa:** css `771dd39d…`, js `6edf4312…`.
+- **Pruebas:** 20 de 20 en local. Comprobado también sobre la página de Camolas servida: el visor se abre al tocar y las velocidades coinciden.

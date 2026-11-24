@@ -540,13 +540,74 @@
       es.forEach(function (e) {
         if (!e.isIntersecting) return; shotIO.disconnect();
         var k = W.matchMedia('(max-width: 760px)').matches ? 'm' : 'pc';
-        D.querySelectorAll('[data-hm-shot="' + k + '"] img[loading="lazy"]').forEach(function (im) { im.setAttribute('loading', 'eager'); });
+        D.querySelectorAll('[data-hm-shot="' + k + '"] img[loading="lazy"]').forEach(function (im) { if (k === 'm' && im.offsetTop > 13500) return; im.setAttribute('loading', 'eager'); });
       });
     }, { rootMargin: '150% 0px' });
     shotIO.observe(sec);
   }
 
-  function init() { markMenu(); subMenus(); sides(); steps(); peeks(); lpN(); curtains(); vids(); shots(); ctaBar(); variety(); opArrows(); filterArrows(); packClients(); hands(); teamNames(); rotArrows(); lateAds(); reels(); shotsWarm(); req(); }
+  /* 18. (2026-11-24) Camolas · O site: o scroll passa a ser controlado aqui (no pacote tirou-se data-scrub/data-sstep da secção).
+     O desenho movia cada página com uma curva que acelerava a meio e, com as páginas inteiras, a imagem chegava a correr ~12× (PC)
+     e ~30× (telemóvel) mais que o scroll. Agora cada página avança a velocidade constante (PC 2,5 px por px; telemóvel 3,5, com as
+     páginas limitadas a 12.000 px), as entradas entre as três páginas duram ~0,75 ecrã e a altura da secção calcula-se para o ecrã. */
+  var OS = null;
+  function osParse(el, k) { var o = {}; (el.getAttribute(k) || '').split(';').forEach(function (p) { var i = p.indexOf(':'); if (i > 0) o[p.slice(0, i).trim()] = p.slice(i + 1).trim(); }); return o; }
+  function osStack(l) { var ss = l.querySelectorAll('[data-hm-shot]'); for (var i = 0; i < ss.length; i++) if (ss[i].offsetHeight > 0) return ss[i]; return null; }
+  function osLayout() {
+    if (!OS) return;
+    var vh = W.innerHeight, mob = MQ.matches, v = mob ? 3.5 : 2.5, cap = mob ? 12000 : 1e9, ah = OS.area.offsetHeight;
+    var I = .9 * vh, R = .75 * vh, G = .12 * vh, H = .35 * vh, t = .85 * I, seg = [];
+    OS.layers.forEach(function (l, i) {
+      var sk = osStack(l), d = sk ? Math.max(0, Math.min(sk.offsetHeight - ah, cap)) : 0, r0 = t;
+      if (i) { r0 = t + G; t = r0 + R + G; }
+      seg.push({ sk: sk, d: d, r0: r0, r1: i ? r0 + R : r0, s: t, e: t + d / v });
+      t = t + d / v;
+    });
+    OS.seg = seg; OS.I = I; OS.L = t + H;
+    OS.root.style.setProperty('height', Math.round(OS.L + vh) + 'px', 'important');
+  }
+  function osPut(y) {
+    var o = OS, I = o.I, L = o.L, k;
+    var a = clamp(y / I); o.frame.style.transform = 'translate3d(0,0,0) scale(' + (.56 + .44 * sm(a)).toFixed(4) + ')';
+    k = sm(clamp(y / (.75 * I))); o.text.style.opacity = (1 - k).toFixed(3); o.text.style.transform = 'translate3d(0,' + (-48 * k).toFixed(1) + 'px,0)';
+    o.labels.style.opacity = sm(clamp((y - .75 * I) / (.35 * I))).toFixed(3);
+    var idx = 0;
+    o.seg.forEach(function (g, i) {
+      if (i) { var r = sm(clamp((y - g.r0) / Math.max(1, g.r1 - g.r0))); o.layers[i].style.clipPath = o.layers[i].style.webkitClipPath = 'inset(' + (100 - 100 * r).toFixed(2) + '% 0 0 0)'; if (y >= (g.r0 + g.r1) / 2) idx = i; }
+      if (g.sk) g.sk.style.transform = 'translate3d(0,' + (-g.d * clamp((y - g.s) / Math.max(1, g.e - g.s))).toFixed(1) + 'px,0)';
+    });
+    if (idx !== o.idx) { o.idx = idx; o.xs.forEach(function (x) { var on = +x.getAttribute('data-x') === idx, st = osParse(x, on ? 'data-on' : 'data-off'); Object.keys(st).forEach(function (p) { x.style.setProperty(p, st[p]); }); }); }
+    if (o.fill) o.fill.style.transform = 'scaleX(' + clamp(y / L).toFixed(4) + ')';
+  }
+  function osTick() {
+    if (!OS || !OS.root.isConnected) { if (OS) OS.raf = 0; return; }
+    var y = Math.max(0, Math.min(OS.L, -OS.root.getBoundingClientRect().top));
+    OS.cur = OS.cur === null ? y : OS.cur + (y - OS.cur) * .2; if (Math.abs(y - OS.cur) < .5) OS.cur = y;
+    osPut(OS.cur);
+    OS.raf = OS.vis ? requestAnimationFrame(osTick) : 0;
+  }
+  function osite() {
+    var root = D.getElementById('digital'); if (!root || !root.hasAttribute('data-hm-osite')) return;
+    if (OS && OS.root === root) return;
+    var st = root.firstElementChild, kids = st ? st.children : []; if (kids.length < 3) return;
+    var frame = kids[1], bar = frame.children[0], area = frame.children[1]; if (!bar || !area) return;
+    var layers = [].slice.call(area.children).filter(function (e) { return e.tagName === 'DIV'; }); if (layers.length < 3) return;
+    OS = { root: root, st: st, text: kids[0], frame: frame, labels: kids[2], area: area, layers: layers, xs: [].slice.call(root.querySelectorAll('[data-x]')), fill: bar.querySelector('[data-sfill]'), cur: null, idx: -1, vis: false, raf: 0 };
+    layers.forEach(function (l) { var c = l.firstElementChild; if (c) c.style.transform = 'none'; });
+    if (RED) { root.style.setProperty('height', 'auto', 'important'); st.style.position = 'relative'; OS.L = 0; OS.seg = []; OS.frame.style.transform = 'none'; OS.labels.style.opacity = 1; return; }
+    osLayout(); osPut(0);
+    if ('IntersectionObserver' in W) new IntersectionObserver(function (es) { OS.vis = es[es.length - 1].isIntersecting; if (OS.vis && !OS.raf) OS.raf = requestAnimationFrame(osTick); }, { rootMargin: '50% 0px' }).observe(root);
+    W.addEventListener('resize', function () { clearTimeout(OS.rz); OS.rz = setTimeout(function () { osLayout(); OS.cur = null; }, 150); });
+  }
+
+  /* 19. (2026-11-24) Lightbox das galerias no telemóvel: abre-se no pointerup e o clique sintético que o telemóvel dispara a seguir
+     caía no fundo do próprio lightbox, que o fechava logo («clicar fora»). Ignora esse clique quando o toque começou com o lightbox fechado. */
+  var lbDownOpen = false;
+  function lbVisible() { var r = D.querySelector('[data-hm-lb]'); return !!r && r.style.display !== 'none' && r.style.opacity !== '0'; }
+  W.addEventListener('pointerdown', function () { lbDownOpen = lbVisible(); }, true);
+  D.addEventListener('click', function (e) { var t = e.target; if (t && t.hasAttribute && t.hasAttribute('data-hm-lb') && !lbDownOpen) { e.stopPropagation(); e.preventDefault(); } }, true);
+
+  function init() { markMenu(); subMenus(); sides(); steps(); peeks(); lpN(); curtains(); vids(); shots(); ctaBar(); variety(); opArrows(); filterArrows(); packClients(); hands(); teamNames(); rotArrows(); lateAds(); reels(); shotsWarm(); osite(); req(); }
   /* o desenho é montado por JS: repetir até aparecer e quando o menu se abre */
   var n = 0, iv = setInterval(function () { init(); if (++n > 20) clearInterval(iv); }, 250);
   D.addEventListener('click', function () { setTimeout(function () { markMenu(); subMenus(); opArrows(); filterArrows(); }, 60); }, true);

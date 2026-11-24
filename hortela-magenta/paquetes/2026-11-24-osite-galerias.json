@@ -1,0 +1,42 @@
+[
+ {
+  "op": "regex",
+  "page": "camolas",
+  "pattern": "(<section data-cursor-bg=\"light\" id=\"digital\" data-tone=\"blue\") data-scrub=\"pin\" data-sstep=\"3\"",
+  "new": "\\1 data-hm-osite=\"\"",
+  "count": 1,
+  "why": "Camolas · O site: o scroll passa a ser controlado pela capa (hm-boceto-fix.js, 18)"
+ },
+ {
+  "op": "regex",
+  "page": "camolas",
+  "pattern": "(<span aria-hidden=\"true\" style=\"color:#D82E87;\">↔</span>) Arraste para ver mais</p>",
+  "new": "\\1 <span data-hm-hint=\"pc\">Arraste para ver mais · clique numa foto para ampliar</span><span data-hm-hint=\"m\">Deslize para ver mais · toque numa foto para ampliar</span></p>",
+  "count": 1,
+  "why": "Camolas · Fotografia: aviso «clique/toque numa foto para ampliar»"
+ },
+ {
+  "op": "regex",
+  "page": "camolas",
+  "pattern": "(Design de rótulos de vinho →</a>)",
+  "new": "\\1\n      <p style=\"margin:18px 0 0; font-size:16px; color:var(--mu);\"><span data-hm-hint=\"pc\">Clique numa imagem para ampliar</span><span data-hm-hint=\"m\">Toque numa imagem para ampliar</span></p>",
+  "count": 1,
+  "why": "Camolas · Rótulos: aviso «clique/toque numa imagem para ampliar»"
+ },
+ {
+  "op": "regex",
+  "page": "sobre",
+  "pattern": ">Arraste para ver mais →</p>",
+  "new": "><span data-hm-hint=\"pc\">Arraste para ver mais · clique numa foto para ampliar</span><span data-hm-hint=\"m\">Deslize para ver mais · toque numa foto para ampliar</span></p>",
+  "count": 1,
+  "why": "Sobre · Hortelanices: aviso «clique/toque numa foto para ampliar»"
+ },
+ {
+  "op": "regex",
+  "page": "design-web",
+  "pattern": "(<section data-cursor-bg=\"light\" id=\"conteudos\"[\\s\\S]*?)(</section>)",
+  "new": "\\1<p style=\"margin:clamp(16px,2vw,24px) 0 0; padding:0 clamp(16px,4vw,64px); font-size:18px; font-weight:400; color:rgba(28,27,35,.6);\"><span aria-hidden=\"true\" style=\"color:#D82E87;\">↔</span> <span data-hm-hint=\"pc\">Arraste para ver mais · clique numa foto para ampliar</span><span data-hm-hint=\"m\">Deslize para ver mais · toque numa foto para ampliar</span></p>\n\\2",
+  "count": 1,
+  "why": "Design Web · Conteúdos: aviso «clique/toque numa foto para ampliar»"
+ }
+]
