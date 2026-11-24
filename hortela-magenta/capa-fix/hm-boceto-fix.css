@@ -506,3 +506,9 @@ html body #anuncios img { object-fit: cover !important; }
 /* Design Web: ao sair da cabeçalho, o véu (data-veil) pinta-a com a cor do bloco seguinte. Era #e8eced (o bloco «Atividade», retirado);
    o seguinte agora é «Responsivo», #f6f7f8, como em Branding o véu e «Suportes» têm a mesma cor */
 html body section:has(+ #responsivo) [data-veil] { background: linear-gradient(to top, #f6f7f8 50%, transparent 100%) !important; }
+
+/* Branding e Design Web · Trabalhos (telemóvel): os nomes dos projetos numa só linha. A 30 px «Palmela Experiences» (9,95 em) partia-se
+   e encostava ao texto de cima; agora min(26px, (largura do cartão − 40 px) / 10,4): 26 px a 390 px, ~22,6 px a 320 px. Também na cópia com scroll. */
+@media (max-width: 767px) {
+  html body #trabalhos-galeria [data-lpt], html body [data-hm-scroll] [data-lpt] { font-size: min(26px, calc((86vw - 40px) / 10.4)) !important; white-space: nowrap !important; }
+}

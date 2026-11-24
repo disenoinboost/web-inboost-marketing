@@ -108,3 +108,10 @@ Laura pasa «Avença Mensal 360» y «Coaching de Marcas». Son textos completos
 - **Imágenes nuevas copiadas:** con `hm_media_mirror()`.
 - **Pruebas en local:** 20 de 20 sin errores. El desplegable de PC muestra 6 servicios, igual que el menú móvil y el pie.
 - **En vivo:** páginas 200, enlaces a `#avencas-mensais` presentes y ningún enlace a la web antigua.
+
+## «Desde 2007» en todas las cabeceras y nombres de Trabalhos en móvil (2026-11-24)
+
+- **«Moita, Portugal — desde 2007» → «Desde 2007»:** en Serviços, Projetos, Sobre, Blog y Contacto (antes ya estaban la Home y Design Web). En Branding vuelve «Desde 2007», que se había quitado.
+  - `paquetes/2026-11-24-desde-2007.json`. Copia: `hm-paginas-bak/2026-11-24-antes-desde-2007/`.
+- **Branding y Design Web · Trabalhos (móvil):** a 30 px, «Palmela Experiences» (9,95 em) se partía en dos líneas y se pegaba al texto de arriba. Ahora todos los nombres van a `min(26px, (86vw − 40px) / 10,4)` y en una línea: 26 px a 390 px y unos 22,6 px a 320 px. Afecta también a la copia con scroll de Branding. Capa: css `c6659970…`.
+- **«Somos uma equipa…» (Home):** ya estaba hecho desde la ronda (móvil de 22 a 20 px; PC 1440 de 24 a 20 px; pantallas grandes de 32 a 26 px; interlineado de 1,2 a 1,45). Se le pasa a Laura una comparación de antes y después.

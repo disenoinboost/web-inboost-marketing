@@ -1,0 +1,50 @@
+[
+ {
+  "op": "regex",
+  "page": "blog",
+  "pattern": "<span>Moita, Portugal — desde 2007</span>",
+  "new": "<span>Desde 2007</span>",
+  "count": 1,
+  "why": "Cabeçalho: «Moita, Portugal — desde 2007» → «Desde 2007» (como na Home)"
+ },
+ {
+  "op": "regex",
+  "page": "contacto",
+  "pattern": "<span>Moita, Portugal — desde 2007</span>",
+  "new": "<span>Desde 2007</span>",
+  "count": 1,
+  "why": "Cabeçalho: «Moita, Portugal — desde 2007» → «Desde 2007» (como na Home)"
+ },
+ {
+  "op": "regex",
+  "page": "projetos",
+  "pattern": "<span>Moita, Portugal — desde 2007</span>",
+  "new": "<span>Desde 2007</span>",
+  "count": 1,
+  "why": "Cabeçalho: «Moita, Portugal — desde 2007» → «Desde 2007» (como na Home)"
+ },
+ {
+  "op": "regex",
+  "page": "servicos",
+  "pattern": "<span>Moita, Portugal — desde 2007</span>",
+  "new": "<span>Desde 2007</span>",
+  "count": 1,
+  "why": "Cabeçalho: «Moita, Portugal — desde 2007» → «Desde 2007» (como na Home)"
+ },
+ {
+  "op": "regex",
+  "page": "sobre",
+  "pattern": "<span>Moita, Portugal — desde 2007</span>",
+  "new": "<span>Desde 2007</span>",
+  "count": 1,
+  "why": "Cabeçalho: «Moita, Portugal — desde 2007» → «Desde 2007» (como na Home)"
+ },
+ {
+  "op": "regex",
+  "page": "branding",
+  "pattern": "(transition:background 0\\.2s ease;\"></span></div>)(</div>\\n</div>\\n<div style=\"flex:0 1 440px; display:flex; flex-direction:column; justify-content:flex-end;\">)",
+  "new": "\\1<span style=\"font-size:18px; color:#6E6A63;\">Desde 2007</span>\\2",
+  "count": 1,
+  "why": "Branding · cabeçalho: volta «Desde 2007» (como em Design Web)"
+ }
+]
