@@ -174,7 +174,7 @@ Recreadas en el diseño nuevo a partir de la web actual (mismo contenido íntegr
 | Branding y Design Web | El canonical apuntaba a `/branding-para-empresas` y `/websites-para-empresas`, URL que no existen. Ahora es la URL real |
 | Serviços | «Explorar …» en Gráfico + Editorial, Campanhas, Fotografia y Avenças (antes «Pedir orçamento»). Nueva sección 07 «Coaching de Marcas» con la misma composición que Avenças. Contadores a «/ 07» |
 | Home | El servicio Avenças enlaza a su página (nota del Word de Gonçalo) |
-| Blog | Fuera las 6 tarjetas de ejemplo: tenían fechas futuras y todas llevaban al mismo artículo. Queda el artículo publicado. Los 6 borradores vacíos de WordPress (ID 180–185) pasan a borrador |
+| Blog | Se mantienen las 6 tarjetas de ejemplo del diseño para ver cómo queda el blog (petición de Laura). Son temas propuestos sin artículo escrito: las seis llevan a «Quanto custa um site para empresas?», el único artículo real. Las 6 entradas de WordPress que tenían solo el extracto (ID 180–185) pasan a borrador; las tarjetas no dependen de ellas |
 | Artigo | «Continue a ler» mostraba 3 artículos inexistentes. Ahora «Continue a explorar», con Design Web, Knowledgebiz y Farinhas Firmos |
 | Contacto | El formulario no enviaba nada. Ahora envía de verdad y lleva a /obrigado. Tiene campo trampa, mensaje de error y preselección del servicio con `?servico=` |
 | Capa de correcciones (JS) | El menú móvil marca la página actual también con URL sin barra final. La barra «Pedir orçamento · Ligar» no sale en /contacto ni en /obrigado |
@@ -235,7 +235,7 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
   - No existe «Aviso legal» en la web actual y no se ha inventado. Confirmar si se quiere.
 - **Vídeos de Vimeo** (Alinea y Livro Vilamoura): se enlazan, no se incrustan, para no instalar cookies de terceros sin consentimiento.
 - **Versión inglesa:** la web actual tiene 19 páginas en inglés indexables. El diseño nuevo es solo en portugués. Ahora redirigen (301). Decidir si se rehace una versión EN.
-- **Blog:** solo hay un artículo real. Los 6 temas de ejemplo se pueden escribir más adelante. Material de partida: S02 para naming, manual y rebranding, S01, S04, el Word de avença y la guía A02.
+- **Blog:** solo hay un artículo real. Ni la web actual (no tiene blog) ni la archivada en nostalgia.hortelamagenta.pt (portfolio, servicios, equipo y Hortelanices) tienen artículos que migrar. Las 6 tarjetas de ejemplo siguen a la vista y llevan al artículo real: antes de publicar, hay que escribir esos artículos o quitar las tarjetas (`extras._blog_sem_exemplos` en el generador). Material de partida: S02 para naming, manual y rebranding, S01, S04, el Word de avença y la guía A02.
 - **No creadas por falta de contenido real (los Word lo indican):**
   - Páginas locales `/criacao-de-sites-lisboa` y `/criacao-de-sites-algarve` (G01/G02): falta prueba de cobertura y caso local.
   - Guía `/guias/manual-identidade-visual` (A02): falta una muestra autorizada.
@@ -248,9 +248,8 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 3. **Enlaces a la web antigua:** había 163 en las plantillas (cuerpo y lógica). En producción habrían funcionado solo por casualidad; en el entorno de trabajo llevaban fuera.
 4. **Selector «EN»:** llevaba a una versión que no existe en el sitio nuevo.
 5. **Contenido provisional:**
-   - Tarjetas de ejemplo en el blog, con fechas futuras y enlaces al mismo artículo.
    - «Continue a ler» con artículos inexistentes.
-   - 6 entradas vacías publicadas en WordPress.
+   - 6 entradas vacías publicadas en WordPress (ahora en borrador).
 6. **Formulario de contacto:** simulaba el envío.
 7. **Rutas nativas de WordPress:** entradas, adjuntos, categorías y feeds eran públicos con la plantilla antigua de Divi. El sitemap de WordPress listaba las páginas Divi con otras URL.
 8. **Indexación del entorno de trabajo:** era indexable (`blog_public=1` y sin noindex). Ahora lleva `X-Robots-Tag: noindex` en cualquier dominio que no sea hortelamagenta.pt (se desactiva solo en producción).

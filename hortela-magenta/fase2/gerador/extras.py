@@ -56,8 +56,9 @@ def servicos(t):
     return t
 
 
-def blog(t):
-    """Os seis cartões de exemplo (datas futuras e todos a apontar para o mesmo artigo) saem; fica o artigo publicado."""
+def _blog_sem_exemplos(t):
+    """NÃO SE APLICA (2026-11-24, pedido de Laura: manter os seis cartões de exemplo para mostrar como fica o blog).
+    Se se quiser retirar os cartões quando houver artigos reais, renomear para blog()."""
     m = re.search(r'const PAGE = \{"items":\[.*?\],"chips":\[.*?\],', t, re.S)
     assert m
     t = t[:m.start()] + 'const PAGE = {"items":[],"chips":[],' + t[m.end():]

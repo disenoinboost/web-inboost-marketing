@@ -343,7 +343,13 @@ html.hm-dark :where([style*="background: rgb(246, 247, 248)"]):not(:where([data-
   </div>
 </div>
 
-
+<div data-crail="" style="position:fixed; z-index:45; left:50%; bottom:calc(clamp(16px,3vh,28px) + env(safe-area-inset-bottom)); transform:translate3d(-50%,12px,0); opacity:0; visibility:hidden; pointer-events:none;">
+  <nav aria-label="Filtrar artigos por tema" style="display:flex; max-width:calc(100vw - 32px); padding:4px 18px; border-radius:9999px; background:rgba(250,250,248,.9); -webkit-backdrop-filter:saturate(180%) blur(12px); backdrop-filter:saturate(180%) blur(12px); box-shadow:0 0 0 1px rgba(28,27,35,.08);">
+    <div data-cats="" role="group" aria-label="Tema" sc-camel-on-scroll="{{ catScroll }}" style="display:flex; align-items:center; gap:clamp(12px,1.6vw,24px); min-width:0; overflow-x:auto; overflow-y:hidden; scrollbar-width:none;">
+      <sc-for list="{{ chips }}" as="c" hint-placeholder-count="5"><button type="button" data-cat="" sc-camel-on-click="{{ c.pick }}" aria-pressed="{{ c.pressed }}" style="flex:none; display:flex; align-items:center; gap:8px; min-height:44px; padding:0 2px; background:none; border:0; font:inherit; font-size:18px; font-weight:300; white-space:nowrap; color:{{ c.col }}; cursor:pointer; transition:color 0.2s ease;" style-hover="color:#1C1B23;"><span aria-hidden="true" style="display:block; flex:none; width:7px; height:7px; border-radius:50%; border:1px solid {{ c.dotB }}; background:{{ c.dotF }}; transition:background 0.2s, border-color 0.2s;"></span>{{ c.c }}<sup style="font-size:16px; color:#6E6A63; font-variant-numeric:tabular-nums;">{{ c.n }}</sup></button></sc-for>
+    </div>
+  </nav>
+</div>
 
 <main id="top">
 
@@ -374,11 +380,21 @@ html.hm-dark :where([style*="background: rgb(246, 247, 248)"]):not(:where([data-
       <p style="margin:0 0 22px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:#6E6A63;"><span aria-hidden="true" style="color:#D82E87;">—</span> Em destaque</p>
       <h3 data-fw="200@1372:100" style="margin:0 0 20px; font-size:clamp(34px,2.88vw,51px); font-weight:100; letter-spacing:-0.045em; line-height:1; text-wrap:balance;">Quanto custa um site para empresas?</h3>
       <p style="margin:0 0 22px; font-size:18px; font-weight:300; line-height:1.5; color:#4A4743;">Não há um preço único para um site. Explicamos o que influencia o orçamento e o que convém preparar antes de pedir uma proposta.</p>
-      <p style="margin:0; display:flex; flex-wrap:wrap; gap:6px 14px; font-size:18px; color:#6E6A63;"><span style="color:#1C1B23;">Sites</span><span aria-hidden="true">·</span><time style="font-size:16px;">19 out 2026</time></p>
+      <p style="margin:0; display:flex; flex-wrap:wrap; gap:6px 14px; font-size:18px; color:#6E6A63;"><span style="color:#1C1B23;">Sites</span><span aria-hidden="true">·</span><time style="font-size:16px;">19 out 2026</time><span aria-hidden="true">·</span><span>6 min de leitura</span></p>
       <span style="display:inline-block; margin-top:26px; font-size:18px; border-bottom:1px solid #D82E87; padding-bottom:5px;">Ler artigo →</span>
     </div>
   </a>
-  
+  <p data-posts-top="" style="margin:0 0 clamp(36px,5vh,56px); padding-bottom:22px; border-bottom:1px solid rgba(28,27,35,.12); font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:#6E6A63;"><span aria-hidden="true" style="color:#D82E87;">—</span> Todos os artigos</p>
+  <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, max(300px, calc((100% - 2 * clamp(24px,3vw,48px)) / 3))), 1fr)); gap:clamp(48px,7vh,80px) clamp(24px,3vw,48px); align-items:start;">
+    <sc-for list="{{ items }}" as="p" hint-placeholder-count="6">
+      <a href="{{ p.href }}" data-post="" data-cursor="Ler artigo" style="display:{{ p.show }}; color:#1C1B23; text-decoration:none;">
+        <div style="aspect-ratio:4/3; overflow:hidden; background:#EEEDEA;"><img src="{{ p.img }}" alt="{{ p.title }}" loading="lazy" decoding="async" style="display:block; width:100%; height:100%; object-fit:cover; transition:transform 1.2s cubic-bezier(.2,.7,.2,1);" style-hover="transform:scale(1.04);"></div>
+        <p style="margin:18px 0 12px; display:flex; flex-wrap:wrap; gap:6px 12px; font-size:18px; color:#6E6A63;"><span style="color:#1C1B23;">{{ p.cat }}</span><span aria-hidden="true">·</span><span style="font-size:16px;">{{ p.date }}</span></p>
+        <h3 style="margin:0 0 12px; font-size:clamp(24px,1.9vw,30px); font-weight:200; letter-spacing:-0.03em; line-height:1.15; text-wrap:balance;">{{ p.title }}</h3>
+        <p style="margin:0; font-size:18px; font-weight:300; line-height:1.5; color:#4A4743;">{{ p.ex }}</p>
+      </a>
+    </sc-for>
+  </div>
 </section>
 
 <!-- 08 CONTACTO -->
@@ -468,7 +484,7 @@ html.hm-dark :where([style*="background: rgb(246, 247, 248)"]):not(:where([data-
 </x-dc>
 <script type="text/x-dc" data-dc-script="">
 const IMG = 'https://hortelamagenta.pt/media/pages/projetos/';
-const PAGE = {"items":[],"chips":[],"introWords":[],"ctaText":"Diga-nos, onde quer chegar?","cases":[],"process":[],"faq":[],"current":"Blog"};
+const PAGE = {"items":[{"title":"Rebranding: o que conservar e o que mudar numa marca","cat":"Branding","tags":["Branding"],"date":"8 out 2026","read":"5 min","ex":"Rever uma marca não obriga a mudar todos os seus elementos. Como decidir o que se mantém e o que precisa de evoluir.","img":"https://hortelamagenta.pt/media/pages/projetos/alinea/9de4876d63-1710332653/hortelamagenta_portfolio_alinea_estacionario-1900x.jpg","href":"/blog/quanto-custa-um-site"},{"title":"Naming: como escolher o nome de uma marca","cat":"Branding","tags":["Branding"],"date":"24 set 2026","read":"4 min","ex":"O nome é uma das primeiras decisões de uma marca. Que critérios ajudam a avaliar as propostas.","img":"https://hortelamagenta.pt/media/pages/projetos/camolas/5d5f15c3a2-1735900038/hortelamagenta_portfolio_marca_camolas_logo_02-1900x.jpg","href":"/blog/quanto-custa-um-site"},{"title":"O que deve incluir o manual de normas de uma marca","cat":"Branding","tags":["Branding"],"date":"10 set 2026","read":"5 min","ex":"As normas reúnem os critérios para usar a marca de forma coerente em todos os suportes.","img":"https://hortelamagenta.pt/media/pages/projetos/imperalum/7bae5f7d33-1739317592/hortelamagenta_portfolio_marca_imperalum_estacionario_01-1900x.jpg","href":"/blog/quanto-custa-um-site"},{"title":"Como preparar os conteúdos do seu novo site","cat":"Sites","tags":["Sites"],"date":"27 ago 2026","read":"6 min","ex":"Textos, fotografias e estrutura: o que rever antes de começar, para que o projeto avance sem surpresas.","img":"https://hortelamagenta.pt/media/pages/projetos/camolas/93fc94cba4-1736267817/hortelamagenta_portfolio_marca_camolas_site_02-1900x.jpg","href":"/blog/quanto-custa-um-site"},{"title":"Fotografia de produto: imagens para o seu catálogo","cat":"Fotografia & Vídeo","tags":["Fotografia & Vídeo"],"date":"12 ago 2026","read":"4 min","ex":"Imagens pensadas para mostrar o catálogo em suportes digitais e impressos.","img":"https://hortelamagenta.pt/media/pages/projetos/farinhas-firmos/fd75baaf78-1736160048/hortelamagenta_portfolio_marca_farinhafirmos_fabrica-1900x.jpg","href":"/blog/quanto-custa-um-site"},{"title":"Comunicação continuada: trabalhar com uma agência ao longo do ano","cat":"Comunicação","tags":["Comunicação"],"date":"29 jul 2026","read":"5 min","ex":"Num acompanhamento global, as necessidades de comunicação organizam-se num plano de trabalho revisto em conjunto.","img":"https://hortelamagenta.pt/media/pages/projetos/alsil/be5cc9f6bd-1734959174/alsilgroup_portfolio_marca_stand-1900x.jpg","href":"/blog/quanto-custa-um-site"}],"chips":["Todos","Branding","Sites","Comunicação","Fotografia & Vídeo"],"introWords":[],"ctaText":"Diga-nos, onde quer chegar?","cases":[],"process":[],"faq":[],"current":"Blog"};
 const GREY = [110, 106, 99], MAG = [28, 27, 35];
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const ease = t => t < .5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
