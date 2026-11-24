@@ -82,7 +82,7 @@ def _menus(b):
         b = b[:a2] + foot + b[c:]
         # rodapé · ligações legais
         b = b.replace('<a href="https://www.livroreclamacoes.pt/Inicio/" style="color:#FFFFFF; font-weight:400; text-decoration:none;">Livro de Reclamações</a>',
-                      '<a href="/politica-de-cookies" style="color:#FFFFFF; font-weight:400; text-decoration:none;">Política de Cookies</a>\n      <a href="/mapa-do-site" style="color:#FFFFFF; font-weight:400; text-decoration:none;">Mapa do site</a>\n      <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener" style="color:#FFFFFF; font-weight:400; text-decoration:none;">Livro de Reclamações</a>', 1)
+                      '<a href="/politica-de-cookies" style="color:#FFFFFF; font-weight:400; text-decoration:none;">Política de Cookies</a>\n      ' + COOKIE_BTN + '\n      <a href="/mapa-do-site" style="color:#FFFFFF; font-weight:400; text-decoration:none;">Mapa do site</a>\n      <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener" style="color:#FFFFFF; font-weight:400; text-decoration:none;">Livro de Reclamações</a>', 1)
     # cabeçalho · seletor EN (não existe versão inglesa)
     b = re.sub(r'\s*<a data-intro="" href="https://hortelamagenta\.pt/en"[^>]*>EN</a>', '<span hidden></span>', b, count=1)
     return b
@@ -108,12 +108,23 @@ def _logic(b):
     return b
 
 
+# Botão do rodapé que volta a abrir o painel de consentimento do Complianz (o JS do Complianz 7 escuta button.cmplz-manage-consent).
+COOKIE_BTN = ('<button type="button" class="cmplz-manage-consent hm-cookies" style="appearance:none; -webkit-appearance:none; background:none; border:0; '
+              'padding:0; margin:0; font:inherit; letter-spacing:inherit; text-transform:inherit; color:#FFFFFF; font-weight:400; cursor:pointer;">'
+              'Preferências de cookies</button>')
+
+# Valores do ajuste «identidadeFundo» do modelo Camolas (só no código): em português.
+PT_PROPS = [('Gris claro', 'Cinza claro'), ('Gris oscuro', 'Cinza escuro'), ("'Negro'", "'Preto'"), ('&quot;Negro&quot;', '&quot;Preto&quot;'), ('"Negro"', '"Preto"')]
+
+
 def normalizar(t):
     i = t.index('</helmet>')
     h, b = t[:i], t[i:]
     b = _links(b)
     b = _menus(b)
     b = _logic(b)
+    for a, n in PT_PROPS:
+        b = b.replace(a, n)
     return h + b
 
 

@@ -58,14 +58,30 @@ COOKIES = dict(
                 '<strong>Anúncios e Publicidade:</strong> permitem-nos colocar anúncios direcionados noutros sites que visita e medir o seu envolvimento com esses anúncios.']),
             ('p', 'Os cookies de métricas e de publicidade só são utilizados com o seu consentimento. Pode ativar ou desativar essa permissão a qualquer momento; se desativar determinados cookies, a sua experiência de navegação poderá ser afetada.')]),
         ('neste-site', 'O que este site guarda no seu navegador', [
-            ('p', 'O site não instala cookies próprios de métricas nem de publicidade. Para funcionar, guarda no armazenamento de sessão do navegador (sessionStorage) alguns valores técnicos, que não identificam o utilizador e se apagam ao fechar o separador:'),
+            ('p', 'Ao entrar no site, um painel pede o seu consentimento. As estatísticas e o marketing só são ativados se os aceitar; se recusar, o site funciona na mesma.'),
+            ('p', '<strong>Necessários (sempre ativos).</strong> Não identificam o utilizador:'),
             ('ul', [
-                '<strong>hm-pt</strong> e <strong>hm-ptd:</strong> indicam que vem de outra página do site e o sentido da transição entre páginas.',
-                '<strong>hm-theme:</strong> recorda se escolheu o tema claro ou escuro.',
-                '<strong>hm-form:</strong> confirma, na página de agradecimento, que a mensagem do formulário foi enviada.']),
+                '<strong>cmplz_banner-status, cmplz_consented_services, cmplz_policy_id, cmplz_functional, cmplz_preferences, cmplz_statistics e cmplz_marketing:</strong> guardam a escolha feita no painel de consentimento, durante 365 dias.',
+                '<strong>hm-pt</strong> e <strong>hm-ptd</strong> (armazenamento de sessão): indicam que vem de outra página do site e o sentido da transição entre páginas.',
+                '<strong>hm-theme</strong> (armazenamento de sessão): recorda se escolheu o tema claro ou escuro.',
+                '<strong>hm-form</strong> (armazenamento de sessão): confirma, na página de agradecimento, que a mensagem do formulário foi enviada.']),
+            ('p', '<strong>Estatísticas (só com consentimento).</strong> Google Analytics 4, carregado através do Google Tag Manager:'),
+            ('ul', [
+                '<strong>_ga:</strong> distingue visitantes, de forma agregada; dura 2 anos.',
+                '<strong>_ga_*:</strong> mantém o estado da sessão; dura 2 anos.']),
+            ('p', '<strong>Marketing (só com consentimento).</strong> Píxel da Meta (Facebook e Instagram), carregado através do Google Tag Manager:'),
+            ('ul', [
+                '<strong>_fbp:</strong> mede a eficácia das campanhas nas plataformas da Meta; dura 3 meses.']),
+            ('p', 'Enquanto não houver consentimento, o Google Tag Manager funciona em modo de consentimento (Consent Mode v2) e não ativa cookies de estatística nem de publicidade.'),
             ('p', 'O formulário de contacto envia os dados que preencher apenas para responder ao seu pedido, como descrito na <a href="/politica-de-privacidade">Política de Privacidade</a>.')]),
+        ('terceiros', 'Serviços de terceiros', [
+            ('p', 'O Google Analytics e o Google Tag Manager são serviços da Google Ireland Limited; o píxel da Meta é um serviço da Meta Platforms Ireland Limited. Estes fornecedores podem tratar dados fora da União Europeia, ao abrigo do Quadro de Privacidade de Dados UE-EUA.'),
+            ('links', [
+                ('https://policies.google.com/privacy?hl=pt-PT', 'Política de privacidade da Google'),
+                ('https://www.facebook.com/privacy/policy/', 'Política de privacidade da Meta')])]),
         ('gerir', 'Como gerir os cookies', [
-            ('p', 'O utilizador pode configurar o seu navegador para recusar cookies ou apagar os que já existem, embora isso possa afetar a funcionalidade de algumas áreas do site. As opções encontram-se nas definições de privacidade de cada navegador.')]),
+            ('p', 'Pode mudar ou retirar o seu consentimento a qualquer momento no botão «Preferências de cookies», no rodapé de todas as páginas.'),
+            ('p', 'O utilizador pode também configurar o seu navegador para recusar cookies ou apagar os que já existem, embora isso possa afetar a funcionalidade de algumas áreas do site. As opções encontram-se nas definições de privacidade de cada navegador.')]),
         ('contacto-cookies', 'Mais informação', [
             ('p', 'Para qualquer questão sobre esta política, contacte a Hortelã Magenta – Design de Comunicação, Lda. através do telefone 211 806 292 ou do e-mail <a href="mailto:info@hortelamagenta.com">info@hortelamagenta.com</a>.')]),
     ])
