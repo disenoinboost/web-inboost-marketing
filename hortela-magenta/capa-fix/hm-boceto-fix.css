@@ -507,8 +507,27 @@ html body #anuncios img { object-fit: cover !important; }
    o seguinte agora é «Responsivo», #f6f7f8, como em Branding o véu e «Suportes» têm a mesma cor */
 html body section:has(+ #responsivo) [data-veil] { background: linear-gradient(to top, #f6f7f8 50%, transparent 100%) !important; }
 
-/* Branding e Design Web · Trabalhos (telemóvel): os nomes dos projetos numa só linha. A 30 px «Palmela Experiences» (9,95 em) partia-se
-   e encostava ao texto de cima; agora min(26px, (largura do cartão − 40 px) / 10,4): 26 px a 390 px, ~22,6 px a 320 px. Também na cópia com scroll. */
+/* Galerias horizontais no telemóvel (Camolas · Rótulos e packaging; Branding e Design Web · Trabalhos e a sua cópia com scroll):
+   os títulos sempre numa só linha e com o mesmo tamanho em todas. O mais comprido é «Monocasta Syrah · rótulo» (12,27 em) num cartão
+   de 78vw com o número ao lado (−41 px): min(22px, (78vw − 41px) / 12,6) → ~20,9 px a 390 px, ~19 px a 360 px.
+   (Antes: Trabalhos a 30 px e depois 26 px, «Palmela Experiences» partia-se; Rótulos a ~25 px, dois títulos em duas linhas.) */
 @media (max-width: 767px) {
-  html body #trabalhos-galeria [data-lpt], html body [data-hm-scroll] [data-lpt] { font-size: min(26px, calc((86vw - 40px) / 10.4)) !important; white-space: nowrap !important; }
+  html body #trabalhos-galeria [data-lpt], html body [data-hm-scroll] [data-lpt], html body #rotulos [data-lpp] h3 { font-size: min(22px, calc((78vw - 41px) / 12.6)) !important; white-space: nowrap !important; }
+}
+}
+
+/* Projetos · panel «Filtrar projetos» (telemóvel): ocupava demasiado e, no iPhone com as barras do Safari, a parte de cima (com o ×)
+   ficava por baixo da cabeçalho (o painel cresce para cima a partir do botão «Filtros» com max-height 100vh − 170px).
+   Letra mais pequena (nomes 16 px, números e títulos 13 px), filas mais baixas, altura máxima que deixa livre a cabeçalho
+   e a linha «Filtrar projetos ×» fixa no topo do painel, para o × estar sempre à vista. */
+@media (max-width: 767px) {
+  html body #f-panel { max-height: calc(100vh - 230px) !important; max-height: calc(100svh - 230px) !important; padding: 0 18px 14px !important; overscroll-behavior: contain; }
+  html body #f-panel > div:first-child { position: sticky; top: 0; z-index: 2; background: #FAFAF8; margin: 0 -18px 6px !important; padding: 10px 18px 6px; }
+  html body #f-panel > div:first-child > p { font-size: 13px !important; }
+  html body #f-panel > div:last-child { gap: 10px 24px !important; }
+  html body #f-panel > div:last-child > div > p { font-size: 13px !important; margin: 0 0 4px !important; }
+  html body #f-panel ol button, html body #f-panel ol [aria-disabled] { padding: 7px 0 !important; gap: 10px !important; }
+  html body #f-panel ol button > span:first-child, html body #f-panel ol button > sup,
+  html body #f-panel ol [aria-disabled] > span:first-child, html body #f-panel ol [aria-disabled] > sup { font-size: 13px !important; }
+  html body #f-panel ol button > span:nth-child(2), html body #f-panel ol [aria-disabled] > span:nth-child(2) { font-size: 16px !important; }
 }

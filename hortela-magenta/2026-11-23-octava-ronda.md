@@ -115,3 +115,14 @@ Laura pasa «Avença Mensal 360» y «Coaching de Marcas». Son textos completos
   - `paquetes/2026-11-24-desde-2007.json`. Copia: `hm-paginas-bak/2026-11-24-antes-desde-2007/`.
 - **Branding y Design Web · Trabalhos (móvil):** a 30 px, «Palmela Experiences» (9,95 em) se partía en dos líneas y se pegaba al texto de arriba. Ahora todos los nombres van a `min(26px, (86vw − 40px) / 10,4)` y en una línea: 26 px a 390 px y unos 22,6 px a 320 px. Afecta también a la copia con scroll de Branding. Capa: css `c6659970…`.
 - **«Somos uma equipa…» (Home):** ya estaba hecho desde la ronda (móvil de 22 a 20 px; PC 1440 de 24 a 20 px; pantallas grandes de 32 a 26 px; interlineado de 1,2 a 1,45). Se le pasa a Laura una comparación de antes y después.
+
+## Filtros de Projetos y títulos de galerías en móvil (2026-11-24)
+
+- **Projetos · panel «Filtrar projetos» (móvil):** crece hacia arriba desde el botón «Filtros» con un `max-height` de `100vh − 170px`. En el iPhone, con las barras de Safari, su parte de arriba (con el ×) quedaba debajo de la cabecera. Cambios:
+  - Letra más pequeña: nombres a 16 px (antes 18); números, recuentos y títulos «Disciplina»/«Setor»/«Filtrar projetos» a 13 px. Filas de 7 px de relleno (antes 12).
+  - `max-height: calc(100svh − 230px)`.
+  - Línea «Filtrar projetos ×» `sticky` arriba del panel.
+  - Resultado a 375×664: el × queda a 98 px (la cabecera acaba en 65), el panel mide 434 px y casi todo cabe sin desplazar. A 375×560 se desplaza y el × sigue a la vista.
+- **Títulos de galerías horizontales (móvil):** en Rótulos de Camolas, «Grande Escolha · rótulo» y «Monocasta Syrah · rótulo» ocupaban dos líneas (unos 25 px). Rótulos y Trabalhos de Branding y Design Web (incluida la copia con scroll) van ahora al mismo tamaño, en una línea: `min(22px, (78vw − 41px) / 12,6)`, que da 22 px a 430, unos 20,9 a 390 y unos 19 a 360. No hay más galerías de este tipo en Sobre, Serviços, Projetos ni Home. En PC ya cabían.
+- **Capa:** css `9a888cf4…`, servida con `v=1795513139`.
+- **Pruebas:** 20 de 20 en local sin errores. En vivo, md5 servido igual.
