@@ -102,6 +102,8 @@ def _logic(b):
     b = b.replace("cta: 'Ver serviços', img: U.ffFab", "cta: 'Explorar Fotografia & Vídeo', img: U.ffFab")
     b = b.replace("megaSize: 'clamp(22px,1.9vw,30px)', href: '/servicos/avenca-comunicacao-360' },\n    ].map(",
                   "megaSize: 'clamp(22px,1.9vw,30px)', href: '/servicos/avenca-comunicacao-360' },\n" + COACH + "    ].map(")
+    b = b.replace("cta: 'Ver serviços', img: 'https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg'",
+                  "cta: 'Explorar Avenças mensais', img: 'https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg'")
     b = b.replace('"Ficha de projeto"', '"Branding"')
     return b
 
