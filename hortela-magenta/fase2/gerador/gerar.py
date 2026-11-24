@@ -68,6 +68,12 @@ def build_projeto(slug, p, base):
     if p.get('apps'):
         parts.append(B.proj_lp(M, p['apps']))
         pidx.append(('aplicacoes', p['apps'].get('nav', p['apps']['eyebrow'].split(' ')[0])))
+    if p.get('ads'):
+        parts.append(B.proj_anuncios(M, p['ads']))
+        pidx.append(('anuncios', p['ads'].get('nav', 'Anúncios')))
+    if p.get('site'):
+        parts.append(B.proj_filme(p['site'], sec_id='site', label='05 Site'))
+        pidx.append(('site', 'Site'))
     if p.get('film'):
         parts.append(B.proj_filme(p['film']))
         pidx.append(('filme', 'Vídeo'))
@@ -108,7 +114,9 @@ def blocks_html(blocks, slug):
         elif kind == 'chips':
             out.append(BS.chips(b, sid, label, **({'bg': bg} if bg else {})))
         elif kind == 'marquee':
-            out.append(B.proj_marquee(M, b, sec_id=sid, label=label))
+            out.append(B.proj_marquee(M, b, sec_id=sid, label=label, drag_attr='data-mq-drag'))
+        elif kind == 'imagens':
+            out.append(BS.imagens(M, b, sid, label, **({'bg': bg} if bg else {})))
         elif kind == 'premios':
             out.append(BS.premios(M, b, sid, label, **({'bg': bg} if bg else {})))
         elif kind == 'links':
@@ -117,6 +125,11 @@ def blocks_html(blocks, slug):
             out.append(B.proj_mais(M, b['items']))
         else:
             raise ValueError(kind)
+    # antes de «Mais projetos» (que tem o seu próprio espaço por cima) a secção anterior não leva o espaço inferior inteiro
+    kinds = [k for k, _ in blocks]
+    for i in range(len(out) - 1):
+        if kinds[i + 1] == 'mais':
+            out[i] = out[i].replace(f'padding:var(--sp-block) {B.PAD} var(--sp-block) {B.PAD}', f'padding:var(--sp-block) {B.PAD} var(--sp-title) {B.PAD}', 1)
     return out
 
 

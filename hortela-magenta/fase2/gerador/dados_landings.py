@@ -12,7 +12,10 @@ LANDS = [('/design-rotulos-vinho/', 'Design de Rótulos para Vinhos'), ('/design
 def landings(M, LI):
     """LI(slug, nome_do_ficheiro) devolve a URL local da imagem da landing (registada em M)."""
     I = lambda s, k: M.find(s, k)
+    CAM = lambda k: next(u for u in M.info if u.startswith('/wp-content/uploads/hm-media/') and '/camolas/' in u and k in u)
     tile = lambda s: (NAMES[s], '/projetos/' + s, CARD[s])
+    # fotografia de projetos reais para as faixas «imagens» (cada uma liga ao projeto)
+    foto = lambda url, alt, cap, slug: dict(img=url, alt=alt, cap=cap, href='/projetos/' + slug)
     others = lambda path: dict(eyebrow='Conheça também', title='Outras especialidades', items=[(h, l) for h, l in LANDS if h != path] + [('/servicos', 'Todos os serviços')])
     L = {}
 
@@ -55,6 +58,11 @@ def landings(M, LI):
                 dict(img=LI(s, 'Mutante-Awards-2025.webp'), alt='Prémio de Design At Wine – Mutante Awards 2025', title='2 Prémios de Design', sub='Mutante Awards – Design at Wine 2025'),
             ], quote='«Gostamos de vinho e gostamos de design. Dificilmente separamos os dois, mas isso são problemas nossos ;)»')),
             ('frase', dict(eyebrow='Resultados', title='Design é posicionamento. Perceção cria valor e impulsiona as vendas nas prateleiras.', text='Resultados que um bom rótulo traz.')),
+            ('imagens', dict(items=[
+                foto(CAM('camolas_garrafeira_01'), 'Garrafeira da Adega Camolas', 'Adega Camolas · Garrafeira', 'camolas'),
+                foto(CAM('camolas_espumante'), 'Espumante da Adega Camolas', 'Adega Camolas · Espumante', 'camolas'),
+                foto(CAM('camolas_monocasta_syrah_03'), 'Monocasta Syrah da Adega Camolas', 'Adega Camolas · Monocasta Syrah', 'camolas'),
+            ])),
             ('chips', dict(eyebrow='Para quem', title='Para quem desenhamos?', items=['Adegas históricas e modernas', 'Produtores de vinho independentes', 'Marcas premium e edições limitadas', 'Projetos virados para a exportação'])),
             ('lista', dict(eyebrow='Processo', title='O nosso processo', bg='#f6f7f8', items=[
                 ('Análise de mercado', 'Analisamos o posicionamento, a concorrência direta e os objetivos comerciais.'),
@@ -146,9 +154,9 @@ def landings(M, LI):
                 ('Posicionamento', 'Definição do tom de voz, manifesto da marca, fotografia e vídeo, e estratégia para clínicas que pretendem liderar no seu segmento.'),
             ], cta=('/servicos/branding', 'Branding e identidade →'))),
             ('frase', dict(eyebrow='Qualidade', title='A estética não é um luxo. É um compasso de qualidade.', text='Os pacientes assumem subconscientemente que o nível de design da sua marca dita o nível de higiene e tecnologia dos seus tratamentos.')),
-            ('marquee', dict(id='imagens', title='Design que transmite tranquilidade', intro='Identidade visual e aplicação no espaço clínico.', items=[
-                dict(img=LI(s, 'dental_clinic_premium.webp'), alt='Branding e design para clínica dentária premium'),
-                dict(img=LI(s, 'dental_clinic_details.webp'), alt='Identidade visual e logótipo para clínica dentária'),
+            ('imagens', dict(id='imagens', eyebrow='Imagens', title='Design que transmite tranquilidade', items=[
+                dict(img=LI(s, 'dental_clinic_premium.webp'), alt='Branding e design para clínica dentária premium', cap='Identidade e espaço clínico'),
+                dict(img=LI(s, 'dental_clinic_details.webp'), alt='Identidade visual e logótipo para clínica dentária', cap='Detalhes da identidade'),
             ])),
             ('chips', dict(eyebrow='Para quem', title='Para quem desenhamos?', items=['Clínicas de Reabilitação Oral e Implantologia', 'Clínicas de Estética Dentária Avançada', 'Consultórios Boutique e Exclusivos', 'Grupos de Saúde a preparar expansão'])),
             ('lista', dict(eyebrow='Método', title='Método', bg='#f6f7f8', items=[
@@ -181,6 +189,11 @@ def landings(M, LI):
                 'Na Hortelã Magenta, desenvolvemos soluções de comunicação completas para entidades públicas, com foco na eficácia, consistência e impacto.',
                 'A comunicação institucional enfrenta desafios específicos: grande volume de informação técnica, necessidade de clareza e acessibilidade, comunicação com públicos diversos e responsabilidade na transmissão de dados.',
                 'Um bom design permite simplificar conteúdos complexos, melhorar a compreensão da informação, reforçar a confiança nas instituições e aproximar a comunicação dos cidadãos.'])),
+            ('imagens', dict(items=[
+                foto(I('documentos-normativos-imt', 'imt_fasciaculo_livro_02'), 'Os quatro documentos normativos do IMT', 'IMT · Documentos normativos', 'documentos-normativos-imt'),
+                foto(I('camara-municipal-de-almada-roteiro', 'roteiro_mapa_02'), 'Desdobrável de bolso do roteiro de Almada', 'Câmara Municipal de Almada · Roteiro', 'camara-municipal-de-almada-roteiro'),
+                foto(I('hospital-garcia-de-orta', 'hgo_estacionario'), 'Estacionário do Hospital Garcia de Orta', 'Hospital Garcia de Orta · Rebranding', 'hospital-garcia-de-orta'),
+            ])),
             ('lista', dict(eyebrow='O que fazemos', title='Projetos integrados, do conceito à implementação.', bg='#f6f7f8', numbered=False, text='Desenvolvemos projetos integrados para entidades públicas.', items=[
                 ('Estratégia de comunicação', 'Definição de objetivos, estruturação da mensagem e alinhamento institucional.'),
                 ('Conceito criativo', 'Direção visual, narrativa e linguagem, coerência global.'),
@@ -204,6 +217,11 @@ def landings(M, LI):
                 ('Estratégia', 'Definição da estrutura de comunicação e abordagem.'),
                 ('Desenvolvimento', 'Criação do conceito e execução visual.'),
                 ('Implementação', 'Acompanhamento técnico e entrega final.'),
+            ])),
+            ('imagens', dict(items=[
+                foto(I('livro-vilamoura', 'livro-vilamoura-img_02'), 'Leitor a folhear o Livro Vilamoura', 'Livro Vilamoura', 'livro-vilamoura'),
+                foto(I('camara-municipal-de-almada-roteiro', 'roteiro_foto_05'), 'Visitante com o desdobrável de Almada', 'Câmara Municipal de Almada · Roteiro', 'camara-municipal-de-almada-roteiro'),
+                foto(I('documentos-normativos-imt', 'imt_fasciaculo_livro_04'), 'Documento normativo do IMT aberto', 'IMT · Documentos normativos', 'documentos-normativos-imt'),
             ])),
             ('lista', dict(eyebrow='Hortelã Magenta', title='Porquê escolher a Hortelã Magenta', numbered=False, items=[
                 ('Experiência em projetos institucionais e editoriais', ''), ('Capacidade de traduzir informação complexa', ''),
@@ -231,6 +249,11 @@ def landings(M, LI):
                 'Desenhamos a comunicação com um foco analítico: atuar não para o espaço físico, mas para o público que o vai experienciar.',
                 'Cada evento tem um público específico e um contexto próprio. Um evento institucional comunica de forma diversa de um corporativo. A nossa disciplina visual responde a cada dinâmica com rigor.',
                 'Garantimos que cada peça, física ou digital, contribui ativamente para uma experiência coerente e focada no público que a marca quer atingir.'])),
+            ('imagens', dict(items=[
+                foto(I('croma', 'croma_banner_04'), 'Identidade do CROMA projetada em palco', 'CROMA · Palco', 'croma'),
+                foto(I('alsil', 'alsilgroup_portfolio_marca_stand'), 'Stand do Alsil Group numa exposição internacional', 'Alsil Group · Stand', 'alsil'),
+                foto(I('croma', 'croma_banner_03'), 'Mupi do CROMA', 'CROMA · Mupi', 'croma'),
+            ])),
             ('lista', dict(eyebrow='O design como sistema', title='Num evento, tudo comunica de forma interligada.', bg='#f6f7f8', numbered=False, text='Desde o primeiro contacto ao fechar das portas.', items=[
                 ('Identidade transversal', 'Desenvolvemos o master visual do projeto, aplicando-o de forma natural desde a sinalética aos conteúdos digitais.'),
                 ('Organização fluida', 'A identidade visual opera como sistema primário de informação, definindo e gerindo intuitivamente a circulação de pessoas no recinto.'),
@@ -251,6 +274,11 @@ def landings(M, LI):
                 dict(img=LI(s, 'hortelamagenta_portfolio_marca_croma_logo_02.gif'), alt='Identidade visual e animação para palcos e eventos'),
             ])),
             ('frase', dict(eyebrow='Escala', title='O tamanho importa. O objetivo não é decorar. É comunicar com intenção.', text='O design tem um papel fundamental na perceção e credibilidade de um evento: contextualiza e orienta, reforça a mensagem e cria ritmo gráfico, orientando de forma silenciosa toda a audiência.')),
+            ('imagens', dict(items=[
+                foto(I('croma', 'croma_badge'), 'Credenciais do CROMA', 'CROMA · Credenciais', 'croma'),
+                foto(I('alsil', 'alsilgroup_portfolio_marca_display'), 'Ecrã de grande formato do Alsil Group numa exposição', 'Alsil Group · Display', 'alsil'),
+                foto(I('croma', 'croma_tickets'), 'Bilhetes do CROMA', 'CROMA · Bilhetes', 'croma'),
+            ])),
             ('chips', dict(eyebrow='Contextos', title='Contextos onde atuamos', items=['Eventos institucionais e municipais', 'Eventos corporativos B2B/B2C', 'Apresentações, galas e lançamentos de produtos', 'Iniciativas públicas, encontros setoriais e feiras da indústria'])),
             ('lista', dict(eyebrow='O ciclo contínuo', title='Antes, durante e depois.', bg='#f6f7f8', text='A gestão da presença de marca acompanha o evento integralmente.', items=[
                 ('Antes', 'Campanhas de teaser nas redes sociais, design de email marketing e convites formais para suscitar e cimentar a expectativa.'),

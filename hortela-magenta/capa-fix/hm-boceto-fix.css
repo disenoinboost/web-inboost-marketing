@@ -215,7 +215,7 @@ html body [data-mobile] > div:first-child > span > span { width: clamp(170px, 16
   /* Camolas · identidade (só Camolas: Branding também tem #identidade): cortinas na horizontal; a imagem enche o espaço 3:2 */
   html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child { height: auto !important; overflow: hidden !important; background: none !important; }
   html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div[data-x] { inset: 0 0 auto 0 !important; height: calc((100vw - 32px) * 2 / 3) !important; }
-  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div[data-x] > img { object-fit: cover !important; }
+  html body section#identidade[data-tone]:not([data-hm-fit]) [data-step]:not([data-step-v]) > div:first-child > div[data-x] > img { object-fit: cover !important; }
   html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div[aria-hidden="true"] { display: none !important; }
   html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div:last-child { position: relative !important; inset: auto !important; margin-top: calc((100vw - 32px) * 2 / 3 + 10px) !important; grid-template-columns: minmax(0, 1fr) !important; }
   /* (7.ª ronda) as linhas têm o tamanho e o espaçamento da lista de serviços da Home */
@@ -499,8 +499,9 @@ html body [data-hm-shot] img { display: block; width: 100%; height: auto; }
    (o desenho tinha clamp(12px,2vh,20px) por cima e o gap da coluna, clamp(20px,3vh,36px), por baixo; medido: 11 vs 28 px no telemóvel, 16 vs 36 no PC) */
 html body #sobre div:has(> p > span > [data-dg]) { padding-top: calc(clamp(20px, 3vh, 36px) + 10px) !important; }
 
-/* Camolas · Anúncios e redes sociais: as imagens enchem a caixa (sem faixas creme) e o 05 fica centrado na sua caixa como os outros */
-html body #anuncios img { object-fit: cover !important; }
+/* Camolas · Anúncios e redes sociais: as imagens enchem a caixa (sem faixas creme) e o 05 fica centrado na sua caixa como os outros.
+   As fichas geradas (data-hm-fit) mostram as imagens inteiras sobre a cor do fundo: ficam fora desta regra e da de Identidade no telemóvel. */
+html body #anuncios:not([data-hm-fit]) img { object-fit: cover !important; }
 @media (min-width: 768px) { html body #anuncios article[data-swap-txt]:last-of-type { min-height: 62vh !important; align-items: center !important; } }
 
 /* Design Web: ao sair da cabeçalho, o véu (data-veil) pinta-a com a cor do bloco seguinte. Era #e8eced (o bloco «Atividade», retirado);

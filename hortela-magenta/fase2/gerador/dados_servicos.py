@@ -152,7 +152,7 @@ def servicos(M):
         desc='O departamento de comunicação da sua empresa. Conhecemos o seu negócio por dentro para lhe dar uma voz própria, coerente e real. Desde 2007.',
         og='https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg',
         hero=dict(crumbs=[('Início', '/'), ('Serviços', '/servicos'), ('Avença Mensal 360°', None)], display_is_h1=True,
-                  eyebrow='Avença Mensal 360°', display=['O departamento de', 'comunicação da sua', 'empresa. Só que do', 'lado de fora.'],
+                  eyebrow='Avença Mensal 360°', display=['O departamento de', 'comunicação da sua', 'empresa. Só que do', 'lado de fora.'], display_wide=['O departamento de comunicação', 'da sua empresa.', 'Só que do lado de fora.'],
                   intro='Há empresas que precisam de uma agência. E há empresas que precisam de alguém que conheça o seu negócio tão bem como elas. Na avença mensal 360° somos as duas coisas: a agência e o departamento de comunicação da sua empresa.',
                   cta=('/contacto', 'Marcar conversa →'), cta2=('#inclui', 'O que inclui')),
         blocks=[
@@ -197,7 +197,7 @@ def servicos(M):
         desc='Sessões de coaching de marca para clarificar posicionamento, identidade e comunicação. Ouvimos a sua marca para a ajudar a encontrar a sua voz.',
         og=GONCALO,
         hero=dict(crumbs=[('Início', '/'), ('Serviços', '/servicos'), ('Coaching de Marcas', None)], display_is_h1=True,
-                  eyebrow='Coaching de Marcas', display=['Coaching de Marcas:', 'às vezes, a sua', 'marca só precisa', 'de ser ouvida.'],
+                  eyebrow='Coaching de Marcas', display=['Coaching de Marcas:', 'às vezes, a sua', 'marca só precisa', 'de ser ouvida.'], display_wide=['Coaching de Marcas:', 'às vezes, a sua marca', 'só precisa de ser ouvida.'],
                   intro='Este serviço não fomos nós que o inventámos. Foram os nossos clientes que lhe deram nome.',
                   cta=('/contacto', 'Marcar uma sessão →'), cta2=('#como-funciona', 'Como funciona')),
         blocks=[

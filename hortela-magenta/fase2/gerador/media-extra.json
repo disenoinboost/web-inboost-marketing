@@ -1,0 +1,1250 @@
+{
+"info": {
+"/wp-content/uploads/hm-media/split/queijaria-merch-saco.webp": {
+"rel": "split/queijaria-merch-saco.webp",
+"wh": [
+950,
+596
+],
+"kb": 0
+},
+"/wp-content/uploads/hm-media/split/queijaria-merch-caixa.webp": {
+"rel": "split/queijaria-merch-caixa.webp",
+"wh": [
+950,
+592
+],
+"kb": 0
+},
+"/wp-content/uploads/hm-media/split/croma-pins.webp": {
+"rel": "split/croma-pins.webp",
+"wh": [
+950,
+594
+],
+"kb": 0
+},
+"/wp-content/uploads/hm-media/split/croma-tshirt.webp": {
+"rel": "split/croma-tshirt.webp",
+"wh": [
+950,
+594
+],
+"kb": 0
+},
+"/wp-content/uploads/hm-media/split/queijaria-logo-amarelo.webp": {
+"rel": "split/queijaria-logo-amarelo.webp",
+"wh": [
+952,
+554
+],
+"kb": 0
+},
+"/wp-content/uploads/hm-media/split/queijaria-logo-azul.webp": {
+"rel": "split/queijaria-logo-azul.webp",
+"wh": [
+948,
+554
+],
+"kb": 0
+},
+"/wp-content/uploads/hm-media/hortelamagenta.pt/media/pages/projetos/camolas/8744408df0-1736268635/hortelamagenta_portfolio_marca_camolas_garrafeira_01-1900x.webp": {
+"rel": "hortelamagenta.pt/media/pages/projetos/camolas/8744408df0-1736268635/hortelamagenta_portfolio_marca_camolas_garrafeira_01-1900x.webp",
+"wh": [
+1900,
+950
+],
+"kb": 0
+},
+"/wp-content/uploads/hm-media/hortelamagenta.pt/media/pages/projetos/camolas/9b74a8bfa5-1736340175/hortelamagenta_portfolio_marca_camolas_espumante-1900x.webp": {
+"rel": "hortelamagenta.pt/media/pages/projetos/camolas/9b74a8bfa5-1736340175/hortelamagenta_portfolio_marca_camolas_espumante-1900x.webp",
+"wh": [
+1900,
+1425
+],
+"kb": 0
+},
+"/wp-content/uploads/hm-media/hortelamagenta.pt/media/pages/projetos/camolas/264c922f6d-1736787310/hortelamagenta_portfolio_marca_camolas_monocasta_syrah_03-1900x.webp": {
+"rel": "hortelamagenta.pt/media/pages/projetos/camolas/264c922f6d-1736787310/hortelamagenta_portfolio_marca_camolas_monocasta_syrah_03-1900x.webp",
+"wh": [
+1900,
+1108
+],
+"kb": 0
+},
+"/wp-content/uploads/hm-media/hortelamagenta.pt/media/pages/projetos/camolas/7ed9788f4b-1736329677/hortelamagenta_portfolio_marca_camolas_aword-1900x.webp": {
+"rel": "hortelamagenta.pt/media/pages/projetos/camolas/7ed9788f4b-1736329677/hortelamagenta_portfolio_marca_camolas_aword-1900x.webp",
+"wh": [
+1900,
+582
+],
+"kb": 0
+},
+"/wp-content/uploads/hm-media/hortelamagenta.pt/media/pages/projetos/camolas/6bf74896bb-1736166678/hortelamagenta_portfolio_marca_camolas_foto_01-1900x.webp": {
+"rel": "hortelamagenta.pt/media/pages/projetos/camolas/6bf74896bb-1736166678/hortelamagenta_portfolio_marca_camolas_foto_01-1900x.webp",
+"wh": [
+1900,
+950
+],
+"kb": 0
+},
+"/wp-content/uploads/hm-media/hortelamagenta.pt/media/pages/projetos/camolas/8ff25d922e-1736263859/hortelamagenta_portfolio_marca_camolas_garrafeira_02-1900x.webp": {
+"rel": "hortelamagenta.pt/media/pages/projetos/camolas/8ff25d922e-1736263859/hortelamagenta_portfolio_marca_camolas_garrafeira_02-1900x.webp",
+"wh": [
+1900,
+1105
+],
+"kb": 0
+}
+},
+"edges": {
+"hortelamagenta_portfolio_marca_consulai_slogan_foto-1900x.webp": [
+"#C1B688",
+276
+],
+"hortelamagenta_portfolio_marca_consulai_icons-950x.webp": [
+"#F8F8F8",
+38
+],
+"hortelamagenta_portfolio_marca_consulai_redes_sociais_02-1900x.webp": [
+"#758664",
+210
+],
+"hortelamagenta_portfolio_marca_consulai_font-1900x.webp": [
+"#D5DFD8",
+281
+],
+"hortelamagenta_portfolio_marca_consulai_bottle-1900x.webp": [
+"#59843B",
+234
+],
+"hortelamagenta_portfolio_marca_consulai_folhete-1900x.webp": [
+"#A9B885",
+170
+],
+"hortelamagenta_portfolio_marca_consulai_rs_01.webp": [
+"#014E4B",
+1
+],
+"hortelamagenta_portfolio_marca_consulai_logo_cores-1900x.webp": [
+"#829A72",
+365
+],
+"hortelamagenta_portfolio_marca_consulai_logo_03.webp": [
+"#8DB344",
+114
+],
+"hortelamagenta_portfolio_marca_consulai_banner_02-1900x.webp": [
+"#505550",
+334
+],
+"hortelamagenta_portfolio_marca_consulai_bag-950x.webp": [
+"#689520",
+22
+],
+"hortelamagenta_portfolio_marca_consulai_logo_01-1900x.webp": [
+"#014E4B",
+1
+],
+"hortelamagenta_portfolio_marca_consulai_badge-950x.webp": [
+"#31383B",
+194
+],
+"hortelamagenta_portfolio_marca_consulai_wall_logo-1900x.webp": [
+"#ACB0B3",
+307
+],
+"hortelamagenta_portfolio_marca_consulai_rollup-1900x.webp": [
+"#D0CECF",
+2
+],
+"hortelamagenta_portfolio_marca_consulai_estacionario-1900x.webp": [
+"#105352",
+24
+],
+"hortelamagenta_portfolio_marca_consulai_banner-1900x.webp": [
+"#024D4B",
+6
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_logo_03-1900x.webp": [
+"#0049EF",
+0
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_logo_05-950x.webp": [
+"#05183A",
+0
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_logo_04-950x.webp": [
+"#E1E4E8",
+4
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_estacionario-1900x.webp": [
+"#637ED2",
+273
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_icons-1900x.webp": [
+"#0047F7",
+0
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_cor-950x.webp": [
+"#157DC4",
+256
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_banner-1900x.webp": [
+"#524E4F",
+382
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_bloco-de-notas-950x.webp": [
+"#2C56F6",
+41
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_id-badge-950x.webp": [
+"#BCC9C8",
+217
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_mobile_02.webp": [
+"#00193C",
+3
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_logo_01-1900x.webp": [
+"#0048EE",
+3
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_foto-950x.webp": [
+"#FFFFFF",
+0
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_site_03-1900x.webp": [
+"#9CA7B6",
+414
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_mobile_01-1900x.webp": [
+"#04205B",
+208
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_site_01-1900x.webp": [
+"#86A1E3",
+236
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_site_05-1900x.webp": [
+"#93ACE6",
+264
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_site_02.webp": [
+"#2A66F9",
+370
+],
+"hortelamagenta_portfolio_marca_queijariadasao_foto_02-950x.webp": [
+"#C4C8D0",
+219
+],
+"hortelamagenta_portfolio_marca_queijariadasao_foto_06-1900x.webp": [
+"#CCA275",
+220
+],
+"hortelamagenta_portfolio_marca_queijariadasao_site_03.webp": [
+"#FFDA74",
+80
+],
+"hortelamagenta_portfolio_marca_queijariadasao_foto_04.webp": [
+"#D3D3D2",
+300
+],
+"hortelamagenta_portfolio_marca_queijariadasao_site_02-1900x.webp": [
+"#FDFDFB",
+23
+],
+"hortelamagenta_portfolio_marca_queijariadasao_rollup-1900x.webp": [
+"#BAB8BA",
+320
+],
+"hortelamagenta_portfolio_marca_queijariadasao_post.webp": [
+"#FACD6E",
+156
+],
+"hortelamagenta_portfolio_marca_queijariadasao_animais-1900x.webp": [
+"#F8F9F5",
+89
+],
+"hortelamagenta_portfolio_marca_queijariadasao_veiculo-1900x.webp": [
+"#AC9F81",
+329
+],
+"hortelamagenta_portfolio_marca_queijariadasao_logo_04-1900x.webp": [
+"#43565C",
+277
+],
+"hortelamagenta_portfolio_marca_queijariadasao_logo_02-1900x.webp": [
+"#829079",
+219
+],
+"hortelamagenta_portfolio_marca_queijariadasao_foto_01.webp": [
+"#A4A09A",
+219
+],
+"hortelamagenta_portfolio_marca_queijariadasao_merchandising_01-950x.webp": [
+"#375E86",
+360
+],
+"hortelamagenta_portfolio_marca_queijariadasao_site_01-1900x.webp": [
+"#F8E6B4",
+107
+],
+"hortelamagenta_portfolio_marca_queijariadasao_foto_03-950x.webp": [
+"#C3BFC0",
+417
+],
+"hortelamagenta_portfolio_marca_queijariadasao_logo_01-1900x.webp": [
+"#FFFFFF",
+0
+],
+"hortelamagenta_portfolio_marca_queijariadasao_video.webp": [
+"#919088",
+331
+],
+"hortelamagenta_portfolio_marca_queijariadasao_rotulos-1900x.webp": [
+"#3B73A2",
+311
+],
+"hortelamagenta_portfolio_marca_queijariadasao_foto_05-1900x.webp": [
+"#DCDCE2",
+401
+],
+"hortelamagenta_portfolio_marca_queijariadasao_cartao-1900x.webp": [
+"#D6CEC4",
+67
+],
+"hortelamagenta_portfolio_marca_queijariadasao_merchandising_02-950x.webp": [
+"#CEB485",
+153
+],
+"hortelamagenta_portfolio_marca_hgo_logo_02-950x.webp": [
+"#0E4DB2",
+3
+],
+"hortelamagenta_portfolio_marca_hgo_rollup-950x.webp": [
+"#EBEDF1",
+59
+],
+"hortelamagenta_portfolio_marca_hgo_ilustracao-1900x.webp": [
+"#EDF0F5",
+192
+],
+"hortelamagenta_portfolio_marca_hgo_pin-950x.webp": [
+"#104DBC",
+3
+],
+"hortelamagenta_portfolio_marca_hgo_estacionario-1900x.webp": [
+"#DDDEE3",
+109
+],
+"hortelamagenta_portfolio_marca_hgo_logo_cor-950x.webp": [
+"#EEEDEF",
+2
+],
+"hortelamagenta_portfolio_marca_hgo_ilustracao_02-1900x.webp": [
+"#F3F6F9",
+118
+],
+"hortelamagenta_portfolio_marca_hgo_capa-1200x.webp": [
+"#0D4DB3",
+2
+],
+"hortelamagenta_portfolio_marca_hgo_logo_04-1900x.webp": [
+"#7397D1",
+288
+],
+"hortelamagenta_portfolio_marca_hgo_a4-1900x.webp": [
+"#C4CEDD",
+387
+],
+"hortelamagenta_portfolio_marca_hgo_badge-950x.webp": [
+"#174EAE",
+97
+],
+"hortelamagenta_portfolio_marca_hgo_foto_01-950x.webp": [
+"#EEEEEC",
+307
+],
+"hortelamagenta_portfolio_marca_croma_tickets-950x.webp": [
+"#7A7778",
+146
+],
+"hortelamagenta_portfolio_marca_croma_font-1900x.webp": [
+"#FDFEFE",
+9
+],
+"hortelamagenta_portfolio_marca_croma_rs_02.webp": [
+"#E8ECED",
+88
+],
+"hortelamagenta_portfolio_marca_croma_tshirt_pin-950x.webp": [
+"#1C76B2",
+131
+],
+"hortelamagenta_portfolio_marca_croma_banner_03-950x.webp": [
+"#969693",
+283
+],
+"hortelamagenta_portfolio_marca_croma_badge-1900x.webp": [
+"#EAEDEF",
+11
+],
+"hortelamagenta_portfolio_marca_croma_cor-1900x.webp": [
+"#4B4084",
+379
+],
+"hortelamagenta_portfolio_marca_croma_banner_02-1900x.webp": [
+"#726AA8",
+241
+],
+"hortelamagenta_portfolio_marca_croma_banner_02-2400x.webp": [
+"#6E66A4",
+238
+],
+"hortelamagenta_portfolio_marca_croma_programa-1900x.webp": [
+"#DC4346",
+83
+],
+"hortelamagenta_portfolio_marca_croma_foto-1900x.webp": [
+"#483A34",
+339
+],
+"hortelamagenta_portfolio_marca_croma_banner_04-1900x.webp": [
+"#0F0F11",
+101
+],
+"hortelamagenta_portfolio_marca_croma_rs_01-1900x.webp": [
+"#EEC4C9",
+326
+],
+"hortelamagenta_portfolio_marca_croma_banner_01-1900x.webp": [
+"#584C41",
+337
+],
+"hortelamagenta_portfolio_marca_croma_bag-950x.webp": [
+"#FDB047",
+23
+],
+"hortelamagenta_portfolio_marca_croma_video.webp": [
+"#070B6A",
+217
+],
+"hortelamagenta_portfolio_alinea_capa-1200x.webp": [
+"#6D726E",
+375
+],
+"hortelamagenta_portfolio_alinea_foto_02-950x.webp": [
+"#A2A6A7",
+307
+],
+"hortelamagenta_portfolio_alinea_anuncio-1900x.webp": [
+"#7D6E54",
+113
+],
+"hortelamagenta_portfolio_alinea_saco-950x.webp": [
+"#DCD9D7",
+41
+],
+"hortelamagenta_portfolio_alinea_padrao.webp": [
+"#F3F3F3",
+59
+],
+"hortelamagenta_portfolio_alinea_site_03-1900x.webp": [
+"#E9F3F6",
+451
+],
+"hortelamagenta_portfolio_alinea_logo.webp": [
+"#00739C",
+5
+],
+"hortelamagenta_portfolio_alinea_banner-950x.webp": [
+"#AAABA9",
+464
+],
+"hortelamagenta_portfolio_alinea_flyer-950x.webp": [
+"#A2A0A0",
+332
+],
+"hortelamagenta_portfolio_alinea_foto_01-1023x1534-q85.webp": [
+"#B1AAA5",
+422
+],
+"hortelamagenta_portfolio_alinea_foto_01-950x.webp": [
+"#B0AAA4",
+426
+],
+"hortelamagenta_portfolio_alinea_site_01-1900x.webp": [
+"#2A8BAD",
+410
+],
+"hortelamagenta_portfolio_alinea_cores-1900x.webp": [
+"#ADCED6",
+321
+],
+"hortelamagenta_portfolio_alinea_estacionario-1900x.webp": [
+"#064053",
+105
+],
+"hortelamagenta_portfolio_alinea_site_02.webp": [
+"#576063",
+481
+],
+"hortelamagenta_portfolio_alinea_foto_03-950x.webp": [
+"#FEFEFE",
+27
+],
+"hortelamagenta_portfolio_alinea_cartao-1900x.webp": [
+"#70A3B4",
+225
+],
+"hortelamagenta_portfolio_alinea_redes_sociais.webp": [
+"#619BB3",
+332
+],
+"hortelamagenta_portfolio_alinea_site_04.webp": [
+"#55A2BD",
+328
+],
+"hortelamagenta_portfolio_alinea_simbolo-1900x.webp": [
+"#93B9C0",
+252
+],
+"hortelamagenta_portfolio_marca_alsilgroup_fabrica_07-950x.webp": [
+"#A0A4A8",
+413
+],
+"hortelamagenta_portfolio_marca_alsilgroup_video.webp": [
+"#577785",
+294
+],
+"hortelamagenta_portfolio_marca_alsilgroup_cor-1900x.webp": [
+"#699371",
+239
+],
+"alsilgroup_portfolio_marca_calendario-950x.webp": [
+"#DD401D",
+6
+],
+"hortelamagenta_portfolio_marca_alsilgroup_fabrica_08-950x.webp": [
+"#B1A5A8",
+383
+],
+"hortelamagenta_portfolio_marca_alsilgroup_flyer.webp": [
+"#0280DC",
+4
+],
+"hortelamagenta_portfolio_marca_alsilgroup_fabrica_06-950x.webp": [
+"#52504A",
+418
+],
+"phone-mockup-hand-950x.webp": [
+"#1E72B6",
+295
+],
+"hortelamagenta_portfolio_marca_alsilgroup_estacionario.webp": [
+"#74787D",
+168
+],
+"hortelamagenta_portfolio_marca_alsilgroup_fabrica_01-1900x.webp": [
+"#DCB676",
+231
+],
+"hortelamagenta_portfolio_marca_alsilgroup_cartao-de-visita-1900x.webp": [
+"#818E90",
+295
+],
+"hortelamagenta_portfolio_marca_alsilgroup_logo_01.webp": [
+"#FFFFFF",
+0
+],
+"hortelamagenta_portfolio_marca_alsilgroup_site.webp": [
+"#CFCDC9",
+33
+],
+"alsilgroup_portfolio_marca_stand-1900x.webp": [
+"#383B4D",
+186
+],
+"hortelamagenta_portfolio_marca_alsilgroup_fabrica_04-950x.webp": [
+"#686E71",
+144
+],
+"alsilgroup_portfolio_marca_font-1900x.webp": [
+"#F4F6F3",
+79
+],
+"alsilgroup_portfolio_marca_display-1900x.webp": [
+"#0D121B",
+104
+],
+"alsilgroup_portfolio_marca_display-2400x.webp": [
+"#0D1119",
+85
+],
+"hortelamagenta_portfolio_marca_alsilgroup_logo_02-1900x.webp": [
+"#12345A",
+3
+],
+"hortelamagenta_portfolio_marca_alsilgroup_fabrica_02-950x.webp": [
+"#7F7D77",
+299
+],
+"alsilgroup_portfolio_marca_badge_cracha-950x.webp": [
+"#9F9F9F",
+226
+],
+"hortelamagenta_portfolio_marca_alsilgroup_logo_05-1900x.webp": [
+"#F8F8F8",
+30
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_flyer-950x.webp": [
+"#C3B9B0",
+62
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_farinha_sacos_02-1900x.webp": [
+"#50605C",
+251
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_farinha_sacos_02-2400x.webp": [
+"#50605B",
+251
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_fabrica_09-950x.webp": [
+"#A7A4A4",
+233
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_redessociais_02-1900x.webp": [
+"#FEFEFE",
+4
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_site_06-1900x.webp": [
+"#3D4648",
+0
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_cor-1900x.webp": [
+"#B7BAB0",
+349
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_calendario-1900x.webp": [
+"#327170",
+1
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_site_01.webp": [
+"#307B77",
+163
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_font-1900x.webp": [
+"#FFFFFF",
+0
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_site_02.webp": [
+"#E9E688",
+127
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_video.webp": [
+"#4A483D",
+198
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_site_05-1900x.webp": [
+"#3E5857",
+61
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_fabrica_11-950x.webp": [
+"#564E45",
+292
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_redessociais_03.webp": [
+"#A28C7A",
+72
+],
+"firmos_20210825_0055_hr_lr-1900x.webp": [
+"#A09994",
+392
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_farinha_sacos_03.webp": [
+"#DAC1B1",
+138
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_fabrica-1900x.webp": [
+"#ADA390",
+316
+],
+"hortelamagenta_portfolio_marca_imperalum_banner_02-1900x.webp": [
+"#4C4441",
+256
+],
+"hortelamagenta_portfolio_marca_imperalum_banner_02-2400x.webp": [
+"#4D4543",
+240
+],
+"hortelamagenta_portfolio_marca_imperalum_id_06-950x.webp": [
+"#0AA1B7",
+232
+],
+"hortelamagenta_portfolio_marca_imperalum_banner_01-1900x.webp": [
+"#847E76",
+352
+],
+"hortelamagenta_portfolio_marca_imperalum_lata_02-950x.webp": [
+"#00B3D3",
+4
+],
+"hortelamagenta_portfolio_marca_imperalum_hhh_01-950x.webp": [
+"#031F30",
+15
+],
+"hortelamagenta_portfolio_marca_imperalum_logo_06-950x.webp": [
+"#EEF6FB",
+2
+],
+"hortelamagenta_portfolio_marca_imperalum_logo_07-1900x.webp": [
+"#597696",
+229
+],
+"hortelamagenta_portfolio_marca_imperalum_bag_01-950x.webp": [
+"#5C5F61",
+223
+],
+"hortelamagenta_portfolio_marca_imperalum_estacionario_01-1900x.webp": [
+"#B6BABA",
+303
+],
+"hortelamagenta_portfolio_marca_imperalum_font_01-1900x.webp": [
+"#E5EDF0",
+36
+],
+"hortelamagenta_portfolio_marca_imperalum_logo_05-950x.webp": [
+"#012539",
+4
+],
+"hortelamagenta_portfolio_marca_imperalum_livro_01.webp": [
+"#BFBDBC",
+181
+],
+"hortelamagenta_portfolio_marca_imperalum_logo_02-1900x.webp": [
+"#022539",
+0
+],
+"hortelamagenta_portfolio_marca_imperalum_foto_02-1900x.webp": [
+"#7A9184",
+360
+],
+"hortelamagenta_portfolio_marca_imperalum_cor_01-1900x.webp": [
+"#055978",
+184
+],
+"hortelamagenta_portfolio_marca_imperalum_lata_01-950x.webp": [
+"#EEF6FB",
+2
+],
+"hortelamagenta_portfolio_marca_imperalum_estacionario_02-1900x.webp": [
+"#143865",
+70
+],
+"hortelamagenta_portfolio_marca_imperalum_lata_03.webp": [
+"#1A4676",
+45
+],
+"hortelamagenta_portfolio_marca_imperalum_foto_01-1900x.webp": [
+"#2C3722",
+121
+],
+"hortelamagenta_portfolio_marca_imperalum_logo_03-1900x.webp": [
+"#022439",
+4
+],
+"hortelamagenta_portfolio_marca_imperalum_estacionario_03-950x.webp": [
+"#02B1D4",
+3
+],
+"hortelamagenta_portfolio_marca_imt_fasciaculo_livro_01-1900x.webp": [
+"#C58B5B",
+171
+],
+"hortelamagenta_portfolio_marca_imt_fasciaculo_grafismo-1900x.webp": [
+"#FFFFFF",
+0
+],
+"hortelamagenta_portfolio_marca_imt_fasciaculo_livro_06-950x.webp": [
+"#3F8624",
+43
+],
+"hortelamagenta_portfolio_marca_imt_fasciaculo_livro_05-950x.webp": [
+"#08ADEB",
+0
+],
+"hortelamagenta_portfolio_marca_imt_fasciaculo_livro_02-1900x.webp": [
+"#2396C3",
+381
+],
+"hortelamagenta_portfolio_marca_imt_fasciaculo_livro_04-1900x.webp": [
+"#796E67",
+290
+],
+"hortelamagenta_portfolio_marca_imt_fasciaculo_livro_07.webp": [
+"#F4A25E",
+209
+],
+"hortelamagenta_portfolio_marca_imt_fasciculo_livro_07_hortela-magenta-instituto-da-mobilidade-e-transportes-web.webp": [
+"#BFBDBC",
+181
+],
+"hortelamagenta_portfolio_marca_imt_fasciaculo_foto_01-950x.webp": [
+"#7D7C79",
+232
+],
+"hortelamagenta_portfolio_marca_imt_fasciaculo_capa-1200x.webp": [
+"#F97723",
+50
+],
+"hortelamagenta_portfolio_marca_camera-municipal-de-almada_roteiro_livro_02-1900x.webp": [
+"#01508E",
+88
+],
+"hortelamagenta_portfolio_marca_camera-municipal-de-almada_roteiro_foto_01-1900x.webp": [
+"#5380A3",
+256
+],
+"hortelamagenta_portfolio_marca_camera-municipal-de-almada_roteiro_foto_02-950x.webp": [
+"#769193",
+248
+],
+"hortelamagenta_portfolio_marca_camera-municipal-de-almada_roteiro_mapa_02-1900x.webp": [
+"#015292",
+82
+],
+"hortelamagenta_portfolio_marca_camera-municipal-de-almada_roteiro_foto_05-1900x.webp": [
+"#717874",
+241
+],
+"hortelamagenta_portfolio_marca_camera-municipal-de-almada_roteiro_livro_01-1900x.webp": [
+"#01427E",
+5
+],
+"hortelamagenta_portfolio_marca_camera-municipal-de-almada_roteiro_livro_03-1900x.webp": [
+"#014987",
+104
+],
+"hortelamagenta_portfolio_marca_camera-municipal-de-almada_roteiro_capa-1200x.webp": [
+"#01306A",
+2
+],
+"hortelamagenta_portfolio_marca_camera-municipal-de-almada_roteiro_foto_04-1900x.webp": [
+"#0F5D8B",
+238
+],
+"hortelamagenta_portfolio_marca_camera-municipal-de-almada_roteiro_foto_03-950x.webp": [
+"#49718B",
+240
+],
+"hortelamagenta_portfolio_marca_camera-municipal-de-almada_roteiro_livro_04-1900x.webp": [
+"#02427F",
+4
+],
+"hortelamagenta_portfolio_marca_camera-municipal-de-almada_roteiro_mapa_01-1900x.webp": [
+"#1D669B",
+349
+],
+"livro-vilamoura-cover-1800x.webp": [
+"#69715A",
+418
+],
+"livro-vilamoura-cover-1900x.webp": [
+"#69715A",
+418
+],
+"livro-vilamoura-img_07-1900x.webp": [
+"#DDDDDD",
+69
+],
+"livro-vilamoura-img_10-1900x.webp": [
+"#2F2E2C",
+181
+],
+"livro-vilamoura-img_02-950x.webp": [
+"#626060",
+374
+],
+"livro-vilamoura-img_01-1900x.webp": [
+"#C1CAD0",
+394
+],
+"livro-vilamoura-img_09-1900x.webp": [
+"#D6D6D6",
+8
+],
+"livro-vilamoura-img_03-950x.webp": [
+"#8E8F90",
+409
+],
+"livro-vilamoura-img_04-1900x.webp": [
+"#CCCACA",
+346
+],
+"hortelamagenta_portfolio_marca_alsilgroup_logo_04.gif": [
+"#46A4DF",
+210
+],
+"hortelamagenta_portfolio_marca_consulai_icons_02.gif": [
+"#78A025",
+0
+],
+"hortelamagenta_portfolio_marca_croma_logo_02.gif": [
+"#000560",
+0
+],
+"hortelamagenta_portfolio_marca_croma_logo_01.gif": [
+"#FFFFFF",
+0
+],
+"hortelamagenta_portfolio_marca_imt_fasciaculo_grafismo_02.gif": [
+"#E00024",
+0
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_simbolo.gif": [
+"#FFFFFF",
+0
+],
+"hortelamagenta_portfolio_marca_farinhafirmos_farinha_sacos_02.gif": [
+"#CE3D44",
+0
+],
+"hortelamagenta_portfolio_marca_hgo_logo_03.gif": [
+"#EDEDEF",
+0
+],
+"hortelamagenta_portfolio_marca_hgo_frase.gif": [
+"#FFFFFF",
+0
+],
+"hortelamagenta_portfolio_marca_hgo_logo_01.gif": [
+"#FFFFFF",
+0
+],
+"hortelamagenta_portfolio_marca_imperalum_logo_01.gif": [
+"#F3FAFB",
+15
+],
+"hortelamagenta_portfolio_marca_imperalum_logo_04.gif": [
+"#012639",
+0
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_logo_06.gif": [
+"#F9F9F7",
+0
+],
+"hortelamagenta_portfolio_marca_knowledgebiz_logo_02.gif": [
+"#0049F0",
+0
+],
+"livro-vilamoura-img_06.gif": [
+"#B8C0C1",
+350
+],
+"livro-vilamoura-img_05.gif": [
+"#D9D9D9",
+15
+],
+"livro-vilamoura-img_08.gif": [
+"#DCDDDC",
+62
+],
+"hortelamagenta_portfolio_marca_queijariadasao_logo_03.gif": [
+"#F5EDE2",
+0
+],
+"hortelamagenta_portfolio_marca_queijariadasao_logo_05.gif": [
+"#FFE28E",
+92
+],
+"queijaria-merch-saco.webp": [
+"#E2CA98",
+96
+],
+"queijaria-merch-caixa.webp": [
+"#DBB357",
+86
+],
+"croma-pins.webp": [
+"#16889D",
+91
+],
+"croma-tshirt.webp": [
+"#2F56D7",
+38
+],
+"queijaria-logo-amarelo.webp": [
+"#B9B27A",
+316
+],
+"queijaria-logo-azul.webp": [
+"#296693",
+113
+],
+"hortelamagenta_portfolio_marca_croma_rs_01-1900x3831-q90.webp": [
+"#CD9FBA",
+283
+],
+"hortelamagenta_portfolio_marca_croma_bag-1023x1116-q90.webp": [
+"#FEB046",
+20
+],
+"hortelamagenta_ludopolis_grafico_poster_mupi.webp": [
+"#A8B5BB",
+483
+],
+"hortelamagenta_ludopolis_grafico_pulseiras2.webp": [
+"#DBCEA0",
+225
+],
+"hortelamagenta_portfolio_marca_croma_foto-1900x4560-q90.webp": [
+"#433530",
+295
+],
+"hortelamagenta_ludopolis_espaco_mascotes.webp": [
+"#D6DEE2",
+80
+],
+"alsilgroup_portfolio_marca_display-1900x3040-q90.webp": [
+"#090C11",
+138
+],
+"03-hortela-magenta-imporquimica-catalogo-editorial.webp": [
+"#2786E3",
+48
+],
+"hortelamagenta_hortela-magenta-eurobatata-cebola-batata-portuguese-portuges-packaging-embalagem_icon_branding_05.webp": [
+"#D8DAD5",
+539
+],
+"16-scaled.webp": [
+"#F5F2ED",
+43
+],
+"RWA_natal_02.webp": [
+"#A6AFB6",
+404
+],
+"hortelamagenta_portfolio_marca_alsilgroup_fabrica_02-1023x1116-q90.webp": [
+"#837F7A",
+309
+],
+"05-hortela-magenta-scada-produtos.webp": [
+"#F1EFED",
+57
+],
+"Hortela-Magenta-Hospital-Garcia-de-Horta_07-1.webp": [
+"#1351B4",
+82
+],
+"07-Vilamoura_livro_outros-olhares-novas-historias-editorial-design-hortelamagenta-inframoura-graphic-design.webp": [
+"#636060",
+372
+],
+"CM_Odemira_hortelamagenta_guias_turisticos_design_touristic_guide_portugal_03.webp": [
+"#DEE9EF",
+247
+],
+"hortelamagenta_portfolio_marca_imt_fasciaculo_livro_01-1900x2850-q90.webp": [
+"#F17B2C",
+37
+],
+"hortela-magenta-inframoura-relatorio-contas-design-editorial-4.webp": [
+"#E3E3E3",
+78
+],
+"03-hortelamagenta_hortela-magenta-design-ambiental-comunicacao-apa-apaambiente-rea-sustentabilidade-portal-estado-ambiente-relatorio-editorial-paginacao-grafico-lisbon-portugal.webp": [
+"#F6F6F6",
+0
+],
+"16.webp": [
+"#262C39",
+132
+],
+"hortelamagenta_portfolio_marca_camolas_moscatel-5-anos_05-1900x2853-q90.webp": [
+"#F8F7F9",
+124
+],
+"hortelamagenta_portfolio_marca_camolas_garrafeira_03-1023x1023-q90.webp": [
+"#56402E",
+192
+],
+"hortelamagenta_portfolio_marca_camolas_award-IWSC-wines.webp": [
+"#F9F3E4",
+19
+],
+"Mutante-Awards-2025.webp": [
+"#D2CABD",
+47
+],
+"hortelamagenta_portfolio_marca_camolas_moscatel-5-anos_04-1900x4560-q90.webp": [
+"#170D0E",
+95
+],
+"siria-2020-6-baixa-1023x1532-q90.webp": [
+"#0D0B08",
+93
+],
+"filipe_palhoca_merlot.webp": [
+"#0D0D0D",
+156
+],
+"hortelamagenta_portfolio_marca_camolas_grande-escolha_01-1900x2850-q90.webp": [
+"#457AA4",
+201
+],
+"dental_clinic_premium.webp": [
+"#A0A095",
+237
+],
+"dental_clinic_details.webp": [
+"#B7AEA1",
+403
+],
+"hortelamagenta_portfolio_marca_camolas_25anos_banner-1900x.webp": [
+"#161210",
+70
+],
+"hortelamagenta_portfolio_marca_camolas_cores-1900x.webp": [
+"#7D7770",
+369
+],
+"hortelamagenta_portfolio_marca_camolas_garrafeira_01-1900x.webp": [
+"#16181D",
+44
+],
+"hortelamagenta_portfolio_marca_camolas_monocasta_syrah_03-1900x.webp": [
+"#D2C6C2",
+169
+],
+"hortelamagenta_portfolio_marca_camolas_garrafeira_03-950x.webp": [
+"#553E2D",
+188
+],
+"hortelamagenta_portfolio_marca_camolas_grande-escolha_03-1023x1116-q85.webp": [
+"#1E2A4E",
+151
+],
+"hortelamagenta_portfolio_marca_camolas_grande-escolha_03-950x.webp": [
+"#1E2A4D",
+150
+],
+"hortelamagenta_portfolio_marca_camolas_frase-1900x.webp": [
+"#1C1C1C",
+2
+],
+"hortelamagenta_portfolio_marca_camolas_site_03-1900x.webp": [
+"#E2D4C4",
+173
+],
+"hortelamagenta_portfolio_marca_camolas_aword-1900x.webp": [
+"#F7F0E1",
+4
+],
+"hortelamagenta_portfolio_marca_camolas_foto_02-950x.webp": [
+"#59433A",
+175
+],
+"hortelamagenta_portfolio_marca_camolas_grande-escolha_01-1900x.webp": [
+"#457AA4",
+201
+],
+"hortelamagenta_portfolio_marca_camolas_foto_01-1900x.webp": [
+"#858583",
+394
+],
+"hortelamagenta_portfolio_marca_camolas_espumante-1900x.webp": [
+"#C0937B",
+179
+],
+"hortelamagenta_portfolio_marca_camolas_site_01-1900x.webp": [
+"#383838",
+595
+],
+"hortelamagenta_portfolio_marca_camolas_monocasta_syrah_01-950x.webp": [
+"#AC7175",
+192
+],
+"hortelamagenta_portfolio_marca_camolas_logo_01.gif": [
+"#FEFEFE",
+2
+],
+"hortelamagenta_portfolio_marca_camolas_cobaia_01-1900x.webp": [
+"#010101",
+2
+],
+"hortelamagenta_portfolio_marca_camolas_moscatel-5-anos_05-1900x.webp": [
+"#F8F7F9",
+124
+],
+"hortelamagenta_portfolio_marca_camolas_site_04.webp": [
+"#232323",
+42
+],
+"hortelamagenta_portfolio_marca_camolas_logo_02-1900x.webp": [
+"#161616",
+51
+],
+"siria-2020-6-baixa-950x.webp": [
+"#0C0B08",
+120
+],
+"hortelamagenta_portfolio_marca_camolas_estacionario-1900x.webp": [
+"#444545",
+398
+],
+"hortelamagenta_portfolio_marca_camolas_monocasta_syrah_02-1023x920-q85.webp": [
+"#2E141A",
+75
+],
+"hortelamagenta_portfolio_marca_camolas_monocasta_syrah_02-950x.webp": [
+"#31161D",
+85
+],
+"hortelamagenta_portfolio_marca_camolas_foto_04-1023x1227-q85.webp": [
+"#D5C4B9",
+315
+],
+"hortelamagenta_portfolio_marca_camolas_foto_04-950x.webp": [
+"#D5C4B9",
+316
+],
+"hortelamagenta_portfolio_marca_camolas_cobaia_02-1900x.webp": [
+"#F7F6F5",
+3
+],
+"hortelamagenta_portfolio_marca_camolas_moscatel-5-anos_04-1900x.webp": [
+"#45322F",
+331
+],
+"hortelamagenta_portfolio_marca_camolas_rollup-1900x.webp": [
+"#252525",
+41
+],
+"hortelamagenta_portfolio_marca_camolas_base-para-copo-950x.webp": [
+"#C6BDB0",
+297
+],
+"hortelamagenta_portfolio_marca_camolas_cobaia_03-1900x.webp": [
+"#040503",
+55
+],
+"hortelamagenta_portfolio_marca_camolas_site_02-1900x.webp": [
+"#464544",
+557
+],
+"hortelamagenta_portfolio_marca_camolas_garrafeira_02-1900x.webp": [
+"#061E79",
+12
+],
+"hortelamagenta_portfolio_marca_camolas_garrafeira_04-950x.webp": [
+"#8B786F",
+55
+],
+"hortelamagenta_portfolio_marca_camolas_garrafeira_04-1023x1023-q85.webp": [
+"#8B7870",
+54
+]
+}
+}

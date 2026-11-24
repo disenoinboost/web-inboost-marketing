@@ -506,4 +506,271 @@ def projetos(M):
         ]),
         contact='Conte-nos o que faz a sua empresa e o que precisa de comunicar: marca, comunicação de produto, catálogos ou embalagens. Com essa base ajudamos a definir o trabalho.',
     )
+    enriquecer(P, M)
     return P
+
+
+SPLIT = '/wp-content/uploads/hm-media/split/'
+
+
+def enriquecer(P, M):
+    """Ronda de 2026-11-24 (pedido da Laura): fichas tão completas como a de Camolas.
+    - Secção «Anúncios e redes sociais» (lista com imagem fixa, como em Camolas) com o material de cada projeto;
+      quando o projeto não tem anúncios, a secção mostra o que tem (cartazes, site, páginas do livro…) com esse título.
+    - Secção «O site» (vídeo que cresce, como o filme de Camolas) quando há vídeo do site no portfólio.
+    - Imagens compostas partidas em duas (hm-media/split) e logótipos que faltavam.
+    - Cada imagem aparece numa só secção (salvo a galeria, que repete algumas como mostruário).
+    Os textos novos descrevem só o que se vê em cada imagem ou reutilizam frases da web atual."""
+    f = M.find
+    I = lambda s, k: f(s, k)
+    V = lambda s, k: f(s, k, 'video')
+
+    def vid(s, k, title, text, tags='', alt=None):
+        src, poster = V(s, k)
+        return dict(video=src, poster=poster, title=title, text=text, tags=tags, alt=alt or title)
+
+    def im(url, title, text, tags='', alt=None):
+        return dict(img=url, title=title, text=text, tags=tags, alt=alt or title)
+
+    def site(s, k, text, label, aria):
+        src, poster = V(s, k)
+        e = M.edge(poster)
+        return dict(src=src, poster=poster, title='O site', text=text, word='Website', label=label, aria=aria,
+                    kind='Website', fit='contain', scale='1', bg=e[0] if e else '#000')
+
+    def keep(items, drop):
+        return [it for it in items if not any(d in (it.get('img') or it.get('video') or it.get('poster') or '') for d in drop)]
+
+    # ---------------------------------------------------------------- Consulai
+    s = 'consulai'; p = P[s]
+    p['apps']['items'] = keep(p['apps']['items'], ['consulai_banner-1900x', 'consulai_banner_02'])
+    p['ads'] = dict(title='Anúncios e redes sociais', intro='Anúncios publicitários e uma abordagem renovada para as redes sociais.', items=[
+        im(I(s, 'consulai_slogan_foto'), 'Na natureza do seu negócio', 'A assinatura da campanha sobre uma paisagem agrícola, a imagem de partida dos anúncios.', 'Campanha · Anúncios'),
+        im(I(s, 'consulai_banner_02'), 'Outdoor', 'A campanha num outdoor, com fotografia e os grafismos da marca.', 'Anúncios'),
+        im(I(s, 'consulai_banner-1900x'), 'Cartazes', 'Série de cartazes «Na natureza dos elementos», cada um com um grafismo da marca.', 'Anúncios · Eventos'),
+        im(I(s, 'consulai_redes_sociais_02'), 'Redes sociais', 'Grelha de publicações com fotografia, ilustração e os elementos gráficos da marca.', 'Redes sociais'),
+        vid(s, 'consulai_rs_01', 'Publicações animadas', 'Publicações animadas para as redes sociais da CONSULAI.', 'Redes sociais · Vídeo'),
+    ])
+
+    # ---------------------------------------------------------------- Knowledgebiz
+    s = 'knowledgebiz'; p = P[s]
+    p['ident']['tabs'] = [
+        dict(img=I(s, 'knowledgebiz_logo_04'), title='Logótipo', sub='Rebranding', desc='A nova assinatura «Innovate your life».'),
+        dict(img=I(s, 'knowledgebiz_logo_05'), title='Versão escura', sub='Sobre fundo azul-escuro'),
+        dict(img=I(s, 'knowledgebiz_logo_01'), title='Símbolo', sub='Construção'),
+        dict(img=I(s, 'knowledgebiz_logo_03'), title='Tipografia', sub='Família tipográfica'),
+        dict(img=I(s, 'knowledgebiz_cor'), title='Cores', sub='Paleta'),
+    ]
+    p['apps']['items'] = keep(p['apps']['items'], ['knowledgebiz_banner'])
+    p['ads'] = dict(title='Cartazes e digital', nav='Cartazes', intro='A nova identidade em cartazes e num website capaz de potenciar a presença online da marca.', items=[
+        im(I(s, 'knowledgebiz_banner'), 'Cartazes', 'Série de cartazes com fotografia de equipa e os elementos gráficos da marca.', 'Cartazes'),
+        im(I(s, 'knowledgebiz_site_01'), 'Website', 'O website em computador e telemóvel, com a mesma linguagem gráfica da marca.', 'Website'),
+        im(I(s, 'knowledgebiz_site_05'), 'Páginas', 'Páginas do website, da apresentação da empresa ao recrutamento.', 'Website'),
+        im(I(s, 'knowledgebiz_site_03'), 'Contacto', 'A página de contacto, «Get in touch».', 'Website'),
+        vid(s, 'knowledgebiz_mobile_02', 'Telemóvel', 'O website adaptado ao telemóvel.', 'Website · Mobile'),
+    ])
+    p['site'] = site(s, 'knowledgebiz_site_02', 'Um website capaz de potenciar a presença online da marca.', 'Website · Knowledgebiz', 'Navegação no website da Knowledgebiz')
+    p['gallery'] = dict(title='Galeria', intro='A marca em movimento e aplicada.', link=('/servicos/design-web', 'Criação de sites para empresas →'), items=[
+        dict(img=I(s, 'knowledgebiz_logo_06'), alt='Animação do logótipo da Knowledgebiz'),
+        dict(img=I(s, 'knowledgebiz_logo_02'), alt='Animação do símbolo da Knowledgebiz'),
+        dict(img=I(s, 'knowledgebiz_foto'), alt='Fotografia de equipa da Knowledgebiz'),
+        dict(img=I(s, 'knowledgebiz_estacionario'), alt='Estacionário da Knowledgebiz'),
+        dict(img=I(s, 'knowledgebiz_mobile_01'), alt='Website da Knowledgebiz em vários telemóveis'),
+    ])
+
+    # ---------------------------------------------------------------- Queijaria da São
+    s = 'queijaria-da-sao'; p = P[s]
+    p['ident']['tabs'] = [
+        dict(img=I(s, 'queijariadasao_logo_01'), title='Logótipo', sub='Antes e depois', desc='Da marca anterior ao novo logótipo.'),
+        dict(img=SPLIT + 'queijaria-logo-amarelo.webp', title='Amarelo', sub='Cores da marca', alt='Logótipo da Queijaria da São sobre amarelo'),
+        dict(img=SPLIT + 'queijaria-logo-azul.webp', title='Azul', sub='Cores da marca', alt='Logótipo da Queijaria da São sobre azul'),
+        dict(img=I(s, 'queijariadasao_animais'), title='Ilustração', sub='Tipografia e animais'),
+        dict(img=I(s, 'queijariadasao_logo_04'), title='Universo', sub='Imagem da marca'),
+    ]
+    p['apps']['items'] = [
+        dict(img=I(s, 'queijariadasao_rotulos'), title='Rótulos'),
+        dict(img=I(s, 'queijariadasao_cartao'), title='Cartão de visita'),
+        dict(img=I(s, 'queijariadasao_merchandising_01'), title='Fardas'),
+        dict(img=SPLIT + 'queijaria-merch-saco.webp', title='Saco', alt='Saco de pano da Queijaria da São'),
+        dict(img=SPLIT + 'queijaria-merch-caixa.webp', title='Caixa', alt='Caixa da Queijaria da São'),
+    ]
+    p['ads'] = dict(title='Comunicação e redes sociais', nav='Comunicação', intro='A comunicação nas redes sociais e a nova imagem nas embalagens, nos roll-ups e na viatura.', items=[
+        vid(s, 'queijariadasao_post', 'Redes sociais', 'Publicações para as redes sociais com os produtos e a nova imagem.', 'Redes sociais'),
+        im(I(s, 'queijariadasao_foto_05'), 'Embalagens', 'Caixa de transporte com a marca, cheia de queijos frescos.', 'Packaging'),
+        im(I(s, 'queijariadasao_rollup'), 'Roll-ups', 'Três roll-ups com frases da marca, em branco, amarelo e azul.', 'Comunicação'),
+        im(I(s, 'queijariadasao_veiculo'), 'Viatura', 'A nova imagem aplicada na viatura da queijaria.', 'Frota'),
+    ])
+    p['site'] = site(s, 'queijariadasao_site_03', 'O website, com a nova imagem da marca.', 'Website · Queijaria da São', 'Navegação no website da Queijaria da São')
+    p['gallery']['items'] = [
+        dict(img=I(s, 'queijariadasao_foto_02'), alt='Queijos frescos da Queijaria da São'),
+        dict(img=I(s, 'queijariadasao_logo_05'), alt='Animação do símbolo da Queijaria da São'),
+        dict(img=I(s, 'queijariadasao_foto_03'), alt='Embalagem de queijo da Queijaria da São'),
+        dict(video=V(s, 'queijariadasao_queijos')[0], poster=V(s, 'queijariadasao_queijos')[1], alt='Queijo da Queijaria da São em fundo claro'),
+        dict(img=I(s, 'queijariadasao_foto_01'), alt='Produção na Queijaria da São'),
+        dict(img=I(s, 'queijariadasao_logo_03'), alt='Animação do logótipo da Queijaria da São'),
+        dict(img=I(s, 'queijariadasao_site_01'), alt='Website da Queijaria da São'),
+        dict(img=I(s, 'queijariadasao_site_02'), alt='Páginas do website da Queijaria da São'),
+    ]
+
+    # ---------------------------------------------------------------- Hospital Garcia de Orta
+    s = 'hospital-garcia-de-orta'; p = P[s]
+    for tab in p['ident']['tabs']:
+        tab.pop('ph', None)
+    p['apps']['items'] = keep(p['apps']['items'], ['hgo_ilustracao-1900x'])
+    p['ads'] = dict(title='Ilustração e comunicação', nav='Comunicação', intro='Respeitar o passado e potenciar o futuro: a nova marca na ilustração e na comunicação do hospital.', items=[
+        im(I(s, 'hgo_ilustracao-1900x'), 'Painel ilustrado', 'A ilustração do hospital e da cidade aplicada num painel exterior.', 'Ilustração · Sinalética'),
+        im(I(s, 'hgo_ilustracao_02'), 'Ilustração', 'Ilustração em linha com o hospital, a cidade e as pessoas.', 'Ilustração'),
+        im(I(s, 'hgo_logo_04'), 'Comunicação', 'A nova marca numa peça de comunicação, com fotografia.', 'Design gráfico'),
+        im(I(s, 'hgo_foto_01'), 'Fotografia', 'Fotografia de profissionais de saúde usada na comunicação.', 'Fotografia'),
+    ])
+    p['gallery'] = dict(title='A marca em movimento', intro='O símbolo e a assinatura animados.', items=[
+        dict(img=I(s, 'hgo_logo_03'), alt='Animação do símbolo do Hospital Garcia de Orta'),
+        dict(img=I(s, 'hgo_frase'), alt='Animação da assinatura «A referência a Sul»'),
+        dict(img=I(s, 'hgo_logo_01'), alt='Animação do logótipo do Hospital Garcia de Orta'),
+        dict(img=I(s, 'hgo_estacionario'), alt='Estacionário do Hospital Garcia de Orta'),
+    ])
+
+    # ---------------------------------------------------------------- Croma
+    s = 'croma'; p = P[s]
+    p['apps']['items'] = [
+        dict(img=I(s, 'croma_programa'), title='Programa'),
+        dict(img=I(s, 'croma_tickets'), title='Bilhetes'),
+        dict(img=I(s, 'croma_badge'), title='Credenciais'),
+        dict(img=I(s, 'croma_bag'), title='Saco'),
+        dict(img=SPLIT + 'croma-tshirt.webp', title='T-shirt', alt='T-shirt do CROMA'),
+        dict(img=SPLIT + 'croma-pins.webp', title='Pins', alt='Pins do CROMA'),
+    ]
+    p['ads'] = dict(title='Anúncios e redes sociais', intro='Cartazes, anúncios e conteúdos para as redes sociais, para amplificar a presença da marca e atrair público.', items=[
+        im(I(s, 'croma_banner_01'), 'Cartazes', 'Cartazes dos concertos em caixas de luz, cada um com a sua cor.', 'Anúncios'),
+        im(I(s, 'croma_banner_03'), 'Mupi', 'A campanha num mupi de rua.', 'Anúncios · Exterior'),
+        im(I(s, 'croma_banner_02-1900x'), 'Série de cartazes', 'Os cartazes de todos os concertos, lado a lado.', 'Anúncios · Redes sociais'),
+        im(I(s, 'croma_rs_01'), 'Redes sociais', 'Publicações com os concertos, os músicos e a programação.', 'Redes sociais'),
+        vid(s, 'croma_rs_02', 'Publicação animada', 'Publicação animada para o telemóvel.', 'Redes sociais · Vídeo'),
+        im(I(s, 'croma_banner_04'), 'Palco', 'A identidade projetada no palco dos concertos.', 'Evento'),
+    ])
+    p['gallery'] = dict(title='Galeria', intro='A energia do logótipo, em movimento e aplicado.', items=[
+        dict(img=I(s, 'croma_logo_01'), alt='Animação do logótipo do CROMA'),
+        dict(img=I(s, 'croma_foto'), alt='Músicos em concerto'),
+        dict(img=I(s, 'croma_tickets'), alt='Bilhetes do CROMA'),
+        dict(img=I(s, 'croma_bag'), alt='Saco do CROMA'),
+        dict(img=SPLIT + 'croma-pins.webp', alt='Pins do CROMA'),
+    ])
+
+    # ---------------------------------------------------------------- Alinea
+    s = 'alinea'; p = P[s]
+    p['apps']['items'] = keep(p['apps']['items'], ['alinea_anuncio', 'alinea_flyer', 'alinea_banner'])
+    p['ads'] = dict(title='Anúncios e redes sociais', intro='Algumas das ações gráficas que o grupo nos confia diariamente.', items=[
+        im(I(s, 'alinea_anuncio'), 'Anúncio de imprensa', 'Anúncio numa revista, com fotografia e o azul e dourado da marca.', 'Anúncios · Imprensa'),
+        im(I(s, 'alinea_banner'), 'Mupi', 'Mupi de rua com fotografia de um médico da Alinea.', 'Anúncios · Exterior'),
+        im(I(s, 'alinea_flyer'), 'Flyer', 'Flyer desdobrável com fotografia das clínicas.', 'Design gráfico'),
+        vid(s, 'alinea_redes_sociais', 'Redes sociais', 'Publicações com fotografia e o azul e dourado da marca.', 'Redes sociais'),
+    ])
+    p['site'] = site(s, 'alinea_site_04', 'O website em vários ecrãs, com a simplicidade da marca.', 'Website · Alinea', 'Website da Alinea em vários ecrãs')
+    p['gallery']['items'] = keep(p['gallery']['items'], ['alinea_redes_sociais', 'alinea_site_04'])
+
+    # ---------------------------------------------------------------- Livro Vilamoura
+    s = 'livro-vilamoura'; p = P[s]
+    p['apps']['items'] = [
+        dict(img=I(s, 'livro-vilamoura-img_01'), title='Abertura'),
+        dict(img=I(s, 'livro-vilamoura-img_04'), title='Índice'),
+        dict(img=I(s, 'livro-vilamoura-img_07'), title='Paginação'),
+    ]
+    p['ads'] = dict(title='O livro por dentro', nav='O livro', caption='Livro Vilamoura', intro='Cadernos diferentes em papel, textura e dimensão, que acompanham o desenrolar da ação.', items=[
+        im(I(s, 'livro-vilamoura-img_06'), 'Retratos', 'Retratos a página inteira, ao lado do texto.', 'Fotografia · Paginação'),
+        im(I(s, 'livro-vilamoura-img_05'), 'Cadernos', 'Cadernos de cor diferente ao longo do livro.', 'Produção gráfica'),
+        im(I(s, 'livro-vilamoura-img_08'), 'Paisagem', 'Fotografia de paisagem em página dupla.', 'Fotografia'),
+        im(I(s, 'livro-vilamoura-img_09'), 'Capa e lombada', 'Capa, lombada e contracapa em cinzento escuro, com o título em letra grande.', 'Capa'),
+    ])
+
+    # ---------------------------------------------------------------- Farinhas Firmos
+    s = 'farinhas-firmos'; p = P[s]
+    p['apps']['items'] = [
+        dict(img=I(s, 'farinhafirmos_farinha_sacos_02.gif'), title='Embalagem'),
+        dict(img=V(s, 'farinha_sacos_03')[1], title='Gama de farinhas'),
+        dict(img=I(s, 'farinhafirmos_farinha_sacos_02-1900x'), title='Gama completa'),
+    ]
+    p['ident']['tabs'] = [tb for tb in p['ident']['tabs'] if 'sacos_02' not in tb['img']]
+    for tab in p['ident']['tabs']:
+        tab.pop('ph', None)
+    p['ads'] = dict(title='Redes sociais e comunicação', nav='Comunicação', intro='Uma presença digital nas redes sociais e materiais de comunicação com a nova marca.', items=[
+        im(I(s, 'farinhafirmos_redessociais_02'), 'Redes sociais', 'Grelha de publicações com receitas, produtos e a fábrica.', 'Redes sociais'),
+        vid(s, 'farinhafirmos_redessociais_01', 'Calendário do Advento', 'Publicação animada do Calendário do Advento 2024.', 'Redes sociais · Vídeo'),
+        im(I(s, 'farinhafirmos_flyer'), 'Folhetos', 'Folhetos de produto, com fotografia e a nova marca.', 'Design gráfico'),
+        im(I(s, 'farinhafirmos_calendario'), 'Calendário', 'Calendário de secretária com fotografia de pão.', 'Design gráfico'),
+    ])
+    p['site'] = site(s, 'farinhafirmos_site_02', 'Presença digital num website com a nova marca.', 'Website · Farinhas Firmos', 'Navegação no website da Farinhas Firmos')
+    p['gallery']['items'] = keep(p['gallery']['items'], ['farinhafirmos_redessociais_01', 'farinhafirmos_site_02'])
+
+    # ---------------------------------------------------------------- Alsil
+    s = 'alsil'; p = P[s]
+    p['apps']['items'] = keep(p['apps']['items'], ['alsilgroup_flyer', 'marca_display', 'marca_stand'])
+    p['ads'] = dict(title='Anúncios e exposições', nav='Exposições', intro='Dos distintos cartões de visita aos espaços impactantes em exposições internacionais.', items=[
+        im(I(s, 'alsilgroup_portfolio_marca_display'), 'Display', 'Ecrã de grande formato com a mensagem «We are tooling».', 'Exposições'),
+        im(I(s, 'alsilgroup_portfolio_marca_stand'), 'Stand', 'Stand do grupo numa exposição internacional.', 'Exposições'),
+        vid(s, 'alsilgroup_flyer', 'Folheto', 'Folheto sobre fundo azul, com fotografia de produto.', 'Design gráfico'),
+        im(I(s, 'phone-mockup-hand'), 'Digital', 'Comunicação digital no telemóvel.', 'Digital'),
+    ])
+    p['site'] = site(s, 'alsilgroup_site', 'O website do grupo, com a nova identidade.', 'Website · Alsil Group', 'Website do Alsil Group')
+    p['gallery']['items'] = keep(p['gallery']['items'], ['alsilgroup_site', 'phone-mockup-hand']) + [
+        dict(img=I(s, 'alsilgroup_logo_04'), alt='Animação dos logótipos do Alsil Group')]
+
+    # ---------------------------------------------------------------- IMT
+    s = 'documentos-normativos-imt'; p = P[s]
+    p['apps']['items'] = keep(p['apps']['items'], ['imt_fasciaculo_livro_04', 'livro_07_hortela-magenta'])
+    p['ads'] = dict(title='Ilustração e paginação', nav='Paginação', caption='Documentos Normativos', intro='Ilustrações técnicas, tabelas e elementos gráficos com uma linguagem coesa, para uma leitura mais fluída e intuitiva.', items=[
+        im(I(s, 'imt_fasciaculo_grafismo-1900x'), 'Ilustrações técnicas', 'Pictogramas em linha: carros, bicicletas, peões e árvores.', 'Ilustração'),
+        im(I(s, 'imt_fasciaculo_grafismo_02'), 'Pictogramas', 'Pictograma animado de um peão.', 'Ilustração · Animação'),
+        im(V(s, 'livro_07_hortela-magenta-instituto-da-mobilidade-e-transportes-web')[1], 'Paginação', 'Páginas interiores com capítulos numerados, tabelas e ilustrações.', 'Editorial'),
+        im(I(s, 'imt_fasciaculo_livro_02'), 'Capas', 'As capas dos quatro documentos, numeradas e cada uma com a sua cor.', 'Editorial'),
+        im(I(s, 'imt_fasciaculo_livro_04'), 'Leitura', 'Um documento aberto, com ilustrações em linha a acompanhar o texto.', 'Editorial'),
+    ])
+    p['gallery'] = dict(title='Os documentos em vídeo', intro='Uma linguagem gráfica coesa em todos os documentos.', items=[
+        dict(video=V(s, 'livro_07_hortela-magenta-instituto-da-mobilidade-e-transportes.mp4')[0], poster=V(s, 'livro_07_hortela-magenta-instituto-da-mobilidade-e-transportes.mp4')[1], alt='Páginas interiores dos documentos do IMT'),
+        dict(video=V(s, 'livro_07_hortela-magenta-instituto-da-mobilidade-e-transportes-web')[0], poster=V(s, 'livro_07_hortela-magenta-instituto-da-mobilidade-e-transportes-web')[1], alt='Abertura de um documento normativo do IMT'),
+        dict(img=I(s, 'imt_fasciaculo_livro_01'), alt='Páginas interiores de um documento normativo do IMT'),
+        dict(img=I(s, 'imt_fasciaculo_livro_06'), alt='Documento normativo do IMT aberto'),
+    ])
+
+    # ---------------------------------------------------------------- Almada
+    s = 'camara-municipal-de-almada-roteiro'; p = P[s]
+    p['apps']['items'] = keep(p['apps']['items'], ['roteiro_mapa_01', 'roteiro_mapa_02'])
+    p['ads'] = dict(title='Mapas e desdobrável', nav='Mapas', caption='Roteiro de Almada', intro='Um desdobrável de bolso pensado para guiar tanto os visitantes mais curiosos como os locais.', items=[
+        im(I(s, 'roteiro_mapa_01'), 'Mapa', 'Mapa da cidade com os percursos e os pontos de interesse.', 'Cartografia'),
+        im(I(s, 'roteiro_mapa_02'), 'Desdobrável de bolso', 'O desdobrável aberto: o mapa de um lado e as fotografias dos locais do outro.', 'Editorial'),
+        im(I(s, 'roteiro_foto_05'), 'Na rua', 'Uma visitante consulta o desdobrável durante o passeio.', 'Fotografia'),
+        im(I(s, 'roteiro_foto_04'), 'Fotografia', 'Fotografias dos locais, sobre o azul do roteiro.', 'Fotografia'),
+    ])
+    p['gallery']['items'] = keep(p['gallery']['items'], ['roteiro_foto_04', 'roteiro_foto_05'])
+
+    # ---------------------------------------------------------------- Imperalum
+    s = 'imperalum'; p = P[s]
+    p['ident']['tabs'] = [
+        dict(img=I(s, 'imperalum_logo_05'), title='Logótipo', sub='Rebranding', desc='A nova marca, com a assinatura «Soluções com futuro».'),
+        dict(img=I(s, 'imperalum_logo_06'), title='Versão clara', sub='Sobre fundo claro'),
+        dict(img=I(s, 'imperalum_logo_02'), title='Construção', sub='Símbolo'),
+        dict(img=I(s, 'imperalum_cor_01'), title='Cores', sub='Paleta'),
+        dict(img=I(s, 'imperalum_font_01'), title='Tipografia', sub='Família tipográfica'),
+    ]
+    p['apps']['items'] = [
+        dict(img=I(s, 'imperalum_estacionario_01'), title='Estacionário'),
+        dict(img=I(s, 'imperalum_estacionario_02'), title='Pastas e documentos'),
+        dict(img=I(s, 'imperalum_estacionario_03'), title='Bloco de notas'),
+        dict(img=I(s, 'imperalum_id_06'), title='Crachá'),
+        dict(img=I(s, 'imperalum_bag_01'), title='Saco'),
+        dict(img=I(s, 'imperalum_logo_07'), title='Fachada'),
+    ]
+    p['ads'] = dict(title='Comunicação de produto', nav='Produto', intro='O rebranding impulsionou uma revisão estratégica da comunicação dos produtos, alinhando-os com a atualidade.', items=[
+        im(I(s, 'imperalum_banner_01'), 'Outdoor', 'Outdoor sobre impermeabilização, com a nova marca.', 'Anúncios'),
+        im(I(s, 'imperalum_banner_02-1900x'), 'Montras', 'Cartazes de produto numa montra, com a gama New Imper.', 'Anúncios · Ponto de venda'),
+        im(I(s, 'imperalum_hhh_01'), 'Folheto', 'Folheto técnico de produto.', 'Design gráfico'),
+        vid(s, 'imperalum_lata_03', 'New Imper NGP Tech', 'Imagem de lançamento da embalagem New Imper NGP Tech.', 'Produto'),
+        vid(s, 'imperalum_livro_01', 'Catálogo', 'Catálogo de produtos, com as páginas de gama.', 'Editorial'),
+    ])
+    p['gallery'] = dict(title='Produto e marca', intro='O rebranding aplicado aos produtos, em movimento e nos espaços.', items=[
+        dict(img=I(s, 'imperalum_lata_01'), alt='Embalagem New Imper da Imperalum'),
+        dict(img=I(s, 'imperalum_logo_01'), alt='Animação do logótipo da Imperalum'),
+        dict(img=I(s, 'imperalum_lata_02'), alt='Embalagem da Imperalum sobre fundo azul'),
+        dict(img=I(s, 'imperalum_logo_03'), alt='Construção do logótipo da Imperalum'),
+        dict(img=I(s, 'imperalum_foto_01'), alt='Coberturas verdes em edifícios'),
+        dict(img=I(s, 'imperalum_logo_04'), alt='Animação da marca Imperalum'),
+    ])

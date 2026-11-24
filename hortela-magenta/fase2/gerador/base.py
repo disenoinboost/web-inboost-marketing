@@ -34,6 +34,22 @@ class Media:
     def __init__(self, info_path, proj_path):
         self.info = json.load(open(info_path, encoding='utf-8'))
         self.proj = json.load(open(proj_path, encoding='utf-8'))
+        # media-extra.json (no repositório): imagens partidas em hm-media/split e cor/uniformidade da borda de cada imagem,
+        # medidas no servidor (para encaixar imagens inteiras sobre a cor do próprio fundo).
+        ex = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'media-extra.json'), encoding='utf-8'))
+        self.info.update(ex['info'])
+        self.edges = ex['edges']
+
+    def edge(self, url):
+        """(cor média da borda, desvio) ou None. Desvio baixo = fundo liso (gráfico)."""
+        i = self.info.get(url)
+        rel = i['rel'] if i else url
+        e = self.edges.get(rel.split('/')[-1])
+        return (e[0], e[1]) if e else None
+
+    def ratio_f(self, url):
+        d = self.wh(url)
+        return d[0] / d[1] if d else 16 / 9
 
     def find(self, slug, key, kind='img'):
         for m in self.proj[slug]['media']:
