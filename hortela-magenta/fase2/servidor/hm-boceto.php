@@ -56,6 +56,7 @@ function hm_servir( $archivo, $status = 200 ) {
 	$dist = ( isset( $_GET['paquete'] ) && is_user_logged_in() ) ? false : hm_dist_get( $archivo );
 	if ( $dist ) {
 		$dist = hm_fix_inject( $dist );
+		$dist = hm_plugins_inject( $dist );
 		global $wp_query;
 		if ( $wp_query && 200 === $status ) {
 			$wp_query->is_404 = false; // rutas sin página en WP: que WP Rocket también las cachee
@@ -188,3 +189,121 @@ function hm_favicon_tags() {
 }
 /* páginas que o WordPress pinta (artigos, categorias, autor, 404): o mesmo favicon */
 add_action( 'wp_head', function () { if ( ! get_option( 'site_icon' ) ) { echo hm_favicon_tags() . "\n"; } }, 2 );
+
+/* ------------------------------------------------------------------------------------------------
+ * Plugins en las páginas de paquete (2026-11-24)
+ * Los paquetes se sirven en template_redirect (prioridad 0) y no pasan por wp_head()/wp_footer(), así que
+ * ningún plugin imprime nada en ellos. Aquí se ejecutan esos ganchos solo con las funciones de los plugins
+ * permitidos (Complianz: banner, Consent Mode y GTM; Site Kit: meta de verificación) y las de WordPress que
+ * imprimen sus estilos y scripts. Yoast, Divi, etc. quedan fuera: el SEO de estas páginas va en el propio paquete.
+ * ---------------------------------------------------------------------------------------------- */
+function hm_plugins_permitidos() {
+	return apply_filters( 'hm_plugins_permitidos', array( 'complianz-gdpr', 'google-site-kit' ) );
+}
+
+/** Archivo donde está definida una función de gancho ('' si no se puede saber). */
+function hm_cb_archivo( $cb ) {
+	try {
+		if ( is_string( $cb ) && false !== strpos( $cb, '::' ) ) {
+			$cb = explode( '::', $cb, 2 );
+		}
+		if ( is_array( $cb ) && 2 === count( $cb ) ) {
+			$r = new ReflectionMethod( $cb[0], $cb[1] );
+		} elseif ( $cb instanceof Closure || is_string( $cb ) ) {
+			$r = new ReflectionFunction( $cb );
+		} elseif ( is_object( $cb ) && method_exists( $cb, '__invoke' ) ) {
+			$r = new ReflectionMethod( $cb, '__invoke' );
+		} else {
+			return '';
+		}
+		return wp_normalize_path( (string) $r->getFileName() );
+	} catch ( \Throwable $e ) {
+		return '';
+	}
+}
+
+/** Deja en un gancho solo las funciones de los plugins permitidos (y las de $nucleo, por nombre). */
+function hm_filtrar_gancho( $hook, $nucleo = array() ) {
+	global $wp_filter;
+	if ( empty( $wp_filter[ $hook ] ) ) {
+		return;
+	}
+	$pl = trailingslashit( wp_normalize_path( WP_PLUGIN_DIR ) );
+	$ok = hm_plugins_permitidos();
+	foreach ( $wp_filter[ $hook ]->callbacks as $prio => $cbs ) {
+		foreach ( $cbs as $c ) {
+			$f = $c['function'];
+			if ( is_string( $f ) && in_array( $f, $nucleo, true ) ) {
+				continue;
+			}
+			$file = hm_cb_archivo( $f );
+			$keep = false;
+			foreach ( $ok as $slug ) {
+				if ( '' !== $file && 0 === strpos( $file, $pl . $slug . '/' ) ) {
+					$keep = true;
+					break;
+				}
+			}
+			if ( ! $keep ) {
+				remove_action( $hook, $f, $prio );
+			}
+		}
+	}
+}
+
+/** HTML que los plugins permitidos pondrían en <head> y antes de </body>. */
+function hm_plugins_saida() {
+	static $out = null;
+	if ( null !== $out ) {
+		return $out;
+	}
+	$out = array( 'head' => '', 'footer' => '' );
+	if ( ! did_action( 'wp_loaded' ) || ! apply_filters( 'hm_plugins_ativos', true ) ) {
+		return $out;
+	}
+	// GTM (Complianz) solo en producción: así las visitas de revisión no entran en GA4 ni en los píxeles de Meta.
+	if ( ! hm_es_produccion() ) {
+		add_filter( 'cmplz_script_filter', function ( $s ) {
+			return ( false !== stripos( (string) $s, 'googletagmanager' ) ) ? '' : $s;
+		}, 99 );
+	}
+	$ws  = wp_scripts();
+	$wst = wp_styles();
+	$pre = array( $ws->queue, $wst->queue );
+	foreach ( array( 'wp_enqueue_scripts', 'wp_print_styles', 'wp_print_scripts' ) as $h ) {
+		hm_filtrar_gancho( $h );
+	}
+	hm_filtrar_gancho( 'wp_head', array( 'wp_print_styles', 'wp_print_head_scripts' ) );
+	hm_filtrar_gancho( 'wp_footer', array( 'wp_print_footer_scripts' ) );
+	hm_filtrar_gancho( 'wp_print_footer_scripts', array( '_wp_footer_scripts' ) );
+	ob_start();
+	do_action( 'wp_enqueue_scripts' ); // Complianz imprime aquí el GTM de cabecera
+	// Solo lo que han puesto en cola los plugins permitidos (y sus dependencias).
+	$ws->queue  = array_values( array_diff( $ws->queue, $pre[0] ) );
+	$wst->queue = array_values( array_diff( $wst->queue, $pre[1] ) );
+	do_action( 'wp_head' );
+	$out['head'] = trim( (string) ob_get_clean() );
+	ob_start();
+	do_action( 'wp_footer' );
+	$out['footer'] = trim( (string) ob_get_clean() );
+	return $out;
+}
+
+function hm_plugins_inject( $html ) {
+	$s = hm_plugins_saida();
+	if ( '' !== $s['head'] && false !== ( $p = stripos( $html, '</head>' ) ) ) {
+		$html = substr_replace( $html, $s['head'] . "\n", $p, 0 );
+	}
+	if ( '' !== $s['footer'] && false !== ( $p = strripos( $html, '</body>' ) ) ) {
+		$html = substr_replace( $html, $s['footer'] . "\n", $p, 0 );
+	}
+	return $html;
+}
+
+/* Site Kit: solo informes y verificación. Las etiquetas las pone Complianz (GTM-KXHQKJMV, que ya incluye GA4),
+   así que se bloquean las de Site Kit para no medir dos veces aunque alguien active «colocar fragmento». */
+foreach ( array( 'analytics-4', 'tagmanager', 'ads' ) as $hm_sk ) {
+	add_filter( 'googlesitekit_' . $hm_sk . '_tag_blocked', '__return_true' );
+	add_filter( 'googlesitekit_' . $hm_sk . '_tag_amp_blocked', '__return_true' );
+}
+unset( $hm_sk );
