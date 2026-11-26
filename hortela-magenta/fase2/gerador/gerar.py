@@ -128,6 +128,8 @@ def blocks_html(blocks, slug):
             out.append(B.proj_marquee(M, b, sec_id=sid, label=label, drag_attr='data-mq-drag'))
         elif kind == 'imagens':
             out.append(BS.imagens(M, b, sid, label, **({'bg': bg} if bg else {})))
+        elif kind == 'linhas':
+            out.append(BS.linhas(b, sid, label, **({'bg': bg} if bg else {})))
         elif kind == 'ambito':
             out.append(BS.ambito(b, sid, label, **({'bg': bg} if bg else {})))
         elif kind == 'galeria':

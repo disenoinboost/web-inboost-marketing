@@ -538,3 +538,21 @@ html.hm-fade img[data-hm-in] { animation: hmImgIn .6s ease backwards; }
   html body main [data-hm-amb] h3 button > span:first-child { font-size: 15px !important; }
   html body main [data-hm-amb] h3 button > span[data-acc-ico] { font-size: clamp(30px, 9vw, 38px) !important; font-weight: 100 !important; line-height: 1.14 !important; }
 }
+
+/* Migalhas no telemóvel: sempre numa linha (letra 15 px, menos espaço; se ainda não couber, o último nível termina em «…») */
+@media (max-width: 767px) {
+  html body nav[aria-label="Breadcrumb"] { flex-wrap: nowrap !important; gap: 7px !important; font-size: 15px !important; white-space: nowrap; overflow: hidden; }
+  html body nav[aria-label="Breadcrumb"] > * { flex: none; }
+  html body nav[aria-label="Breadcrumb"] > :last-child { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+}
+
+/* Fotografia em grande (lightbox): sem a caixa rosa de foco no X e nas setas (o foco vai para o X ao abrir) */
+html body [data-lb-x], html body [data-lb-p], html body [data-lb-nx], html body [data-lb-x]:focus, html body [data-lb-x]:focus-visible,
+html body [data-lb-p]:focus, html body [data-lb-p]:focus-visible { outline: none !important; box-shadow: none !important; }
+
+/* «O site» / «Filme» no telemóvel: a legenda fica por baixo do vídeo com a altura real dele (--hm-gh, calculada no JS);
+   antes supunha 16:9 e, nos vídeos mais altos (Alsil, Queijaria…), ficava por cima do vídeo */
+@media (max-width: 767px) {
+  html body [data-grow] [data-grow-ui] { top: min(calc(50% + var(--hm-gh, 28.125vw) + 16px), calc(100% - 48px)) !important; }
+}
+

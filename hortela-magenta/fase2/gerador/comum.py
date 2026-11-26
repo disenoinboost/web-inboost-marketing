@@ -68,7 +68,10 @@ def _menus(b):
         a = nav.index('<div', a)
         a2 = nav.index('>', a) + 1
         c = nav.index('</div>', a2)
-        subs = '\n      ' + '\n      '.join(MOB_SUB.format(h='/projetos/' + s, l=esc(NAMES[s])) for s in ORDER) + '\n    '
+        # mesma prioridade que o menu do computador (os seis destacados) e depois os restantes, pela ordem da página Projetos
+        top = ['camolas', 'queijaria-da-sao', 'farinhas-firmos', 'alsil', 'hospital-garcia-de-orta', 'livro-vilamoura']
+        mob = top + [s for s in ORDER if s not in top]
+        subs = '\n      ' + '\n      '.join(MOB_SUB.format(h='/projetos/' + s, l=esc(NAMES[s])) for s in mob) + '\n    '
         nav = nav[:a2] + subs + nav[c:]
         b = b[:i] + nav + b[j:]
     # rodapé · coluna Serviços

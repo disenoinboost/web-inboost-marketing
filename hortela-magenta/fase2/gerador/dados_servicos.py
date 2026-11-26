@@ -272,11 +272,11 @@ def servicos(M):
                 ('Marcas em mudança', 'Um novo produto, um novo mercado, uma nova geração na gestão.'),
                 ('Negócios que comunicam muito mas não são percebidos', 'Ou que não sabem por onde começar.'),
             ])),
-            ('ambito', dict(id='como-funciona', eyebrow='Como funciona', title='Como funciona', bg='#f6f7f8', items=[
-                ('Escuta', 'Uma conversa profunda sobre o negócio, as pessoas, a história e as ambições.'),
-                ('Diagnóstico', 'Analisamos como a marca se vê, como é vista e onde está a diferença.'),
-                ('Clarificação', 'Trabalhamos juntos o posicionamento, a proposta de valor, a personalidade e o tom de voz.'),
-                ('Direção', 'Recebe um plano claro e prático para comunicar com confiança, connosco ou com a sua equipa.'),
+            ('linhas', dict(id='como-funciona', eyebrow='Como funciona', title='Como funciona', bg='#f6f7f8', items=[
+                ('Escuta', 'Uma conversa profunda sobre o negócio, as pessoas, a história e as ambições. A primeira sessão pode demorar até 3h: é o tempo necessário para ouvirmos com calma a história da empresa e as dúvidas sobre a marca.'),
+                ('Diagnóstico', 'Analisamos como a marca se vê, como é vista e onde está a diferença. Fazemos as perguntas certas e ajudamos a organizar o que a empresa já sabe sobre si mesma, mas ainda não conseguiu traduzir em comunicação.'),
+                ('Clarificação', 'Trabalhamos juntos o posicionamento, a proposta de valor, a personalidade e o tom de voz. As respostas são construídas em conjunto consigo, até chegar a um posicionamento claro e a uma voz própria.'),
+                ('Direção', 'Recebe um plano claro e prático para comunicar com confiança, connosco ou com a sua equipa. Às vezes bastam pequenos ajustes nas mensagens ou no tom de voz; noutros casos, faz sentido evoluir a identidade. A decisão é sempre sua.'),
             ], foot='Pode ser uma sessão pontual ou um acompanhamento regular de mentoria de marca.', cta=('/contacto', 'Marcar uma sessão de Coaching de Marca →'))),
             ('frase', dict(eyebrow='Clareza', title='Não é consultoria. É uma conversa que muda a forma como comunica.', text='A consultoria tradicional entrega relatórios. Nós entregamos clareza. Quando uma marca se conhece, tudo o resto fica mais fácil: o design, os textos, as campanhas e até as decisões de negócio.', cta=('/contacto', 'Marcar uma sessão de Coaching de Marca →'))),
         ],

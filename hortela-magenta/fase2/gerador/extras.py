@@ -110,8 +110,12 @@ FORM_JS = ("submitForm: e => { e.preventDefault(); const f = e.currentTarget || 
 def sobre(t):
     """Opinião da Mafraria: a fotografia apontava para assets/clientes/mafraria.jpg, que não vem no pacote do desenho
     (imagem partida). Usa uma peça da própria Mafraria («Um café singular», na mediateca)."""
-    return _rep(t, "img: ((window.__resources && window.__resources['assets/clientes/mafraria.jpg']) || 'assets/clientes/mafraria.jpg')",
-                "img: '/wp-content/uploads/2026/11/mafraria_slide_2-1024x1024.jpg'")
+    t = _rep(t, "img: ((window.__resources && window.__resources['assets/clientes/mafraria.jpg']) || 'assets/clientes/mafraria.jpg')",
+             "img: '/wp-content/uploads/2026/11/mafraria_slide_2-1024x1024.jpg'")
+    # «Uma forma de estar descontraída»: o texto centrado na vertical com a palavra (estava alinhado pela linha de base, mais abaixo)
+    t = _rep(t, 'gap:12px clamp(32px,5vw,96px); align-items:baseline; padding:clamp(22px,3vw,40px) 0; border-bottom:1px solid rgba(28,27,35,.12);"><h3 style="margin:0; display:flex;',
+             'gap:12px clamp(32px,5vw,96px); align-items:center; padding:clamp(22px,3vw,40px) 0; border-bottom:1px solid rgba(28,27,35,.12);"><h3 style="margin:0; padding-top:.23em; display:flex;', n=3)
+    return t
 
 
 def contacto(t):
@@ -132,9 +136,9 @@ def contacto(t):
            'Não foi possível enviar a mensagem. Tente de novo ou fale connosco pelo telefone <a href="tel:+351211806292" style="color:#1C1B23;">(+351) 211 806 292</a>.</div>')
     c = t.index('</form>')
     t = t[:c] + err + t[c:]
-    # morada em duas linhas (estava em quatro numa coluna de ~290 px): letra um pouco menor e cada linha sem quebra
+    # morada em três linhas (estava em quatro numa coluna de ~290 px), com a mesma letra das outras colunas e sem quebras dentro de cada linha
     t = _rep(t, 'style="display:block; font-size:clamp(20px,1.6vw,26px); font-weight:200; letter-spacing:-0.02em; line-height:1.3; color:#1C1B23; text-decoration:none;" style-hover="color:#D82E87;">R. Dr. Miguel Bombarda nº 88<br>2860-461 Moita, Portugal</a>',
-             'style="display:block; font-size:clamp(17px,1.4vw,22px); font-weight:200; letter-spacing:-0.02em; line-height:1.35; color:#1C1B23; text-decoration:none;" style-hover="color:#D82E87;"><span style="white-space:nowrap;">R. Dr. Miguel Bombarda nº 88</span><br><span style="white-space:nowrap;">2860-461 Moita, Portugal</span></a>')
+             'style="display:block; font-size:clamp(20px,1.6vw,26px); font-weight:200; letter-spacing:-0.02em; line-height:1.3; color:#1C1B23; text-decoration:none;" style-hover="color:#D82E87;"><span style="white-space:nowrap;">R. Dr. Miguel Bombarda</span><br><span style="white-space:nowrap;">nº 88, 2860-461 Moita</span><br>Portugal</a>')
     # pré-seleção do serviço (?servico=Branding)
     pre = ('<script>(function(){if(window.__hmSv)return;window.__hmSv=1;try{var v=new URLSearchParams(location.search).get("servico");if(!v)return;var n=0;'
            '(function f(){var s=document.getElementById("servico");if(s){for(var i=0;i<s.options.length;i++){if(s.options[i].text===v){s.selectedIndex=i;break}}return}if(n++<80)setTimeout(f,100)})()}catch(e){}})();</script>')

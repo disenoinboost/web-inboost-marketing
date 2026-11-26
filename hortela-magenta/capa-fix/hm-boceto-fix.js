@@ -644,3 +644,24 @@
   });
 })();
 
+/* ===== «O site» / «Filme» (data-grow): meia altura real do vídeo em ecrã inteiro (contain), para a legenda no telemóvel · 2026-11-26 ===== */
+(function () {
+  var W = window, D = document;
+  function ratioOf(sec, cb) {
+    var v = sec.querySelector('[data-grow-media] video'), im = sec.querySelector('[data-grow-media] img');
+    if (v) {
+      if (v.videoWidth) return cb(v.videoWidth / v.videoHeight);
+      v.addEventListener('loadedmetadata', function () { if (v.videoWidth) cb(v.videoWidth / v.videoHeight); }, { once: true });
+      var ps = v.getAttribute('poster'); if (ps) { var i = new Image(); i.onload = function () { if (!v.videoWidth && i.naturalWidth) cb(i.naturalWidth / i.naturalHeight); }; i.src = ps; }
+    } else if (im) { if (im.naturalWidth) cb(im.naturalWidth / im.naturalHeight); else im.addEventListener('load', function () { cb(im.naturalWidth / im.naturalHeight); }, { once: true }); }
+  }
+  function setup(sec) {
+    if (sec.__hmGh) return; sec.__hmGh = 1;
+    var r = 16 / 9;
+    function apply() { var h = Math.min(W.innerWidth / r, W.innerHeight); sec.style.setProperty('--hm-gh', Math.round(h / 2) + 'px'); }
+    ratioOf(sec, function (x) { if (x > 0) { r = x; apply(); } });
+    apply(); W.addEventListener('resize', apply);
+  }
+  var n = 0, iv = setInterval(function () { [].forEach.call(D.querySelectorAll('[data-grow]'), setup); if (++n > 30) clearInterval(iv); }, 400);
+})();
+

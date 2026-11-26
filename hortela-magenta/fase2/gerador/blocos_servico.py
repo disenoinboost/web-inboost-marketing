@@ -318,16 +318,18 @@ def ambito(b, sec_id, label, bg='#ffffff'):
     """Lista em linhas grandes que se abrem (como «Âmbito e orçamento» de Design Web): número + palavra grande à esquerda;
     ao abrir (passar o cursor ou tocar), a palavra acende e o texto aparece à direita com o traço magenta.
     Usa o acordeão do desenho (data-acc, fx-servico); a abertura ao passar o cursor está em capa-fix (data-hm-amb).
-    b: eyebrow, title, text, items [(titulo, texto)], cta, foot, hint ('etapa', 'tema'…)."""
+    b: eyebrow, title, text, items [(titulo, texto)], cta, foot, hint ('etapa', 'tema'…).
+    padding-top:.23em na palavra: na Spartan sobram ~.27em por baixo da linha de base e ~.04em por cima das maiúsculas;
+    assim o espaço visível por cima e por baixo da palavra fica igual."""
     rows = ''
     for i, it in enumerate(b['items']):
         t, d = it[0], it[1] if len(it) > 1 else ''
         k = f'{sec_id}-{i + 1}'
         op = ' data-acc-open=""' if i == 0 else ''
         rows += f'''
-    <div data-acc=""{op} style="border-top:1px solid rgba(28,27,35,.12); display:flex; flex-wrap:wrap; align-items:flex-start; column-gap:clamp(16px,4vw,80px);">
-      <h3 style="margin:0; flex:1 1 480px; min-width:0; font-weight:300;"><button type="button" data-acc-btn="" id="{k}-b" aria-controls="{k}" aria-expanded="false" style="display:flex; align-items:baseline; gap:clamp(12px,1.6vw,28px); width:100%; background:none; border:0; padding:clamp(6px,.8vw,12px) 0; font:inherit; text-align:left; cursor:pointer; color:{INK};"><span style="flex:none; min-width:1.6em; font-size:16px; font-variant-numeric:tabular-nums; color:{MU}; font-weight:300;">{i + 1:02d}</span><span data-acc-ico="" data-on="color:#1C1B23" data-off="color:rgba(28,27,35,.26)" style="min-width:0; font-size:clamp(36px,4.6vw,80px); font-weight:100; letter-spacing:-0.05em; line-height:1.14; color:rgba(28,27,35,.26); transition:color .35s ease; text-wrap:balance;">{esc(t)}</span></button></h3>
-      <div data-acc-panel="" id="{k}" role="region" aria-labelledby="{k}-b" style="flex:0 1 440px; min-width:0; display:grid; grid-template-rows:0fr; transition:grid-template-rows .45s cubic-bezier(.33,1,.68,1);"><div style="overflow:hidden; min-height:0;"><div style="padding:clamp(18px,2.2vw,34px) 0 clamp(24px,3vw,44px);"><span data-acc-ico="" data-on="transform:scaleX(1)" data-off="transform:scaleX(0)" aria-hidden="true" style="display:block; width:32px; height:1px; margin-bottom:18px; background:#D82E87; transform-origin:0 50%; transform:scaleX(0); transition:transform .9s cubic-bezier(.22,1,.36,1);"></span><p style="margin:0; max-width:420px; font-size:18px; line-height:1.5; color:{TX}; text-wrap:pretty;">{esc(d)}</p></div></div></div>
+    <div data-acc=""{op} style="border-top:1px solid rgba(28,27,35,.12); display:flex; flex-wrap:wrap; align-items:center; column-gap:clamp(16px,4vw,80px);">
+      <h3 style="margin:0; flex:1 1 480px; min-width:0; font-weight:300;"><button type="button" data-acc-btn="" id="{k}-b" aria-controls="{k}" aria-expanded="false" style="display:flex; align-items:baseline; gap:clamp(12px,1.6vw,28px); width:100%; background:none; border:0; padding:clamp(8px,1.1vw,16px) 0; font:inherit; text-align:left; cursor:pointer; color:{INK};"><span style="flex:none; min-width:1.6em; font-size:16px; font-variant-numeric:tabular-nums; color:{MU}; font-weight:300;">{i + 1:02d}</span><span data-acc-ico="" data-on="color:#1C1B23" data-off="color:rgba(28,27,35,.26)" style="min-width:0; padding-top:.23em; font-size:clamp(36px,4.6vw,80px); font-weight:100; letter-spacing:-0.05em; line-height:1.14; color:rgba(28,27,35,.26); transition:color .35s ease; text-wrap:balance;">{esc(t)}</span></button></h3>
+      <div data-acc-panel="" id="{k}" role="region" aria-labelledby="{k}-b" style="flex:0 1 440px; min-width:0; display:grid; grid-template-rows:0fr; transition:grid-template-rows .45s cubic-bezier(.33,1,.68,1);"><div style="overflow:hidden; min-height:0;"><div style="padding:8px 0 23px;"><span data-acc-ico="" data-on="transform:scaleX(1)" data-off="transform:scaleX(0)" aria-hidden="true" style="display:block; width:32px; height:1px; margin-bottom:14px; background:#D82E87; transform-origin:0 50%; transform:scaleX(0); transition:transform .9s cubic-bezier(.22,1,.36,1);"></span><p style="margin:0; max-width:420px; font-size:18px; line-height:1.5; color:{TX}; text-wrap:pretty;">{esc(d)}</p></div></div></div>
     </div>'''
     side = ''
     if b.get('text'):
@@ -378,3 +380,27 @@ def galeria(M, b, sec_id, label, bg='#e8eced'):
     top = '0px' if b.get('joined') else 'var(--sp-block)'
     jn = ' data-hm-joined=""' if b.get('joined') else ''
     return f'''<section data-cursor-bg="light" id="{sec_id}"{jn} data-screen-label="{label}" style="position:relative; padding:{top} 0 var(--sp-block) 0; background:{bg}; color:{INK}; overflow:hidden;">{head}<div style="display:flex; flex-direction:column; gap:16px;">{rows}</div></section>'''
+
+
+def linhas(b, sec_id, label, bg='#ffffff'):
+    """Linhas sempre visíveis, como «Uma forma de estar descontraída» de Sobre: número e palavra grande à esquerda, texto à
+    direita, centrado na vertical com a palavra (padding-top:.23em compensa o espaço que a Spartan deixa por baixo da linha de base).
+    b: eyebrow, title, text, foot, cta, items [(titulo, texto)]."""
+    li = ''.join(f'''
+    <li data-rise="{min(i, 6) * 0.05:.2f}" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(min(100%,320px),1fr)); gap:12px clamp(32px,5vw,96px); align-items:center; padding:clamp(22px,3vw,40px) 0; border-bottom:1px solid rgba(28,27,35,.12);"><h3 style="margin:0; padding-top:.23em; display:flex; align-items:baseline; gap:clamp(16px,2vw,28px); font-size:clamp(40px,5.12vw,94px); font-weight:100; letter-spacing:-0.055em; line-height:1;"><span style="font-size:16px; letter-spacing:0; color:{MU}; font-variant-numeric:tabular-nums; font-weight:300;">{i + 1:02d}</span>{esc(it[0])}</h3><p style="margin:0; max-width:46ch; font-size:18px; font-weight:300; line-height:1.5; color:{TX}; text-wrap:pretty;">{esc(it[1])}</p></li>''' for i, it in enumerate(b['items']))
+    side = ''
+    for k in ('text', 'foot'):
+        if b.get(k):
+            side += f'<p style="margin:0 0 22px; font-size:18px; line-height:1.5; color:{TX};">{esc(b[k])}</p>'
+    if b.get('cta'):
+        side += _ulink(b['cta'][0], b['cta'][1])
+    side = f'<div style="flex:0 1 440px; min-width:0;">{side}</div>' if side else ''
+    return f'''<section data-cursor-bg="light" id="{sec_id}" data-screen-label="{label}" style="position:relative; background:{bg}; padding:var(--sp-block) {PAD} var(--sp-block) {PAD}; color:{INK};">
+  <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px clamp(40px,6vw,120px); margin-bottom:var(--sp-title);">
+    <div style="flex:1 1 420px; min-width:0;"><p style="margin:0 0 24px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{MU};">{DASH_A} {esc(b["eyebrow"])}</p><h2 style="margin:0; max-width:14ch; font-size:clamp(40px,4.48vw,80px); font-weight:100; letter-spacing:-0.05em; line-height:1.05;">{esc(b["title"])}</h2></div>
+    {side}
+  </div>
+  <ul style="list-style:none; margin:0; padding:0; border-top:1px solid rgba(28,27,35,.12);">{li}
+  </ul>
+</section>'''
+
