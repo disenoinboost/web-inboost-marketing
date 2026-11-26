@@ -394,11 +394,33 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 
 **Verificación:** regresión de 36 rutas × 2 sin errores ni desbordes; en vivo, 36 rutas en 200 y ninguna imagen referenciada que falte.
 
-**Transición de la cabecera (blanco → gris):** al hacer scroll, el velo de la cabecera (`data-veil`) la pinta con el color de la sección siguiente, como en Branding. En servicios y landings el velo era gris (#e8eced) y la sección siguiente blanca, así que la cabecera pasaba a gris y luego saltaba a blanco. Ahora la primera sección de cada página toma el gris del velo (o el velo toma el color de la sección, si esta ya trae uno propio). En Serviços (diseño original) y Obrigado la sección siguiente es blanca y el velo pasa a blanco. Comprobado en las 32 páginas con cabecera de ese tipo.
+**Transición de la cabecera (blanco → gris):** al hacer scroll, el velo de la cabecera (`data-veil`) la pinta con el color de la sección siguiente, como en Branding. En servicios y landings el velo era gris (#e8eced) y la sección siguiente blanca, así que la cabecera pasaba a gris y luego saltaba a blanco. Ahora la primera sección de cada página toma el gris del velo (o el velo toma el color de la sección, si esta ya trae uno propio). En Obrigado la sección siguiente es blanca y el velo pasa a blanco. En Serviços se probó igual, pero así la fusión no se veía; desde el 2026-11-26 el velo vuelve a ser gris y la fila «Branding» toma ese gris. Comprobado en las 32 páginas con cabecera de ese tipo.
 
 **Galería «Trabalhos» (2026-11-26):**
 - **Dónde:** Gráfico + Editorial, Campanhas y Fotografia & Vídeo.
 - **Problema:** el componente `data-lp` del diseño para en cada tarjeta. Al medirlo, 14 de cada 40 pasos de scroll no movían la galería, de ahí la sensación de ir a golpes.
 - **Solución:** estas tres usan ahora `data-lpf`, implementado en `capa-fix/hm-boceto-fix.js`, con los mismos efectos pero avance continuo: unos 89 px por paso, ninguno parado.
 - **Branding y Design Web** (diseño original) y el carrusel «Aplicações» de las fichas mantienen las paradas. Si se quieren continuos, es el mismo cambio.
+
+## 13. Ronda 2026-11-26: fondos, franjas, espaciado y cursor
+
+**Espaciado entre secciones (todas las páginas generadas):**
+- **Regla:** dos secciones seguidas nunca comparten fondo. Si coinciden, la segunda cambia: de un gris pasa a blanco y del blanco pasa a #f6f7f8. Así cada frontera es «126 px · cambio de color · 126 px», como en Branding.
+- **Antes:** con el mismo fondo se sumaban los dos rellenos y se veía un hueco en blanco de 212–252 px. Era el caso de la franja «Imperalum · Outdoor» antes de «Departamento externo», o de los paneles antes de «Design editorial».
+- **Franjas de fotos pegadas a un texto:** siguen al color de la sección anterior y ahora terminan con el mismo espacio que el resto de secciones (126 px); antes eran 86 px.
+- **Fichas de proyecto:** el mismo criterio con los tonos. «Anúncios» ya no repite el tono de «Aplicações», y «Mais projetos» pasa a gris claro cuando le precede «Fotografia», que es blanca.
+- **Auditoría:** se midió cada frontera en 36 rutas. Ya no queda ningún par con el mismo fondo, salvo las franjas de fotos pegadas a su texto, que son intencionadas.
+- **Fuera del cambio:** las páginas de diseño original (portada, Branding, Design Web, Sobre) no se tocan.
+
+**Franjas de los paneles:** en Campanhas y Fotografia el fondo de la sección es gris (#e8eced) y la primera franja (o la cuarta) tenía ese mismo color, así que se fundía. Ahora las franjas usan grises distintos del fondo de su sección: #f6f7f8, #dde3e7 y #cbd4db sobre gris; sobre blanco no cambian.
+
+**Serviços:** vuelve la fusión gris de la cabecera; la fila «Branding» pasa a gris para continuarla.
+
+**Cursor grande** («Ver projeto», «Arraste», «Falar»…): el texto pasa de 16 a 12,5 px. «Ver projeto» medía 96 px, lo mismo que el círculo; ahora mide 75 px. La regla está en `capa-fix/hm-boceto-fix.css` y vale para toda la web.
+
+**Antetítulo del hero:** ocupa una sola línea siempre que cabe. En Administração Pública es así desde 1024 px; en tablet y móvil se parte en líneas. Los titulares de 4 líneas se quedan como están (validado por Laura).
+
+**Verificación:**
+- Regresión local: 36 rutas × 2 (ordenador y móvil), ancho correcto y 0 errores.
+- En vivo: 25 plantillas reconstruidas y CSS con md5 comprobado; marcadores nuevos presentes en las páginas servidas.
 
