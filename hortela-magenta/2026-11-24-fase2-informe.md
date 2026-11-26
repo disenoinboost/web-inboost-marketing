@@ -444,3 +444,28 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 - Regresión local: 36 rutas × 2 sin errores ni desbordes.
 - En vivo: JS (md5 566713b8…) y 23 plantillas desplegados; atributos y colores nuevos comprobados en las páginas servidas.
 
+## 15. Ronda 2026-11-26 (noche): páginas más visuales y arreglos
+
+**Componentes nuevos, tomados de Design Web:**
+- **Filas que se abren** (bloque `ambito`, como «Âmbito e orçamento»):
+  - Número y palabra grande; al pasar el cursor (o tocar en móvil) la palabra se ilumina y aparece el texto con el trazo magenta.
+  - Está en Coaching («Como funciona»), Gráfico + Editorial («Design editorial»), Fotografia («Como trabalhamos») y en los procesos de Rótulos, Indústria, Clínicas («Método»), Administração Pública y Eventos («O ciclo contínuo»).
+- **Galería tipo «Conteúdos»** (bloque `galeria`): tres filas que avanzan solas, se arrastran y se amplían al pulsar, todas con piezas reales de los proyectos.
+  - Campanhas: publicaciones, anuncios y outdoors.
+  - Fotografia: fábricas, productos, personas y espacios, con algunos vídeos.
+  - Avença: estacionario, redes sociales, sitios, fotografía y embalaje.
+- **Coaching sin galería:** solo hay 5 fotos del ateliê, antiguas (2016) y de poca calidad; montada, la galería quedaba pobre. Se queda la franja de 3 fotos. Si hay fotos de sesiones o del ateliê actual, se monta igual.
+
+**Arreglos:**
+- **HGO · roll-up:** la imagen original traía una franja blanca de 171 px arriba. Se ha recortado y centrado en el servidor (`hm-media/split/hgo-rollup.webp`, 924×935).
+- **Fichas de proyecto y Camolas · galería fija** («Aplicações»/«Rótulos»): la pantalla fija ocupaba 100vh con el contenido centrado y dejaba ~235 px de vacío arriba. Ahora arranca a 126 px, como el resto de secciones, y se fija centrada mientras avanza.
+- **Sobre · opinión de Mafraria:** la foto apuntaba a `assets/clientes/mafraria.jpg`, que no venía en el paquete del diseño. Ahora usa una pieza de la propia marca de la mediateca («Um café singular»).
+- **Imágenes rotas:** escaneadas las 1.014 referencias de imagen de las 36 páginas; no queda ninguna rota.
+- **Imágenes en negro y de golpe:** las fotos de las opiniones se cargaban en diferido sobre fondo oscuro; ahora se precargan al acercarse la sección. Además, toda imagen visible entra con un fundido de 0,6 s.
+- **Contacto · dirección:** de 4 líneas a 2, con la letra algo menor y sin cortes dentro de cada línea.
+
+**Verificación:**
+- Regresión: 36 rutas × 2 sin errores ni desbordes.
+- Espaciado: sin secciones seguidas con el mismo fondo, salvo las franjas pegadas a su texto.
+- En vivo: 13 plantillas, CSS y JS desplegados con md5 comprobado.
+
