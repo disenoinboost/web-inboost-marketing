@@ -4,6 +4,7 @@ Uso: python3 -I gerar.py <dir-modelos-originais> <media-info.json> <oldproj.json
 Escreve <dir-saida>/<pagina>.html (template, com os uuid dos recursos do pacote) e <dir-saida>/rotas.json.
 """
 import json
+import re
 import os
 import sys
 
@@ -86,7 +87,7 @@ def build_projeto(slug, p, base):
     others = [ORDER[(i + k) % len(ORDER)] for k in range(1, 6)]
     parts.append(B.proj_mais(M, [(NAMES[o], '/projetos/' + o, CARD[o]) for o in others]))
     parts.append(B.contacto('Falemos da comunicação de que a sua marca precisa.', p['contact'], 'Falar sobre a minha marca'))
-    t = set_main(t, '\n\n'.join(parts))
+    t = set_main(t, alternar_tons('\n\n'.join(parts)))
     t = set_pidx(t, pidx)
     t = normalizar(t)
     return t
@@ -144,6 +145,87 @@ def blocks_html(blocks, slug):
     return out
 
 
+
+# Fundos (2026-11-26): duas secções seguidas nunca com o mesmo fundo (o espaço de cada uma somava-se num vazio enorme
+# e as faixas fundiam-se). A faixa de fotos «junta» (data-hm-joined) acompanha a secção anterior; os painéis abertos
+# (data-step-v) usam cinzentos diferentes do fundo da sua secção.
+_GREYS = {'#e8eced', '#dde3e7', '#f6f7f8'}
+_TONE = {'soft': '#f6f7f8', 'blue': '#e8eced', 'mist': '#dde3e7'}
+_STRIPS = {'#ffffff': ['#e8eced', '#dde3e7', '#f6f7f8'], '#e8eced': ['#f6f7f8', '#dde3e7', '#cbd4db'],
+           '#f6f7f8': ['#e8eced', '#dde3e7', '#cbd4db'], '#dde3e7': ['#f6f7f8', '#e8eced', '#cbd4db']}
+
+
+def _sec_color(tag):
+    m = re.search(r'background:\s*([^;"]+)', tag)
+    if not m:
+        return None, None
+    v = m.group(1).strip()
+    if v.startswith('var(--sf)'):
+        tm = re.search(r'data-tone="(\w+)"', tag)
+        return (_TONE.get(tm.group(1), 'dark') if tm else '#ffffff'), v
+    if v.startswith('var(--bg)'):
+        return '#ffffff', v
+    if v.lower() in ('#1c1b23', '#141319'):
+        return 'dark', v
+    return v.lower(), v
+
+
+def alternar_fundos(html):
+    ms = list(re.finditer(r'<section\b[^>]*>', html))
+    out, pos, prev = [], 0, None
+    for k, m in enumerate(ms):
+        end = ms[k + 1].start() if k + 1 < len(ms) else len(html)
+        tag, body = m.group(0), html[m.end():end]
+        out.append(html[pos:m.start()])
+        pos = end
+        if 'data-screen-label="01 ' in tag:
+            prev = None
+            out.append(tag + body)
+            continue
+        c, raw = _sec_color(tag)
+        new = c
+        if 'data-hm-joined' in tag and prev and prev != 'dark':
+            new = prev
+        elif c and c != 'dark' and c == prev:
+            new = '#ffffff' if c in _GREYS else '#f6f7f8'
+        if new != c and raw:
+            tag = tag.replace('background:' + raw, 'background:' + new, 1)
+        if new in _STRIPS and 'data-step-v=""' in body:
+            pal = _STRIPS[new]
+            body = re.sub(r'(<div data-t="(\d+)" data-x="\d+" role="button"[^>]*?background:)(#[0-9a-fA-F]{6})',
+                          lambda mm: mm.group(1) + pal[int(mm.group(2)) % 3], body)
+        prev = new or prev
+        out.append(tag + body)
+    out.append(html[pos:])
+    return ''.join(out)
+
+
+def alternar_tons(html):
+    """Fichas de projeto: o mesmo critério, trocando o tom (data-tone) de uma secção igual à anterior."""
+    ms = list(re.finditer(r'<section\b[^>]*>', html))
+    out, pos, prev = [], 0, None
+    for m in ms:
+        tag = m.group(0)
+        out.append(html[pos:m.start()])
+        pos = m.end()
+        tm = re.search(r'data-tone="(\w+)"', tag)
+        c, _ = _sec_color(tag)
+        if '{{' in tag:
+            c = None
+        if tm and tm.group(1) in _TONE and c == prev:
+            nt = 'blue' if tm.group(1) == 'soft' else 'soft'
+            tag = tag.replace('data-tone="%s"' % tm.group(1), 'data-tone="%s"' % nt, 1)
+            c = _TONE[nt]
+        elif not tm and c == prev == '#ffffff' and 'background:var(--bg)' in tag:
+            # ex.: «Fotografia» e «Projetos», ambas brancas: «Projetos» passa ao cinzento claro
+            tag = tag.replace('background:var(--bg)', 'background:var(--sf)', 1).replace('<section ', '<section data-tone="soft" ', 1)
+            c = _TONE['soft']
+        prev = c
+        out.append(tag)
+    out.append(html[pos:])
+    return ''.join(out)
+
+
 def build_servico(slug, d, base, crumbs_parent=('Serviços', '/servicos'), schema_type='Service'):
     t = base
     crumbs = [('Início', '/')] + ([crumbs_parent] if crumbs_parent else []) + [(d['name'] if 'crumb' not in d else d['crumb'], d['path'])]
@@ -185,7 +267,7 @@ def build_servico(slug, d, base, crumbs_parent=('Serviços', '/servicos'), schem
         parts.append(BS.faq(d['faq'], 'faq-' + slug.replace('servico-', '').replace('lp-', '')))
     c = d['contact']
     parts.append(BS.contacto_s(c[0], c[1], c[2], cta_href))
-    t = set_main(t, '\n\n'.join(parts))
+    t = set_main(t, alternar_fundos('\n\n'.join(parts)))
     t = tone_vars(t)
     t = set_page_current(t, d.get('current', d['name']))
     t = normalizar(t)

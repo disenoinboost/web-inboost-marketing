@@ -513,3 +513,7 @@ html body section:has(+ #responsivo) [data-veil] { background: linear-gradient(t
 @media (max-width: 767px) {
   html body #trabalhos-galeria [data-lpt], html body [data-hm-scroll] [data-lpt] { font-size: min(26px, calc((86vw - 40px) / 10.4)) !important; white-space: nowrap !important; }
 }
+
+/* Cursor grande («Ver projeto», «Arraste»…): o texto cabia à justa no círculo de 96 px e tocava a borda (2026-11-26) */
+html body div[style*="position: fixed"][style*="width: 96px"][style*="border-radius: 50%"] > * { font-size: 12.5px !important; letter-spacing: 0 !important; }
+

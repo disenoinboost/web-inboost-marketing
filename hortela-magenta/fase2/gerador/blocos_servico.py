@@ -45,7 +45,8 @@ def hero(h):
     full = ' '.join(l for l in disp if l) + ((' ' + h['rot'][0]) if h.get('rot') else '')
     disp_style = 'margin:0 0 0 -0.04em; font-weight:100; letter-spacing:-0.055em; line-height:1; font-size:clamp(45px, min(6.88vw, var(--hdr-fit), calc(33.3vh - 120px)), 99px);'
     disp_style += f' width:max-content; max-width:calc(100vw - 2 * {PAD});'
-    eyebrow_style = f'margin:0 0 clamp(20px,3.5vh,40px); font-size:18px; font-weight:300; letter-spacing:.1em; text-transform:uppercase; color:{MU}; '
+    # antetítulo numa só linha sempre que caiba no ecrã (2026-11-26: «Design de Comunicação para Administração Pública em Portugal»)
+    eyebrow_style = f'margin:0 0 clamp(20px,3.5vh,40px); font-size:18px; font-weight:300; letter-spacing:.1em; text-transform:uppercase; color:{MU}; width:max-content; max-width:calc(100vw - 2 * {PAD}); '
     if h.get('display_is_h1'):
         top = f'<p style="{eyebrow_style}">{DASH_A} {esc(h["eyebrow"])}</p><h1 style="{disp_style}"><span style="{SR}">{esc(full)}</span>{lines}</h1>'
     else:
@@ -305,8 +306,9 @@ def imagens(M, b, sec_id, label, bg='#ffffff'):
     if b.get('title'):
         head = (f'<p style="margin:0 0 24px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{MU};">{DASH_A} {esc(b.get("eyebrow", ""))}</p>'
                 f'<h2 style="margin:0 0 var(--sp-title); max-width:18ch; font-weight:100; font-size:clamp(40px,4.48vw,80px); letter-spacing:-0.05em; line-height:1.05;">{esc(b["title"])}</h2>')
-    pad = 'var(--sp-block)' if b.get('title') else 'clamp(40px,6vw,96px)'
+    pad = 'var(--sp-block)'
     top = '0px' if b.get('joined') else pad
-    return f'''<section data-cursor-bg="light" id="{sec_id}" data-screen-label="{label}" style="background:{bg}; padding:{top} {PAD} {pad} {PAD};">
+    jn = ' data-hm-joined=""' if b.get('joined') else ''
+    return f'''<section data-cursor-bg="light" id="{sec_id}"{jn} data-screen-label="{label}" style="background:{bg}; padding:{top} {PAD} {pad} {PAD};">
   {head}<div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:28px clamp(12px,1.6vw,24px);">{figs}</div>
 </section>'''
