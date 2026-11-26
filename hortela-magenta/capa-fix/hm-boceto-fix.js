@@ -557,14 +557,17 @@
   if (D.readyState !== 'loading') init(); else D.addEventListener('DOMContentLoaded', init);
 })();
 
-/* ===== Galeria «Trabalhos» das páginas geradas (data-lpf) · 2026-11-26 =====
+/* ===== Galerias que se deslocam ao descer (data-lpf) · 2026-11-26 =====
    O mesmo efeito que o data-lp do desenho (cartões que se revelam, título que ganha foco, véu sobre a fotografia),
    mas com movimento contínuo: o data-lp para em cada cartão, o que ao fazer scroll dava a sensação de andar aos solavancos.
-   No telemóvel a galeria é um scroll horizontal nativo (regras de #trabalhos-galeria no CSS), que se sobrepõem a isto. */
+   data-lpf=""  : «Trabalhos» (serviços, Branding, Design Web), como o data-lp de fx-servico.
+   data-lpf="p" : «Aplicações» das fichas e «Rótulos» de Camolas, como o data-lp de fx-projeto (os últimos painéis completam-se no fim).
+   No telemóvel, #trabalhos-galeria e #rotulos são scroll horizontal nativo (regras no CSS), que se sobrepõem a isto. */
 (function () {
   var W = window, D = document;
   var RED = !!(W.matchMedia && W.matchMedia('(prefers-reduced-motion: reduce)').matches);
   function clamp(v) { return v < 0 ? 0 : (v > 1 ? 1 : v); }
+  function sm(x) { x = clamp(x); return x * x * (3 - 2 * x); }
   function panel(pn, e, fit) {
     var iw = pn.__i || (pn.__i = pn.querySelector('[data-lpi]'));
     if (iw) { var cp = 'inset(0 0 ' + (27.8 * (1 - e)).toFixed(2) + '% 0)'; iw.style.clipPath = cp; iw.style.webkitClipPath = cp; var im = iw.firstElementChild; if (im) im.style.transform = 'scale(' + (1.08 - .08 * e).toFixed(4) + ')'; }
@@ -578,7 +581,7 @@
     var st = el.querySelector('[data-lp-st]'), tr = el.querySelector('[data-lp-track]'); if (!st || !tr) return;
     var ps = [].slice.call(tr.querySelectorAll('[data-lpp]')), ov = el.querySelector('[data-lp-ov]'), ct = el.querySelector('[data-lp-ct]');
     if (RED) { el.style.height = 'auto'; st.style.position = 'relative'; st.style.overflowX = 'auto'; st.style.overflowY = 'hidden'; tr.style.transform = 'none'; ps.forEach(function (pn) { panel(pn, 1, true); }); if (ov) ov.style.opacity = '.3'; return; }
-    var dist = 0, cur = -1, stH = 0, stW = 0, run = false;
+    var proj = el.getAttribute('data-lpf') === 'p', dist = 0, cur = -1, stH = 0, stW = 0, run = false;
     function lay() { stH = st.offsetHeight; stW = st.clientWidth; ps.forEach(function (pn) { pn.__ol = pn.offsetLeft; pn.__ow = pn.offsetWidth; }); dist = Math.max(0, tr.scrollWidth - stW); el.style.height = (stH + dist * 1.6) + 'px'; }
     function frame() {
       var r = el.getBoundingClientRect(), p = clamp(-r.top / Math.max(1, r.height - stH));
@@ -586,9 +589,10 @@
       if (Math.abs(p - cur) < .0003) cur = p;
       var tx = -cur * dist, Wd = stW;
       tr.style.transform = 'translate3d(' + tx.toFixed(1) + 'px,0,0)';
-      ps.forEach(function (pn, i) { var e = clamp((.86 * Wd - (pn.__ol + tx)) / (.56 * Wd)); if (i === ps.length - 1) e = Math.max(e, clamp((cur - .8) / .17)); panel(pn, e, pn.__ol + tx + pn.__ow <= Wd + 2); });
+      if (proj) ps.forEach(function (pn) { var raw = (.86 * Wd - (pn.__ol + tx)) / (.56 * Wd), end = (.86 * Wd - (pn.__ol - dist)) / (.56 * Wd); panel(pn, clamp(raw + (end < 1 ? (1 - end) * sm((cur - .55) / .45) : 0))); });
+      else ps.forEach(function (pn, i) { var e = clamp((.86 * Wd - (pn.__ol + tx)) / (.56 * Wd)); if (i === ps.length - 1) e = Math.max(e, clamp((cur - .8) / .17)); panel(pn, e, pn.__ol + tx + pn.__ow <= Wd + 2); });
       if (ps[0]) { var dd = clamp((.86 * Wd - (ps[0].__ol + tx)) / (.7 * Wd)); if (ov) ov.style.opacity = (.3 + .55 * dd).toFixed(3); if (ct) ct.style.opacity = (1 - .65 * dd).toFixed(3); }
-      if (cur !== p || (r.bottom > -100 && r.top < W.innerHeight + 100)) requestAnimationFrame(frame); else run = false;
+      if (cur !== p) requestAnimationFrame(frame); else run = false; /* parada: só volta a correr com scroll/resize */
     }
     function kick() { if (!run) { run = true; requestAnimationFrame(frame); } }
     lay();

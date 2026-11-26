@@ -17,6 +17,9 @@ CTA_STYLE = 'style="font-size:18px; color:#1C1B23; text-decoration:none; border-
 
 def servicos(t):
     # a cabeçalho funde-se (véu cinzento) com a primeira secção, como em Branding: «Branding» passa a esse cinzento
+    # índice dos serviços: um pouco mais de espaço por cima (ao descer parecia colado à cabeçalha)
+    t = t.replace('data-screen-label="02 Acesso rápido" style="background:#e8eced; padding:clamp(28px,4vh,44px) clamp(16px,4vw,64px);"',
+                  'data-screen-label="02 Acesso rápido" style="background:#e8eced; padding:clamp(48px,8vh,76px) clamp(16px,4vw,64px) clamp(28px,4vh,44px);"', 1)
     t = t.replace('id="branding" data-screen-label="03 Branding" style="background:#ffffff;', 'id="branding" data-screen-label="03 Branding" style="background:#e8eced;', 1)
     # 1) secções 03–05 e Avenças: «Explorar …» para as páginas novas (como Branding e Design Web)
     for page, label in [('/servicos/design-grafico-e-editorial', 'Explorar Gráfico + Editorial'),

@@ -89,6 +89,7 @@ def build_projeto(slug, p, base):
     parts.append(B.contacto('Falemos da comunicação de que a sua marca precisa.', p['contact'], 'Falar sobre a minha marca'))
     t = set_main(t, alternar_tons('\n\n'.join(parts)))
     t = set_pidx(t, pidx)
+    t = t.replace(' data-lp=""', ' data-lpf="p"')  # «Aplicações»: movimento contínuo (capa-fix), sem paragens
     t = normalizar(t)
     return t
 
@@ -151,8 +152,33 @@ def blocks_html(blocks, slug):
 # (data-step-v) usam cinzentos diferentes do fundo da sua secção.
 _GREYS = {'#e8eced', '#dde3e7', '#f6f7f8'}
 _TONE = {'soft': '#f6f7f8', 'blue': '#e8eced', 'mist': '#dde3e7'}
-_STRIPS = {'#ffffff': ['#e8eced', '#dde3e7', '#f6f7f8'], '#e8eced': ['#f6f7f8', '#dde3e7', '#cbd4db'],
-           '#f6f7f8': ['#e8eced', '#dde3e7', '#cbd4db'], '#dde3e7': ['#f6f7f8', '#e8eced', '#cbd4db']}
+# franjas: cada uma com um tom diferente (nunca o do fundo da secção) e na ordem de Branding: claro, médio, escuro, …
+_STRIPS = {'#ffffff': ['#e8eced', '#dde3e7', '#a6b4c1', '#cbd4db', '#b9c5cf'],
+           '#e8eced': ['#f6f7f8', '#dde3e7', '#a6b4c1', '#cbd4db', '#b9c5cf'],
+           '#f6f7f8': ['#e8eced', '#dde3e7', '#a6b4c1', '#cbd4db', '#b9c5cf'],
+           '#dde3e7': ['#f6f7f8', '#e8eced', '#a6b4c1', '#cbd4db', '#b9c5cf']}
+_STRIP_RE = re.compile(r'(<div data-t="(\d+)" data-x="\d+" role="button"[^>]*?background:)(#[0-9a-fA-F]{6})')
+
+
+def pintar_franjas(body, bg):
+    pal = _STRIPS.get(bg)
+    return _STRIP_RE.sub(lambda mm: mm.group(1) + pal[int(mm.group(2)) % len(pal)], body) if pal else body
+
+
+def franjas_existentes(html):
+    """Páginas do desenho original (Branding): o mesmo critério nas franjas dos painéis."""
+    ms = list(re.finditer(r'<section\b[^>]*>', html))
+    out, pos = [], 0
+    for k, m in enumerate(ms):
+        end = ms[k + 1].start() if k + 1 < len(ms) else len(html)
+        body = html[m.end():end]
+        if 'data-step-v=""' in body:
+            c, _ = _sec_color(m.group(0))
+            body = pintar_franjas(body, c)
+        out.append(html[pos:m.end()] + body)
+        pos = end
+    out.append(html[pos:])
+    return ''.join(out)
 
 
 def _sec_color(tag):
@@ -191,9 +217,7 @@ def alternar_fundos(html):
         if new != c and raw:
             tag = tag.replace('background:' + raw, 'background:' + new, 1)
         if new in _STRIPS and 'data-step-v=""' in body:
-            pal = _STRIPS[new]
-            body = re.sub(r'(<div data-t="(\d+)" data-x="\d+" role="button"[^>]*?background:)(#[0-9a-fA-F]{6})',
-                          lambda mm: mm.group(1) + pal[int(mm.group(2)) % 3], body)
+            body = pintar_franjas(body, new)
         prev = new or prev
         out.append(tag + body)
     out.append(html[pos:])
@@ -331,6 +355,10 @@ def main():
         t = normalizar(t)
         if hasattr(extras, n.replace('-', '_')):
             t = getattr(extras, n.replace('-', '_'))(t)
+        # galerias que se deslocam ao descer: movimento contínuo (data-lpf, em capa-fix) em vez das paragens do data-lp
+        t = t.replace(' data-lp=""', ' data-lpf="p"' if n == 'camolas' else ' data-lpf=""')
+        if n == 'branding':
+            t = franjas_existentes(t)
         write(n, t)
     json.dump(ROUTES, open(os.path.join(OUT, 'rotas.json'), 'w'), indent=1, ensure_ascii=False)
     print('ok', len(ROUTES), 'páginas novas;', len(EXISTING), 'existentes normalizadas')
