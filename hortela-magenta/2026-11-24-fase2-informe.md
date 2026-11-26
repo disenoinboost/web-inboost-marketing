@@ -400,7 +400,7 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 - **Dónde:** Gráfico + Editorial, Campanhas y Fotografia & Vídeo.
 - **Problema:** el componente `data-lp` del diseño para en cada tarjeta. Al medirlo, 14 de cada 40 pasos de scroll no movían la galería, de ahí la sensación de ir a golpes.
 - **Solución:** estas tres usan ahora `data-lpf`, implementado en `capa-fix/hm-boceto-fix.js`, con los mismos efectos pero avance continuo: unos 89 px por paso, ninguno parado.
-- **Branding y Design Web** (diseño original) y el carrusel «Aplicações» de las fichas mantienen las paradas. Si se quieren continuos, es el mismo cambio.
+- **Ampliado el 2026-11-26** a Branding, Design Web, «Rótulos» de Camolas y «Aplicações» de las 12 fichas. Ya no queda ninguna galería con paradas (ver sección 14).
 
 ## 13. Ronda 2026-11-26: fondos, franjas, espaciado y cursor
 
@@ -412,7 +412,7 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 - **Auditoría:** se midió cada frontera en 36 rutas. Ya no queda ningún par con el mismo fondo, salvo las franjas de fotos pegadas a su texto, que son intencionadas.
 - **Fuera del cambio:** las páginas de diseño original (portada, Branding, Design Web, Sobre) no se tocan.
 
-**Franjas de los paneles:** en Campanhas y Fotografia el fondo de la sección es gris (#e8eced) y la primera franja (o la cuarta) tenía ese mismo color, así que se fundía. Ahora las franjas usan grises distintos del fondo de su sección: #f6f7f8, #dde3e7 y #cbd4db sobre gris; sobre blanco no cambian.
+**Franjas de los paneles:** en Campanhas y Fotografia el fondo de la sección es gris (#e8eced) y la primera franja (o la cuarta) tenía ese mismo color, así que se fundía. Ahora las franjas usan grises distintos del fondo de su sección (revisado después en la sección 14).
 
 **Serviços:** vuelve la fusión gris de la cabecera; la fila «Branding» pasa a gris para continuarla.
 
@@ -423,4 +423,24 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 **Verificación:**
 - Regresión local: 36 rutas × 2 (ordenador y móvil), ancho correcto y 0 errores.
 - En vivo: 25 plantillas reconstruidas y CSS con md5 comprobado; marcadores nuevos presentes en las páginas servidas.
+
+## 14. Ronda 2026-11-26 (tarde): galerías continuas, tonos de las franjas e índice de Serviços
+
+**Galerías que se mueven al hacer scroll, ahora todas continuas:**
+- **Dónde:** «Trabalhos» de Branding y Design Web, «Rótulos» de Camolas y el carrusel de materiales («Aplicações», «Materiais promocionais»…) de las 12 fichas. Se suman a las tres de servicios que ya lo eran.
+- **Cómo:** `data-lp` → `data-lpf`. Los efectos son los del diseño, pero sin paradas: 0 de 40 pasos de scroll parados en las cuatro galerías medidas.
+- **Fichas y Camolas** usan `data-lpf="p"`, que reproduce cómo revela los paneles el diseño de las fichas: los últimos se completan al final del recorrido.
+- **Rendimiento:** la animación se detiene cuando la galería está quieta y vuelve con el scroll.
+- **Móvil:** no cambia. Las galerías de deslizar (Trabalhos, Rótulos) siguen siendo nativas; la copia de Branding que avanza al bajar y las «Aplicações» pasan también a movimiento continuo.
+
+**Franjas de los paneles:** antes la 1.ª y la 4.ª tenían el mismo tono, también en Branding. Ahora cada franja tiene un tono propio, nunca el del fondo, en el orden de Branding (claro, medio, oscuro…):
+- Sobre gris: #f6f7f8, #dde3e7, #a6b4c1, #cbd4db, #b9c5cf.
+- Sobre blanco: #e8eced, #dde3e7, #a6b4c1, #cbd4db, #b9c5cf.
+- Afecta a Branding, Gráfico + Editorial, Campanhas, Fotografia, Avença, Rótulos, Indústria y Eventos.
+
+**Serviços · índice de servicios:** margen interior superior de 44 a 72 px. Por debajo no cambia.
+
+**Verificación:**
+- Regresión local: 36 rutas × 2 sin errores ni desbordes.
+- En vivo: JS (md5 566713b8…) y 23 plantillas desplegados; atributos y colores nuevos comprobados en las páginas servidas.
 
