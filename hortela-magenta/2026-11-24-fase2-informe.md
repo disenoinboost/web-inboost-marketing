@@ -396,3 +396,9 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 
 **Transición de la cabecera (blanco → gris):** al hacer scroll, el velo de la cabecera (`data-veil`) la pinta con el color de la sección siguiente, como en Branding. En servicios y landings el velo era gris (#e8eced) y la sección siguiente blanca, así que la cabecera pasaba a gris y luego saltaba a blanco. Ahora la primera sección de cada página toma el gris del velo (o el velo toma el color de la sección, si esta ya trae uno propio). En Serviços (diseño original) y Obrigado la sección siguiente es blanca y el velo pasa a blanco. Comprobado en las 32 páginas con cabecera de ese tipo.
 
+**Galería «Trabalhos» (2026-11-26):**
+- **Dónde:** Gráfico + Editorial, Campanhas y Fotografia & Vídeo.
+- **Problema:** el componente `data-lp` del diseño para en cada tarjeta. Al medirlo, 14 de cada 40 pasos de scroll no movían la galería, de ahí la sensación de ir a golpes.
+- **Solución:** estas tres usan ahora `data-lpf`, implementado en `capa-fix/hm-boceto-fix.js`, con los mismos efectos pero avance continuo: unos 89 px por paso, ninguno parado.
+- **Branding y Design Web** (diseño original) y el carrusel «Aplicações» de las fichas mantienen las paradas. Si se quieren continuos, es el mismo cambio.
+
