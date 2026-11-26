@@ -517,3 +517,24 @@ html body section:has(+ #responsivo) [data-veil] { background: linear-gradient(t
 /* Cursor grande («Ver projeto», «Arraste»…): o texto cabia à justa no círculo de 96 px e tocava a borda (2026-11-26) */
 html body div[style*="position: fixed"][style*="width: 96px"][style*="border-radius: 50%"] > * { font-size: 12.5px !important; letter-spacing: 0 !important; }
 
+/* Fichas e Camolas · galeria «Aplicações»/«Rótulos» (data-lpf="p"): o palco deixa de ocupar 100vh com o conteúdo centrado
+   (ficava ~235 px de vazio por cima); passa a ter var(--sp-block) em cima e em baixo, como as outras secções, e o JS fixa-o
+   centrado no ecrã (--hm-lpst) enquanto a galeria anda (2026-11-26) */
+html body [data-lpf="p"] > [data-lp-st] { height: auto !important; min-height: 0 !important; padding-top: var(--sp-block) !important; padding-bottom: var(--sp-block) !important; top: var(--hm-lpst, 0px) !important; }
+html body [data-lpf="p"] > [data-lp-st] > [data-lp-track] { padding-top: 0 !important; }
+
+/* Imagens: fundido ao carregar (o JS marca data-hm-in só nas imagens visíveis) */
+@keyframes hmImgIn { from { opacity: 0; } to { opacity: 1; } }
+html.hm-fade img[data-hm-in] { animation: hmImgIn .6s ease backwards; }
+
+/* Linhas que se abrem: o aviso muda com o tipo de ecrã (rato: «Passe o cursor…»; táctil: «Toque…») */
+[data-hm-hint-touch] { display: none; }
+@media (hover: none), (pointer: coarse) { [data-hm-hint-fine] { display: none; } [data-hm-hint-touch] { display: inline; } }
+
+
+/* Linhas que se abrem, no telemóvel: o desenho iguala todo o texto dos h3 (main h3 button > span herda ~25 px);
+   aqui o número fica pequeno e a palavra grande, como no ecrã largo */
+@media (max-width: 767px) {
+  html body main [data-hm-amb] h3 button > span:first-child { font-size: 15px !important; }
+  html body main [data-hm-amb] h3 button > span[data-acc-ico] { font-size: clamp(30px, 9vw, 38px) !important; font-weight: 100 !important; line-height: 1.14 !important; }
+}

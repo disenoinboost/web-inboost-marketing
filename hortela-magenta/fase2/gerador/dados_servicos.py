@@ -12,6 +12,13 @@ NOST = lambda M, k: next(u for u in M.info if u.startswith('/wp-content/uploads/
 def servicos(M):
     I = lambda s, k: M.find(s, k)
     V = lambda s, k: M.find(s, k, 'video')
+
+    def G(s, k, alt):
+        """Peça de projeto para as galerias: imagem ou, se a chave for de um vídeo, vídeo com o seu cartaz."""
+        if k.startswith('v:'):
+            src, poster = V(s, k[2:])
+            return dict(video=src, poster=poster, alt=alt)
+        return dict(img=I(s, k), alt=alt)
     S = {}
 
     # ===================================================================== Gráfico + Editorial
@@ -37,7 +44,7 @@ def servicos(M):
                 dict(short='Catálogos', title='Catálogos e Publicações', text='Apresentamos a sua marca e produtos. Um catálogo é uma ferramenta de trabalho da empresa, que estudamos para que possa evoluir e atualizar-se ao longo do tempo, para informar clientes, estimulando e acompanhando as suas vendas.', img=I('documentos-normativos-imt', 'imt_fasciaculo_livro_01'), cap='Imagem · Documentos Normativos IMT', pos='50% 50%'),
                 dict(short='Ambientes', title='Decoração de Ambientes', text='Criamos ambientes para a sua loja ou stand. O ambiente do seu espaço comercial é fundamental para projetar a sua empresa e cativar mais clientes. Deve ser pensado e desenhado para ser funcional em termos de utilização e eficaz a cumprir cada um dos seus objetivos de comunicação.', img=I('alsil', 'alsilgroup_portfolio_marca_stand'), cap='Imagem · Alsil Group', pos='50% 50%'),
             ])),
-            ('lista', dict(eyebrow='Design editorial', title='Dar estrutura à informação.', text='Organizamos textos, imagens e outros conteúdos ao longo de uma publicação, para facilitar a leitura e manter uma relação clara entre as suas partes.', items=[
+            ('ambito', dict(eyebrow='Design editorial', title='Dar estrutura à informação.', hint='tema', text='Organizamos textos, imagens e outros conteúdos ao longo de uma publicação, para facilitar a leitura e manter uma relação clara entre as suas partes.', items=[
                 ('Títulos, secções e percursos', 'Uma publicação precisa de títulos, secções e percursos que permitam encontrar a informação. A extensão, o tipo de leitura e o conteúdo condicionam o design. Revemos como se relacionam texto, imagens, tabelas e ilustrações antes de definir a composição das páginas.'),
                 ('Catálogos e publicações', 'Um catálogo organiza referências e ajuda a compará-las. Outras publicações precisam de desenvolver um tema, apresentar uma instituição ou reunir informação técnica. O trabalho editorial adapta a estrutura e a apresentação ao uso de cada documento.'),
                 ('Folhetos e brochuras', 'Um folheto concentra a informação num formato mais curto. Convém decidir o que o leitor deve perceber e que ordem facilita essa leitura. Trabalhamos a hierarquia de textos e imagens tendo em conta o formato e a forma como a peça vai ser distribuída.'),
@@ -85,6 +92,16 @@ def servicos(M):
                 dict(short='Comunicação global', title='Integradas na estratégia da marca', text='Na avença mensal, a gestão de redes sociais integra-se na estratégia global da marca, com conteúdos, textos, fotografia e vídeo planeados em conjunto, reuniões regulares e ajustes contínuos.', img=I('consulai', 'consulai_redes_sociais_02'), cap='Imagem · Consulai', pos='50% 50%'),
             ])),
             ('frase', dict(eyebrow='Comunicação continuada', title='Uma presença consistente nas redes, que aumenta a notoriedade e a confiança na sua marca.', text='As campanhas e as redes sociais funcionam melhor quando fazem parte de uma comunicação planeada: o mesmo tom de voz, a mesma imagem e os mesmos objetivos em todos os canais.', cta=('/servicos/avenca-comunicacao-360', 'Conhecer a avença mensal 360° →'))),
+            ('galeria', dict(id='pecas', eyebrow='Redes sociais e campanhas', title='Publicações, anúncios e outdoors.', bg='#f6f7f8',
+                             text='Peças de projetos da Hortelã Magenta para redes sociais, campanhas e publicidade exterior, sempre a partir da identidade de cada marca.',
+                             links=[('/projetos', 'Ver todos os projetos →')], rows=[
+                [G('consulai', 'consulai_redes_sociais_02', 'Consulai — redes sociais'), G('croma', 'v:croma_rs_02', 'CROMA — redes sociais'), G('farinhas-firmos', 'farinhafirmos_redessociais_02', 'Farinhas Firmos — redes sociais'),
+                 G('alinea', 'v:alinea_redes_sociais', 'Alinea — redes sociais'), G('croma', 'croma_rs_01', 'CROMA — redes sociais'), G('consulai', 'v:consulai_rs_01', 'Consulai — redes sociais'),
+                 G('queijaria-da-sao', 'v:queijariadasao_post', 'Queijaria da São — publicação'), G('farinhas-firmos', 'v:farinhafirmos_redessociais_01', 'Farinhas Firmos — redes sociais')],
+                [G('croma', 'croma_banner_01', 'CROMA — cartaz'), G('imperalum', 'imperalum_banner_01', 'Imperalum — outdoor'), G('consulai', 'consulai_banner', 'Consulai — anúncio'),
+                 G('alinea', 'alinea_banner', 'Alinea — anúncio'), G('camolas', 'camolas_25anos_banner', 'Adega Camolas — 25 anos'), G('knowledgebiz', 'knowledgebiz_banner', 'Knowledgebiz — anúncio'),
+                 G('croma', 'croma_banner_02', 'CROMA — cartaz'), G('imperalum', 'imperalum_banner_02', 'Imperalum — anúncio'), G('alinea', 'alinea_anuncio', 'Alinea — anúncio')],
+            ])),
         ],
         trabalhos=dict(title='Trabalhos de campanhas e redes sociais.', text='Conteúdos para redes sociais, campanhas e materiais promocionais, sempre ligados à identidade de cada marca.',
                        statement='Cada publicação fala com a mesma voz da marca.', bg=I('consulai', 'consulai_banner_02'), items=[
@@ -119,7 +136,20 @@ def servicos(M):
                 dict(short='Motion', title='Motion Graphics', text='Damos vida e animação ao que só viu em sonhos. Seja para dar a conhecer um espaço que ainda não existe, para contar uma história ou ainda para dar instruções sobre a utilização de produtos e serviços, as técnicas de Motion Graphics permitem partilhar a sua visão de uma forma mais dinâmica.', img=V('croma', 'croma-2023')[1], cap='Imagem · Croma', pos='50% 50%'),
             ])),
             ('filme', dict(src=V('farinhas-firmos', '30_anosfirmos')[0], poster=V('farinhas-firmos', '30_anosfirmos')[1], title='Vídeo corporativo', text='O vídeo dos 30 anos da Farinhas Firmos, parte de um projeto que incluiu marca, website e fotografia.', word='Vídeo', label='Farinhas Firmos', aria='Vídeo corporativo dos 30 anos da Farinhas Firmos')),
-            ('lista', dict(eyebrow='Como trabalhamos', title='Da mensagem à peça final.', text='Antes de fotografar ou filmar, acordamos o que deve mostrar cada imagem e onde vai ser utilizada.', items=[
+            ('galeria', dict(id='galeria', eyebrow='Galeria', title='Fábricas, produtos, pessoas e espaços.', bg='#f6f7f8',
+                             text='Fotografia e vídeo dos projetos da Hortelã Magenta, feitos para os sites, catálogos e redes sociais de cada marca.',
+                             links=[('/projetos', 'Ver todos os projetos →')], rows=[
+                [G('farinhas-firmos', 'farinhafirmos_fabrica', 'Farinhas Firmos — fábrica'), G('camolas', 'camolas_foto_01', 'Adega Camolas — vinha'), G('alsil', 'alsilgroup_fabrica_01', 'Alsilgroup — fábrica'),
+                 G('queijaria-da-sao', 'queijariadasao_foto_02', 'Queijaria da São — produto'), G('hospital-garcia-de-orta', 'hgo_foto_01', 'Hospital Garcia de Orta — equipa'), G('alsil', 'v:alsilgroup_video', 'Alsilgroup — vídeo'),
+                 G('imperalum', 'imperalum_foto_01', 'Imperalum — fotografia'), G('camara-municipal-de-almada-roteiro', 'camera-municipal-de-almada_roteiro_foto_01', 'Almada — roteiro')],
+                [G('farinhas-firmos', 'farinhafirmos_fabrica_11', 'Farinhas Firmos — fábrica'), G('camolas', 'camolas_foto_02', 'Adega Camolas — fotografia'), G('queijaria-da-sao', 'v:queijariadasao_queijos', 'Queijaria da São — queijos'),
+                 G('alsil', 'alsilgroup_fabrica_02', 'Alsilgroup — fábrica'), G('consulai', 'consulai_slogan_foto', 'Consulai — fotografia'), G('queijaria-da-sao', 'queijariadasao_foto_03', 'Queijaria da São — fotografia'),
+                 G('imperalum', 'imperalum_foto_02', 'Imperalum — fotografia'), G('alinea', 'alinea_foto_01', 'Alinea — fotografia')],
+                [G('farinhas-firmos', 'farinhafirmos_fabrica_09', 'Farinhas Firmos — fábrica'), G('alsil', 'alsilgroup_fabrica_07', 'Alsilgroup — fábrica'), G('camolas', 'camolas_foto_04', 'Adega Camolas — fotografia'),
+                 G('queijaria-da-sao', 'queijariadasao_veiculo', 'Queijaria da São — viatura'), G('knowledgebiz', 'knowledgebiz_foto', 'Knowledgebiz — fotografia'), G('alsil', 'alsilgroup_fabrica_04', 'Alsilgroup — fábrica'),
+                 G('queijaria-da-sao', 'queijariadasao_foto_05', 'Queijaria da São — fotografia'), G('alinea', 'alinea_foto_02', 'Alinea — fotografia'), G('croma', 'croma_foto', 'CROMA — fotografia')],
+            ])),
+            ('ambito', dict(eyebrow='Como trabalhamos', title='Da mensagem à peça final.', hint='tema', text='Antes de fotografar ou filmar, acordamos o que deve mostrar cada imagem e onde vai ser utilizada.', items=[
                 ('Imagens para os suportes que utiliza', 'Uma ficha de produto, um catálogo e uma peça de comunicação têm necessidades diferentes. Antes de preparar a sessão, convém identificar os suportes, os enquadramentos e os formatos.'),
                 ('Packshot e fotografia em contexto', 'Uma imagem sobre fundo neutro ajuda a reconhecer o produto e a comparar referências de um catálogo. Uma fotografia em contexto mostra como se utiliza ou como se relaciona com outros elementos. Acordamos o tipo de imagem de acordo com o suporte.'),
                 ('Vídeo institucional', 'As instalações, os processos e as pessoas trazem informação que nem sempre é fácil transmitir numa descrição. Um vídeo institucional reúne esses elementos numa peça que apresenta a atividade da empresa.'),
@@ -181,10 +211,18 @@ def servicos(M):
                 ('Gestão de redes sociais', 'Integrada na estratégia global da marca.'),
                 ('Acompanhamento próximo', 'Reuniões regulares, planeamento e ajustes contínuos.'),
             ], cta=('/contacto', 'Marcar conversa →'))),
-            ('imagens', dict(items=[
-                dict(img=M.find('croma', 'croma_rs_01'), alt='Publicações do CROMA nas redes sociais', cap='CROMA · Redes sociais', href='/projetos/croma'),
-                dict(img=M.find('queijaria-da-sao', 'queijariadasao_rollup'), alt='Roll-ups da Queijaria da São', cap='Queijaria da São · Roll-ups', href='/projetos/queijaria-da-sao'),
-                dict(img=M.find('imperalum', 'imperalum_banner_01'), alt='Outdoor da Imperalum', cap='Imperalum · Outdoor', href='/projetos/imperalum'),
+            ('galeria', dict(id='conteudos', eyebrow='Conteúdos', title='O que uma avença pode incluir, em peças reais.', bg='#e8eced',
+                             text='Estacionário, folhetos, redes sociais, sites, fotografia e vídeo: peças de projetos da Hortelã Magenta, do mesmo tipo que a avença mensal reúne.',
+                             links=[('/projetos', 'Ver todos os projetos →')], rows=[
+                [G('consulai', 'consulai_estacionario', 'Consulai — estacionário'), G('croma', 'croma_programa', 'CROMA — programa'), G('imperalum', 'imperalum_estacionario_01', 'Imperalum — estacionário'),
+                 G('alinea', 'alinea_flyer', 'Alinea — folheto'), G('farinhas-firmos', 'farinhafirmos_flyer', 'Farinhas Firmos — folheto'), G('knowledgebiz', 'knowledgebiz_bloco-de-notas', 'Knowledgebiz — bloco de notas'),
+                 G('camolas', 'camolas_estacionario', 'Adega Camolas — estacionário'), G('queijaria-da-sao', 'queijariadasao_cartao', 'Queijaria da São — cartão')],
+                [G('consulai', 'consulai_redes_sociais_02', 'Consulai — redes sociais'), G('croma', 'v:croma_rs_02', 'CROMA — redes sociais'), G('farinhas-firmos', 'farinhafirmos_redessociais_02', 'Farinhas Firmos — redes sociais'),
+                 G('knowledgebiz', 'knowledgebiz_site_01', 'Knowledgebiz — site'), G('imperalum', 'imperalum_banner_02', 'Imperalum — anúncio'), G('queijaria-da-sao', 'queijariadasao_site_01', 'Queijaria da São — site'),
+                 G('farinhas-firmos', 'farinhafirmos_site_05', 'Farinhas Firmos — site'), G('alinea', 'alinea_banner', 'Alinea — anúncio')],
+                [G('farinhas-firmos', 'farinhafirmos_fabrica', 'Farinhas Firmos — fábrica'), G('camolas', 'camolas_foto_02', 'Adega Camolas — fotografia'), G('queijaria-da-sao', 'queijariadasao_foto_06', 'Queijaria da São — fotografia'),
+                 G('alsil', 'alsilgroup_fabrica_06', 'Alsilgroup — fábrica'), G('imperalum', 'imperalum_lata_01', 'Imperalum — embalagem'), G('consulai', 'consulai_bag', 'Consulai — saco'),
+                 G('croma', 'croma_bag', 'CROMA — saco'), G('alinea', 'alinea_saco', 'Alinea — saco')],
             ])),
             ('panels', dict(eyebrow='Departamento externo', title='Porquê ter um departamento de comunicação externo?', items=[
                 dict(short='Equipa completa', title='Uma equipa completa', text='Estratégia, design, textos e digital, sem ter de construir e gerir uma equipa interna.', img='https://hortelamagenta.pt/media/pages/projetos/camolas/34c1b44fdb-1735900095/hortelamagenta_portfolio_marca_camolas_estacionario-1900x.jpg', cap='Imagem · Adega Camolas', pos='50% 50%'),
@@ -234,7 +272,7 @@ def servicos(M):
                 ('Marcas em mudança', 'Um novo produto, um novo mercado, uma nova geração na gestão.'),
                 ('Negócios que comunicam muito mas não são percebidos', 'Ou que não sabem por onde começar.'),
             ])),
-            ('lista', dict(id='como-funciona', eyebrow='Como funciona', title='Como funciona', bg='#f6f7f8', numbered=True, items=[
+            ('ambito', dict(id='como-funciona', eyebrow='Como funciona', title='Como funciona', bg='#f6f7f8', items=[
                 ('Escuta', 'Uma conversa profunda sobre o negócio, as pessoas, a história e as ambições.'),
                 ('Diagnóstico', 'Analisamos como a marca se vê, como é vista e onde está a diferença.'),
                 ('Clarificação', 'Trabalhamos juntos o posicionamento, a proposta de valor, a personalidade e o tom de voz.'),

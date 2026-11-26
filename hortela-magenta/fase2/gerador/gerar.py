@@ -102,7 +102,7 @@ def blocks_html(blocks, slug):
     out = []
     # faixa de imagens logo a seguir a outra secção: o mesmo fundo e sem espaço entre as duas (parecem um só bloco)
     for i, (kind, b) in enumerate(blocks):
-        if kind == 'imagens' and i and not b.get('title'):
+        if kind in ('imagens', 'galeria') and i and not b.get('title'):
             pk, pb = blocks[i - 1]
             b.setdefault('bg', pb.get('bg') or KIND_BG.get(pk, '#ffffff'))
             b['joined'] = True
@@ -128,6 +128,10 @@ def blocks_html(blocks, slug):
             out.append(B.proj_marquee(M, b, sec_id=sid, label=label, drag_attr='data-mq-drag'))
         elif kind == 'imagens':
             out.append(BS.imagens(M, b, sid, label, **({'bg': bg} if bg else {})))
+        elif kind == 'ambito':
+            out.append(BS.ambito(b, sid, label, **({'bg': bg} if bg else {})))
+        elif kind == 'galeria':
+            out.append(BS.galeria(M, b, sid, label, **({'bg': bg} if bg else {})))
         elif kind == 'premios':
             out.append(BS.premios(M, b, sid, label, **({'bg': bg} if bg else {})))
         elif kind == 'links':
@@ -139,7 +143,7 @@ def blocks_html(blocks, slug):
     # antes de «Mais projetos» (que tem o seu próprio espaço por cima) a secção anterior não leva o espaço inferior inteiro
     kinds = [k for k, _ in blocks]
     for i in range(len(out) - 1):
-        if kinds[i + 1] == 'imagens' and blocks[i + 1][1].get('joined'):
+        if kinds[i + 1] in ('imagens', 'galeria') and blocks[i + 1][1].get('joined'):
             out[i] = out[i].replace(f'padding:var(--sp-block) {B.PAD} var(--sp-block) {B.PAD}', f'padding:var(--sp-block) {B.PAD} clamp(28px,3.5vw,56px) {B.PAD}', 1)
         if kinds[i + 1] == 'mais':
             out[i] = out[i].replace(f'padding:var(--sp-block) {B.PAD} var(--sp-block) {B.PAD}', f'padding:var(--sp-block) {B.PAD} var(--sp-title) {B.PAD}', 1)

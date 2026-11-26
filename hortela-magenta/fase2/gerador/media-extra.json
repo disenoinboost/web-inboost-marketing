@@ -135,6 +135,14 @@
 768
 ],
 "kb": 0
+},
+"/wp-content/uploads/hm-media/split/hgo-rollup.webp": {
+"rel": "split/hgo-rollup.webp",
+"wh": [
+924,
+935
+],
+"kb": 26
 }
 },
 "edges": {
@@ -1285,6 +1293,10 @@
 "hortelamagenta_portfolio_marca_camolas_garrafeira_04-1023x1023-q85.webp": [
 "#8B7870",
 54
+],
+"hgo-rollup.webp": [
+"#EBEDF1",
+12
 ]
 }
 }

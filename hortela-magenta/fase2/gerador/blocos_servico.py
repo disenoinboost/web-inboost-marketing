@@ -312,3 +312,69 @@ def imagens(M, b, sec_id, label, bg='#ffffff'):
     return f'''<section data-cursor-bg="light" id="{sec_id}"{jn} data-screen-label="{label}" style="background:{bg}; padding:{top} {PAD} {pad} {PAD};">
   {head}<div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:28px clamp(12px,1.6vw,24px);">{figs}</div>
 </section>'''
+
+
+def ambito(b, sec_id, label, bg='#ffffff'):
+    """Lista em linhas grandes que se abrem (como «Âmbito e orçamento» de Design Web): número + palavra grande à esquerda;
+    ao abrir (passar o cursor ou tocar), a palavra acende e o texto aparece à direita com o traço magenta.
+    Usa o acordeão do desenho (data-acc, fx-servico); a abertura ao passar o cursor está em capa-fix (data-hm-amb).
+    b: eyebrow, title, text, items [(titulo, texto)], cta, foot, hint ('etapa', 'tema'…)."""
+    rows = ''
+    for i, it in enumerate(b['items']):
+        t, d = it[0], it[1] if len(it) > 1 else ''
+        k = f'{sec_id}-{i + 1}'
+        op = ' data-acc-open=""' if i == 0 else ''
+        rows += f'''
+    <div data-acc=""{op} style="border-top:1px solid rgba(28,27,35,.12); display:flex; flex-wrap:wrap; align-items:flex-start; column-gap:clamp(16px,4vw,80px);">
+      <h3 style="margin:0; flex:1 1 480px; min-width:0; font-weight:300;"><button type="button" data-acc-btn="" id="{k}-b" aria-controls="{k}" aria-expanded="false" style="display:flex; align-items:baseline; gap:clamp(12px,1.6vw,28px); width:100%; background:none; border:0; padding:clamp(6px,.8vw,12px) 0; font:inherit; text-align:left; cursor:pointer; color:{INK};"><span style="flex:none; min-width:1.6em; font-size:16px; font-variant-numeric:tabular-nums; color:{MU}; font-weight:300;">{i + 1:02d}</span><span data-acc-ico="" data-on="color:#1C1B23" data-off="color:rgba(28,27,35,.26)" style="min-width:0; font-size:clamp(36px,4.6vw,80px); font-weight:100; letter-spacing:-0.05em; line-height:1.14; color:rgba(28,27,35,.26); transition:color .35s ease; text-wrap:balance;">{esc(t)}</span></button></h3>
+      <div data-acc-panel="" id="{k}" role="region" aria-labelledby="{k}-b" style="flex:0 1 440px; min-width:0; display:grid; grid-template-rows:0fr; transition:grid-template-rows .45s cubic-bezier(.33,1,.68,1);"><div style="overflow:hidden; min-height:0;"><div style="padding:clamp(18px,2.2vw,34px) 0 clamp(24px,3vw,44px);"><span data-acc-ico="" data-on="transform:scaleX(1)" data-off="transform:scaleX(0)" aria-hidden="true" style="display:block; width:32px; height:1px; margin-bottom:18px; background:#D82E87; transform-origin:0 50%; transform:scaleX(0); transition:transform .9s cubic-bezier(.22,1,.36,1);"></span><p style="margin:0; max-width:420px; font-size:18px; line-height:1.5; color:{TX}; text-wrap:pretty;">{esc(d)}</p></div></div></div>
+    </div>'''
+    side = ''
+    if b.get('text'):
+        side += f'<p style="margin:0 0 22px; font-size:18px; line-height:1.5; color:{TX};">{esc(b["text"])}</p>'
+    if b.get('foot'):
+        side += f'<p style="margin:0 0 22px; font-size:18px; line-height:1.5; color:{TX};">{esc(b["foot"])}</p>'
+    if b.get('cta'):
+        side += _ulink(b['cta'][0], b['cta'][1])
+    side = f'<div style="flex:0 1 440px; min-width:0;">{side}</div>' if side else ''
+    hint = b.get('hint', 'etapa')
+    return f'''<section data-cursor-bg="light" id="{sec_id}" data-screen-label="{label}" style="position:relative; background:{bg}; padding:var(--sp-block) {PAD} var(--sp-block) {PAD}; color:{INK};">
+  <div style="display:flex; justify-content:space-between; align-items:flex-end; flex-wrap:wrap; gap:24px clamp(40px,6vw,120px);">
+    <div style="flex:1 1 420px; min-width:0;"><p style="margin:0 0 24px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{MU};">{DASH_A} {esc(b["eyebrow"])}</p><h2 style="margin:0; max-width:14ch; font-size:clamp(40px,4.48vw,80px); font-weight:100; letter-spacing:-0.05em; line-height:1.05;">{esc(b["title"])}</h2></div>
+    {side}
+  </div>
+  <p style="margin:clamp(48px,6vw,88px) 0 var(--sp-title) 0; text-align:right; font-size:18px; color:rgba(28,27,35,.6);"><span data-hm-hint-fine="">Passe o cursor sobre cada {hint}</span><span data-hm-hint-touch="">Toque em cada {hint}</span></p>
+  <div data-acc-group="" data-hm-amb="" style="border-bottom:1px solid rgba(28,27,35,.12);">{rows}
+  </div>
+</section>'''
+
+
+def galeria(M, b, sec_id, label, bg='#e8eced'):
+    """Galeria em filas que andam sozinhas, se arrastam e abrem em grande (como «Conteúdos» de Design Web).
+    b: eyebrow, title, text, links [(href, label)], rows [[{img, alt} | {video, poster, alt}]]; sem title = faixa simples."""
+    def cell(it, hidden=False):
+        src = it['poster'] if it.get('video') else it['img']
+        r = max(.66, min(1.8, M.ratio_f(src)))
+        box = f'flex:none; height:clamp(150px,17vw,250px); aspect-ratio:{r:.3f}; margin-right:16px; overflow:hidden; background:#EEEDEA;'
+        if it.get('video'):
+            inner = f'<video data-video="" src="{att(it["video"])}" poster="{att(it["poster"])}" muted="" loop="" playsinline="" preload="none" aria-hidden="true" style="display:block; width:100%; height:100%; object-fit:cover;"></video>'
+        else:
+            inner = img_tag(M, it['img'], '' if hidden else it.get('alt', ''), 'display:block; width:100%; height:100%; object-fit:cover;')
+        return f'<div style="{box}">{inner}</div>'
+    speeds = [('-1', '.45'), ('1', '.35'), ('-1', '.4')]
+    rows = ''
+    for k, row in enumerate(b['rows']):
+        d, sp = speeds[k % 3]
+        # duas metades iguais (o marquee do desenho volta ao início a meio da largura); cada metade com ≥ ~2600 px
+        est = sum(min(1.8, max(.66, M.ratio_f(it['poster'] if it.get('video') else it['img']))) * 250 + 16 for it in row) or 1
+        reps = max(1, -(-2600 // int(est)))
+        half = ''.join(cell(it, hidden=(j >= len(row))) for j, it in enumerate(row * reps))
+        rows += f'<div aria-hidden="true" style="overflow:hidden;"><div data-mq-drag="" data-lb="" data-cursor="Arraste" data-marquee="{d}" data-speed="{sp}" style="display:flex; width:max-content; will-change:transform;">{half}{half}</div></div>'
+    head = ''
+    if b.get('title'):
+        links = ''.join(_ulink(h, l) if i == 0 else f'<a href="{att(h)}" style="font-size:18px; color:{INK}; text-decoration:none; opacity:.72;">{esc(l)}</a>' for i, (h, l) in enumerate(b.get('links', [])))
+        links = f'<div style="display:flex; flex-wrap:wrap; gap:16px 28px;">{links}</div>' if links else ''
+        head = f'''<div style="padding:0 {PAD}; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:24px 64px; margin-bottom:var(--sp-title);"><div style="flex:1 1 420px; min-width:0;"><p style="margin:0 0 24px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{MU};">{DASH_A} {esc(b["eyebrow"])}</p><h2 style="margin:0; max-width:14ch; font-size:clamp(40px,4.48vw,80px); font-weight:100; letter-spacing:-0.05em; line-height:1.05;">{esc(b["title"])}</h2></div><div style="flex:0 1 460px; min-width:0;"><p style="margin:0 0 24px; font-size:18px; line-height:1.5; color:{TX};">{esc(b["text"])}</p>{links}</div></div>'''
+    top = '0px' if b.get('joined') else 'var(--sp-block)'
+    jn = ' data-hm-joined=""' if b.get('joined') else ''
+    return f'''<section data-cursor-bg="light" id="{sec_id}"{jn} data-screen-label="{label}" style="position:relative; padding:{top} 0 var(--sp-block) 0; background:{bg}; color:{INK}; overflow:hidden;">{head}<div style="display:flex; flex-direction:column; gap:16px;">{rows}</div></section>'''

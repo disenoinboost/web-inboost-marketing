@@ -582,9 +582,11 @@
     var ps = [].slice.call(tr.querySelectorAll('[data-lpp]')), ov = el.querySelector('[data-lp-ov]'), ct = el.querySelector('[data-lp-ct]');
     if (RED) { el.style.height = 'auto'; st.style.position = 'relative'; st.style.overflowX = 'auto'; st.style.overflowY = 'hidden'; tr.style.transform = 'none'; ps.forEach(function (pn) { panel(pn, 1, true); }); if (ov) ov.style.opacity = '.3'; return; }
     var proj = el.getAttribute('data-lpf') === 'p', dist = 0, cur = -1, stH = 0, stW = 0, run = false;
-    function lay() { stH = st.offsetHeight; stW = st.clientWidth; ps.forEach(function (pn) { pn.__ol = pn.offsetLeft; pn.__ow = pn.offsetWidth; }); dist = Math.max(0, tr.scrollWidth - stW); el.style.height = (stH + dist * 1.6) + 'px'; }
+    var T = 0; /* fichas: o palco tem a altura do conteúdo (+ var(--sp-block) em cima e em baixo, ver CSS) e fixa-se centrado no ecrã */
+    function lay() { stH = st.offsetHeight; stW = st.clientWidth; ps.forEach(function (pn) { pn.__ol = pn.offsetLeft; pn.__ow = pn.offsetWidth; }); dist = Math.max(0, tr.scrollWidth - stW); el.style.height = (stH + dist * 1.6) + 'px';
+      if (proj) { T = Math.max(0, Math.round((W.innerHeight - stH) / 2)); el.style.setProperty('--hm-lpst', T + 'px'); } }
     function frame() {
-      var r = el.getBoundingClientRect(), p = clamp(-r.top / Math.max(1, r.height - stH));
+      var r = el.getBoundingClientRect(), p = clamp((T - r.top) / Math.max(1, r.height - stH));
       cur = cur < 0 ? p : cur + (p - cur) * .16;
       if (Math.abs(p - cur) < .0003) cur = p;
       var tx = -cur * dist, Wd = stW;
@@ -604,5 +606,41 @@
   function scan() { [].forEach.call(D.querySelectorAll('[data-lpf]'), setup); }
   var n = 0, iv = setInterval(function () { scan(); if (++n > 40) clearInterval(iv); }, 300);
   if (D.readyState !== 'loading') scan(); else D.addEventListener('DOMContentLoaded', scan);
+})();
+
+/* ===== Imagens: entram com um fundido curto em vez de aparecerem de golpe; opiniões pré-carregadas · 2026-11-26 =====
+   - Ao carregar, uma imagem visível (opacidade calculada > .5) faz uma animação de opacidade 0 → 1 (fill backwards: no fim
+     não fica nenhum estilo, os efeitos do desenho continuam a mandar na opacidade).
+   - As fotografias das opiniões (Sobre, Início, Serviços) estavam em loading="lazy" dentro de um fundo escuro: só começavam
+     a descarregar quando a opinião aparecia, e via-se o negro. Passam a carregar quando a secção se aproxima do ecrã. */
+(function () {
+  var D = document, W = window;
+  if (W.matchMedia && W.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  D.documentElement.classList.add('hm-fade');
+  function vis(img) { try { return parseFloat(getComputedStyle(img).opacity) > .5; } catch (e) { return false; } }
+  D.addEventListener('load', function (e) {
+    var img = e.target; if (!img || img.tagName !== 'IMG' || img.__hmIn) return; img.__hmIn = 1;
+    if (vis(img)) img.setAttribute('data-hm-in', '');
+  }, true);
+  function eager() {
+    [].forEach.call(D.querySelectorAll('section[data-screen-label*="Opini"]'), function (s) {
+      if (s.__hmEager) return; var r = s.getBoundingClientRect();
+      if (r.top < W.innerHeight * 2.5 && r.bottom > -W.innerHeight) { s.__hmEager = 1; [].forEach.call(s.querySelectorAll('img[loading="lazy"]'), function (im) { im.loading = 'eager'; }); }
+    });
+  }
+  W.addEventListener('scroll', eager, { passive: true });
+  var n = 0, iv = setInterval(function () { eager(); [].forEach.call(D.querySelectorAll('section[data-screen-label*="Opini"]'), function (s) { if (s.__hmEager) [].forEach.call(s.querySelectorAll('img[loading="lazy"]'), function (im) { im.loading = 'eager'; }); }); if (++n > 40) clearInterval(iv); }, 400);
+})();
+
+/* ===== Linhas que se abrem (data-hm-amb, como «Âmbito e orçamento» de Design Web) · 2026-11-26 =====
+   Com rato, abrir ao passar o cursor (o clique e o teclado continuam a funcionar pelo acordeão do desenho, data-acc). */
+(function () {
+  var W = window, D = document;
+  if (!(W.matchMedia && W.matchMedia('(hover: hover) and (pointer: fine)').matches)) return;
+  D.addEventListener('mouseover', function (e) {
+    var t = e.target; if (!t || !t.closest) return;
+    var it = t.closest('[data-hm-amb] > [data-acc]'); if (!it || it._o || !it._set) return;
+    var b = it.querySelector('[data-acc-btn]'); if (b) b.click();
+  });
 })();
 

@@ -64,7 +64,7 @@ def landings(M, LI):
                 foto(CAM('camolas_monocasta_syrah_03'), 'Monocasta Syrah da Adega Camolas', 'Adega Camolas · Monocasta Syrah', 'camolas'),
             ])),
             ('chips', dict(eyebrow='Para quem', title='Para quem desenhamos?', items=['Adegas históricas e modernas', 'Produtores de vinho independentes', 'Marcas premium e edições limitadas', 'Projetos virados para a exportação'])),
-            ('lista', dict(eyebrow='Processo', title='O nosso processo', bg='#f6f7f8', items=[
+            ('ambito', dict(eyebrow='Processo', title='O nosso processo', bg='#f6f7f8', items=[
                 ('Análise de mercado', 'Analisamos o posicionamento, a concorrência direta e os objetivos comerciais.'),
                 ('Conceito criativo', 'Desenvolvemos narrativas únicas ancoradas na história do produtor.'),
                 ('Desenvolvimento', 'Materializamos conceitos em propostas visuais premium, selecionando papéis e tipografias.'),
@@ -114,7 +114,7 @@ def landings(M, LI):
             ])),
             ('frase', dict(eyebrow='Clareza', title='Complexidade não é confusão. Design é clareza estratégica.', text='Comunicar melhor é vender melhor. Somos um motor silencioso nas grandes transações B2B, apoiando a comunicação industrial das empresas.')),
             ('chips', dict(eyebrow='Para quem', title='Para quem desenhamos?', items=['Indústria metalomecânica', 'Robótica e automação', 'Indústria alimentar', 'Empresas B2B técnicas e engenharia'])),
-            ('lista', dict(eyebrow='Processo', title='O nosso processo', bg='#f6f7f8', items=[
+            ('ambito', dict(eyebrow='Processo', title='O nosso processo', bg='#f6f7f8', items=[
                 ('Diagnóstico e análise técnica', 'Mergulhamos nas especificações do seu produto e entendemos a audiência e o canal.'),
                 ('Estratégia de comunicação', 'Definimos o posicionamento industrial e um plano de ação estruturado.'),
                 ('Desenvolvimento criativo', 'Materializamos conceitos em propostas visuais rigorosas sem sacrificar a estética.'),
@@ -164,7 +164,7 @@ def landings(M, LI):
                 foto(I('hospital-garcia-de-orta', 'hgo_rollup'), 'Roll-up do Hospital Garcia de Orta', 'Hospital Garcia de Orta · Roll-up', 'hospital-garcia-de-orta'),
             ])),
             ('chips', dict(eyebrow='Para quem', title='Para quem desenhamos?', items=['Clínicas de Reabilitação Oral e Implantologia', 'Clínicas de Estética Dentária Avançada', 'Consultórios Boutique e Exclusivos', 'Grupos de Saúde a preparar expansão'])),
-            ('lista', dict(eyebrow='Método', title='Método', bg='#f6f7f8', items=[
+            ('ambito', dict(eyebrow='Método', title='Método', bg='#f6f7f8', items=[
                 ('Imersão', 'Compreendemos a visão do Diretor Clínico e o paciente-alvo.'),
                 ('Estratégia', 'Definimos o posicionamento, a diferenciação e a narrativa.'),
                 ('Design', 'Criamos a identidade visual e exploramos o universo da marca.'),
@@ -217,7 +217,7 @@ def landings(M, LI):
             ])),
             ('frase', dict(eyebrow='Transparência', title='Informação clara gera confiança. Comunicar melhor é servir melhor. Design é transparência.', text='Uma boa comunicação institucional ajuda a aumentar a transparência, melhorar a compreensão pública, reforçar a credibilidade institucional e valorizar o trabalho desenvolvido. A forma como se comunica influencia diretamente a forma como se é percebido.')),
             ('chips', dict(eyebrow='Para quem', title='Para quem é este serviço', items=['Câmaras municipais', 'Entidades governamentais', 'Organismos públicos', 'Empresas públicas'])),
-            ('lista', dict(eyebrow='Processo', title='O nosso processo', bg='#f6f7f8', items=[
+            ('ambito', dict(eyebrow='Processo', title='O nosso processo', bg='#f6f7f8', items=[
                 ('Diagnóstico', 'Análise do contexto, objetivos e enquadramento institucional.'),
                 ('Estratégia', 'Definição da estrutura de comunicação e abordagem.'),
                 ('Desenvolvimento', 'Criação do conceito e execução visual.'),
@@ -285,7 +285,7 @@ def landings(M, LI):
                 foto(I('croma', 'croma_tickets'), 'Bilhetes do CROMA', 'CROMA · Bilhetes', 'croma'),
             ])),
             ('chips', dict(eyebrow='Contextos', title='Contextos onde atuamos', items=['Eventos institucionais e municipais', 'Eventos corporativos B2B/B2C', 'Apresentações, galas e lançamentos de produtos', 'Iniciativas públicas, encontros setoriais e feiras da indústria'])),
-            ('lista', dict(eyebrow='O ciclo contínuo', title='Antes, durante e depois.', bg='#f6f7f8', text='A gestão da presença de marca acompanha o evento integralmente.', items=[
+            ('ambito', dict(eyebrow='O ciclo contínuo', title='Antes, durante e depois.', bg='#f6f7f8', hint='momento', text='A gestão da presença de marca acompanha o evento integralmente.', items=[
                 ('Antes', 'Campanhas de teaser nas redes sociais, design de email marketing e convites formais para suscitar e cimentar a expectativa.'),
                 ('Durante', 'Elementos físicos no espaço, ecrãs gigantes, crachás e folhetos de leitura em mão para orientar o público.'),
                 ('Depois', 'Vídeos de resumo e reportagem, fotografias e documentação editorial para estender o impacto do evento.'),

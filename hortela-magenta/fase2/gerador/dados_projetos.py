@@ -195,7 +195,7 @@ def projetos(M):
             dict(img=I(s, 'hgo_a4'), title='Papel de carta'),
             dict(img=I(s, 'hgo_badge'), title='Crachá'),
             dict(img=I(s, 'hgo_pin'), title='Pins'),
-            dict(img=I(s, 'hgo_rollup'), title='Roll-up'),
+            dict(img=SPLIT + 'hgo-rollup.webp', title='Roll-up'),  # recortada: o original tinha uma faixa branca em cima
             dict(img=I(s, 'hgo_ilustracao-1900x'), title='Ilustração'),
         ]),
         gallery=dict(title='Ilustração e fotografia', intro='Respeitar o passado e potenciar o futuro.', items=[
