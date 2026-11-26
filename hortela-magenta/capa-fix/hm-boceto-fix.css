@@ -556,3 +556,19 @@ html body [data-lb-p]:focus, html body [data-lb-p]:focus-visible { outline: none
   html body [data-grow] [data-grow-ui] { top: min(calc(50% + var(--hm-gh, 28.125vw) + 16px), calc(100% - 48px)) !important; }
 }
 
+/* Fichas · «Aplicações» no telemóvel: carrossel com o dedo, como «Rótulos» de Camolas (2026-11-26).
+   Fixada, a galeria ficava a meio do ecrã e, por ser mais baixa do que ele, a secção seguinte subia por baixo dela antes de a soltar.
+   Assim corre como uma secção normal: var(--sp-block) em cima e em baixo, título fixo em cima, imagens todas com a mesma altura. */
+@media (max-width: 767px) {
+  html body #aplicacoes { height: auto !important; }
+  html body #aplicacoes > [data-lp-st] { position: relative !important; top: auto !important; height: auto !important; min-height: 0 !important; overflow: hidden !important; display: block !important; padding: var(--sp-block) 0 !important; }
+  html body #aplicacoes [data-lp-track] { position: relative !important; left: auto !important; top: auto !important; width: auto !important; min-width: 0 !important; max-width: none !important; height: auto !important; transform: none !important; will-change: auto !important; display: grid !important; grid-auto-flow: column; grid-template-rows: auto auto; grid-auto-columns: max-content; align-items: start !important; column-gap: 12px !important; row-gap: 28px !important; padding: 0 16px 8px !important; overflow-x: auto !important; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scroll-padding: 0 16px; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  html body #aplicacoes [data-lp-track]::-webkit-scrollbar { display: none; }
+  html body #aplicacoes [data-lp-track] > div:first-child { grid-row: 1; grid-column: 1 / span var(--hm-n, 6); position: sticky !important; left: 0 !important; width: calc(100vw - 32px) !important; max-width: none !important; justify-self: start; }
+  html body #aplicacoes [data-lp-track] > article { grid-row: 2; scroll-snap-align: start; }
+  html body #aplicacoes [data-lpi] { clip-path: none !important; -webkit-clip-path: none !important; }
+  html body #aplicacoes [data-lpi] img { transform: none !important; }
+  html body #aplicacoes [data-lpt], html body #aplicacoes [data-lpd] { opacity: 1 !important; filter: none !important; transform: none !important; }
+  #aplicacoes .hm-arrows-rot { margin: 14px 12px 0 16px; }
+}
+

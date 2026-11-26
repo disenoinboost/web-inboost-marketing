@@ -395,14 +395,14 @@
     es.forEach(function (e) {
       var tr = e.target, h = tr.__hmHand; if (!h || !h.isConnected || tr.__hmSwiped) return;
       if (e.isIntersecting && e.intersectionRatio > .55) {
-        if (tr.closest('#rotulos')) { var im = tr.querySelector('article [data-lpi]') || tr.querySelector('article'); if (im) { var hr = h.parentElement.getBoundingClientRect(), ir = im.getBoundingClientRect(); h.style.top = (ir.top - hr.top + ir.height / 2) + 'px'; h.style.left = Math.min(W.innerWidth * .62, ir.left - hr.left + ir.width / 2) + 'px'; } }
+        if (tr.closest('#rotulos, #aplicacoes')) { var im = tr.querySelector('article [data-lpi]') || tr.querySelector('article'); if (im) { var hr = h.parentElement.getBoundingClientRect(), ir = im.getBoundingClientRect(); h.style.top = (ir.top - hr.top + ir.height / 2) + 'px'; h.style.left = Math.min(W.innerWidth * .62, ir.left - hr.left + ir.width / 2) + 'px'; } }
         h.classList.remove('hm-go'); void h.offsetWidth; h.classList.add('hm-go');
       } else if (!e.isIntersecting) h.classList.remove('hm-go');
     });
   }, { threshold: [0, .6] }) : null;
   function hands() {
     if (!MQ.matches || !handIO) return;
-    D.querySelectorAll('#trabalhos-galeria [data-lp-track], #rotulos [data-lp-track]').forEach(function (tr) {
+    D.querySelectorAll('#trabalhos-galeria [data-lp-track], #rotulos [data-lp-track], #aplicacoes [data-lp-track]').forEach(function (tr) {
       var host = tr.parentElement; if (!host) return;
       /* se o desenho voltou a pintar a galeria, a mão antiga sai */
       if (tr.__hmHand && tr.__hmHand.isConnected) { [].forEach.call(host.querySelectorAll(':scope > .hm-hand'), function (o) { if (o !== tr.__hmHand) o.remove(); }); return; }
@@ -458,19 +458,22 @@
   /* 14. (7.ª ronda) Camolas · Rótulos: setas (as mesmas das opiniões), além da mão */
   function rotArrows() {
     if (!MQ.matches) return;
-    var tr = D.querySelector('#rotulos [data-lp-track]'); if (!tr) return;
-    var host = tr.parentElement; if (!host) return;
-    /* por baixo das imagens, fora da faixa que desliza (assim não se mexem) */
-    [].forEach.call(D.querySelectorAll('#rotulos .hm-arrows'), function (o) { if (o !== tr.__hmArr) o.remove(); });
-    if (tr.__hmArr && tr.__hmArr.isConnected) return;
-    var nav = mkArrows('Rótulo anterior', 'Rótulo seguinte'), b = nav.children; nav.classList.add('hm-arrows-rot'); host.insertBefore(nav, tr.nextSibling); tr.__hmArr = nav;
-    function stepW() { var a = tr.querySelector('article'); return a ? a.getBoundingClientRect().width + (parseFloat(getComputedStyle(tr).columnGap) || 0) : tr.clientWidth * .8; }
-    function state() { var max = tr.scrollWidth - tr.clientWidth - 2; b[0].disabled = tr.scrollLeft <= 2; b[1].disabled = tr.scrollLeft >= max; }
-    b[0].addEventListener('click', function () { tr.scrollBy({ left: -stepW(), behavior: RED ? 'auto' : 'smooth' }); });
-    b[1].addEventListener('click', function () { tr.scrollBy({ left: stepW(), behavior: RED ? 'auto' : 'smooth' }); });
-    tr.__hmArrState = state;
-    if (!tr.__hmArrOn) { tr.__hmArrOn = 1; tr.addEventListener('scroll', function () { if (tr.__hmArrState) tr.__hmArrState(); }, { passive: true }); }
-    state();
+    /* Camolas · Rótulos e, desde 2026-11-26, «Aplicações» das fichas (o mesmo carrossel com o dedo no telemóvel) */
+    [['#rotulos', 'Rótulo anterior', 'Rótulo seguinte'], ['#aplicacoes', 'Imagem anterior', 'Imagem seguinte']].forEach(function (cfg) {
+      var tr = D.querySelector(cfg[0] + ' [data-lp-track]'); if (!tr) return;
+      var host = tr.parentElement; if (!host) return;
+      /* por baixo das imagens, fora da faixa que desliza (assim não se mexem) */
+      [].forEach.call(D.querySelectorAll(cfg[0] + ' .hm-arrows'), function (o) { if (o !== tr.__hmArr) o.remove(); });
+      if (tr.__hmArr && tr.__hmArr.isConnected) return;
+      var nav = mkArrows(cfg[1], cfg[2]), b = nav.children; nav.classList.add('hm-arrows-rot'); host.insertBefore(nav, tr.nextSibling); tr.__hmArr = nav;
+      function stepW() { var a = tr.querySelector('article'); return a ? a.getBoundingClientRect().width + (parseFloat(getComputedStyle(tr).columnGap) || 0) : tr.clientWidth * .8; }
+      function state() { var max = tr.scrollWidth - tr.clientWidth - 2; b[0].disabled = tr.scrollLeft <= 2; b[1].disabled = tr.scrollLeft >= max; }
+      b[0].addEventListener('click', function () { tr.scrollBy({ left: -stepW(), behavior: RED ? 'auto' : 'smooth' }); });
+      b[1].addEventListener('click', function () { tr.scrollBy({ left: stepW(), behavior: RED ? 'auto' : 'smooth' }); });
+      tr.__hmArrState = state;
+      if (!tr.__hmArrOn) { tr.__hmArrOn = 1; tr.addEventListener('scroll', function () { if (tr.__hmArrState) tr.__hmArrState(); }, { passive: true }); }
+      state();
+    });
   }
 
   /* 15. (7.ª ronda) Camolas · Anúncios: a imagem abre-se quando chega à altura dos olhos (o desenho abria-a logo ao entrar no ecrã) */
