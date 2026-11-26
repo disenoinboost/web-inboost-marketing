@@ -469,3 +469,16 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 - Espaciado: sin secciones seguidas con el mismo fondo, salvo las franjas pegadas a su texto.
 - En vivo: 13 plantillas, CSS y JS desplegados con md5 comprobado.
 
+## 16. Ronda 2026-11-26 (cierre): móvil, contacto, lightbox y «Como funciona»
+
+- **Fichas · «Aplicações»:** todas las imágenes tienen la misma altura, en escritorio y en móvil. El ancho tenía un tope (84vw / 940 px) que encogía las imágenes anchas: en móvil medían entre 164 y 240 px de alto y ahora todas 240 px. Se ha comprobado en los 12 proyectos.
+- **HGO · roll-up:** la página publicada usa la imagen recortada desde la ronda anterior. Si aún se ve la franja, es la caché del navegador.
+- **Migas de pan en móvil:** siempre en una línea (15 px). Si el último nivel no cabe, termina en «…»; solo pasa con «Campanhas & Redes Sociais».
+- **Menú móvil · Projetos:** primero los seis destacados del menú de escritorio (Camolas, Queijaria da São, Farinhas Firmos, Alsilgroup, Hospital Garcia de Orta y Livro Vilamoura) y después el resto.
+- **«O site» / «Filme» en móvil:** el pie se colocaba suponiendo un vídeo 16:9 y en los vídeos más altos quedaba encima. Ahora va debajo, calculado con la proporción real de cada vídeo.
+- **Contacto:** la dirección usa la misma letra que «Orçamentos» y «Redes» (20–26 px), en tres líneas.
+- **Lightbox:** sin el recuadro rosa en la X ni en las flechas. Era el estilo de foco, porque la X recibe el foco al abrirse.
+- **Coaching · «Como funciona»:** pasa de desplegable a filas siempre visibles, como en Sobre. Cada paso lleva más texto, todo sacado del Word de Gonçalo (de las respuestas de las preguntas frecuentes).
+- **Título y texto centrados en vertical:** en Coaching, en «Uma forma de estar descontraída» (Sobre) y en los desplegables al abrirse. La palabra lleva `padding-top:.23em` porque la tipografía Spartan deja ~0,27em por debajo de la línea base y ~0,04em por encima de las mayúsculas.
+- **Verificación:** regresión de 36 rutas × 2 sin errores; 37 plantillas, CSS y JS desplegados con md5 comprobado.
+
