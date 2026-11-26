@@ -481,4 +481,5 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 - **Coaching · «Como funciona»:** pasa de desplegable a filas siempre visibles, como en Sobre. Cada paso lleva más texto, todo sacado del Word de Gonçalo (de las respuestas de las preguntas frecuentes).
 - **Título y texto centrados en vertical:** en Coaching, en «Uma forma de estar descontraída» (Sobre) y en los desplegables al abrirse. La palabra lleva `padding-top:.23em` porque la tipografía Spartan deja ~0,27em por debajo de la línea base y ~0,04em por encima de las mayúsculas.
 - **Verificación:** regresión de 36 rutas × 2 sin errores; 37 plantillas, CSS y JS desplegados con md5 comprobado.
+- **Fichas · «Aplicações» en móvil:** pasan a ser un carrusel de deslizar con el dedo, como «Rótulos» de Camolas, con el título fijo arriba, la mano de aviso y las flechas. Fijada, la galería quedaba a media pantalla y la sección siguiente subía por debajo antes de soltarla. Ahora la sección termina con su margen normal (64 px en móvil). En escritorio no cambia.
 
