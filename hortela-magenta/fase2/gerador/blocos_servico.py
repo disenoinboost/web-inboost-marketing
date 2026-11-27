@@ -329,7 +329,7 @@ def ambito(b, sec_id, label, bg='#ffffff'):
     for i, it in enumerate(b['items']):
         t, d = it[0], it[1] if len(it) > 1 else ''
         k = f'{sec_id}-{i + 1}'
-        op = ' data-acc-open=""' if i == 0 else ''
+        op = ''  # todas começam fechadas, também a primeira (Laura, 2026-11-27: «que empiecen todos cerrados»)
         rows += f'''
     <div data-acc=""{op} data-on="padding-top:clamp(16px,2vw,32px);padding-bottom:clamp(16px,2vw,32px)" data-off="padding-top:0px;padding-bottom:0px" style="border-top:1px solid rgba(28,27,35,.12); display:flex; flex-wrap:wrap; align-items:center; column-gap:clamp(16px,4vw,80px); transition:padding .45s cubic-bezier(.33,1,.68,1);">
       <h3 style="margin:0; flex:1 1 480px; min-width:0; font-weight:300;"><button type="button" data-acc-btn="" id="{k}-b" aria-controls="{k}" aria-expanded="false" style="display:flex; align-items:baseline; gap:clamp(12px,1.6vw,28px); width:100%; background:none; border:0; padding:clamp(8px,1.1vw,16px) 0; font:inherit; text-align:left; cursor:pointer; color:{INK};"><span style="flex:none; min-width:1.6em; font-size:16px; font-variant-numeric:tabular-nums; color:{MU}; font-weight:300;">{i + 1:02d}</span><span data-acc-ico="" data-on="color:#1C1B23" data-off="color:rgba(28,27,35,.26)" style="min-width:0; padding-top:.23em; font-size:clamp(36px,4.6vw,80px); font-weight:100; letter-spacing:-0.05em; line-height:1.14; color:rgba(28,27,35,.26); transition:color .35s ease; text-wrap:balance;">{esc(t)}</span></button></h3>

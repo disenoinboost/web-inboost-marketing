@@ -318,6 +318,9 @@ const lineas = (sel, root = document) => [...root.querySelectorAll(sel)].filter(
     const { ctx, p } = await open(b, 'movil', r); await walk(p);
     const z = await p.evaluate(() => { const out = []; document.querySelectorAll('[data-hm-amb] h3 button, #ambito h3 button, #servicos li h3').forEach(h => { const n = [...h.querySelectorAll('span')].find(s => /^\d{2}$/.test(s.textContent.trim())); if (n && n.offsetParent) out.push(getComputedStyle(n).fontSize); }); return out; });
     if (z.length) rep('movil', r, 'Filas que se abren: número a 16 px (como la home)', z.every(v => v === '16px'), [...new Set(z)].join(',') + ' · ' + z.length + ' filas');
+    /* e todas fechadas depois de descer a página sem tocar em nada (a 1.ª abria-se sozinha: data-acc-open; Laura, 2026-11-27) */
+    const ab = await p.evaluate(() => [...document.querySelectorAll('[data-hm-amb] [data-acc-btn], #ambito h3 button')].filter(b => b.getAttribute('aria-expanded') === 'true').map(b => b.textContent.trim().slice(0, 24)));
+    if (z.length) rep('movil', r, 'Filas que se abren: todas cerradas al bajar', !ab.length, ab.join(', '));
     await ctx.close();
   }
   // 21) Imágenes: ninguna de otro dominio (Wikimedia, web antigua…): todas en hm-media (2026-11-27)

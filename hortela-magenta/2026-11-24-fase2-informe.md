@@ -677,3 +677,8 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 **Batería:** comprobaciones nuevas, que fallan con la capa anterior y pasan con la nueva: lightbox al tocar (móvil y tablet, 6 páginas), foto después del texto en Serviços, enlaces de especialidades, número a 16 px en los desplegables del móvil, imágenes alojadas en el propio sitio. La comprobación del lightbox que había era solo con ratón y por eso no vio el fallo.
 
 **Dónde está cada cambio:** capa (`capa-fix/`, puntos 1, 4 y 6), generador y plantillas (`gerador/extras.py`, `gerador/comum.py`, `modelos/servicos.html` y `modelos/sobre.html`, puntos 2, 3 y 5), medios en el servidor (punto 5).
+
+**Desplegables con número que empezaban con la 1.ª fila abierta** (mismo día, petición posterior de Laura):
+- En Gráfico + Editorial, Fotografia & Vídeo y las 5 landings, el generador marcaba la primera fila con `data-acc-open` y al bajar aparecía abierta. Design Web y la home ya empezaban cerradas.
+- Ahora todas empiezan cerradas (`blocos_servico.ambito()` y las 7 plantillas). Se abren igual al tocar o al pasar el ratón.
+- Batería: nueva comprobación «todas cerradas al bajar» en cada página con estas filas.
