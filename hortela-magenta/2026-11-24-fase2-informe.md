@@ -261,7 +261,10 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 
 1. **Aprobaciones:** validar los textos del punto 7 (Dani en ES y PT; Gonçalo, los hechos).
 2. **Formulario:**
-   - Definir el destinatario con `update_option('hm_form_to', 'email-de-hortela')`. Ahora llega al email de administración de WordPress.
+   - **Destinatario: `info@hortelamagenta.com`** (decidido el 2026-11-27: se pone el día de la publicación, no antes, para que las pruebas en el entorno de trabajo no lleguen al cliente). Ahora llega al email de administración de WordPress.
+     - Fuente: Política de Privacidade de hortelamagenta.pt («e-mail info@hortelamagenta.com»); la página de contacto actual no lo muestra. El dominio tiene MX (`mail.hortelamagenta.com`).
+     - Antes de ponerlo, que Dani confirme con Gonçalo que es el buzón para los pedidos de presupuesto.
+     - Comando: `update_option('hm_form_to', 'info@hortelamagenta.com');`
    - Comprobar la entrega del correo en el servidor de producción (SPF/DKIM o SMTP).
 3. **Analítica y consentimiento** (hecho en la ronda del punto 10; quedan estos pasos):
    - **GTM-KXHQKJMV:** incluye dos etiquetas HTML de píxel de Meta (1075614403527200 y 1791344078253720) que disparan PageView sin condición. En GTM, añadirles «Configuración de consentimiento → requerir `ad_storage`» (o el activador `cmplz_event_marketing`) para que respeten el banner. GA4 ya respeta el Consent Mode.
