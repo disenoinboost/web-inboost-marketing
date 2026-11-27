@@ -483,3 +483,51 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 - **Verificación:** regresión de 36 rutas × 2 sin errores; 37 plantillas, CSS y JS desplegados con md5 comprobado.
 - **Fichas · «Aplicações» en móvil:** pasan a ser un carrusel de deslizar con el dedo, como «Rótulos» de Camolas, con el título fijo arriba, la mano de aviso y las flechas. Fijada, la galería quedaba a media pantalla y la sección siguiente subía por debajo antes de soltarla. Ahora la sección termina con su margen normal (64 px en móvil). En escritorio no cambia.
 
+## 17. Auditoría integral y sistema de diseño (2026-11-27)
+
+**Método:**
+- Script de auditoría (`hmtools/audit.js`) sobre las 36 rutas en escritorio (1440×900), tablet (820×1180) y móvil (390×844), con scroll completo antes de medir.
+- Qué mide:
+  - Fondos y paddings de cada sección.
+  - Alineación con la rejilla.
+  - Tipografía por papel: H1, H2, H3, antetítulo, texto, enlaces y botones.
+  - Desbordes horizontales.
+  - Solapes de texto, con un detector que tiene en cuenta recortes y opacidades.
+  - Efectos que se quedan sin activar.
+  - Imágenes rotas.
+  - Errores JS.
+  - Cabecera y footer.
+- Además: hojas de capturas en tablet, capturas de los cambios, regresión `reg.js` y diff del HTML generado antes y después.
+
+**Lo que ya estaba bien:**
+- Ningún error JS ni desborde horizontal en las 108 combinaciones.
+- Ningún efecto atascado.
+- Cabecera (81/65 px) y footer idénticos en todas las páginas.
+- 223 de 266 secciones con 126 px (64 px en móvil). Las demás son excepciones justificadas: cabeceras, franjas pegadas a su texto y galerías fijas.
+
+**Problemas encontrados y corregidos en su origen:**
+1. **Antetítulos:** 32 antetítulos en minúscula encima de un título, en Branding, Design Web, Camolas, fichas, landings y frases destacadas, frente a MAYÚSCULAS en el resto. Regla: el antetítulo que encabeza un título va en mayúsculas espaciadas, y las etiquetas siguen en frase normal. Se aplica en `comum.normalizar` (`estilos.normalizar_antetitulos`) y en los bloques del generador.
+2. **Bloques de las fichas reutilizados en servicios y landings** (portfolio y vídeo): título a 66 px (escala de proyecto) en lugar de 58 px, y sin antetítulo. Ahora llevan la escala de sección y el antetítulo «Projetos».
+3. **«Para quem» y «Conheça também»:** hueco entre columnas de hasta 140 px frente a los 120 px de la rejilla común, así que la columna derecha empezaba en otro punto. Ahora usan la rejilla común.
+4. **Tablet ~768–840 px:** la columna lateral fija de listas y preguntas seguía fija con las columnas apiladas y se montaba sobre la lista (Avença, Coaching, landings, Branding y Design Web). El JS la marca `data-hm-stacked` y deja de ser fija.
+5. **Tablet táctil · «Mais projetos»:** solo la primera tarjeta salía a color y con nombre. Ahora salen todas, como en el móvil.
+6. **Home · Showreel:** el antetítulo quedaba debajo del titular gigante cuando este sube con el scroll. Ahora el antetítulo copia su desplazamiento, con 48 px constantes entre ambos.
+7. **Botón de contacto de la home:** grosor 400 frente a 300 en el resto.
+8. **«Conheça también»:** era la única lista sin animación de entrada.
+
+**Sistema de diseño:**
+- `fase2/gerador/estilos.py` es la fuente única de colores, espaciado, rejilla 5:7, escala tipográfica por papel y antetítulos. Los bloques importan de ahí.
+- Bloque `:root` en `capa-fix/hm-boceto-fix.css` con los mismos tokens.
+- Documentación en `SISTEMA-DE-DISENO.md`.
+
+**Control final:**
+- Nueva auditoría completa: sin incidencias, salvo un falso positivo (un enlace del blog que se parte en dos líneas).
+- Regresión: 36 × 2 sin errores.
+- 27 plantillas, CSS y JS desplegados, comprobados en las páginas servidas.
+
+**No verificado:**
+- La web publicada en un navegador real: el contenedor no llega al dominio, así que todo se ha renderizado en local con las mismas plantillas y el mismo CSS/JS, y en el servidor se han comprobado las marcas en el HTML servido.
+- Fotos y logos que no hay en local (equipo de Sobre, logos de Serviços) y vídeos: el escaneo del servidor no encontró ninguna imagen rota.
+- Safari/iOS y tablet en horizontal.
+- Estados hover uno a uno.
+
