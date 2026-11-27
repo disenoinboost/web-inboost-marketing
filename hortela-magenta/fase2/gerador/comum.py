@@ -12,7 +12,7 @@ import re
 
 from base import PROJ_SLUGS, LANDINGS, att, esc
 from dados_projetos import ORDER, NAMES, CARD
-from estilos import normalizar_antetitulos, dicas_galerias
+from estilos import normalizar_antetitulos, dicas_galerias, og_imagens_locais
 
 NEW_SVC = {
     '/servicos#design-grafico-e-editorial': '/servicos/design-grafico-e-editorial',
@@ -135,6 +135,7 @@ def normalizar(t):
     b = _logic(b)
     for a, n in PT_PROPS:
         b = b.replace(a, n)
+    h = og_imagens_locais(h, 'https://hortelamagenta.pt')  # imagem de partilha: cópia local, não a web antiga
     return h + b
 
 

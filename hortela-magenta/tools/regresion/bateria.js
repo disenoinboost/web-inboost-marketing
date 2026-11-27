@@ -240,6 +240,9 @@ const lineas = (sel, root = document) => [...root.querySelectorAll(sel)].filter(
   { const h = fs.readFileSync(path.join(DIR, PAGES['/'] + '.html'), 'utf8'); const m = h.match(/pjItems:\s*(\[\[.*?\]\])/); const order = m ? JSON.parse(m[1]).map(x => x[1].split('/').pop()) : [];
     const top = ['camolas', 'queijaria-da-sao', 'farinhas-firmos', 'alsil', 'hospital-garcia-de-orta', 'livro-vilamoura'];
     rep('html', '/', 'Menú móvil: proyectos principales primero', top.every((s, i) => order[i] === s), order.slice(0, 7).join(',')); }
+  // 12b) Imagen de compartir (og:image): copia local en el dominio de producción, sin dominio duplicado ni web antigua (2026-11-27)
+  { const bad = routes.filter(r => { const m = fs.readFileSync(path.join(DIR, PAGES[r] + '.html'), 'utf8').match(/<meta property="og:image" content="([^"]*)"/); return !m || !/^https:\/\/hortelamagenta\.pt\/wp-content\/uploads\//.test(m[1]) || /pthttps/.test(m[1]); });
+    rep('html', '*', 'Imagen de compartir (og:image) local y bien formada', !bad.length, bad.join(', ')); }
   // 13) Galerías continuas: ninguna galería «a golpes» (data-lp sin data-lpf)
   { const bad = routes.filter(r => /data-lp="/.test(fs.readFileSync(path.join(DIR, PAGES[r] + '.html'), 'utf8')));
     rep('html', '*', 'Galerías continuas (sin data-lp a golpes)', !bad.length, bad.join(', ')); }

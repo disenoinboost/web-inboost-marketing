@@ -91,3 +91,29 @@ def dicas_galerias(html):
         return s[:-len('</section>')].rstrip() + '\n  ' + DICA_GALERIA + '\n</section>'
     return _SEC.sub(sec, html)
 
+
+# ---------------------------------------------------------------------------------------------------------------------------
+# Imagens de partilha (og:image) apontam para a cópia local em hm-media, como as imagens da página (2026-11-27).
+# A mesma regra de hm_media_local() (hm-boceto-dist.php): hm-media/<host><caminho>, JPG/PNG passam a WebP.
+_MEDIA_PREFIXOS = ('https://hortelamagenta.pt/media/', 'https://nostalgia.hortelamagenta.pt/old/wp-content/',
+                   'https://www.adrepes.pt/wp-content/uploads/', 'https://www.minhaterra.pt/wst/images/', 'https://www.coprate.pt/images/')
+
+
+def media_local(url):
+    """Caminho local (/wp-content/uploads/hm-media/...) de um medio remoto copiado; devolve o URL tal qual se não for um deles."""
+    if not url or not url.startswith(_MEDIA_PREFIXOS):
+        return url
+    rest = url.split('://', 1)[1]
+    return '/wp-content/uploads/hm-media/' + re.sub(r'\.(jpe?g|png)$', '.webp', rest, flags=re.I)
+
+
+def og_imagens_locais(head, site):
+    """og:image dos modelos do desenho (Início, Branding, Sobre…): da web antiga para a cópia local, no domínio de produção."""
+    def r(m):
+        u = m.group(1)
+        if u.startswith(site + 'https://'):  # domínio repetido (gerado antes com SITE + URL absoluto)
+            u = u[len(site):]
+        loc = media_local(u)
+        return '<meta property="og:image" content="' + (site + loc if loc.startswith('/') else loc) + '">'
+    return re.sub(r'<meta property="og:image" content="([^"]*)">', r, head)
+

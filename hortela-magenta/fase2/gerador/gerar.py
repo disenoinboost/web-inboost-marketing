@@ -3,6 +3,7 @@
 Uso: python3 -I gerar.py <dir-modelos-originais> <media-info.json> <oldproj.json> <dir-saida>
 Escreve <dir-saida>/<pagina>.html (template, com os uuid dos recursos do pacote) e <dir-saida>/rotas.json.
 """
+from estilos import media_local
 import json
 import re
 import os
@@ -44,7 +45,9 @@ def LI(slug, name):
 def og_local(url):
     if not url:
         return None
-    return SITE + (url if url.startswith('/wp-content/') else M.local(url))
+    loc = url if url.startswith('/wp-content/') else M.local(url)
+    loc = media_local(loc)  # remoto sem medidas em media-info: a cópia de hm-media (antes saía SITE + URL absoluto: domínio duplicado)
+    return SITE + loc if loc.startswith('/') else loc
 
 
 def write(name, t):

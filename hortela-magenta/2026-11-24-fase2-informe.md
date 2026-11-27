@@ -641,3 +641,17 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
    - Los tres botones siguen en una fila en todos los anchos y vistas.
    - A 320 px el banner mide 267 px, porque los enlaces caben en una línea.
 
+## 21. Revisión de enlaces (2026-11-27)
+
+- **Las 36 páginas servidas:** responden 200.
+- **Enlaces internos:** los 35 llevan a páginas que existen, sin redirecciones intermedias y sin anclas rotas.
+- **Enlaces visibles a la web antigua:** ninguno.
+- **Imágenes y vídeos de la web antigua** (hortelamagenta.pt/media, nostalgia, adrepes, minhaterra, coprate): los 291 están copiados en `uploads/hm-media` (las JPG/PNG en WebP), y las páginas usan las copias locales.
+  - Además, `hm-boceto.php` redirige cualquier `/media/…` antiguo a su copia, así que tras el cambio de dominio no se rompe nada.
+- **Enlaces externos:** responden todos. LinkedIn (403), Instagram (429) y el Livro de Reclamações (405) rechazan las peticiones automáticas, pero abren en el navegador.
+- **Corregido: imagen de compartir (`og:image`).**
+  - En Avença y Coaching tenía el dominio duplicado (`https://hortelamagenta.pthttps://…`), porque `og_local()` sumaba SITE a una URL ya absoluta.
+  - En 15 páginas del diseño original apuntaba a la web antigua o a nostalgia.
+  - Ahora todas apuntan a la copia local en el dominio de producción (`estilos.media_local`, `og_imagens_locais`); se ha comprobado que existen los 27 archivos.
+- **Batería:** nueva comprobación de `og:image`. Herramienta de inventario: `tools/regresion/enlaces.py`.
+
