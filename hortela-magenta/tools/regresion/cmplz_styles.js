@@ -1,0 +1,22 @@
+// estilos calculados del banner frente a los botones de la web: node cmplz_styles.js <dir-copia> [ancho]
+const { chromium } = require('playwright'); const fs = require('fs'), path = require('path');
+const ORIGIN = 'https://hortelamagenta.inboost.marketing', S = '/tmp/claude-0/-home-user-web-inboost-marketing/8ac7a14c-9ecb-54c6-b461-e5d9e459bd0f/scratchpad';
+const [MIR, W] = process.argv.slice(2); const FIX = '/home/user/web-inboost-marketing/hortela-magenta/capa-fix';
+const TYPES = { '.js': 'application/javascript', '.css': 'text/css', '.woff2': 'font/woff2', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.svg': 'image/svg+xml' };
+(async () => { const b = await chromium.launch(); const w = +(W || 1280); const ctx = await b.newContext(w < 768 ? { viewport: { width: w, height: 812 }, isMobile: true, hasTouch: true, deviceScaleFactor: 3 } : { viewport: { width: w, height: 800 }, deviceScaleFactor: 2 }); const p = await ctx.newPage();
+  await p.route('**/*', async r => { const u = new URL(r.request().url());
+    if (u.host === 'unpkg.com' && /\/react(-dom)?@/.test(u.pathname)) return r.fulfill({ status: 200, contentType: 'application/javascript', body: fs.readFileSync(path.join(S, 'dist4/site/wp-content/themes/divi-child/hm-paginas/dist/a', /react-dom/.test(u.pathname) ? 'feb8ddc9d0566a4f.js' : 'aa77ae4c49f525bc.js')) });
+    if (u.origin !== ORIGIN) return r.abort();
+    if (r.request().resourceType() === 'document') return r.fulfill({ status: 200, contentType: 'text/html; charset=utf-8', body: fs.readFileSync(path.join(MIR, 'alsil.html'), 'utf8') });
+    if (u.pathname.startsWith('/wp-json') || u.pathname.includes('admin-ajax')) return r.fulfill({ status: 200, contentType: 'application/json', body: '{}' });
+    let fp = path.join(MIR, 'site', decodeURIComponent(u.pathname)); if (!fs.existsSync(fp)) fp = u.pathname.includes('/assets/hm-boceto-fix.') ? path.join(FIX, path.basename(u.pathname)) : path.join(S, 'dist4', 'site', decodeURIComponent(u.pathname));
+    if (fs.existsSync(fp) && fs.statSync(fp).isFile()) return r.fulfill({ status: 200, contentType: TYPES[path.extname(fp).toLowerCase()] || 'application/octet-stream', body: fs.readFileSync(fp) });
+    return r.fulfill({ status: 404, body: '' }); });
+  await p.goto(ORIGIN + '/projetos/alsil/', { waitUntil: 'load' }); await p.waitForSelector('.cmplz-cookiebanner.cmplz-show', { timeout: 15000 }); await p.waitForTimeout(1500);
+  const st = await p.evaluate(() => { const pick = e => { if (!e) return null; const c = getComputedStyle(e); return { t: e.textContent.trim().slice(0, 28), color: c.color, bg: c.backgroundColor, fw: c.fontWeight, fs: c.fontSize, ls: c.letterSpacing, border: c.borderTopWidth + ' ' + c.borderTopStyle + ' ' + c.borderTopColor, deco: c.textDecorationLine + ' ' + c.textDecorationColor, bb: c.borderBottomWidth + ' ' + c.borderBottomStyle + ' ' + c.borderBottomColor, radius: c.borderRadius, h: Math.round(e.getBoundingClientRect().height), pad: c.padding }; };
+    const bn = document.querySelector('.cmplz-cookiebanner');
+    const siteBtns = [...document.querySelectorAll('main a, main button, a.hm-cta-main')].filter(a => { const c = getComputedStyle(a); return a.offsetParent && /rgb\(28, 27, 35\)/.test(c.backgroundColor); }).slice(0, 3).map(pick);
+    return { accept: pick(bn.querySelector('.cmplz-accept')), deny: pick(bn.querySelector('.cmplz-deny')), view: pick(bn.querySelector('.cmplz-view-preferences')), save: pick(bn.querySelector('.cmplz-save-preferences')), link: pick(bn.querySelector('.cmplz-documents a')), msg: pick(bn.querySelector('.cmplz-message')), siteDark: siteBtns, cta: pick(document.querySelector('.hm-cta-main')) }; });
+  console.log(JSON.stringify(st, null, 1));
+  const r = await p.evaluate(() => { const r = document.querySelector('.cmplz-cookiebanner').getBoundingClientRect(); return { x: r.left, y: r.top, width: r.width, height: r.height }; });
+  await p.screenshot({ path: `${S}/cmplz_estilos_${w}.png`, clip: r }); await b.close(); })();

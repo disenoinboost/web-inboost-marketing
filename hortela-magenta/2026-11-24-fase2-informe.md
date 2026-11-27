@@ -634,4 +634,10 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
      - escritorio sin ningún píxel distinto;
      - la barra de llamada vuelve tras aceptar.
    - Herramienta: `tools/regresion/cmplz_render.js`.
+3. **Banner, botones y enlaces como los de la web** (banner versión 4; copia previa en `backup_cmplz_banner120261127b`):
+   - «Ver preferências» y «Guardar preferências» pasan de enlace subrayado a botón con borde, como «Recusar».
+   - Letra de los botones a 300, como los botones de la web (Complianz la ponía a 500). «Aceitar» lleva texto #FAFAF8 sobre #1C1B23, igual que «Pedir orçamento».
+   - Enlaces legales con un solo subrayado: antes se sumaban el subrayado de Complianz y el borde rosa. Ahora texto en tinta, borde rosa y 12 px (antes 14).
+   - Los tres botones siguen en una fila en todos los anchos y vistas.
+   - A 320 px el banner mide 267 px, porque los enlaces caben en una línea.
 
