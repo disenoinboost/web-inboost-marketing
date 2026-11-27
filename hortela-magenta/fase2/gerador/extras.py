@@ -107,6 +107,13 @@ FORM_JS = ("submitForm: e => { e.preventDefault(); const f = e.currentTarget || 
            "errShow: this.state.formErr ? 'block' : 'none', ")
 
 
+def home(t):
+    """Showreel: o antetítulo «— Showreel» ficava por cima do título gigante (as hastes de «Veja o showreel» tocavam-no,
+    e mais ainda quando o título cresce ao descer). Mais espaço por baixo do antetítulo."""
+    return _rep(t, '<p style="margin:0; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:#6E6A63;"><span aria-hidden="true" style="color:#D82E87;">—</span> Showreel</p>\n      <h2 data-reel-l=""',
+                '<p style="margin:0 0 clamp(14px,3vh,34px); font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:#6E6A63;"><span aria-hidden="true" style="color:#D82E87;">—</span> Showreel</p>\n      <h2 data-reel-l=""')
+
+
 def sobre(t):
     """Opinião da Mafraria: a fotografia apontava para assets/clientes/mafraria.jpg, que não vem no pacote do desenho
     (imagem partida). Usa uma peça da própria Mafraria («Um café singular», na mediateca)."""

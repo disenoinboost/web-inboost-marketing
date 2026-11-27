@@ -1,10 +1,7 @@
 """Blocos do desenho (marcação copiada dos modelos de Claude Design, com os mesmos estilos em linha e atributos data-*
 que os efeitos de hm-fx-projeto.js / hm-fx-servico.js / hm-movil.css reconhecem)."""
 from base import esc, att
-
-PAD = 'clamp(16px,4vw,64px)'
-DASH = '<span style="color:#D82E87;">—</span>'
-DASH_A = '<span aria-hidden="true" style="color:#D82E87;">—</span>'
+from estilos import PAD, DASH, DASH_A, H2_SECTION, H2_PROJECT, eyebrow  # sistema de desenho comum
 
 
 def link_u(href, label, extra=''):
@@ -145,7 +142,7 @@ def proj_lp(M, b, sec_id='aplicacoes', label='04 Aplicações', tone='soft'):
   <div data-lp-st="" style="position:sticky; top:0; height:100vh; overflow:hidden; display:flex; align-items:center;">
     <div data-lp-track="" data-lb="" style="display:flex; align-items:center; gap:clamp(20px,3vw,48px); width:max-content; padding:60px {PAD} 0;">
       <div style="flex:none; width:clamp(260px,30vw,440px);">
-        <p style="margin:0 0 18px; font-size:18px; color:var(--mu);">{DASH} {esc(b["eyebrow"])}</p>
+        {eyebrow(esc(b["eyebrow"]), color="var(--mu)")}
         <h2 style="margin:0; font-size:clamp(40px,4.32vw,67px); line-height:1.04; letter-spacing:-0.05em; font-weight:100;">{esc(b["title"])}</h2>
         {link}
       </div>
@@ -155,11 +152,11 @@ def proj_lp(M, b, sec_id='aplicacoes', label='04 Aplicações', tone='soft'):
 </section>'''
 
 
-def proj_filme(b, sec_id='filme', label='06 Filme'):
+def proj_filme(b, sec_id='filme', label='06 Filme', svc=False):
     return f'''<section data-cursor-bg="light" id="{sec_id}" data-tone="soft" data-grow="center" data-screen-label="{label}" style="position:relative; height:240vh; background:var(--sf); color:var(--ink); transition:background-color 0.2s ease, color 0.2s ease;">
   <div style="position:sticky; top:0; height:100vh; overflow:hidden;">
     <div data-grow-fade="" style="position:absolute; left:0; right:0; top:0; display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-start; gap:12px 48px; padding:calc(84px + clamp(16px,4vh,48px)) {PAD} 0;">
-      <h2 style="margin:0; font-size:clamp(40px,5.12vw,80px); line-height:1.04; letter-spacing:-0.05em; font-weight:100;">{esc(b["title"])}</h2>
+      <h2 style="margin:0; {H2_SECTION if svc else H2_PROJECT}">{esc(b["title"])}</h2>
       <p style="margin:0; max-width:30ch; font-size:18px; line-height:1.5; color:var(--tx);">{esc(b["text"])}</p>
     </div>
     <div aria-hidden="true" style="position:absolute; inset:0; display:grid; place-items:center; overflow:hidden; pointer-events:none;"><span data-fw="100" style="font-size:clamp(96px,16vw,300px); font-weight:100; letter-spacing:-0.06em; line-height:.85; white-space:nowrap; color:var(--ln);">{esc(b["word"])}</span></div>
@@ -181,7 +178,9 @@ def _marquee_item(M, it, hidden=False):
     return img_tag(M, it['img'], alt, f'display:block; flex:none; height:{h}; width:auto; aspect-ratio:{ratio}; object-fit:cover; background:var(--ph);', extra=extra)
 
 
-def proj_marquee(M, b, sec_id=None, label='07 Fotografia', drag_attr='data-drag'):
+def proj_marquee(M, b, sec_id=None, label='07 Fotografia', drag_attr='data-drag', svc=False):
+    """Faixa de fotografias que anda e se arrasta. svc=True (serviços e landings): cabeçalho como as outras secções dessas
+    páginas (antetítulo + título à escala de secção); nas fichas mantém a escala das secções de projeto (Camolas)."""
     items = b['items']
     # largura estimada de um conjunto (altura máx. 360 px); repetir até ~2800 px para o ciclo nunca mostrar o fim
     est = sum(360 * M.ratio_f(it['poster'] if it.get('video') else it['img']) + 18 for it in items) or 1
@@ -189,12 +188,16 @@ def proj_marquee(M, b, sec_id=None, label='07 Fotografia', drag_attr='data-drag'
     track = '\n      '.join([_marquee_item(M, it) for it in items] + [_marquee_item(M, it, hidden=True) for it in items * (reps - 1)])
     dup = '\n      '.join(_marquee_item(M, it, hidden=True) for it in items * reps)
     sid = f' id="{sec_id}"' if sec_id else ''
+    if svc:
+        head = f'<div>{eyebrow(esc(b.get("eyebrow", "Projetos")))}<h2 data-words="" style="margin:0; max-width:14ch; {H2_SECTION}">{esc(b["title"])}</h2></div>'
+    else:
+        head = f'<h2 data-words="" style="margin:0; {H2_PROJECT}">{esc(b["title"])}</h2>'
     link = ''
     if b.get('link'):
         link = f'\n  <p style="margin:var(--sp-title) 0 0; padding:0 {PAD};">{link_u(b["link"][0], b["link"][1])}</p>'
     return f'''<section data-cursor-bg="light"{sid} data-screen-label="{label}" style="padding:var(--sp-block) 0 var(--sp-block) 0; background:var(--bg); color:var(--ink); overflow:hidden;">
   <div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:24px 64px; padding:0 {PAD}; margin-bottom:var(--sp-title);">
-    <h2 data-words="" style="margin:0; font-size:clamp(40px,5.12vw,80px); line-height:1.04; letter-spacing:-0.05em; font-weight:100;">{esc(b["title"])}</h2>
+    {head}
     <p data-rise="" style="margin:0; max-width:30ch; font-size:18px; line-height:1.5; color:var(--tx);">{esc(b["intro"])}</p>
   </div>
   <div data-cursor="Arraste" data-lb="" style="overflow:hidden;">

@@ -121,11 +121,11 @@ def blocks_html(blocks, slug):
         elif kind == 'citacao':
             out.append(BS.testemunho(M, b, sec_id=sid, label=label, bg=bg or '#ffffff'))
         elif kind == 'filme':
-            out.append(B.proj_filme(b, sec_id=sid, label=label))
+            out.append(B.proj_filme(b, sec_id=sid, label=label, svc=True))
         elif kind == 'chips':
             out.append(BS.chips(b, sid, label, **({'bg': bg} if bg else {})))
         elif kind == 'marquee':
-            out.append(B.proj_marquee(M, b, sec_id=sid, label=label, drag_attr='data-mq-drag'))
+            out.append(B.proj_marquee(M, b, sec_id=sid, label=label, drag_attr='data-mq-drag', svc=True))
         elif kind == 'imagens':
             out.append(BS.imagens(M, b, sid, label, **({'bg': bg} if bg else {})))
         elif kind == 'linhas':

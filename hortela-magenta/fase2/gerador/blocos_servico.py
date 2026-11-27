@@ -1,18 +1,12 @@
 """Blocos das páginas de serviço e das landings (modelo: Branding). Marcação estática com os atributos que
 hm-fx-servico.js reconhece (data-rotbox, data-step-v, data-lp, data-acc, data-colorize, data-rise...)."""
 from base import esc, att
-from blocos import img_tag, fit_box, PAD, DASH, DASH_A
-
-INK = '#1C1B23'
-TX = '#4A4743'
-MU = '#6E6A63'
+from blocos import img_tag, fit_box
+from estilos import PAD, DASH, DASH_A, INK, TX, MU, eyebrow  # sistema de desenho comum
 SR = 'position:absolute; width:1px; height:1px; margin:-1px; padding:0; border:0; overflow:hidden; clip:rect(0 0 0 0); clip-path:inset(50%); white-space:nowrap;'
 
-# Rejilla comum das secções de duas colunas (2026-11-24): esquerda e direita sempre na proporção 5:7 (bases proporcionais
-# aos fatores de crescimento), para que a coluna direita comece no mesmo ponto em todas as secções; abaixo de ~800 px empilha.
-ROW = 'display:flex; flex-wrap:wrap; align-items:flex-start; gap:32px clamp(40px,6vw,120px);'
-COL_L = 'flex:5 1 300px; min-width:0;'
-COL_R = 'flex:7 1 420px; min-width:0;'
+# Rejilla comum das secções de duas colunas: esquerda e direita na proporção 5:7 (ver estilos.py)
+from estilos import ROW, COL_L, COL_R  # noqa: E402
 
 
 def _ulink(href, label, op=''):
@@ -170,12 +164,12 @@ def frase(b, sec_id, label, bg='#e8eced'):
         t = f'<p style="margin:0 0 22px; font-size:18px; line-height:1.5; color:{TX};">{esc(b["text"])}</p>' if b.get('text') else ''
         c = _ulink(b['cta'][0], b['cta'][1]) if b.get('cta') else ''
         side = f'<div style="{ROW} margin-top:clamp(32px,4vw,56px);"><div aria-hidden="true" style="{COL_L}"></div><div style="{COL_R}"><div style="max-width:52ch;">{t}{c}</div></div></div>'
-    return f'''<section data-cursor-bg="light" id="{sec_id}" data-screen-label="{label}" style="position:relative; padding:var(--sp-block) {PAD} var(--sp-block) {PAD}; background:{bg}; color:{INK};"><p style="margin:0 0 18px; font-size:18px; color:{MU};">{DASH} {esc(b["eyebrow"])}</p><h2 data-colorize="" style="margin:0; max-width:20ch; font-size:clamp(40px,4.64vw,74px); font-weight:100; letter-spacing:-0.05em; line-height:1.04;">{esc(b["title"])}</h2>{side}</section>'''
+    return f'''<section data-cursor-bg="light" id="{sec_id}" data-screen-label="{label}" style="position:relative; padding:var(--sp-block) {PAD} var(--sp-block) {PAD}; background:{bg}; color:{INK};">{eyebrow(esc(b["eyebrow"]))}<h2 data-colorize="" style="margin:0; max-width:20ch; font-size:clamp(40px,4.64vw,74px); font-weight:100; letter-spacing:-0.05em; line-height:1.04;">{esc(b["title"])}</h2>{side}</section>'''
 
 
 def trabalhos(M, b, sec_id='trabalhos'):
     """Introdução + galeria escura fixada com cartões de projeto (como «Trabalhos de branding»)."""
-    intro = f'''<section data-cursor-bg="light" id="{sec_id}" data-screen-label="04 Trabalhos · introdução" style="position:relative; padding:var(--sp-block) {PAD} var(--sp-title) {PAD}; background:#f6f7f8; color:{INK};"><div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:28px 64px;"><div style="flex:1 1 340px; min-width:0;"><p style="margin:0 0 18px; font-size:18px; color:{MU};">{DASH} Projetos</p><h2 style="margin:0; max-width:12ch; font-size:clamp(40px,4.96vw,80px); font-weight:100; letter-spacing:-0.05em; line-height:1.06; color:{INK};">{esc(b["title"])}</h2></div><div style="flex:1 1 340px; max-width:480px; min-width:0;"><p data-rise="" style="margin:0 0 24px; font-size:18px; line-height:1.5; color:{TX};">{esc(b["text"])}</p>{_ulink("/projetos", "Ver todos os projetos →")}</div></div></section>'''
+    intro = f'''<section data-cursor-bg="light" id="{sec_id}" data-screen-label="04 Trabalhos · introdução" style="position:relative; padding:var(--sp-block) {PAD} var(--sp-title) {PAD}; background:#f6f7f8; color:{INK};"><div style="display:flex; flex-wrap:wrap; justify-content:space-between; align-items:flex-end; gap:28px 64px;"><div style="flex:1 1 340px; min-width:0;">{eyebrow("Projetos")}<h2 style="margin:0; max-width:12ch; font-size:clamp(40px,4.96vw,80px); font-weight:100; letter-spacing:-0.05em; line-height:1.06; color:{INK};">{esc(b["title"])}</h2></div><div style="flex:1 1 340px; max-width:480px; min-width:0;"><p data-rise="" style="margin:0 0 24px; font-size:18px; line-height:1.5; color:{TX};">{esc(b["text"])}</p>{_ulink("/projetos", "Ver todos os projetos →")}</div></div></section>'''
     cols = [('#4A4743', '#FAFAF8', 'rgba(250,250,248,.35)'), ('#a6b4c1', INK, 'rgba(28,27,35,.3)'), ('#dde3e7', INK, 'rgba(28,27,35,.3)'),
             ('#1C1B23', '#FAFAF8', 'rgba(250,250,248,.35)'), ('#e8eced', INK, 'rgba(28,27,35,.3)')]
     n = len(b['items'])
@@ -253,7 +247,7 @@ def chips(b, sec_id, label, bg='#ffffff'):
     li = ''.join(f'<li data-rise="{min(i, 6) * 0.05:.2f}" style="border-top:1px solid rgba(28,27,35,.14); padding:clamp(18px,2vw,28px) 0; font-size:clamp(24px,2.4vw,38px); font-weight:200; letter-spacing:-0.035em; line-height:1.1;">{esc(x)}</li>' for i, x in enumerate(b['items']))
     text = f'<p style="margin:0; max-width:34ch; font-size:18px; font-weight:300; line-height:1.5; color:{TX};">{esc(b["text"])}</p>' if b.get('text') else ''
     return f'''<section data-cursor-bg="light" id="{sec_id}" data-screen-label="{label}" style="background:{bg}; padding:var(--sp-block) {PAD} var(--sp-block) {PAD};">
-  <div style="display:flex; flex-wrap:wrap; align-items:flex-start; gap:40px clamp(40px,7vw,140px);">
+  <div style="{ROW}">
     <div style="{COL_L}"><p style="margin:0 0 28px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{MU};">{DASH_A} {esc(b["eyebrow"])}</p><h2 style="margin:0 0 24px; font-size:clamp(40px,3.84vw,74px); font-weight:100; letter-spacing:-0.05em; line-height:1.06;">{esc(b["title"])}</h2>{text}</div>
     <ul style="{COL_R} list-style:none; margin:0; padding:0; border-bottom:1px solid rgba(28,27,35,.14);">{li}</ul>
   </div>
@@ -274,9 +268,9 @@ def premios(M, b, sec_id='premios', label='Prémios', bg='#ffffff'):
 
 
 def links_rel(b, sec_id='especialidades', label='Especialidades', bg='#ffffff'):
-    li = ''.join(f'<li style="border-top:1px solid rgba(28,27,35,.14);"><a href="{att(h)}" style="display:flex; justify-content:space-between; align-items:baseline; gap:24px; padding:clamp(18px,2vw,26px) 0; color:{INK}; text-decoration:none; font-size:clamp(22px,2vw,32px); font-weight:200; letter-spacing:-0.03em; line-height:1.1;">{esc(l)}<span aria-hidden="true" style="font-size:18px; color:#D82E87;">→</span></a></li>' for h, l in b['items'])
+    li = ''.join(f'<li data-rise="{min(i, 6) * 0.05:.2f}" style="border-top:1px solid rgba(28,27,35,.14);"><a href="{att(h)}" style="display:flex; justify-content:space-between; align-items:baseline; gap:24px; padding:clamp(18px,2vw,26px) 0; color:{INK}; text-decoration:none; font-size:clamp(22px,2vw,32px); font-weight:200; letter-spacing:-0.03em; line-height:1.1;">{esc(l)}<span aria-hidden="true" style="font-size:18px; color:#D82E87;">→</span></a></li>' for i, (h, l) in enumerate(b['items']))
     return f'''<section data-cursor-bg="light" id="{sec_id}" data-screen-label="{label}" style="background:{bg}; padding:var(--sp-block) {PAD} var(--sp-block) {PAD};">
-  <div style="display:flex; flex-wrap:wrap; gap:32px clamp(40px,7vw,140px); align-items:flex-start;">
+  <div style="{ROW}">
     <div style="{COL_L}"><p style="margin:0 0 24px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{MU};">{DASH_A} {esc(b["eyebrow"])}</p><h2 style="margin:0; font-size:clamp(34px,2.88vw,51px); font-weight:100; letter-spacing:-0.045em; line-height:1;">{esc(b["title"])}</h2></div>
     <ul style="{COL_R} list-style:none; margin:0; padding:0; border-bottom:1px solid rgba(28,27,35,.14);">{li}</ul>
   </div>

@@ -12,6 +12,7 @@ import re
 
 from base import PROJ_SLUGS, LANDINGS, att, esc
 from dados_projetos import ORDER, NAMES, CARD
+from estilos import normalizar_antetitulos
 
 NEW_SVC = {
     '/servicos#design-grafico-e-editorial': '/servicos/design-grafico-e-editorial',
@@ -123,6 +124,9 @@ PT_PROPS = [('Gris claro', 'Cinza claro'), ('Gris oscuro', 'Cinza escuro'), ("'N
 def normalizar(t):
     i = t.index('</helmet>')
     h, b = t[:i], t[i:]
+    b = normalizar_antetitulos(b)  # sistema de desenho comum (estilos.py)
+    # botão escuro de contacto: o mesmo peso de letra em todas as páginas (a página inicial tinha 400; as outras 300)
+    b = b.replace('font-size:18px; font-weight:400; box-shadow:0 14px 30px -16px rgba(28,27,35,.55);', 'font-size:18px; font-weight:300; box-shadow:0 14px 30px -16px rgba(28,27,35,.55);')
     b = _links(b)
     b = _menus(b)
     b = _logic(b)

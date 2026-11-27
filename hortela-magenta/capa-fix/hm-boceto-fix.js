@@ -668,3 +668,37 @@
   var n = 0, iv = setInterval(function () { [].forEach.call(D.querySelectorAll('[data-grow]'), setup); if (++n > 30) clearInterval(iv); }, 400);
 })();
 
+/* ===== Colunas laterais fixas que se empilham (data-faq-side) · 2026-11-27 =====
+   Lado a lado, a coluna do título acompanha a lista (sticky); empilhadas (tablet ao alto), deixa de o fazer. */
+(function () {
+  var W = window, D = document;
+  function check() {
+    [].forEach.call(D.querySelectorAll('[data-faq-side]'), function (s) {
+      var row = s.parentElement; if (!row) return;
+      var other = null; [].forEach.call(row.children, function (c) { if (c !== s && !other && c.offsetHeight > 0) other = c; });
+      if (!other) return;
+      /* lado a lado = uma coluna começa depois de a outra acabar na horizontal (a posição vertical muda com o sticky) */
+      var a = s.getBoundingClientRect(), b = other.getBoundingClientRect();
+      var stacked = !(b.left >= a.right - 2 || a.left >= b.right - 2);
+      if (stacked) s.setAttribute('data-hm-stacked', ''); else s.removeAttribute('data-hm-stacked');
+    });
+  }
+  W.addEventListener('resize', check);
+  var n = 0, iv = setInterval(function () { check(); if (++n > 30) clearInterval(iv); }, 400);
+})();
+
+
+/* ===== Início · Showreel: o antetítulo acompanha o título (data-reel-l) quando este sobe ao descer · 2026-11-27 =====
+   Parado, o antetítulo acabava por ficar em cima das letras do título. Copia-se o mesmo transform (MutationObserver). */
+(function () {
+  var D = document;
+  function setup() {
+    var h = D.querySelector('section[data-reel] h2[data-reel-l]'); if (!h || h.__hmEb) return !!h;
+    var p = h.previousElementSibling; if (!p || p.tagName !== 'P') return true;
+    h.__hmEb = 1; p.style.willChange = 'transform';
+    var copy = function () { p.style.transform = h.style.transform || ''; };
+    new MutationObserver(copy).observe(h, { attributes: true, attributeFilter: ['style'] }); copy();
+    return true;
+  }
+  var n = 0, iv = setInterval(function () { if (setup() || ++n > 40) clearInterval(iv); }, 300);
+})();
