@@ -252,6 +252,32 @@ const lineas = (sel, root = document) => [...root.querySelectorAll(sel)].filter(
     const fsz = new Set(Object.values(sizes).map(x => x.split('/')[0])); const many = Object.values(sizes).filter(x => parseInt(x.split('/')[1]) > 3);
     rep('movil', 'cabeceras', 'Títulos de cabecera: mismo tamaño y ≤ 3 líneas', fsz.size === 1 && !many.length, JSON.stringify(sizes)); }
 
+  // 15) Galerías de arrastrar y ampliar: aviso debajo, en una línea, con el texto de cada tipo de pantalla (Laura, 2026-11-27)
+  if (run('avisos')) for (const dev of ['movil', 'movil360', 'pc']) for (const r of routes) {
+    const html = fs.readFileSync(path.join(DIR, PAGES[r] + '.html'), 'utf8'); if (!/data-lb=""/.test(html) || !/data-(mq-)?drag=""/.test(html)) continue;
+    if (dev === 'movil360' && !['/projetos/alsil', '/sobre', '/servicos/design-web'].includes(r)) continue;
+    const { ctx, p } = await open(b, dev, r); await walk(p);
+    const g = await p.evaluate(() => [...document.querySelectorAll('section')].filter(s => s.querySelector('[data-lb]') && s.querySelector('[data-drag], [data-mq-drag]')).map(s => { const h = s.querySelector('[data-hm-gal-hint]'); if (!h) return { sec: s.id || s.getAttribute('data-screen-label'), ok: false };
+      const vis = [...h.querySelectorAll('[data-hm-hint-fine], [data-hm-hint-touch]')].filter(x => getComputedStyle(x).display !== 'none'); const gal = [...s.querySelectorAll('[data-lb]')].pop();
+      const fs = parseFloat(getComputedStyle(h).fontSize);
+      return { sec: s.id || s.getAttribute('data-screen-label'), ok: true, txt: vis.map(x => x.textContent).join('|'), lines: Math.round(h.getBoundingClientRect().height / (fs * 1.25)), fits: h.scrollWidth <= h.clientWidth + 1, below: h.getBoundingClientRect().top >= gal.getBoundingClientRect().bottom - 1 }; }));
+    const touch = dev !== 'pc'; const bad = g.filter(x => !x.ok || x.lines > 1 || !x.fits || !x.below || (touch ? !/^Deslize/.test(x.txt) : !/^Arraste/.test(x.txt)));
+    rep(dev, r, 'Galería: aviso «' + (touch ? 'Deslize… · Toque' : 'Arraste… · Clique') + ' para ampliar» debajo y en una línea', g.length > 0 && !bad.length, bad.length ? JSON.stringify(bad) : g.length + ' galería(s)');
+    await ctx.close();
+  }
+  // 16) Identidade visual en móvil: la nueva se abre desde el centro y la anterior sigue entera debajo (sin franja; Laura, 2026-11-27)
+  if (run('identidade')) for (const r of routes) {
+    const html = fs.readFileSync(path.join(DIR, PAGES[r] + '.html'), 'utf8'); if (!/id="identidade" data-tone=/.test(html)) continue;
+    const { ctx, p } = await open(b, 'movil', r); await walk(p);
+    await p.evaluate(() => { const s = document.querySelector('#identidade [data-step]'); scrollTo(0, s.getBoundingClientRect().top + scrollY - 80); }); await p.waitForTimeout(1200);
+    const before = await p.evaluate(() => +document.querySelector('#identidade [data-step]').getAttribute('data-step') || 0);
+    const btns = await p.$$('#identidade [data-step] button[data-t]'); const nxt = (before + 1) % btns.length; await btns[nxt].click({ force: true }); await p.waitForTimeout(350);
+    const m = await p.evaluate(([a, z]) => { const xs = [...document.querySelectorAll('#identidade [data-step] > div:first-child > div[data-x]')]; const cp = e => getComputedStyle(e).clipPath; return { old: cp(xs[a]), oldZ: getComputedStyle(xs[a]).zIndex, neu: cp(xs[z]), neuZ: getComputedStyle(xs[z]).zIndex }; }, [before, nxt]);
+    const nums = (m.neu.match(/[\d.]+%/g) || []).map(parseFloat); const sym = nums.length === 1 || (nums.length >= 2 && Math.abs(nums[0] - nums[nums.length > 2 ? 2 : 1]) < 3);
+    const full = s => s === 'none' || (s.match(/[\d.]+/g) || []).every(v => +v === 0); const ok = full(m.old) && m.neuZ === '2' && (sym || full(m.neu));
+    rep('movil', r, 'Identidade: cambio de imagen limpio desde el centro, sin franja de la anterior', ok, JSON.stringify(m));
+    await ctx.close();
+  }
   fs.writeFileSync(S + '/bateria-ultima.json', JSON.stringify(results, null, 1));
   console.log('\n' + (fails ? 'FALLAN ' + fails + ' de ' + results.length : 'TODO BIEN: ' + results.length + ' comprobaciones'));
   await b.close();

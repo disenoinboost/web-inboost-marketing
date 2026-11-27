@@ -587,3 +587,22 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 - **Menú móvil:** los 6 proyectos principales primero.
 - **Galerías:** todas continuas.
 - **Cabeceras del móvil:** mismo tamaño en los títulos.
+
+## 19. Identidade visual en móvil y aviso de las galerías (2026-11-27)
+
+1. **Identidade visual (móvil, Camolas y las fichas):** al cambiar de imagen salía una franja de color arriba.
+   - Causa: cada imagen inactiva se recogía hacia «su» franja (la 1.ª arriba, la 4.ª abajo), que en el PC son las columnas de las pestañas. Al cambiar, la imagen saliente se encogía hacia esa franja a la vista mientras la nueva se abría.
+   - Arreglo:
+     - en el móvil la nueva se abre siempre desde el centro (`inset(50% 0 50% 0)` → `inset(0)`);
+     - la saliente se queda entera debajo y solo se recoge cuando la nueva ya la ha tapado (transición con 1,05 s de retardo en la capa de `z-index: 1`).
+   - El PC conserva el efecto de columnas del diseño.
+2. **Aviso en las galerías de arrastrar y ampliar:** debajo de cada galería con arrastre (`data-drag`/`data-mq-drag`) y ampliación (`data-lb`).
+   - Texto: «↔ Arraste para ver mais · Clique para ampliar» con ratón, y «↔ Deslize para ver mais · Toque para ampliar» en táctil.
+   - Componente único `estilos.DICA_GALERIA`, que coloca `dicas_galerias()` desde `comum.normalizar`.
+   - En 22 páginas: las 13 fichas, Camolas, Design Web · Conteúdos, Sobre · Hortelanices, Campanhas, Fotografia & Vídeo, Avença y las 4 landings.
+   - Sustituye los avisos antiguos de Camolas (solo «Arraste para ver mais») y de Sobre (estaba en la cabecera, encima de la galería).
+   - En el móvil cabe en una línea: letra ajustada al ancho, 14,4 px a 390 px.
+3. **Batería:** dos comprobaciones nuevas.
+   - Aviso debajo de cada galería, en una línea y con el texto según el tipo de pantalla.
+   - Transición limpia de Identidade en el móvil: la saliente entera y la nueva abriéndose simétrica desde el centro.
+

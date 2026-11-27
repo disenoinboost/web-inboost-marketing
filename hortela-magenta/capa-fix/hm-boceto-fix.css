@@ -644,3 +644,12 @@ html body [data-faq-side][data-hm-stacked] { position: relative !important; top:
 /* Opiniões (todas as larguras): cada palavra entra por uma máscara (overflow:hidden) com folga de 0,16 em por cima,
    pouca para o acento da Spartan: em «É inevitável…» o acento do É ficava mais curto. Folga de 0,3 em, compensada. */
 html body #opinioes blockquote span:has(> [data-op-w]) { padding-top: .3em !important; margin-top: -.3em !important; }
+
+/* Identidade visual no telemóvel (Camolas e fichas): troca limpa de imagem. A nova (z-index 2) abre-se do centro em 1 s;
+   a anterior (passa a z-index 1) não se fecha à vista: fica inteira por baixo e só se recolhe quando a nova já a tapou. */
+@media (max-width: 767px) {
+  html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div[data-x][style*="z-index: 1"] { transition: clip-path 0s linear 1.05s !important; }
+}
+
+/* Aviso das galerias de arrastar e ampliar (gerador: estilos.DICA_GALERIA): no telemóvel cabe numa linha */
+@media (max-width: 767px) { html body [data-hm-gal-hint] { font-size: min(15px, calc((100vw - 32px) / 24.8)) !important; white-space: nowrap; } } /* o texto mede 24,5 em */

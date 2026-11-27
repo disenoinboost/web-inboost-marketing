@@ -12,7 +12,7 @@ import re
 
 from base import PROJ_SLUGS, LANDINGS, att, esc
 from dados_projetos import ORDER, NAMES, CARD
-from estilos import normalizar_antetitulos
+from estilos import normalizar_antetitulos, dicas_galerias
 
 NEW_SVC = {
     '/servicos#design-grafico-e-editorial': '/servicos/design-grafico-e-editorial',
@@ -125,6 +125,7 @@ def normalizar(t):
     i = t.index('</helmet>')
     h, b = t[:i], t[i:]
     b = normalizar_antetitulos(b)  # sistema de desenho comum (estilos.py)
+    b = dicas_galerias(b)  # aviso «Arraste/Deslize… · Clique/Toque… para ampliar» por baixo das galerias
     # botão escuro de contacto: o mesmo peso de letra em todas as páginas (a página inicial tinha 400; as outras 300)
     b = b.replace('font-size:18px; font-weight:400; box-shadow:0 14px 30px -16px rgba(28,27,35,.55);', 'font-size:18px; font-weight:300; box-shadow:0 14px 30px -16px rgba(28,27,35,.55);')
     b = _links(b)

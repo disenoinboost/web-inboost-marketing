@@ -169,12 +169,14 @@
     });
   }
 
-  /* 6. Camolas · identidade (só Camolas; Branding também tem #identidade): no telemóvel as cortinas abrem-se na horizontal (faixas) em vez de colunas */
+  /* 6. Identidade visual (Camolas e fichas; Branding também tem #identidade, com painéis data-step-v): no telemóvel a imagem nova
+     abre-se a partir do centro (antes cada uma fechava-se para a sua faixa e, ao mudar, ficava uma faixa da anterior por cima).
+     A anterior fica inteira por baixo até a nova a tapar (CSS: transição com atraso nas que estão em z-index 1). */
   function curtains() {
     D.querySelectorAll('section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div[data-x]').forEach(function (el) {
       var off = el.getAttribute('data-off') || '';
       if (el.__hmOff === undefined) el.__hmOff = off;
-      var want = MQ.matches ? el.__hmOff.replace(/inset\(0 (\S+) 0 (\S+)\)/, 'inset($2 0 $1 0)') : el.__hmOff;
+      var want = MQ.matches ? el.__hmOff.replace(/inset\([^)]*\)/, 'inset(50% 0 50% 0)') : el.__hmOff;
       if (off === want) return;
       el.setAttribute('data-off', want);
       var m = want.match(/clip-path:\s*([^;]+)/);

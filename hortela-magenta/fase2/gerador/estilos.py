@@ -62,3 +62,32 @@ _ANTE = re.compile(r'<p style="margin:0 0 18px; font-size:18px; color:(#6E6A63|v
 
 def normalizar_antetitulos(html):
     return _ANTE.sub(lambda m: f'<p style="margin:0 0 24px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{m.group(1)};">{m.group(2)}', html)
+
+
+# ---------------------------------------------------------------------------------------------------------------------------
+# Aviso das galerias que se arrastam e abrem em grande (2026-11-27, pedido de Laura: «que sepa el usuario»).
+# Por baixo de cada galeria com arrastar (data-drag / data-mq-drag) e ampliar (data-lb): fichas, serviços, landings,
+# Design Web · Conteúdos, Sobre · Hortelanices e Camolas · Fotografia. O texto muda com o tipo de ecrã (rato / táctil),
+# com as mesmas marcas data-hm-hint-fine / data-hm-hint-touch das linhas que se abrem.
+DICA_GALERIA = (f'<p data-hm-gal-hint="" style="margin:clamp(16px,2vw,24px) 0 0; padding:0 {PAD}; font-size:18px; font-weight:400; '
+                f'color:color-mix(in srgb, {INK} 60%, transparent);"><span aria-hidden="true" style="color:{MAGENTA};">↔</span> '
+                '<span data-hm-hint-fine="">Arraste para ver mais · Clique para ampliar</span>'
+                '<span data-hm-hint-touch="">Deslize para ver mais · Toque para ampliar</span></p>')
+_SEC = re.compile(r'<section\b.*?</section>', re.S)
+_CAMOLAS_HINT = re.compile(r'<p style="margin:clamp\(16px,2vw,24px\) 0 0; padding:0 clamp\(16px,4vw,64px\);[^"]*"><span aria-hidden="true" style="color:#D82E87;">↔</span> Arraste para ver mais</p>')
+_SOBRE_HINT = '<p style="margin:14px 0 0; font-size:18px; color:rgba(28,27,35,.6); font-weight:400;">Arraste para ver mais →</p>'
+
+
+def dicas_galerias(html):
+    """Põe DICA_GALERIA no fim de cada secção que tem uma galeria de arrastar e ampliar (uma só vez por secção).
+    Substitui os avisos antigos («Arraste para ver mais» de Camolas por baixo e de Sobre no cabeçalho)."""
+    def sec(m):
+        s = m.group(0)
+        if 'data-lb=""' not in s or not re.search(r'data-(?:mq-)?drag=""', s) or 'data-hm-gal-hint' in s:
+            return s
+        s = s.replace(_SOBRE_HINT, '')
+        if _CAMOLAS_HINT.search(s):
+            return _CAMOLAS_HINT.sub(DICA_GALERIA, s, count=1)
+        return s[:-len('</section>')].rstrip() + '\n  ' + DICA_GALERIA + '\n</section>'
+    return _SEC.sub(sec, html)
+
