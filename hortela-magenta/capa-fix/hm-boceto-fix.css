@@ -657,3 +657,28 @@ html body #opinioes blockquote span:has(> [data-op-w]) { padding-top: .3em !impo
 /* Banner de cookies (Complianz) por cima da barra «Pedir orçamento · Ligar»: enquanto o banner está à vista, a barra
    esconde-se (o banner já tem z-index 99999; assim nada da barra aparece por cima nem por baixo dele). Volta ao aceitar ou recusar. */
 html body:has(.cmplz-cookiebanner.cmplz-show) .hm-cta { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+
+/* Linhas que se abrem no telemóvel, todas iguais à lista de serviços da página inicial (2026-11-27):
+   o número pequeno (16 px) e a palavra grande. Design Web · «O que determina o âmbito» (#ambito, bloco original do desenho)
+   ficava fora da regra de [data-hm-amb] e o número herdava os ~25 px da palavra. */
+@media (max-width: 767px) {
+  html body main [data-hm-amb] h3 button > span:first-child,
+  html body main #ambito > ul > li > h3 > button > span:first-child { font-size: 16px !important; }
+  html body main #ambito > ul > li > h3 > button > span:last-child { font-size: clamp(30px, 9vw, 38px) !important; font-weight: 100 !important; line-height: 1.14 !important; }
+}
+
+/* Projetos · painel «Filtrar projetos» (telemóvel), reposto a 2026-11-27 (feito a 24-nov e perdido numa subida posterior):
+   ocupava demasiado e, no iPhone com as barras do Safari, a parte de cima (com o ×) ficava por baixo da cabeçalho.
+   Letra mais pequena (nomes 16 px, números e títulos 13 px), filas mais baixas, altura máxima que deixa livre a cabeçalho
+   e a linha «Filtrar projetos ×» fixa no topo do painel, para o × estar sempre à vista. */
+@media (max-width: 767px) {
+  html body #f-panel { max-height: calc(100vh - 230px) !important; max-height: calc(100svh - 230px) !important; padding: 0 18px 14px !important; overscroll-behavior: contain; }
+  html body #f-panel > div:first-child { position: sticky; top: 0; z-index: 2; background: #FAFAF8; margin: 0 -18px 6px !important; padding: 10px 18px 6px; }
+  html body #f-panel > div:first-child > p { font-size: 13px !important; }
+  html body #f-panel > div:last-child { gap: 10px 24px !important; }
+  html body #f-panel > div:last-child > div > p { font-size: 13px !important; margin: 0 0 4px !important; }
+  html body #f-panel ol button, html body #f-panel ol [aria-disabled] { padding: 7px 0 !important; gap: 10px !important; }
+  html body #f-panel ol button > span:first-child, html body #f-panel ol button > sup,
+  html body #f-panel ol [aria-disabled] > span:first-child, html body #f-panel ol [aria-disabled] > sup { font-size: 13px !important; }
+  html body #f-panel ol button > span:nth-child(2), html body #f-panel ol [aria-disabled] > span:nth-child(2) { font-size: 16px !important; }
+}

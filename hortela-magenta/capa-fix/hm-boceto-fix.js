@@ -779,3 +779,20 @@
   var n = 0, iv = setInterval(function () { var r = D.querySelector('#digital[data-hm-scrub]'); if (r) { setup(r); } if (r || ++n > 40) clearInterval(iv); }, 250);
 })();
 
+
+/* Fotografias em grande (lightbox [data-hm-lb]) no telemóvel e no tablet (2026-11-27; já corrigido a 24-nov e perdido numa subida posterior).
+   O lightbox abre-se no pointerup do toque; o «click» que o telemóvel dispara logo a seguir cai no fundo escuro do próprio
+   lightbox (que já está por cima) e esse clique «fora da foto» fechava-o de imediato. Com rato não acontece: o clique cai na foto.
+   Aqui ignora-se esse clique quando o toque começou com o lightbox fechado. Fica na janela (fase de captura), antes de qualquer
+   outro ouvinte; os toques seguintes (X, setas, fora da foto) funcionam como antes. */
+(function () {
+  if (window.__hmLbTap) return; window.__hmLbTap = 1;
+  var W = window, D = document, downOpen = false;
+  function root() { return D.querySelector('[data-hm-lb]'); }
+  function visible(r) { return !!r && r.style.display !== 'none' && r.style.opacity !== '0'; }
+  W.addEventListener('pointerdown', function () { downOpen = visible(root()); }, true);
+  W.addEventListener('click', function (e) {
+    var r = root();
+    if (!downOpen && visible(r) && r.contains(e.target)) { e.stopPropagation(); e.preventDefault(); }
+  }, true);
+})();

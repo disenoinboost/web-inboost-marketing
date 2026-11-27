@@ -130,6 +130,8 @@ def normalizar(t):
     b = b.replace('https://www.google.com/maps?cid=12848211740159704585', 'https://maps.app.goo.gl/iV6yJoYW8JyYDM898')
     # botão escuro de contacto: o mesmo peso de letra em todas as páginas (a página inicial tinha 400; as outras 300)
     b = b.replace('font-size:18px; font-weight:400; box-shadow:0 14px 30px -16px rgba(28,27,35,.55);', 'font-size:18px; font-weight:300; box-shadow:0 14px 30px -16px rgba(28,27,35,.55);')
+    # logo da Stericycle (opiniões de Sobre e Serviços): cópia local em hm-media em vez de Wikimedia (dois redirecionamentos e outro domínio) · 2026-11-27
+    b = b.replace('https://commons.wikimedia.org/wiki/Special:FilePath/Stericycle_logo.svg', '/wp-content/uploads/hm-media/commons.wikimedia.org/Stericycle_logo.svg')
     b = _links(b)
     b = _menus(b)
     b = _logic(b)

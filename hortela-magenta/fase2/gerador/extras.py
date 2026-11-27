@@ -38,14 +38,13 @@ def servicos(t):
     a = t.index('<a href="#avencas-mensais"')
     b = t.index('</li>', a) + 5
     t = t[:b] + li + t[b:]
-    # 5) secção Coaching de Marcas (mesma composição de Avenças, fundo branco e imagem à esquerda)
+    # 5) secção Coaching de Marcas (fundo branco; texto à esquerda e a foto de Gonçalo à direita, como Branding).
+    #    O texto vem ANTES da foto no HTML: no telemóvel as colunas empilham-se pela ordem do HTML e a foto tem de ficar
+    #    depois do texto, como nas outras secções (2026-11-27; antes era row-reverse com a foto primeiro e no telemóvel saía em cima).
     sec = f'''
 
 <section data-cursor-bg="light" id="coaching-de-marcas" data-screen-label="07a2 Coaching de Marcas" style="background:#ffffff; padding:var(--sp-block) clamp(16px,4vw,64px) var(--sp-block) clamp(16px,4vw,64px); scroll-margin-top:40px;">
-  <div style="display:flex; flex-wrap:wrap; gap:56px clamp(40px,7vw,140px); align-items:flex-start; flex-direction:row-reverse; justify-content:flex-end;">
-    <div style="flex:1.3 1 460px; min-width:0; display:flex; flex-direction:column; gap:clamp(20px,3vw,40px);">
-      <figure data-rise="" style="margin:0; width:78%; align-self:flex-end;"><div style="aspect-ratio:4/5; overflow:hidden; background:#EEEDEA;"><img src="{GONCALO}" alt="Gonçalo Santos, fundador da Hortelã Magenta" loading="lazy" decoding="async" style="display:block; width:100%; height:100%; object-fit:cover; object-position:50% 20%;"></div><figcaption style="margin-top:10px; font-size:16px; color:rgba(28,27,35,.6); font-weight:400;">Gonçalo Santos · Fundador</figcaption></figure>
-    </div>
+  <div style="display:flex; flex-wrap:wrap; gap:56px clamp(40px,7vw,140px); align-items:flex-start;">
     <div data-faq-side="" style="flex:1 1 320px; max-width:500px; position:sticky; top:clamp(110px,16vh,150px);">
       <p style="margin:0 0 22px; font-size:16px; color:rgba(28,27,35,.6); font-variant-numeric:tabular-nums; font-weight:400;">07 / 07</p>
       <h2 style="margin:0 0 24px; font-size:clamp(40px,3.68vw,67px); font-weight:100; letter-spacing:-0.05em; line-height:.95; text-wrap:balance;">Coaching de Marcas</h2>
@@ -53,11 +52,20 @@ def servicos(t):
       <ul style="list-style:none; margin:0 0 32px; padding:0; border-top:1px solid rgba(28,27,35,.12);"><li style="padding:12px 0; border-bottom:1px solid rgba(28,27,35,.12); font-size:18px; font-weight:300;">Escuta</li><li style="padding:12px 0; border-bottom:1px solid rgba(28,27,35,.12); font-size:18px; font-weight:300;">Diagnóstico</li><li style="padding:12px 0; border-bottom:1px solid rgba(28,27,35,.12); font-size:18px; font-weight:300;">Clarificação</li><li style="padding:12px 0; border-bottom:1px solid rgba(28,27,35,.12); font-size:18px; font-weight:300;">Direção</li></ul>
       <a href="/servicos/coaching-de-marcas" {CTA_STYLE}>Explorar Coaching de Marcas →</a>
     </div>
+    <div style="flex:1.3 1 460px; min-width:0; display:flex; flex-direction:column; gap:clamp(20px,3vw,40px);">
+      <figure data-rise="" style="margin:0; width:78%; align-self:flex-end;"><div style="aspect-ratio:4/5; overflow:hidden; background:#EEEDEA;"><img src="{GONCALO}" alt="Gonçalo Santos, fundador da Hortelã Magenta" loading="lazy" decoding="async" style="display:block; width:100%; height:100%; object-fit:cover; object-position:50% 20%;"></div><figcaption style="margin-top:10px; font-size:16px; color:rgba(28,27,35,.6); font-weight:400;">Gonçalo Santos · Fundador</figcaption></figure>
+    </div>
   </div>
 </section>'''
     a = t.index('data-screen-label="07a Avenças mensais"')
     b = t.index('</section>', a) + len('</section>')
     t = t[:b] + sec + t[b:]
+    # 6) «Projetos por especialidade»: cada especialidade leva à sua landing (antes as cinco iam para /projetos) · 2026-11-27
+    for nome, lp in [('Vinho', '/design-rotulos-vinho/'), ('Indústria', '/design-comunicacao-industria/'),
+                     ('Clínicas dentárias', '/branding-clinicas-dentarias/'), ('Administração pública', '/design-administracao-publica/'),
+                     ('Eventos', '/design-de-eventos/')]:
+        t, k = re.subn(r'(<a data-fw="[^"]*" href=")/projetos(" [^>]*>' + re.escape(nome) + r'<span)', r'\g<1>' + lp + r'\2', t)
+        assert k == 1, ('especialidade', nome, k)
     return t
 
 
