@@ -544,6 +544,18 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 3. **Migas en las páginas legales y el mapa del sitio (móvil):** son una lista (`nav > ol`, 18 px) que la regla de una línea no cubría: «Início — Política de Privacidade» salía en 2 líneas.
    - Además, en todas las migas del móvil el `overflow:hidden` cortaba el acento de las mayúsculas («INICIO», «POLITICA»).
    - Arreglo: la misma regla para la lista y entrelínea de 1,6.
+4. **Carruseles del móvil (Camolas · Rótulos, fichas · Aplicações):** el antetítulo está dentro de la franja que se desliza, pegado a su borde, y la franja recortaba la tilde: salía «ROTULOS» en lugar de «RÓTULOS».
+   - Arreglo: 10 px de holgura por arriba, compensados con margen negativo, así que nada cambia de sitio.
+   - La batería comprueba ahora en todas las páginas que ningún contenedor recorte acentos de mayúsculas.
+5. **Opiniones (Home, Serviços, Sobre):** al revisar con esa comprobación nueva, la tilde de «É inevitável…» salía recortada.
+   - En el móvil desaparecía, por el recorte de la cita a 5 líneas.
+   - En PC y tablet salía más corta, porque la máscara de la entrada palabra a palabra solo dejaba 0,16 em por arriba.
+   - Arreglo: holgura de 0,2 em en la cita del móvil y de 0,3 em en la máscara, compensadas, así que nada cambia de sitio.
+   - Las migas del móvil también ganan 0,3 em de holgura.
+
+**Resultado final de la batería:**
+- 234 comprobaciones, más la de acentos en las 36 páginas × móvil, tablet y PC: todas bien.
+- «O site» queda a 3,5× el scroll en móvil (390), tablet (820), portátil (1280), PC (1440) y pantalla grande (1920).
 
 **Batería de regresión (`scratchpad/hmtools/bateria.js`):** comprueba cada corrección pedida y se pasa antes de cada subida.
 - **General, en las 36 rutas × móvil, tablet y PC:**

@@ -563,6 +563,8 @@ html.hm-fade img[data-hm-in] { animation: hmImgIn .6s ease backwards; }
   html body nav[aria-label="Breadcrumb"] > ol > li:last-child { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
   /* com overflow:hidden, o acento das maiúsculas («INÍCIO», «POLÍTICA») ficava cortado: entrelinha com folga por cima */
   html body nav[aria-label="Breadcrumb"], html body nav[aria-label="Breadcrumb"] > ol, html body nav[aria-label="Breadcrumb"] li { line-height: 1.6 !important; }
+  html body nav[aria-label="Breadcrumb"] { padding-top: .3em !important; margin-top: -.3em !important; }
+  html body nav[aria-label="Breadcrumb"] > ol { padding-top: .3em !important; margin-top: -.3em !important; }
 }
 
 /* Fotografia em grande (lightbox): sem a caixa rosa de foco no X e nas setas (o foco vai para o X ao abrir) */
@@ -624,3 +626,21 @@ html body [data-faq-side][data-hm-stacked] { position: relative !important; top:
   html body #rotulos [data-lpt] { font-size: min(24.96px, calc((78vw - 42px) / 12.4)) !important; white-space: nowrap !important; }
 }
 
+
+/* Carrosséis com o dedo (Camolas · Rótulos, fichas · Aplicações), telemóvel: o antetítulo está dentro da faixa que desliza
+   (overflow:auto), encostado ao topo, e o acento das maiúsculas ficava cortado («ROTULOS» em vez de «RÓTULOS»).
+   Folga de 10 px por cima, compensada com margem negativa: nada muda de sítio. */
+@media (max-width: 767px) {
+  html body #rotulos [data-lp-track], html body #aplicacoes [data-lp-track] { padding-top: 10px !important; margin-top: -10px !important; }
+}
+
+/* Opiniões no telemóvel: a citação é recortada às 5 linhas (overflow:hidden) e o acento de «É inevitável…» ficava cortado.
+   Folga por cima compensada com margem negativa (a citação não muda de sítio). */
+@media (max-width: 767px) {
+  html body #opinioes [data-op-panel] blockquote, html body #opinioes [data-op-art] > p[data-fw] { padding-top: .2em !important; margin-top: -.2em !important; }
+}
+
+
+/* Opiniões (todas as larguras): cada palavra entra por uma máscara (overflow:hidden) com folga de 0,16 em por cima,
+   pouca para o acento da Spartan: em «É inevitável…» o acento do É ficava mais curto. Folga de 0,3 em, compensada. */
+html body #opinioes blockquote span:has(> [data-op-w]) { padding-top: .3em !important; margin-top: -.3em !important; }

@@ -57,6 +57,20 @@ const GENERAL = () => {
   const bcl = bc && (bc.querySelector('ol') || bc); out.migas = bc ? (bcl.getBoundingClientRect().height <= parseFloat(getComputedStyle(bcl).fontSize) * 2.2) : null;
   /* acentos das maiúsculas sem cortar (overflow:hidden com entrelinha justa cortava «INÍCIO») */
   out.migasAcento = bc ? [bc, bcl].every(e => getComputedStyle(e).overflow === 'visible' || parseFloat(getComputedStyle(e).lineHeight) / parseFloat(getComputedStyle(e).fontSize) >= 1.45) : null;
+  // acentos de las mayúsculas recortados por un contenedor con overflow (p. ej. «ROTULOS» en el carrusel de Camolas)
+  const UPA = /[ÁÀÂÃÉÊÍÓÔÕÚ]/, ANYA = /[ÁÀÂÃÉÊÍÓÔÕÚáàâãéêíóôõú]/; const clip = []; const cv = document.createElement('canvas').getContext('2d');
+  const tw = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT); let tn;
+  while ((tn = tw.nextNode())) { const el = tn.parentElement; if (!el || !ANYA.test(tn.textContent) || el.closest('[aria-hidden="true"], script, style, noscript')) continue;
+    const cs = getComputedStyle(el); if (!el.offsetParent) continue; let eo = 1; for (let q = el; q && q !== document.body; q = q.parentElement) eo *= +getComputedStyle(q).opacity; if (eo < 0.05) continue; /* painéis escondidos (outras opiniões, etc.) */ const up = cs.textTransform === 'uppercase';
+    const s = tn.textContent; const idx = s.search(up ? ANYA : UPA); if (idx < 0) continue;
+    /* só o carácter acentuado: a sua caixa e quanto o acento sobe acima dela (medido com a fonte real) */
+    const rg = document.createRange(); rg.setStart(tn, idx); rg.setEnd(tn, idx + 1); const r1 = rg.getBoundingClientRect(); if (!r1.width) continue;
+    const ch = up ? s[idx].toUpperCase() : s[idx]; cv.font = cs.fontWeight + ' ' + cs.fontSize + ' ' + cs.fontFamily; const m = cv.measureText(ch);
+    const extra = Math.max(0, (m.actualBoundingBoxAscent || 0) - (m.fontBoundingBoxAscent || 0)); if (!extra) continue; const accTop = r1.top - extra;
+    for (let q = el.parentElement; q && q !== document.body; q = q.parentElement) { const qs = getComputedStyle(q); if (qs.clipPath && qs.clipPath !== 'none') break; if (qs.overflowY === 'visible' && qs.overflowX === 'visible') continue;
+      const qr = q.getBoundingClientRect(); if (r1.left >= qr.left - 1 && r1.right <= qr.right + 1 && accTop < qr.top + parseFloat(qs.borderTopWidth) - 2 /* ≥ 2 px do acento cortados */ && r1.top < qr.bottom - 1 && r1.top >= qr.top - 1 && qr.height > 4) /* a letra está dentro da janela e só o acento sai por cima */ /* desplegável fechado: o texto está todo escondido, não cortado */ { clip.push(s.trim().slice(0, 30)); break; } }
+  }
+  out.acentos = [...new Set(clip)].slice(0, 5);
   // vídeos con póster
   out.sinPoster = [...document.querySelectorAll('video')].filter(v => !v.getAttribute('poster') && !v.closest('[data-hm-no-poster]')).length;
   return out;
@@ -72,7 +86,7 @@ const lineas = (sel, root = document) => [...root.querySelectorAll(sel)].filter(
   const b = await chromium.launch();
   const routes = Object.keys(PAGES).filter(r => !only || r.includes(only));
   // 1) generales: todas las rutas en móvil, tablet y PC
-  for (const dev of (process.env.GEN === '0' ? [] : ['movil', 'tablet', 'pc'])) for (const route of routes) {
+  for (const dev of (process.env.GEN === '0' ? [] : (process.env.DEVS ? process.env.DEVS.split(',') : ['movil', 'tablet', 'pc']))) for (const route of routes) {
     const { ctx, p, errs } = await open(b, dev, route); await walk(p);
     /* em local, as imagens de fora (hortelamagenta.pt) e as que só existem no servidor não contam: a prova LIVE=1 apanha-as */
     await p.evaluate(m => { window.__hmLocal404 = m; }, p.__miss || []);
@@ -85,6 +99,7 @@ const lineas = (sel, root = document) => [...root.querySelectorAll(sel)].filter(
     if (g.franjas.length) probs.push('franjas ' + g.franjas.join(' / '));
     if (dev !== 'pc' && g.migas === false) probs.push('migas en 2 líneas');
     if (g.migasAcento === false) probs.push('migas: acentos de mayúsculas recortados');
+    if (g.acentos.length) probs.push('acentos recortados: ' + g.acentos.join(' | '));
     if (dev === 'movil' && g.sinPoster) probs.push(g.sinPoster + ' vídeos sin póster (móvil)');
     rep(dev, route, 'general (ancho, errores, imágenes, fondos, franjas, migas, pósters)', !probs.length, probs.join(' · '));
     await ctx.close();
