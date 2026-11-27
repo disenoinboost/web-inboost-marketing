@@ -573,8 +573,14 @@ html body [data-lb-p]:focus, html body [data-lb-p]:focus-visible { outline: none
 }
 
 
-/* «Mais projetos» no telemóvel: todos os cartões a cores (sem rato, só o primeiro ficava a cores e os outros a cinzento) */
+/* «Mais projetos» no telemóvel: todos os cartões a cores (sem rato, só o primeiro ficava a cores e os outros a cinzento),
+   e em todos o nome do projeto e «Ver projeto →», como no cartão ativo do computador e na página inicial.
+   Filhos de cada cartão: span 1 = degradê, 2 = traço magenta de cima, 3 = número, 4 = nome, 5 = «Ver projeto». */
 @media (max-width: 767px) {
   html body section[data-screen-label="09 Projetos"] [data-step] > a > div[data-x] { opacity: 1 !important; transform: none !important; }
-  html body section[data-screen-label="09 Projetos"] [data-step] > a > span[data-x] { transform: scaleX(0) !important; }
+  html body section[data-screen-label="09 Projetos"] [data-step] > a > span:nth-of-type(1) { background: linear-gradient(180deg, rgba(20,19,25,.38) 0%, rgba(20,19,25,.08) 34%, rgba(20,19,25,.42) 58%, rgba(20,19,25,.9) 100%) !important; }
+  html body section[data-screen-label="09 Projetos"] [data-step] > a > span:nth-of-type(2) { transform: scaleX(0) !important; }
+  html body section[data-screen-label="09 Projetos"] [data-step] > a > span:nth-of-type(3) { text-shadow: 0 1px 10px rgba(0,0,0,.5); }
+  html body section[data-screen-label="09 Projetos"] [data-step] > a > span:nth-of-type(4) { transform: translateY(-34px) !important; font-size: 22px !important; font-weight: 300 !important; text-shadow: 0 1px 14px rgba(0,0,0,.55); }
+  html body section[data-screen-label="09 Projetos"] [data-step] > a > span:nth-of-type(5) { opacity: 1 !important; transform: none !important; font-size: 15px !important; text-shadow: 0 1px 10px rgba(0,0,0,.55); }
 }
