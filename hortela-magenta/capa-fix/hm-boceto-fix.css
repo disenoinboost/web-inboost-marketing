@@ -572,3 +572,9 @@ html body [data-lb-p]:focus, html body [data-lb-p]:focus-visible { outline: none
   #aplicacoes .hm-arrows-rot { margin: 14px 12px 0 16px; }
 }
 
+
+/* «Mais projetos» no telemóvel: todos os cartões a cores (sem rato, só o primeiro ficava a cores e os outros a cinzento) */
+@media (max-width: 767px) {
+  html body section[data-screen-label="09 Projetos"] [data-step] > a > div[data-x] { opacity: 1 !important; transform: none !important; }
+  html body section[data-screen-label="09 Projetos"] [data-step] > a > span[data-x] { transform: scaleX(0) !important; }
+}
