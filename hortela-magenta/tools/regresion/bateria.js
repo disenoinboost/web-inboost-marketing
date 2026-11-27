@@ -281,7 +281,50 @@ const lineas = (sel, root = document) => [...root.querySelectorAll(sel)].filter(
     rep('movil', r, 'Identidade: cambio de imagen limpio desde el centro, sin franja de la anterior', ok, JSON.stringify(m));
     await ctx.close();
   }
-  fs.writeFileSync(S + '/bateria-ultima.json', JSON.stringify(results, null, 1));
+  // 17) Lightbox AL TOCAR (móvil y tablet): abre y la X lo cierra. La 9) solo probaba con ratón y no vio que en el móvil
+  //     el clic que sigue al toque lo cerraba al instante (Laura, 2026-11-27; ya pedido el 24-nov)
+  if (run('lightbox')) for (const dev of ['movil', 'tablet']) for (const r of ['/servicos/design-web', '/sobre', '/projetos/camolas', '/projetos/alinea', '/servicos/fotografia-e-video', '/design-rotulos-vinho']) if (has(r)) {
+    const { ctx, p } = await open(b, dev, r); await walk(p); const res = [];
+    const n = await p.evaluate(() => { const ls = [...document.querySelectorAll('[data-lb]')].filter(e => e.offsetParent !== null); ls.forEach((e, i) => e.setAttribute('data-t-lb', i)); return ls.length; });
+    for (let gi = 0; gi < Math.min(n, 2); gi++) {
+      await p.evaluate(gi => document.querySelector('[data-t-lb="' + gi + '"]').scrollIntoView({ block: 'center' }), gi); await p.waitForTimeout(900);
+      const pt = await p.evaluate(gi => { for (const i of document.querySelectorAll('[data-t-lb="' + gi + '"] img, [data-t-lb="' + gi + '"] video')) { const r = i.getBoundingClientRect(); const x = Math.max(r.left, 0) + Math.min(r.width, innerWidth) / 2, y = r.top + r.height / 2; if (r.width > 30 && x > 5 && x < innerWidth - 5 && y > 70 && y < innerHeight - 90) { const t = document.elementFromPoint(x, y); if (t && (t === i || i.contains(t))) return { x: Math.min(x, r.right - 10), y }; } } return null; }, gi);
+      if (!pt) continue;
+      await p.touchscreen.tap(pt.x, pt.y); await p.waitForTimeout(700);
+      const vis = () => p.evaluate(() => { const r = document.querySelector('[data-hm-lb]'); return !!r && r.style.display !== 'none' && r.style.opacity !== '0'; });
+      const ab = await vis(); let ce = false;
+      if (ab) { const x = await p.evaluate(() => { const b = document.querySelector('[data-hm-lb] [data-lb-x]') || document.querySelector('[data-hm-lb] button'); const r = b.getBoundingClientRect(); return { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }); await p.touchscreen.tap(x.x, x.y); await p.waitForTimeout(700); ce = !(await vis()); }
+      res.push({ g: gi, abre: ab, xCierra: ce });
+    }
+    rep(dev, r, 'Lightbox al tocar: abre la foto y la X lo cierra', res.length > 0 && res.every(x => x.abre && x.xCierra), JSON.stringify(res));
+    await ctx.close();
+  }
+  // 18) Serviços · Coaching de Marcas en el móvil: la foto de Gonçalo DESPUÉS del texto, como las demás secciones (Laura, 2026-11-27)
+  if (run('servicos') && has('/servicos')) {
+    const { ctx, p } = await open(b, 'movil', '/servicos'); await walk(p);
+    const o = await p.evaluate(() => ['branding', 'criacao-de-sites', 'design-grafico-e-editorial', 'campanhas-e-redes-sociais', 'fotografia-e-video', 'avencas-mensais', 'coaching-de-marcas'].map(id => { const s = document.getElementById(id); if (!s) return id + ':?'; const h = s.querySelector('h2').getBoundingClientRect().top, f = s.querySelector('figure').getBoundingClientRect().top; return f > h ? '' : id; }).filter(Boolean));
+    rep('movil', '/servicos', 'Secciones de servicios: foto después del texto (también Coaching)', !o.length, o.join(','));
+    await ctx.close();
+  }
+  // 19) Serviços · «Projetos por especialidade»: cada una a su landing, no las cinco a /projetos (Laura, 2026-11-27)
+  if (run('servicos') && has('/servicos')) {
+    const html = fs.readFileSync(path.join(DIR, PAGES['/servicos'] + '.html'), 'utf8'); const sec = (html.match(/id="especialidades"[\s\S]*?<\/section>/) || [''])[0];
+    const hrefs = [...sec.matchAll(/href="([^"]+)"/g)].map(m => m[1]); const want = ['/design-rotulos-vinho/', '/design-comunicacao-industria/', '/branding-clinicas-dentarias/', '/design-administracao-publica/', '/design-de-eventos/'];
+    rep('html', '/servicos', '«Projetos por especialidade» enlaza las 5 landings', JSON.stringify(hrefs) === JSON.stringify(want), hrefs.join(' '));
+  }
+  // 20) Filas que se abren en el móvil: número pequeño (16 px) en todas, como en la home (Laura, 2026-11-27)
+  if (run('desplegables')) for (const r of routes) {
+    const html = fs.readFileSync(path.join(DIR, PAGES[r] + '.html'), 'utf8'); if (!/data-hm-amb|id="ambito"|id="servicos"/.test(html)) continue;
+    const { ctx, p } = await open(b, 'movil', r); await walk(p);
+    const z = await p.evaluate(() => { const out = []; document.querySelectorAll('[data-hm-amb] h3 button, #ambito h3 button, #servicos li h3').forEach(h => { const n = [...h.querySelectorAll('span')].find(s => /^\d{2}$/.test(s.textContent.trim())); if (n && n.offsetParent) out.push(getComputedStyle(n).fontSize); }); return out; });
+    if (z.length) rep('movil', r, 'Filas que se abren: número a 16 px (como la home)', z.every(v => v === '16px'), [...new Set(z)].join(',') + ' · ' + z.length + ' filas');
+    await ctx.close();
+  }
+  // 21) Imágenes: ninguna de otro dominio (Wikimedia, web antigua…): todas en hm-media (2026-11-27)
+  if (run('imagenes')) { const bad = []; for (const r of routes) { const html = fs.readFileSync(path.join(DIR, PAGES[r] + '.html'), 'utf8');
+      (html.match(/https?:\/\/[a-z0-9.-]+\/[^"'<>\s]+?\.(?:jpe?g|png|webp|gif|svg|mp4|avif)(?=[?'"#\s)]|$)/gi) || []).filter(u => !/hortelamagenta\.pt\/wp-content\/uploads\/hm-media|schema\.org/.test(u)).forEach(u => bad.push(r + ' ' + u)); }
+    rep('html', '*', 'Imágenes y vídeos alojados en el propio sitio', !bad.length, bad.slice(0, 5).join(', ')); }
+  fs.writeFileSync((process.env.OUT_DIR || DIR) + '/bateria-ultima.json', JSON.stringify(results, null, 1));
   console.log('\n' + (fails ? 'FALLAN ' + fails + ' de ' + results.length : 'TODO BIEN: ' + results.length + ' comprobaciones'));
   await b.close();
 })();

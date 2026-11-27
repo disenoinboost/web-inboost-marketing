@@ -655,3 +655,25 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
   - Ahora todas apuntan a la copia local en el dominio de producción (`estilos.media_local`, `og_imagens_locais`); se ha comprobado que existen los 27 archivos.
 - **Batería:** nueva comprobación de `og:image`. Herramienta de inventario: `tools/regresion/enlaces.py`.
 
+
+## 22. Correcciones repetidas y por qué volvían (2026-11-27, tarde)
+
+**Por qué se perdían correcciones ya hechas:**
+- El 24-nov trabajaron dos sesiones a la vez sobre el mismo sitio, cada una en su rama (`vibrant-goodall` y `confident-turing`).
+- A las 09:52 una subió la capa (`hm-boceto-fix.css/.js`) con el visor de fotos al tocar y el panel de filtros compacto. A las 10:20 la otra subió su propia copia de la capa, que no los tenía, y los borró.
+- **Protección nueva:** `tools/hm_push.py` y `fase2/servidor/construir.php` (`$ANTES`) ya no escriben si el archivo del servidor no es exactamente la versión de la que parte la copia. Si otra sesión lo cambió, se para y avisa.
+- **Fuente única:** rama `claude/wizardly-curie-kxm06z`, que contiene todo lo de `confident-turing` y esta ronda. La memoria 195 del sitio lo indica.
+
+**Arreglos:**
+1. **Lightbox en móvil y tablet (todas las galerías):** el toque abría la foto en el `pointerup`, y el «click» que el navegador lanza justo después caía sobre el fondo oscuro del visor, que ya estaba encima, y lo cerraba. Con ratón no pasaba. La capa ignora ese clic cuando el toque empezó con el visor cerrado. Probado en Design Web · Conteúdos, Sobre · Hortelanices, Camolas, Alinea, Campanhas, Fotografia, Avença y Rótulos de vinho: abre al tocar y la X cierra.
+2. **Serviços · Coaching de Marcas (móvil):** la foto de Gonçalo salía antes del texto, porque en el HTML iba primero (`row-reverse`). Ahora el texto va primero, como en las demás secciones. En PC no cambia nada (texto a la izquierda, foto a la derecha).
+3. **Serviços · «Projetos por especialidade»:** los 5 enlaces iban a `/projetos`. Ahora: Vinho → `/design-rotulos-vinho/`, Indústria → `/design-comunicacao-industria/`, Clínicas dentárias → `/branding-clinicas-dentarias/`, Administração pública → `/design-administracao-publica/`, Eventos → `/design-de-eventos/`.
+4. **Filas que se abren en móvil:** número a 16 px en todas, como la lista de servicios de la home. Design Web · «O que determina o âmbito» (bloque original del diseño) quedaba fuera de la regla y su número heredaba los ~25 px de la palabra; ahora la palabra tiene el mismo tamaño que en el resto de páginas con este efecto (35 px a 390 px). Escaneadas las 36 páginas en móvil, tablet y PC: ningún número de lista por encima de 16 px.
+5. **Imágenes rotas:** inventario de las 412 imágenes y vídeos que usan las 36 páginas (móvil y PC), comprobados uno a uno en el servidor.
+   - Rota: la primera foto de Hortelanices («Esquadrão classe A», `2022/10/d865b1ee….jpg`), que sale dos veces en el carrusel de Sobre. En el servidor solo había la copia `.webp` y la página pide `.jpg`. Recuperada la original de la web antigua (936×692).
+   - Dos imágenes de las opiniones (Sobre y Serviços) se cargaban de Wikimedia, con dos redirecciones: el logo de Stericycle y la foto de Tavira (opinión de Tavira Lawyers). Ahora son copias locales en `hm-media/commons.wikimedia.org/`. Ninguna página usa ya imágenes de otro dominio (comprobación nueva en la batería).
+6. **Projetos · panel «Filtrar projetos» (móvil):** repuesto el arreglo perdido del 24-nov. La cabecera tapaba la línea «Filtrar projetos ×»; ahora queda debajo y más compacto.
+
+**Batería:** comprobaciones nuevas, que fallan con la capa anterior y pasan con la nueva: lightbox al tocar (móvil y tablet, 6 páginas), foto después del texto en Serviços, enlaces de especialidades, número a 16 px en los desplegables del móvil, imágenes alojadas en el propio sitio. La comprobación del lightbox que había era solo con ratón y por eso no vio el fallo.
+
+**Dónde está cada cambio:** capa (`capa-fix/`, puntos 1, 4 y 6), generador y plantillas (`gerador/extras.py`, `gerador/comum.py`, `modelos/servicos.html` y `modelos/sobre.html`, puntos 2, 3 y 5), medios en el servidor (punto 5).

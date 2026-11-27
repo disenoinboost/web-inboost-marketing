@@ -3,6 +3,12 @@
 Proyecto de Laura (Inboost) para el cliente Hortelã Magenta (agencia de diseño de Moita, Portugal; textos en portugués de Portugal).
 El `CLAUDE.md` de la raíz es de otro proyecto (optimización de URL de Inboost): su flujo no aplica aquí.
 
+## Antes de tocar nada (2026-11-27)
+
+- **Fuente única:** la rama más reciente con `hortela-magenta/` (hoy `claude/wizardly-curie-kxm06z`). Antes de empezar, `git fetch` y comprueba que no haya otra rama más nueva; si la hay, fusiónala primero.
+- **Nunca subas por encima de lo que hay en el servidor sin comprobarlo.** `tools/hm_push.py` y `construir.php` (con `$ANTES`) se paran si el servidor tiene otra versión. Si se paran, trae la versión del servidor, fusiona y repite: no fuerces.
+- **Cada corrección pedida va también a su fuente** (capa, generador o datos), no solo a la plantilla o al servidor, y a la batería `tools/regresion/bateria.js`.
+
 ## Cómo está montado
 
 - **Sitio:** https://hortelamagenta.inboost.marketing. Tiene WordPress 7.1, PHP 8.5, Divi 5.7.4 con tema Divi Child y WP Rocket.

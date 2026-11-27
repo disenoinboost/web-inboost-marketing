@@ -6,6 +6,9 @@
 //   $MD5      array nome => md5 do modelo (verificação da transferência)
 //   $ETIQUETA texto para a pasta de cópias (hm-paginas-bak/<data>-antes-<etiqueta>/)
 //   $GRAVAR   false: só verifica; true: grava (tmp + rename) e limpa dist/WP Rocket no fim.
+//   $ANTES    (2026-11-27) array nome => md5 do modelo que o servidor DEVE ter agora (o de fase2/modelos/md5.json no commit
+//             anterior). Se o servidor tiver outro, essa página NÃO se grava: outra sessão mudou-a entretanto e é preciso
+//             trazer essa versão e fundir antes de subir (assim nenhuma sessão com uma cópia antiga pisa correções).
 // O manifest de cada pacote junta só os recursos (uuid) que o modelo usa, tirados dos pacotes existentes.
 $dir = get_stylesheet_directory() . '/hm-paginas/';
 $res = array( 'ok' => array(), 'falhas' => array() );
@@ -50,6 +53,10 @@ foreach ( $PAGINAS as $p ) {
 	$new = preg_replace( '#(<head>\s*<meta charset="utf-8">\s*<title>).*?(</title>)#s', '${1}' . str_replace( '$', '\$', $tm[1] ?? 'Hortelã Magenta' ) . '${2}', $new, 1 );
 	list( , , $chk ) = hm_bundle_parts( $new );
 	if ( $chk !== $t ) { $res['falhas'][] = "$p · recodificação não confere"; continue; }
+	if ( isset( $ANTES[ $p ] ) && file_exists( $dir . $p . '.html' ) ) {
+		list( , , $cur ) = hm_bundle_parts( file_get_contents( $dir . $p . '.html' ) );
+		if ( md5( $cur ) !== $ANTES[ $p ] && md5( $cur ) !== md5( $t ) ) { $res['falhas'][] = "$p · o servidor tem outra versão (" . md5( $cur ) . '): não gravado'; continue; }
+	}
 	if ( $GRAVAR ) {
 		if ( file_exists( $dir . $p . '.html' ) ) {
 			wp_mkdir_p( $bak );
