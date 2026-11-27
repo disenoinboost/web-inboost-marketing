@@ -300,7 +300,7 @@ def contacto(title, text, cta_label, cta_href='/contacto', tone_attr='data-tone=
     </div>
     <div>
       <p style="margin:0 0 6px; font-size:18px; letter-spacing:.1em; text-transform:uppercase; color:{mu};">Sede</p>
-      <a href="https://www.google.com/maps?cid=12848211740159704585" target="_blank" rel="noopener" style="display:block; margin:0; font-size:18px; line-height:1.5; color:{ink}; text-decoration:none;" style-hover="color:#D82E87;">R. Dr. Miguel Bombarda nº 88<br>2860-461 Moita, Portugal</a>
+      <a href="https://maps.app.goo.gl/iV6yJoYW8JyYDM898" target="_blank" rel="noopener" style="display:block; margin:0; font-size:18px; line-height:1.5; color:{ink}; text-decoration:none;" style-hover="color:#D82E87;">R. Dr. Miguel Bombarda nº 88<br>2860-461 Moita, Portugal</a>
     </div>
   </div>
 </section>'''

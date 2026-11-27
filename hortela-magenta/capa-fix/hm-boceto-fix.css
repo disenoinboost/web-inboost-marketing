@@ -653,3 +653,7 @@ html body #opinioes blockquote span:has(> [data-op-w]) { padding-top: .3em !impo
 
 /* Aviso das galerias de arrastar e ampliar (gerador: estilos.DICA_GALERIA): no telemóvel cabe numa linha */
 @media (max-width: 767px) { html body [data-hm-gal-hint] { font-size: min(15px, calc((100vw - 32px) / 24.8)) !important; white-space: nowrap; } } /* o texto mede 24,5 em */
+
+/* Banner de cookies (Complianz) por cima da barra «Pedir orçamento · Ligar»: enquanto o banner está à vista, a barra
+   esconde-se (o banner já tem z-index 99999; assim nada da barra aparece por cima nem por baixo dele). Volta ao aceitar ou recusar. */
+html body:has(.cmplz-cookiebanner.cmplz-show) .hm-cta { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }

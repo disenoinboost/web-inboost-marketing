@@ -606,3 +606,19 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
    - Aviso debajo de cada galería, en una línea y con el texto según el tipo de pantalla.
    - Transición limpia de Identidade en el móvil: la saliente entera y la nueva abriéndose simétrica desde el centro.
 
+## 20. Banner de cookies compacto en móvil y enlace de la dirección (2026-11-27)
+
+1. **Enlace de la dirección:** abría la ficha de otra empresa (Fitplace Calpe).
+   - Causa: el `cid=12848211740159704585` de los modelos del diseño original.
+   - Arreglo: ahora apunta al enlace de la web antigua (`https://maps.app.goo.gl/iV6yJoYW8JyYDM898`, el botón «Direções»).
+   - En el generador: `comum.normalizar` y `blocos.py`, en las 37 plantillas.
+   - En las 11 versiones Divi: páginas 131–140 y pie 153, con `divi-edit-module`.
+2. **Banner de Complianz** (banner ID 1, Complianz 7.5.7, sin logo).
+   - Copia de seguridad de la fila en la opción `backup_cmplz_banner120261127`.
+   - `close_button = 0` y `use_custom_cookie_css = 1`.
+   - El bloque CSS pedido se añade al final de `custom_css`, sin tocar lo anterior; `save()` sube `banner_version` de 2 a 3 y regenera `uploads/complianz/css/banner-1-optin.css`.
+   - Ajuste a la Spartan, para que los tres botones quepan en una fila también en la vista «Guardar preferências»: 13 px sin espaciado hasta 430 px, y 12 px con relleno de 12 px por debajo de 360 px.
+   - Desde 431 px quedan los 14 px y el espaciado de 1 px pedidos.
+   - La barra «Pedir orçamento · Ligar» se oculta mientras el banner está a la vista (`capa-fix`).
+   - Cómo volver atrás: restaurar la fila desde la opción y llamar a `save()` (código en la respuesta a Laura).
+

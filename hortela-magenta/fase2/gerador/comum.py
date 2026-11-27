@@ -126,6 +126,8 @@ def normalizar(t):
     h, b = t[:i], t[i:]
     b = normalizar_antetitulos(b)  # sistema de desenho comum (estilos.py)
     b = dicas_galerias(b)  # aviso «Arraste/Deslize… · Clique/Toque… para ampliar» por baixo das galerias
+    # morada: o cid dos modelos do desenho abria outra empresa (Fitplace Calpe); a ligação certa é a da web antiga («Direções»)
+    b = b.replace('https://www.google.com/maps?cid=12848211740159704585', 'https://maps.app.goo.gl/iV6yJoYW8JyYDM898')
     # botão escuro de contacto: o mesmo peso de letra em todas as páginas (a página inicial tinha 400; as outras 300)
     b = b.replace('font-size:18px; font-weight:400; box-shadow:0 14px 30px -16px rgba(28,27,35,.55);', 'font-size:18px; font-weight:300; box-shadow:0 14px 30px -16px rgba(28,27,35,.55);')
     b = _links(b)
