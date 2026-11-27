@@ -621,4 +621,17 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
    - Desde 431 px quedan los 14 px y el espaciado de 1 px pedidos.
    - La barra «Pedir orçamento · Ligar» se oculta mientras el banner está a la vista (`capa-fix`).
    - Cómo volver atrás: restaurar la fila desde la opción y llamar a `save()` (código en la respuesta a Laura).
+   - **Alto del banner, antes → ahora:**
+     - 320 px: 446 → 292
+     - 375 px: 406 → 226
+     - 488 px: 383 → 206
+     - 768 px: 383 → 206
+     - 1280 px: 273 → 273 (igual)
+   - Comprobado en la web real como visitante nuevo, a partir de una copia servida por el propio servidor:
+     - botones en una fila, sin texto cortado, también en la vista «Guardar preferências»;
+     - sin X ni cabecera en el móvil;
+     - enlaces legales enteros;
+     - escritorio sin ningún píxel distinto;
+     - la barra de llamada vuelve tras aceptar.
+   - Herramienta: `tools/regresion/cmplz_render.js`.
 
