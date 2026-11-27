@@ -238,7 +238,7 @@ html body [data-mobile] > div:first-child > span > span { width: clamp(170px, 16
   html body section#identidade[data-tone] [data-step]:not([data-step-v]) > div:first-child > div:last-child > button > span + span { font-size: 28px !important; font-weight: 200 !important; letter-spacing: -.045em !important; line-height: 1 !important; color: var(--ink, #1C1B23) !important; }
 
   /* Camolas · O site: capturas novas (2x) e o dobro do percurso para as ver com calma */
-  html body #digital[data-scrub] { height: 1400vh !important; } /* 8.ª ronda: páginas inteiras (antes 1000vh com 3.200 px) */
+  /* Camolas · O site: a altura passa a ser calculada no JS («O site», 2026-11-27) pela altura real das capturas */
 
   /* barra fixa «Pedir orçamento · Ligar» (hm-boceto-fix.js): as outras barras de baixo sobem quando ela está à vista */
   .hm-cta { display: flex; position: fixed; z-index: 45; left: 50%; bottom: 14px; display: flex; align-items: center; gap: 4px; padding: 4px; border-radius: 9999px; background: rgba(250, 250, 248, .92); -webkit-backdrop-filter: saturate(180%) blur(12px); backdrop-filter: saturate(180%) blur(12px); box-shadow: 0 0 0 1px rgba(28, 27, 35, .08), 0 8px 24px rgba(28, 27, 35, .12); transform: translate3d(-50%, 16px, 0); opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .35s ease, transform .5s cubic-bezier(.2,.7,.2,1), visibility 0s linear .35s; font-family: inherit; }
@@ -504,7 +504,7 @@ html body .hm-reels button:focus-visible { outline: 2px solid #D82E87; outline-o
 html body [data-hm-shot] img { display: block; width: 100%; height: auto; }
 @media (max-width: 760px) { html body [data-hm-shot="pc"] { display: none !important; } }
 @media (min-width: 761px) { html body [data-hm-shot="m"] { display: none !important; } }
-@media (min-width: 768px) { html body #digital[data-scrub] { height: 1000vh !important; } }
+html body #digital[data-hm-scrub] { height: 1400vh; } /* reserva sem JS; o JS define a altura certa */
 
 /* ===== 8.ª ronda · ajustes de Laura (2026-11-23, tarde) ===== */
 
@@ -557,6 +557,12 @@ html.hm-fade img[data-hm-in] { animation: hmImgIn .6s ease backwards; }
   html body nav[aria-label="Breadcrumb"] { flex-wrap: nowrap !important; gap: 7px !important; font-size: 15px !important; white-space: nowrap; overflow: hidden; }
   html body nav[aria-label="Breadcrumb"] > * { flex: none; }
   html body nav[aria-label="Breadcrumb"] > :last-child { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  /* páginas legais e mapa do site: as migalhas são uma lista (nav > ol, 18 px no próprio ol); a mesma regra (2026-11-27) */
+  html body nav[aria-label="Breadcrumb"] > ol { flex-wrap: nowrap !important; gap: 7px !important; font-size: 15px !important; white-space: nowrap; overflow: hidden; max-width: 100%; }
+  html body nav[aria-label="Breadcrumb"] > ol > li { flex: none; }
+  html body nav[aria-label="Breadcrumb"] > ol > li:last-child { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  /* com overflow:hidden, o acento das maiúsculas («INÍCIO», «POLÍTICA») ficava cortado: entrelinha com folga por cima */
+  html body nav[aria-label="Breadcrumb"], html body nav[aria-label="Breadcrumb"] > ol, html body nav[aria-label="Breadcrumb"] li { line-height: 1.6 !important; }
 }
 
 /* Fotografia em grande (lightbox): sem a caixa rosa de foco no X e nas setas (o foco vai para o X ao abrir) */
@@ -610,5 +616,11 @@ html body [data-faq-side][data-hm-stacked] { position: relative !important; top:
   html body section[data-screen-label="09 Projetos"] [data-step] > a > span:nth-of-type(2) { transform: scaleX(0) !important; }
   html body section[data-screen-label="09 Projetos"] [data-step] > a > span:nth-of-type(4) { transform: translateY(-40px) !important; font-size: 20px !important; text-shadow: 0 1px 14px rgba(0,0,0,.55); }
   html body section[data-screen-label="09 Projetos"] [data-step] > a > span:nth-of-type(5) { opacity: 1 !important; transform: none !important; text-shadow: 0 1px 10px rgba(0,0,0,.55); }
+}
+
+/* Camolas · «Rótulos e packaging» (telemóvel): os nomes numa só linha («Grande Escolha · rótulo», «Monocasta Syrah · rótulo»
+   partiam-se em duas). Letra ajustada à largura do cartão (78vw) menos o número; no máximo a do desenho (~25 px). */
+@media (max-width: 767px) {
+  html body #rotulos [data-lpt] { font-size: min(24.96px, calc((78vw - 42px) / 12.4)) !important; white-space: nowrap !important; }
 }
 

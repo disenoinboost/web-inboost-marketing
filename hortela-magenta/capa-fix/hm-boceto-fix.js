@@ -702,3 +702,78 @@
   }
   var n = 0, iv = setInterval(function () { if (setup() || ++n > 40) clearInterval(iv); }, 300);
 })();
+
+/* ===== Camolas · «O site»: as três capturas à mesma velocidade · 2026-11-27 =====
+   As capturas de página inteira de adegacamolas.pt têm alturas muito diferentes (no telemóvel: Vinhos ~30.000 px,
+   Região ~16.000, Experiências ~5.800). Com uma fatia fixa do percurso para cada uma, Vinhos passava a 16× a velocidade
+   do dedo. Aqui reproduz-se a mesma coreografia do desenho (moldura que cresce, título, cortinas entre páginas, endereço
+   e barra de progresso), mas o percurso de cada página mede-se pela altura da sua captura: o conteúdo anda sempre a
+   ~3,5× o scroll, no telemóvel e no computador. A altura da secção calcula-se a partir disso. */
+(function () {
+  var W = window, D = document, R = 0.12, V = 3.5 * (1 - R); /* velocidade constante (pico ≈3,5× o scroll) com arranque e travagem suaves */
+  function cl(x) { return x < 0 ? 0 : (x > 1 ? 1 : x); }
+  function sm(x) { x = cl(x); return x * x * (3 - 2 * x); }
+  function lin(x) { x = cl(x); return x < R ? x * x / (2 * R * (1 - R)) : (x > 1 - R ? 1 - (1 - x) * (1 - x) / (2 * R * (1 - R)) : (x - R / 2) / (1 - R)); }
+  function parse(s) {
+    return s.split('|').map(function (f) { var o = {}; f.split(';').forEach(function (kv) { var i = kv.indexOf(':'); if (i < 0) return; var k = kv.slice(0, i).trim(), v = kv.slice(i + 1).trim();
+      if (k === 'ci') { o.ci = v.split(/\s+/).map(Number); return; } var m = v.match(/^(-?[\d.]+)([a-z%]*)$/); if (m) { o[k] = parseFloat(m[1]); o[k + 'u'] = m[2] || 'px'; } }); return o; });
+  }
+  function setup(root) {
+    if (root.__hmSite) return; root.__hmSite = 1;
+    var items = [].map.call(root.querySelectorAll('[data-sc]'), function (el) { var r = (el.getAttribute('data-sc-r') || '0,1').split(',').map(Number); return { el: el, k: parse(el.getAttribute('data-sc')), a0: r[0], b0: r[1], a: 0, b: 1 }; });
+    var pages = []; items.forEach(function (it) { if (it.el.hasAttribute('data-hm-shot') && pages.indexOf(it.a0) < 0) pages.push(it.a0); }); pages.sort(function (x, y) { return x - y; });
+    var curt = []; items.forEach(function (it) { if (it.k[0].ci && curt.indexOf(it.a0) < 0) curt.push(it.a0); }); curt.sort(function (x, y) { return x - y; });
+    var labels = [].slice.call(root.querySelectorAll('[data-x]')), fill = root.querySelector('[data-sfill]');
+    labels.forEach(function (l) { l.style.transition = 'none'; });
+    var total = 1, P = [], C = [];
+    function lay() {
+      var vh = W.innerHeight, K = (W.innerWidth < 768 ? 13 : 9) * vh; /* entrada (moldura, título, legenda): os mesmos tempos de antes, em ecrãs */
+      P = []; C = [];
+      var y = 0.125 * K;
+      pages.forEach(function (a0, i) {
+        var h = 0, fc = vh; items.forEach(function (it) { if (it.el.hasAttribute('data-hm-shot') && it.a0 === a0 && it.el.offsetParent !== null && it.el.scrollHeight > h) { h = it.el.scrollHeight; fc = it.el.parentElement.offsetHeight || vh; } });
+        if (i > 0) { var c0 = y + 0.16 * vh; C.push([c0, c0 + 1.3 * vh]); y = c0 + 1.63 * vh; } /* cortina entre páginas */
+        var tr = Math.max(0.8 * vh, (h - fc) / V); /* percurso do conteúdo = altura da captura − janela da moldura */
+        if (i === 0) y = Math.max(y, 0.2 * K - R * tr); /* a 1.ª página só ganha velocidade quando a moldura acaba de crescer (somadas, passavam de 4×) */
+        P.push([y, y + tr]); y += tr;
+      });
+      total = y + 1.14 * vh; /* pausa final antes de soltar */
+      items.forEach(function (it) {
+        var pi = pages.indexOf(it.a0), ci = it.k[0].ci ? curt.indexOf(it.a0) : -1;
+        if (it.el.hasAttribute('data-hm-shot') || (pi >= 0 && it.k.length === 2 && it.k[1].ty !== undefined)) { it.a = P[pi][0]; it.b = P[pi][1]; it.lin = 1; }
+        else if (ci >= 0 && C[ci]) { it.a = C[ci][0]; it.b = C[ci][1]; }
+        else { it.a = it.a0 * K; it.b = it.b0 * K; }
+      });
+      root.style.setProperty('height', Math.round(total + vh) + 'px', 'important');
+    }
+    function apply(it, y) {
+      var t = cl((y - it.a) / Math.max(1, it.b - it.a)), e = it.lin ? lin(t) : sm(t), A = it.k[0], B = it.k[it.k.length - 1], s = it.el.style;
+      function g(k, d) { var a = A[k] === undefined ? d : A[k], b = B[k] === undefined ? d : B[k]; return a + (b - a) * e; }
+      if (A.ty !== undefined || A.s !== undefined) s.transform = 'translate3d(0,' + g('ty', 0).toFixed(2) + (A.tyu || B.tyu || 'px') + ',0)' + (A.s !== undefined ? ' scale(' + g('s', 1).toFixed(4) + ')' : '');
+      if (A.o !== undefined) s.opacity = g('o', 1).toFixed(3);
+      if (A.ci) { var c = [0, 1, 2, 3].map(function (j) { return ((A.ci[j] || 0) + ((B.ci[j] || 0) - (A.ci[j] || 0)) * e).toFixed(2) + '%'; }).join(' '); s.clipPath = 'inset(' + c + ')'; s.webkitClipPath = 'inset(' + c + ')'; }
+    }
+    var run = false;
+    function frame() {
+      run = false;
+      var r = root.getBoundingClientRect(); if (r.bottom < -200 || r.top > W.innerHeight + 200) return;
+      var y = Math.max(0, Math.min(total, -r.top));
+      items.forEach(function (it) { apply(it, y); });
+      labels.forEach(function (l) { var j = +l.getAttribute('data-x'), o = 1;
+        if (j > 0 && C[j - 1]) o = sm((y - C[j - 1][0]) / (C[j - 1][1] - C[j - 1][0])); else if (j > 0) o = 0;
+        if (C[j]) o *= 1 - sm((y - C[j][0]) / (C[j][1] - C[j][0]));
+        l.style.opacity = o.toFixed(3); if (/transform/.test(l.getAttribute('data-on') || '')) l.style.transform = 'translateY(' + ((1 - o) * 8).toFixed(1) + 'px)'; });
+      if (fill) fill.style.transform = 'scaleX(' + (y / total).toFixed(4) + ')';
+    }
+    function kick() { if (!run) { run = true; requestAnimationFrame(frame); } }
+    function relay() { lay(); kick(); }
+    relay();
+    W.addEventListener('scroll', kick, { passive: true });
+    W.addEventListener('resize', relay);
+    root.addEventListener('load', relay, true);
+    if (W.ResizeObserver) { var ro = new ResizeObserver(function () { relay(); }); [].forEach.call(root.querySelectorAll('[data-hm-shot]'), function (s) { ro.observe(s); }); }
+    root.__hmSiteLay = relay;
+  }
+  var n = 0, iv = setInterval(function () { var r = D.querySelector('#digital[data-hm-scrub]'); if (r) { setup(r); } if (r || ++n > 40) clearInterval(iv); }, 250);
+})();
+

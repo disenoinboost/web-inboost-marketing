@@ -107,6 +107,14 @@ FORM_JS = ("submitForm: e => { e.preventDefault(); const f = e.currentTarget || 
            "errShow: this.state.formErr ? 'block' : 'none', ")
 
 
+def camolas(t):
+    """O site: as capturas de página inteira (Vinhos ~30.000 px no telemóvel) passavam a 16× a velocidade do dedo, porque
+    cada página tinha uma fatia fixa do percurso. O andamento passa a ser calculado em capa-fix (hm-boceto-fix.js,
+    «O site»): todas as capturas à mesma velocidade, com o percurso medido pela altura real de cada uma.
+    Para isso os efeitos do desenho deixam de pegar nesta secção (data-scrub/data-sstep -> data-hm-scrub/data-hm-sstep)."""
+    return _rep(t, 'id="digital" data-tone="blue" data-scrub="pin" data-sstep="3"', 'id="digital" data-tone="blue" data-hm-scrub="pin" data-hm-sstep="3"')
+
+
 def home(t):
     """Showreel: o antetítulo «— Showreel» ficava por cima do título gigante (as hastes de «Veja o showreel» tocavam-no,
     e mais ainda quando o título cresce ao descer). Mais espaço por baixo do antetítulo."""

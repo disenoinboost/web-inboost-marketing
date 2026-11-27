@@ -531,3 +531,47 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 - Safari/iOS y tablet en horizontal.
 - Estados hover uno a uno.
 
+
+## 18. Regresiones de Camolas y batería de pruebas (2026-11-27)
+
+**Qué falló y por qué:**
+1. **Camolas · «Rótulos e packaging» en el móvil:** los nombres largos («Grande Escolha · rótulo», «Monocasta Syrah · rótulo») salían en 2 líneas. El ajuste de tamaño de una línea solo se había hecho en los Trabajos de Branding y Design Web, y Rótulos seguía a 25 px. La auditoría no lo detectó porque no buscaba saltos de línea en los títulos de las galerías.
+   - Arreglo: la letra se ajusta al ancho de la tarjeta (`min(24.96px, (78vw − 42px) / 12,4)`), en una línea: 21 px a 390 px y 19 px a 360 px.
+2. **Camolas · «O site» bajaba muy rápido:** en la 8.ª ronda se pusieron capturas de página entera de adegacamolas.pt (Vinhos ~30.000 px en el móvil), pero cada página conservaba un tramo fijo del recorrido. Vinhos corría a 16× la velocidad del dedo en el móvil y a 8× en el PC; Experiências, a 3×.
+   - Arreglo: el andamento se calcula ahora en `hm-boceto-fix.js` («O site») con la altura real de cada captura. Las tres van a velocidad constante (~3,5× el scroll, con arranque y frenada suaves) en móvil, tablet y PC.
+   - La coreografía es la misma del diseño: la moldura crece, el título se va, cortinas entre páginas, dirección y barra rosa.
+   - En el generador, la sección pasa a `data-hm-scrub`/`data-hm-sstep` (hook `camolas()` en `extras.py`) para que los efectos del diseño no la muevan dos veces.
+3. **Migas en las páginas legales y el mapa del sitio (móvil):** son una lista (`nav > ol`, 18 px) que la regla de una línea no cubría: «Início — Política de Privacidade» salía en 2 líneas.
+   - Además, en todas las migas del móvil el `overflow:hidden` cortaba el acento de las mayúsculas («INICIO», «POLITICA»).
+   - Arreglo: la misma regla para la lista y entrelínea de 1,6.
+
+**Batería de regresión (`scratchpad/hmtools/bateria.js`):** comprueba cada corrección pedida y se pasa antes de cada subida.
+- **General, en las 36 rutas × móvil, tablet y PC:**
+  - sin desbordamiento horizontal ni errores JS, sin imágenes rotas;
+  - sin dos secciones seguidas con el mismo fondo (salvo un mismo capítulo o fotos pegadas a su texto);
+  - franjas distintas entre sí y del fondo, con al menos 20 puntos RGB de diferencia;
+  - migas en una línea y sin acentos cortados;
+  - pósters en los vídeos del móvil.
+- **Camolas:**
+  - Rótulos en una línea (390 y 360 px);
+  - «O site» ≤ 4× el scroll (móvil, tablet, PC y portátil);
+  - sin la etiqueta de esquina en el móvil.
+- **Branding y Design Web:** nombres de Trabajos en una línea (390 y 360 px).
+- **Fichas:**
+  - Aplicaciones/Rótulos con todas las imágenes a la misma altura (móvil y PC);
+  - la sección siguiente no se sube;
+  - «Mais projetos» a color con nombre y «Ver projeto» (móvil y tablet);
+  - la leyenda de «O site»/«Filme» debajo del vídeo.
+- **Desplegables:**
+  - número y título alineados;
+  - aire por encima y por debajo del texto;
+  - efecto de escritura.
+- **Filas de Coaching y Sobre:** título centrado con el texto.
+- **Contacto:** dirección en 3 líneas con la misma letra.
+- **Fotos ampliadas:** la X sin borde.
+- **Cursor:** 12,5 px.
+- **Servicios:** índice de Serviços con margen superior.
+- **Administração Pública:** antetítulo en una línea.
+- **Menú móvil:** los 6 proyectos principales primero.
+- **Galerías:** todas continuas.
+- **Cabeceras del móvil:** mismo tamaño en los títulos.
