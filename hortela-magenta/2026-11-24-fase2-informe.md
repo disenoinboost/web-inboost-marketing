@@ -682,3 +682,59 @@ Activas en `hm-rutas.php`. Valen igual en producción y son reaplicables.
 - En Gráfico + Editorial, Fotografia & Vídeo y las 5 landings, el generador marcaba la primera fila con `data-acc-open` y al bajar aparecía abierta. Design Web y la home ya empezaban cerradas.
 - Ahora todas empiezan cerradas (`blocos_servico.ambito()` y las 7 plantillas). Se abren igual al tocar o al pasar el ratón.
 - Batería: nueva comprobación «todas cerradas al bajar» en cada página con estas filas.
+
+## 23. Revisión completa de todo lo pedido (2026-11-27, tarde)
+
+**Método:**
+- Lista de todo lo que Laura pidió o señaló, sacada de sus mensajes en las 6 sesiones del 4 al 27 de noviembre: 114 puntos del 4 al 6 de noviembre y 126 del 23 al 27.
+- Comprobación contra lo publicado: copia de las 37 páginas servidas y de la capa del servidor.
+  - Batería de regresión: 325 de 325 bien en móvil, tablet y PC.
+  - Comprobaciones puntuales de cada punto que la batería no cubre.
+  - Comprobaciones en el servidor: medios, vídeos, favicon y banner de cookies.
+
+**Corregido en esta revisión:**
+- **Vídeos que cargan a golpes:** pedido el 5-nov cuatro veces. Los 20 vídeos de las fichas de proyecto (añadidos en la fase 2) tenían el índice al final del archivo. Ahora los 47 vídeos del sitio lo tienen al principio, sin recomprimir.
+  - Herramienta: `fase2/servidor/faststart.php`.
+  - Probado fotograma a fotograma en local con un vídeo del servidor.
+  - Copias de los originales en `uploads/hm-media-bak-faststart/`.
+- Antes, en la misma tarde (sección 22):
+  - lightbox al tocar;
+  - panel de filtros;
+  - Coaching;
+  - especialidades;
+  - números y cierre de los desplegables;
+  - imágenes rotas o de otro dominio.
+
+**Bien, comprobado:**
+- **Del 4 al 6 de noviembre:**
+  - Menú móvil: página actual marcada; Serviços y Projetos plegados.
+  - Logo igual con el menú abierto.
+  - Sin letras «HM» al cambiar de página.
+  - Textos decorativos de Branding y Design Web en el móvil.
+  - Autor pegado a la entradilla del artículo.
+  - Opiniones: 2 y media, la cortada borrosa, con flechas, en Home, Serviços y Sobre.
+  - Trabalhos: deslizar, «Ver projeto», mano y nombres en una línea.
+  - Projetos: galería que se mueve a pantalla completa e índice en minúsculas.
+  - Camolas: cabecera, Identidade, Rótulos (texto a la izquierda, número a la derecha, mano y flechas debajo), O site, Mais projetos en una columna y la barra de secciones oculta en el móvil (decisión del 5-nov por la tarde).
+  - Hortelanices.
+  - Barra de temas del blog a 14 px.
+  - Menú de PC más pequeño.
+  - Cabeceras iguales (HGO en una línea a 1440 px).
+  - Segundo showreel entero sobre gris.
+  - Barra «Pedir orçamento · Ligar».
+  - Favicon.
+  - «Também confiaram em nós»: 5 líneas a 15 px.
+  - Nombres de fondo en Equipa.
+- **Del 23 al 27 de noviembre:**
+  - Todo lo de la 8.ª ronda: Avenças, cifras, «Desde 2007» en todas las cabeceras, «Somos uma equipa…», «Sede», pie a 14 px, Design Web sin los dos bloques, Palmela, imágenes de Serviços, Rótulos 06–10, Anúncios, showreels de Sobre y selector de Contacto.
+  - Todo lo de la fase 2 y sus rondas: fichas y galerías a la misma altura, desplegables, Coaching en filas, franjas, espaciado, migas, dirección, cookies, enlaces, og:image y lightbox sin borde.
+
+**Queda abierto:**
+- **Home · lista de servicios (móvil):** «Campanhas & Redes Sociais» ocupa 2 líneas a 28 px. El 5-nov se pidió que cupieran en una línea; después, más grandes, como el índice de Projetos. Para que quepa haría falta unos 21 px. Decisión de Laura.
+- **Pendiente del cliente o de la publicación** (sección 9):
+  - email de destino del formulario (`hm_form_to`);
+  - Aviso legal (faltan los datos de la empresa);
+  - las 6 tarjetas de ejemplo del blog;
+  - más testimonios y anuncios reales de Camolas;
+  - la foto original de Alinea.
+- **No verificado:** en un iPhone real (Safari, barra de direcciones, «Reducir movimiento»). Todo se ha comprobado con Chromium emulando móvil y tablet.
